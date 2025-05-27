@@ -1,7 +1,7 @@
 import { defineConfig } from "eslint/config";
 
 export default defineConfig({
-  extends: ["next/core-web-vitals"],
+  extends: ["next/core-web-vitals", "prettier"],
   plugins: ["import"],
   rules: {
     "import/order": [
