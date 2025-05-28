@@ -1,11 +1,6 @@
 export default function Test() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-8">
-      <p style={{ 
-        fontFamily: 'var(--font-pretendard)',
-        fontSize: '30px',
-        fontWeight: '600'
-      }}>Large Title 텍스트</p>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-1 p-8">
       <p className="text-largeTitle">Large Title 텍스트</p>
       <p className="text-title1">Title 1 텍스트</p>
       <p className="text-title2">Title 2 텍스트</p>
