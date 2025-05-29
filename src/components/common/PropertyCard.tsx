@@ -1,14 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface PropertyCardProps {
+  itemId: number;
   itemNumber?: number;
   imageUrl: string;
   transactionType: string;
   price: string;
-  address: string;
-  detailAddress: string;
   buildingType: string;
   area: string;
+  address: string;
+  detailAddress: string;
   tags: string[];
   liked: boolean;
   onLikeClick?: () => void;
@@ -16,22 +20,30 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({
+  itemId,
   itemNumber,
   imageUrl,
   transactionType,
   price,
-  address,
-  detailAddress,
   buildingType,
   area,
+  address,
+  detailAddress,
   tags,
   liked,
   onLikeClick,
   small = false,
 }: PropertyCardProps) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/property/${itemId}`);
+  };
+
   return (
     <div
-      className={`flex w-full items-center gap-3 self-stretch bg-white ${small ? "px-3" : "px-5"} py-2.5`}
+      className={`flex w-full items-center gap-3 self-stretch bg-white ${small ? "px-3" : "px-5"} cursor-pointer py-2.5`}
+      onClick={handleCardClick}
     >
       {/* 이미지 섹션 */}
       <div className="relative h-24 w-24 overflow-hidden rounded-lg">
@@ -57,7 +69,10 @@ const PropertyCard = ({
               {transactionType} {price}
             </div>
             <button
-              onClick={onLikeClick}
+              onClick={(e) => {
+                e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+                onLikeClick?.();
+              }}
               className="relative h-6 w-6 cursor-pointer overflow-hidden"
             >
               <Image

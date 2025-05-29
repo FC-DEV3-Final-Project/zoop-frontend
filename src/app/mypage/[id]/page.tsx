@@ -7,6 +7,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
       <h1 className="mb-8 text-2xl font-bold">마이페이지입니다</h1>
       <div className="w-[375px] h-[116px]">
         <PropertyCard
+          itemId={1}
           itemNumber={1}
           imageUrl="/imgs/-.png"
           transactionType="전세"
@@ -19,6 +20,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
           liked={true}
         />
         <PropertyCard
+          itemId={2}
           itemNumber={1}
           imageUrl="/imgs/-.png"
           transactionType="전세"
