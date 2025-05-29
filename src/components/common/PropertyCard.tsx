@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface PropertyCardProps {
   itemId: number;
@@ -15,7 +16,6 @@ interface PropertyCardProps {
   detailAddress: string;
   tags: string[];
   liked: boolean;
-  onLikeClick?: () => void;
   small?: boolean;
 }
 
@@ -31,13 +31,19 @@ const PropertyCard = ({
   detailAddress,
   tags,
   liked,
-  onLikeClick,
   small = false,
 }: PropertyCardProps) => {
   const router = useRouter();
+  const [isLiked, setIsLiked] = useState(liked);
 
   const handleCardClick = () => {
     router.push(`/property/${itemId}`);
+  };
+
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+    setIsLiked((prev) => !prev);
+    // onLikeClick?.();
   };
 
   return (
@@ -69,15 +75,12 @@ const PropertyCard = ({
               {transactionType} {price}
             </div>
             <button
-              onClick={(e) => {
-                e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
-                onLikeClick?.();
-              }}
+              onClick={handleLikeClick}
               className="relative h-6 w-6 cursor-pointer overflow-hidden"
             >
               <Image
-                src={liked ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
-                alt={liked ? "찜하기 완료" : "찜하기"}
+                src={isLiked ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
+                alt={isLiked ? "찜하기 완료" : "찜하기"}
                 width={24}
                 height={24}
               />
