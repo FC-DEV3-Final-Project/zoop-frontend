@@ -1,14 +1,14 @@
 import "./globals.css";
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
 import type { Metadata } from "next";
-import Header from '@/layout/Header';
+import Header from "@/layout/Header";
 
 const pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.woff2',
-  variable: '--font-pretendard',
-  display: 'swap',
-  weight: '100 900',
-})
+  src: "../../public/fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  display: "swap",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
   title: "zoop",
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
-        <div className="mx-auto w-full max-w-[430px] bg-[#f8f8f8] min-h-screen">
+        <div className="mx-auto min-h-screen w-full max-w-[480px] bg-[#f8f8f8]">
           <Header />
           {children}
         </div>
