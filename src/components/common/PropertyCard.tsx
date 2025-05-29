@@ -1,57 +1,68 @@
 import Image from "next/image";
 
 interface PropertyCardProps {
-  number?: number;
+  itemNumber?: number;
   imageUrl: string;
-  title: string;
+  transactionType: string;
+  price: string;
   address: string;
   detailAddress: string;
-  buildingInfo: string;
+  buildingType: string;
+  area: string;
   tags: string[];
-  like: boolean;
+  liked: boolean;
   onLikeClick?: () => void;
+  small?: boolean;
 }
 
 const PropertyCard = ({
-  number,
+  itemNumber,
   imageUrl,
-  title,
+  transactionType,
+  price,
   address,
   detailAddress,
-  buildingInfo,
+  buildingType,
+  area,
   tags,
-  like,
+  liked,
   onLikeClick,
+  small = false,
 }: PropertyCardProps) => {
   return (
-    <div className="inline-flex items-center justify-start gap-3 self-stretch bg-white px-5 py-2.5">
+    <div
+      className={`flex w-full items-center gap-3 self-stretch bg-white ${small ? "px-3" : "px-5"} py-2.5`}
+    >
       {/* 이미지 섹션 */}
       <div className="relative h-24 w-24 overflow-hidden rounded-lg">
-        <img src={imageUrl} alt={title} className="h-full w-full object-cover" />
-        {number && (
+        <img
+          src={imageUrl}
+          alt={`${buildingType} ${area}`}
+          className="cur h-full w-full object-cover"
+        />
+        {/* 목록 번호 */}
+        {itemNumber && (
           <div className="absolute top-0 left-0 flex h-5 w-5 items-center overflow-hidden rounded-br bg-black px-[8px] pt-[2px] pb-[3px] pl-[7px]">
-            <p className="justify-center text-center text-[10px] font-medium text-white">
-              {number}
-            </p>
+            <p className="text-[10px] font-medium text-white">{itemNumber}</p>
           </div>
         )}
       </div>
 
       {/* 정보 섹션 */}
-      <div className="inline-flex flex-1 flex-col items-start justify-between self-stretch">
-        <div className="flex flex-col items-start justify-start gap-0.5 self-stretch">
+      <div className="inline-flex flex-1 flex-col justify-between self-stretch">
+        <div className="flex flex-col gap-0.5 self-stretch">
           {/* 제목과 하트 버튼 */}
           <div className="inline-flex items-center justify-between self-stretch">
             <div className="text-grey-100 text-subtitle2 flex-1 justify-start font-semibold">
-              {title}
+              {transactionType} {price}
             </div>
             <button
               onClick={onLikeClick}
-              className="relative h-6 w-6 overflow-hidden transition-opacity hover:opacity-80"
+              className="relative h-6 w-6 cursor-pointer overflow-hidden"
             >
               <Image
-                src={like ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
-                alt={like ? "찜하기 완료" : "찜하기"}
+                src={liked ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
+                alt={liked ? "찜하기 완료" : "찜하기"}
                 width={24}
                 height={24}
               />
@@ -59,17 +70,19 @@ const PropertyCard = ({
           </div>
 
           {/* 주소와 건물 정보 */}
-          <div className="flex flex-col items-start justify-start self-stretch">
-            <div className="inline-flex items-center justify-start gap-1 self-stretch">
-              <p className="text-grey-100 text-body2 justify-start">{address}</p>
-              <p className="text-body2 flex-1 justify-start text-black">{detailAddress}</p>
+          <div className="flex flex-col items-start gap-0.5 self-stretch">
+            <div className="inline-flex items-center gap-1 self-stretch">
+              <p className="text-grey-100 text-body2 max-w-[131px] truncate">{address}</p>
+              <p className="text-body2 flex-1 text-black">{detailAddress}</p>
             </div>
-            <div className="text-body2 h-5 justify-start self-stretch">{buildingInfo}</div>
+            <div className="text-body2 h-5 self-stretch">
+              {buildingType}, {area}
+            </div>
           </div>
         </div>
 
         {/* 태그 리스트 */}
-        <div className="inline-flex items-center justify-start gap-1 self-stretch">
+        <div className="inline-flex items-center gap-1 self-stretch">
           {tags.map((tag, index) => (
             <div
               key={index}
