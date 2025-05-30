@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
-        <div className="mx-auto min-h-screen w-full max-w-[480px] bg-[#f8f8f8]">
+        <div className="mx-auto min-h-screen w-full max-w-[600px] bg-[#f8f8f8]">
           <Header />
           {children}
         </div>
