@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 body {
   font-family: var(--font-pretendard);
@@ -18,7 +19,7 @@ body {
   font-size: 20px;
   line-height: 1.4;
   font-weight: 700;
-} 
+}
 .text-title3 {
   font-size: 18px;
   line-height: 1.4;
@@ -53,7 +54,7 @@ body {
   font-size: 16px;
   line-height: 1.4;
   font-weight: 500;
-} 
+}
 .text-body2 {
   font-size: 14px;
   line-height: 1.4;
@@ -68,7 +69,7 @@ body {
   font-size: 12px;
   line-height: 1.4;
   font-weight: 400;
-} 
+}
 .text-caption1 {
   font-size: 14px;
   line-height: 1.4;
