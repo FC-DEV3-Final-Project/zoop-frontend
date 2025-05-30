@@ -17,14 +17,14 @@ const BottomSheet = ({ trigger }: BottomSheetProps) => {
               필터 설정
             </SheetTitle>
           </SheetHeader>
+
           <div className="flex h-[110px] flex-col">
-            <div className="flex h-[48px] items-center justify-center hover:bg-[#F4F4F4]">
-              <button className="text-body1 text-center">가격 높은 순</button>
-            </div>
-            <div className="flex h-[48px] items-center justify-center hover:bg-[#F4F4F4]">
-              <button className="text-body1 text-center text-right">가격 낮은 순</button>
-            </div>
-            <div className="flex-1" />
+            <button className="text-body1 flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left hover:bg-[#F4F4F4]">
+              가격 높은 순
+            </button>
+            <button className="text-body1 flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left hover:bg-[#F4F4F4]">
+              가격 낮은 순
+            </button>
           </div>
         </SheetContent>
       </Sheet>
