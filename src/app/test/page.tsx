@@ -7,7 +7,7 @@ export default function Test() {
         <PropertyCard
           itemId={1}
           itemNumber={1}
-          imageUrl="/imgs/-.png"
+          imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
           address="방배마에스트로{주상복합}"
@@ -20,7 +20,7 @@ export default function Test() {
         <PropertyCard
           itemId={2}
           itemNumber={2}
-          imageUrl="/imgs/-.png"
+          imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
           address="방배마에스트로{주상복합}"
