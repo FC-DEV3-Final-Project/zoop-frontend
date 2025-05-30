@@ -100,7 +100,7 @@ const PropertyCard = ({
         </div>
 
         {/* 태그 리스트 */}
-        <div className="inline-flex items-center gap-1 self-stretch">
+        <div className="flex flex-wrap items-center gap-1 self-stretch">
           {tags.map((tag, index) => (
             <div
               key={index}
