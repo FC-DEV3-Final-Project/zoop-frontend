@@ -100,17 +100,16 @@ const PropertyCard = ({
         </div>
 
         {/* 태그 리스트 */}
-        <div className="flex flex-wrap items-center gap-1 h-[19px] overflow-hidden self-stretch">
+        <div className="flex h-[19px] flex-wrap items-center gap-1 self-stretch overflow-hidden">
           {tags.map((tag, index) => (
             <div
               key={index}
-      className="text-footnote flex-shrink-0 flex items-center justify-center gap-2.5 rounded-[50px] bg-[#E8EAEE] px-2 py-0.5 text-center"
-    >
-      {tag}
-    </div>
-  ))}
-</div>
-
+              className="text-footnote flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] bg-[#E8EAEE] px-2 py-0.5 text-center"
+            >
+              {tag}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
