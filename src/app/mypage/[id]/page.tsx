@@ -4,4 +4,4 @@ export default function MyPage({ params }: { params: { id: string } }) {
       <h1 className="text-2xl font-bold">마이페이지입니다</h1>
     </div>
   );
-} 
+}
