@@ -54,6 +54,17 @@ export default {
         caption3: ["12px", { fontWeight: "500", lineHeight: "1.4" }],
         footnote: ["11px", { fontWeight: "300", lineHeight: "1.4" }],
       },
+      borderRadius: {
+        small: "8px",
+        medium: "10px",
+        large: "12px",
+      },
+      boxShadow: {
+        shadow1: "0 4px 4px rgba(31, 34, 39, 0.08)",
+        shadow2: "0 8px 4px rgba(31, 34, 39, 0.08)",
+        shadow3: "0 16px 4px rgba(31, 34, 39, 0.08)",
+        shadow4: "0 24px 4px rgba(31, 34, 39, 0.08)",
+      },
     },
   },
   plugins: [],
