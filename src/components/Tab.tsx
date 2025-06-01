@@ -1,22 +1,22 @@
-type TabItem = {
-    label: string;
-    value: string;
-  };
-  
+type TabOption = {
+  label: string;
+  value: string;
+};
+
 type TabProps = {
-  tabs: TabItem[];
+  tabOptions: TabOption[];
   selected: string;
   onChange: (value: string) => void;
 };
-  
-export const Tab = ({ tabs, selected, onChange }: TabProps) => {
-  const widthClass = tabs.length === 2 ? "w-1/2" : "w-1/3";
-  
+
+export const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
+  const widthClass = tabOptions.length === 2 ? "w-1/2" : "w-1/3";
+
   return (
     <div className="flex w-full max-w-[600px]">
-      {tabs.map((tab) => {
+      {tabOptions.map((tab) => {
         const isActive = selected === tab.value;
-  
+
         return (
           <button
             key={tab.value}
@@ -38,4 +38,3 @@ export const Tab = ({ tabs, selected, onChange }: TabProps) => {
     </div>
   );
 };
-  

@@ -20,7 +20,7 @@ export default function Test() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-1 p-8">
       <Tab
-        tabs={tabItems}
+        tabOptions={tabItems}
         selected={selectedTab}
         onChange={setSelectedTab}
         />
@@ -29,7 +29,7 @@ export default function Test() {
         {selectedTab === "review" && <p>리뷰 내용입니다.</p>}
       </div>
       <Tab
-        tabs={tabItems2}
+        tabOptions={tabItems2}
         selected={selectedTab}
         onChange={setSelectedTab}
         />
