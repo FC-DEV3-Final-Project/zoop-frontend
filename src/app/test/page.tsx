@@ -18,7 +18,7 @@ export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-1 p-8">
+    <>
       <Tab
         tabOptions={tabItems}
         selected={selectedTab}
@@ -55,6 +55,6 @@ export default function Test() {
       <p className="text-caption2">Caption 2 텍스트</p>
       <p className="text-caption3">Caption 3 텍스트</p>
       <p className="text-footnote">Footnote 텍스트</p>
-    </div>
+    </>
   );
 }
