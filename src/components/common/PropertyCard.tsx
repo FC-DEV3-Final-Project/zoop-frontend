@@ -52,7 +52,7 @@ const PropertyCard = ({
       onClick={handleCardClick}
     >
       {/* 이미지 섹션 */}
-      <div className="relative h-24 w-24 overflow-hidden rounded-lg">
+      <div className="rounded-small relative h-24 w-24 overflow-hidden">
         <img
           src={imageUrl}
           alt={`${buildingType} ${area}`}
@@ -71,7 +71,7 @@ const PropertyCard = ({
         <div className="flex flex-col gap-0.5 self-stretch">
           {/* 제목과 하트 버튼 */}
           <div className="inline-flex items-center justify-between self-stretch">
-            <div className="text-grey-100 text-subtitle2 flex-1 justify-start font-semibold">
+            <div className="text-grey-100 text-subtitle2 flex-1 justify-start">
               {transactionType} {price}
             </div>
             <button
