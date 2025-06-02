@@ -1,6 +1,6 @@
 "use client";
 import BottomSheet from "@/components/BottomSheet";
-import { ChevronDown } from "lucide-react";
+
 import { useState } from "react";
 
 export default function Test() {
@@ -12,7 +12,7 @@ export default function Test() {
         trigger={
           <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
             가격순
-            <ChevronDown className="h-3 w-3" />
+            <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
           </button>
         }
         title="정렬 방식"
