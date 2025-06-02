@@ -52,7 +52,7 @@ const PropertyCard = ({
       onClick={handleCardClick}
     >
       {/* 이미지 섹션 */}
-      <div className="rounded-small relative h-24 w-24 overflow-hidden">
+      <div className="rounded-small relative h-24 w-24 shrink-0 overflow-hidden">
         <img
           src={imageUrl}
           alt={`${buildingType} ${area}`}
@@ -60,7 +60,7 @@ const PropertyCard = ({
         />
         {/* 목록 번호 */}
         {itemNumber && (
-          <div className="absolute top-0 left-0 flex h-5 w-5 items-center overflow-hidden rounded-br bg-black px-[8px] pt-[2px] pb-[3px] pl-[7px]">
+          <div className="absolute left-0 top-0 flex h-5 w-5 items-center overflow-hidden rounded-br bg-black px-[8px] pb-[3px] pl-[7px] pt-[2px]">
             <p className="text-[10px] font-medium text-white">{itemNumber}</p>
           </div>
         )}
@@ -90,8 +90,8 @@ const PropertyCard = ({
           {/* 주소와 건물 정보 */}
           <div className="flex flex-col items-start gap-0.5 self-stretch">
             <div className="inline-flex items-center gap-1 self-stretch">
-              <p className="text-grey-100 text-body2 max-w-[131px] truncate">{address}</p>
-              <p className="text-body2 flex-1 text-black">{detailAddress}</p>
+              <p className="text-grey-100 text-body2 max-w-fit truncate">{address}</p>
+              <p className="text-body2 min-w-fit text-black">{detailAddress}</p>
             </div>
             <div className="text-body2 h-5 self-stretch">
               {buildingType}, {area}
