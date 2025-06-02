@@ -38,6 +38,7 @@ export default function Test() {
           { label: "가격 높은 순", value: "high" },
           { label: "낮은 가격 순", value: "low" },
         ]}
+        onSelect={setBottomSheetValue}
       />
     </div>
   );
