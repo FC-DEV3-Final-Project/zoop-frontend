@@ -23,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
-        <div className="relative mx-auto flex h-screen w-full max-w-[600px] flex-col bg-[#f8f8f8]">
+        <div className="relative mx-auto flex h-screen w-full max-w-[600px] flex-col bg-gray-100">
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="h-full pt-[64px]">{children}</main>
         </div>
       </body>
     </html>
