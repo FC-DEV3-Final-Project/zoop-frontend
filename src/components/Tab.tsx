@@ -21,15 +21,11 @@ export const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
           <button
             key={tab.value}
             onClick={() => onChange(tab.value)}
-            className={`
-              ${widthClass} h-[50px] py-[14px] px-[10px]
-              flex justify-center items-center gap-[10px]
-              cursor-pointer border-b-2
-              ${isActive
-                ? "bg-[#EDF0FD] text-[#204AE5] border-[#204AE5] text-title4"
-                : "bg-[#F7F7F7] text-[#32373E] border-transparent text-subtitle3"
-              }
-            `}
+            className={` ${widthClass} flex h-[50px] cursor-pointer items-center justify-center gap-[10px] border-b-2 px-[10px] py-[14px] ${
+              isActive
+                ? "border-blue-800-primary bg-blue-050-bg text-title4 text-blue-800-primary"
+                : "border-transparent bg-[#F7F7F7] text-subtitle3 text-[#32373E]"
+            } `}
           >
             {tab.label}
           </button>
