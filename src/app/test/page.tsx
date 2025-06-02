@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-
-("use client");
+"use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Tab } from "@/components/Tab";
 
 const tabItems = [
@@ -157,7 +156,7 @@ export default function Test() {
         </div>
       </div>
       {/* Typography Section */}
-      <div className="flex flex-col gap-2 p-4 border border-gray-400 rounded-large">
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
         <h2 className="text-title2">Typography</h2>
         <p className="text-largeTitle">Large Title 텍스트</p>
         <p className="text-title1">Title 1 텍스트</p>
@@ -177,7 +176,7 @@ export default function Test() {
         <p className="text-footnote">Footnote 텍스트</p>
       </div>
       {/* Border Radius Section */}
-      <div className="flex flex-col gap-2 p-4 border border-gray-400 rounded-large">
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
         <h2 className="text-title2">Border Radius</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
@@ -198,7 +197,7 @@ export default function Test() {
         </div>
       </div>
       {/* Box Shadow Section */}
-      <div className="flex flex-col gap-2 p-4 border border-gray-400 rounded-large">
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
         <h2 className="text-title2">Box Shadow</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
@@ -223,24 +222,30 @@ export default function Test() {
           </div>
         </div>
       </div>
-      {/** Button Section */}
-      <Button variant={"default"}>다음</Button>
-      <Button variant={"default"} disabled>
-        다음
-      </Button>
 
-      {/* 공통 컴포넌트 */}
-      <h2 className="text-title2">Tab</h2>
-      <Tab tabOptions={tabItems} selected={selectedTab} onChange={setSelectedTab} />
-      <div className="mt-4 text-body1">
-        {selectedTab === "detail" && <p>상세 정보 내용입니다.</p>}
-        {selectedTab === "review" && <p>리뷰 내용입니다.</p>}
+      {/** Button Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Button</h2>
+        <Button variant={"default"}>다음</Button>
+        <Button variant={"default"} disabled>
+          다음
+        </Button>
       </div>
-      <Tab tabOptions={tabItems2} selected={selectedTab} onChange={setSelectedTab} />
-      <div className="mt-4 text-body1">
-        {selectedTab === "one" && <p>월세</p>}
-        {selectedTab === "two" && <p>전세</p>}
-        {selectedTab === "three" && <p>매매</p>}
+
+      {/* Tab Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Tab</h2>
+        <Tab tabOptions={tabItems} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "detail" && <p>상세 정보 내용입니다.</p>}
+          {selectedTab === "review" && <p>리뷰 내용입니다.</p>}
+        </div>
+        <Tab tabOptions={tabItems2} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "one" && <p>월세</p>}
+          {selectedTab === "two" && <p>전세</p>}
+          {selectedTab === "three" && <p>매매</p>}
+        </div>
       </div>
     </div>
   );
