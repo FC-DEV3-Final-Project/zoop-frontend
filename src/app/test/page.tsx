@@ -8,8 +8,23 @@ export default function Test() {
 
   return (
     <div className="flex min-h-screen flex-col items-start justify-center gap-4 p-8">
+      <BottomSheet
+        trigger={
+          <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+            가격순
+            <ChevronDown className="h-3 w-3" />
+          </button>
+        }
+        title="정렬 방식"
+        items={[
+          { label: "가격 높은 순", value: "high" },
+          { label: "낮은 가격 순", value: "low" },
+        ]}
+        onSelect={setBottomSheetValue}
+      />
+
       {/* Color Section */}
-      <div className="rounded-large flex flex-col gap-4 border border-gray-400 p-4">
+      <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">Color</h1>
         {/* 흰색,검정색 */}
         <div className="flex flex-wrap">
@@ -31,7 +46,7 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-050</p>
               <p className="text-footnote text-gray-600">#FCFCFC</p>
-              <div className="bg-gray-050 h-28 w-28"></div>
+              <div className="h-28 w-28 bg-gray-050"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-100</p>
@@ -56,17 +71,17 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-500-alternative</p>
               <p className="text-footnote text-gray-600">#D4D7DD</p>
-              <div className="bg-gray-500-alternative h-28 w-28"></div>
+              <div className="h-28 w-28 bg-gray-500-alternative"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-600-hint</p>
               <p className="text-footnote text-gray-600">#BCC2CA</p>
-              <div className="bg-gray-600-hint h-28 w-28"></div>
+              <div className="h-28 w-28 bg-gray-600-hint"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-700-info</p>
               <p className="text-footnote text-gray-600">#949CA8</p>
-              <div className="bg-gray-700-info h-28 w-28"></div>
+              <div className="h-28 w-28 bg-gray-700-info"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-800</p>
@@ -81,7 +96,7 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-950-dark</p>
               <p className="text-footnote text-gray-600">#252730</p>
-              <div className="bg-gray-950-dark h-28 w-28"></div>
+              <div className="h-28 w-28 bg-gray-950-dark"></div>
             </div>
           </div>
         </div>
@@ -92,7 +107,7 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-050-bg</p>
               <p className="text-footnote text-gray-600">#EDF0FD</p>
-              <div className="bg-blue-050-bg h-28 w-28"></div>
+              <div className="h-28 w-28 bg-blue-050-bg"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-100</p>
@@ -117,7 +132,7 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-500-secondary</p>
               <p className="text-footnote text-gray-600">#4F7FEC</p>
-              <div className="bg-blue-500-secondary h-28 w-28"></div>
+              <div className="h-28 w-28 bg-blue-500-secondary"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-600</p>
@@ -132,7 +147,7 @@ export default function Test() {
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-800-primary</p>
               <p className="text-footnote text-gray-600">#204AE5</p>
-              <div className="bg-blue-800-primary h-28 w-28"></div>
+              <div className="h-28 w-28 bg-blue-800-primary"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-900</p>
@@ -144,7 +159,7 @@ export default function Test() {
       </div>
 
       {/* Typography Section */}
-      <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
+      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
         <p className="text-largeTitle">Large Title 텍스트</p>
         <p className="text-title1">Title 1 텍스트</p>
@@ -165,50 +180,50 @@ export default function Test() {
       </div>
 
       {/* Border Radius Section */}
-      <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
+      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Border Radius</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">small</p>
             <p className="text-footnote text-gray-600">8px</p>
-            <div className="rounded-small h-28 w-28 bg-gray-900"></div>
+            <div className="h-28 w-28 rounded-small bg-gray-900"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">medium</p>
             <p className="text-footnote text-gray-600">10px</p>
-            <div className="rounded-medium h-28 w-28 bg-gray-900"></div>
+            <div className="h-28 w-28 rounded-medium bg-gray-900"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">large</p>
             <p className="text-footnote text-gray-600">12px</p>
-            <div className="rounded-large h-28 w-28 bg-gray-900"></div>
+            <div className="h-28 w-28 rounded-large bg-gray-900"></div>
           </div>
         </div>
       </div>
 
       {/* Box Shadow Section */}
-      <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
+      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Box Shadow</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow1</p>
             <p className="text-footnote text-gray-600">y: 4px</p>
-            <div className="shadow-shadow1 h-28 w-28 border border-gray-200 bg-white"></div>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow1"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow2</p>
             <p className="text-footnote text-gray-600">y: 8px</p>
-            <div className="shadow-shadow2 h-28 w-28 border border-gray-200 bg-white"></div>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow2"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow3</p>
             <p className="text-footnote text-gray-600">y: 16px</p>
-            <div className="shadow-shadow3 h-28 w-28 border border-gray-200 bg-white"></div>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow3"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow4</p>
             <p className="text-footnote text-gray-600">y: 24px</p>
-            <div className="shadow-shadow4 h-28 w-28 border border-gray-200 bg-white"></div>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow4"></div>
           </div>
         </div>
       </div>
