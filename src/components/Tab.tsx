@@ -24,7 +24,7 @@ export const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
             className={` ${widthClass} flex h-[50px] cursor-pointer items-center justify-center gap-[10px] border-b-2 px-[10px] py-[14px] ${
               isActive
                 ? "border-blue-800-primary bg-blue-050-bg text-title4 text-blue-800-primary"
-                : "border-transparent bg-[#F7F7F7] text-subtitle3 text-[#32373E]"
+                : "border-transparent bg-gray-100 text-subtitle3 text-gray-900"
             } `}
           >
             {tab.label}
