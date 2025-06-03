@@ -10,7 +10,7 @@ interface BottomSheetProps {
   trigger: React.ReactNode;
   title: string;
   items: BottomSheetItem[];
-  onSelect: (value: string) => void;
+  onSelect: (item: BottomSheetItem) => void;
 }
 
 const BottomSheet = ({ trigger, title, items, onSelect }: BottomSheetProps) => {
@@ -22,7 +22,7 @@ const BottomSheet = ({ trigger, title, items, onSelect }: BottomSheetProps) => {
 
         <SheetContent>
           <SheetHeader>
-            <SheetTitle className="text-body1 flex h-[40px] items-center justify-center">
+            <SheetTitle className="flex h-[40px] items-center justify-center text-body1">
               {title}
             </SheetTitle>
           </SheetHeader>
@@ -30,10 +30,10 @@ const BottomSheet = ({ trigger, title, items, onSelect }: BottomSheetProps) => {
           <div className="flex h-[110px] flex-col">
             {items.map((item) => (
               <button
-                className="text-body1 flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left hover:bg-[#F4F4F4]"
+                className="flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-[#F4F4F4]"
                 key={item.value}
                 onClick={() => {
-                  onSelect(item.value);
+                  onSelect(item);
                   setOpen(false);
                 }}
               >

@@ -4,14 +4,19 @@ import BottomSheet from "@/components/BottomSheet";
 import { useState } from "react";
 
 export default function Test() {
-  const [bottomSheetValue, setBottomSheetValue] = useState("");
+  const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
+  const handleSelect = (item: { label: string; value: string }) => {
+    console.log("선택된 정렬: ", item);
+    setSelectedItem(item);
+  };
   return (
     <div className="flex min-h-screen flex-col items-start justify-center gap-4 p-8">
+      <div>선택된 정렬: {selectedItem ? selectedItem.label : "없음"}</div>
       <BottomSheet
         trigger={
           <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
-            가격순
+            {selectedItem?.label ?? "정렬 방식"}
             <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
           </button>
         }
@@ -20,7 +25,7 @@ export default function Test() {
           { label: "가격 높은 순", value: "high" },
           { label: "낮은 가격 순", value: "low" },
         ]}
-        onSelect={setBottomSheetValue}
+        onSelect={handleSelect}
       />
 
       {/* Color Section */}
