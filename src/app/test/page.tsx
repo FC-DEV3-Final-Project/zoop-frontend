@@ -1,9 +1,257 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Tab } from "@/components/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 
+const tabItems = [
+  { label: "상세 정보", value: "detail" },
+  { label: "리뷰", value: "review" },
+];
+
+const tabItems2 = [
+  { label: "월세", value: "one" },
+  { label: "전세", value: "two" },
+  { label: "매매", value: "three" },
+];
+
 export default function Test() {
+  const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
+
   return (
-    <>
-      <div>
+    <div className="flex flex-col items-center justify-center gap-1 p-4">
+      <h1 className="text-title1">Guide</h1>
+      {/* Color Section */}
+      <div className="flex flex-col gap-4 p-4 border border-gray-400 rounded-large">
+        <h1 className="text-title1">Color</h1>
+        {/* 흰색,검정색 */}
+        <div className="flex flex-wrap">
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">white</p>
+            <p className="text-gray-600 text-footnote">#FFFFFF</p>
+            <div className="bg-white border border-gray-200 h-28 w-28"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">black</p>
+            <p className="text-gray-600 text-footnote">#000000</p>
+            <div className="bg-black h-28 w-28"></div>
+          </div>
+        </div>
+        {/* 회색 계열 */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-title4">Gray</h2>
+          <div className="flex flex-wrap">
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-050</p>
+              <p className="text-gray-600 text-footnote">#FCFCFC</p>
+              <div className="h-28 w-28 bg-gray-050"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-100</p>
+              <p className="text-gray-600 text-footnote">#F8F8F8</p>
+              <div className="bg-gray-100 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-200</p>
+              <p className="text-gray-600 text-footnote">#F3F3F3</p>
+              <div className="bg-gray-200 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-300</p>
+              <p className="text-gray-600 text-footnote">#EDEDED</p>
+              <div className="bg-gray-300 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-400</p>
+              <p className="text-gray-600 text-footnote">#DDE0E4</p>
+              <div className="bg-gray-400 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-500-alternative</p>
+              <p className="text-gray-600 text-footnote">#D4D7DD</p>
+              <div className="h-28 w-28 bg-gray-500-alternative"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-600-hint</p>
+              <p className="text-gray-600 text-footnote">#BCC2CA</p>
+              <div className="h-28 w-28 bg-gray-600-hint"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-700-info</p>
+              <p className="text-gray-600 text-footnote">#949CA8</p>
+              <div className="h-28 w-28 bg-gray-700-info"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-800</p>
+              <p className="text-gray-600 text-footnote">#778292</p>
+              <div className="bg-gray-800 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-900</p>
+              <p className="text-gray-600 text-footnote">#444A54</p>
+              <div className="bg-gray-900 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">gray-950-dark</p>
+              <p className="text-gray-600 text-footnote">#252730</p>
+              <div className="h-28 w-28 bg-gray-950-dark"></div>
+            </div>
+          </div>
+        </div>
+        {/* 파란색 계열 */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-title4">Blue</h2>
+          <div className="flex flex-wrap">
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-050-bg</p>
+              <p className="text-gray-600 text-footnote">#EDF0FD</p>
+              <div className="h-28 w-28 bg-blue-050-bg"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-100</p>
+              <p className="text-gray-600 text-footnote">#D9E0FB</p>
+              <div className="bg-blue-100 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-200</p>
+              <p className="text-gray-600 text-footnote">#B7C9F7</p>
+              <div className="bg-blue-200 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-300</p>
+              <p className="text-gray-600 text-footnote">#8FAEF4</p>
+              <div className="bg-blue-300 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-400</p>
+              <p className="text-gray-600 text-footnote">#6F99F1</p>
+              <div className="bg-blue-400 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-500-secondary</p>
+              <p className="text-gray-600 text-footnote">#4F7FEC</p>
+              <div className="h-28 w-28 bg-blue-500-secondary"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-600</p>
+              <p className="text-gray-600 text-footnote">#3B68E9</p>
+              <div className="bg-blue-600 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-700</p>
+              <p className="text-gray-600 text-footnote">#2E57E7</p>
+              <div className="bg-blue-700 h-28 w-28"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-800-primary</p>
+              <p className="text-gray-600 text-footnote">#204AE5</p>
+              <div className="h-28 w-28 bg-blue-800-primary"></div>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-caption3">blue-900</p>
+              <p className="text-gray-600 text-footnote">#1939B5</p>
+              <div className="bg-blue-900 h-28 w-28"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Typography Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Typography</h2>
+        <p className="text-largeTitle">Large Title 텍스트</p>
+        <p className="text-title1">Title 1 텍스트</p>
+        <p className="text-title2">Title 2 텍스트</p>
+        <p className="text-title3">Title 3 텍스트</p>
+        <p className="text-title4">Title 4 텍스트</p>
+        <p className="text-subtitle1">Subtitle 1 텍스트</p>
+        <p className="text-subtitle2">Subtitle 2 텍스트</p>
+        <p className="text-subtitle3">Subtitle 3 텍스트</p>
+        <p className="text-subtitle4">Subtitle 4 텍스트</p>
+        <p className="text-body1">Body 1 텍스트</p>
+        <p className="text-body2">Body 2 텍스트</p>
+        <p className="text-body3">Body 3 텍스트</p>
+        <p className="text-caption1">Caption 1 텍스트</p>
+        <p className="text-caption2">Caption 2 텍스트</p>
+        <p className="text-caption3">Caption 3 텍스트</p>
+        <p className="text-footnote">Footnote 텍스트</p>
+      </div>
+      {/* Border Radius Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Border Radius</h2>
+        <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">small</p>
+            <p className="text-gray-600 text-footnote">8px</p>
+            <div className="bg-gray-900 h-28 w-28 rounded-small"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">medium</p>
+            <p className="text-gray-600 text-footnote">10px</p>
+            <div className="bg-gray-900 h-28 w-28 rounded-medium"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">large</p>
+            <p className="text-gray-600 text-footnote">12px</p>
+            <div className="bg-gray-900 h-28 w-28 rounded-large"></div>
+          </div>
+        </div>
+      </div>
+      {/* Box Shadow Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Box Shadow</h2>
+        <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">shadow1</p>
+            <p className="text-gray-600 text-footnote">y: 4px</p>
+            <div className="bg-white border border-gray-200 h-28 w-28 shadow-shadow1"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">shadow2</p>
+            <p className="text-gray-600 text-footnote">y: 8px</p>
+            <div className="bg-white border border-gray-200 h-28 w-28 shadow-shadow2"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">shadow3</p>
+            <p className="text-gray-600 text-footnote">y: 16px</p>
+            <div className="bg-white border border-gray-200 h-28 w-28 shadow-shadow3"></div>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-caption3">shadow4</p>
+            <p className="text-gray-600 text-footnote">y: 24px</p>
+            <div className="bg-white border border-gray-200 h-28 w-28 shadow-shadow4"></div>
+          </div>
+        </div>
+      </div>
+
+      {/** Button Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Button</h2>
+        <Button variant={"default"}>다음</Button>
+        <Button variant={"default"} disabled>
+          다음
+        </Button>
+      </div>
+
+      {/* Tab Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Tab</h2>
+        <Tab tabOptions={tabItems} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "detail" && <p>상세 정보 내용입니다.</p>}
+          {selectedTab === "review" && <p>리뷰 내용입니다.</p>}
+        </div>
+        <Tab tabOptions={tabItems2} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "one" && <p>월세</p>}
+          {selectedTab === "two" && <p>전세</p>}
+          {selectedTab === "three" && <p>매매</p>}
+        </div>
+      </div>
+
+      {/* propertyCard Section */}
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+        <h2 className="text-title2">Property Card</h2>
         <PropertyCard
           itemId={1}
           itemNumber={1}
@@ -30,231 +278,6 @@ export default function Test() {
           small={true}
         />
       </div>
-
-      <div className="flex min-h-screen flex-col items-center justify-center gap-1 p-8">
-        <p className="text-largeTitle">Large Title 텍스트</p>
-        <p className="text-title1">Title 1 텍스트</p>
-        <p className="text-title2">Title 2 텍스트</p>
-        <p className="text-title3">Title 3 텍스트</p>
-        <p className="text-title4">Title 4 텍스트</p>
-        <p className="text-subtitle1">Subtitle 1 텍스트</p>
-        <p className="text-subtitle2">Subtitle 2 텍스트</p>
-        <p className="text-subtitle3">Subtitle 3 텍스트</p>
-        <p className="text-subtitle4">Subtitle 4 텍스트</p>
-        <p className="text-body1">Body 1 텍스트</p>
-        <p className="text-body2">Body 2 텍스트</p>
-        <p className="text-body3">Body 3 텍스트</p>
-        <p className="text-caption1">Caption 1 텍스트</p>
-        <p className="text-caption2">Caption 2 텍스트</p>
-        <p className="text-caption3">Caption 3 텍스트</p>
-        <p className="text-footnote">Footnote 텍스트</p>
-      </div>
-      <div className="flex min-h-screen flex-col items-start justify-center gap-4 p-8">
-        {/* Color Section */}
-        <div className="rounded-large flex flex-col gap-4 border border-gray-400 p-4">
-          <h1 className="text-title1">Color</h1>
-          {/* 흰색,검정색 */}
-          <div className="flex flex-wrap">
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">white</p>
-              <p className="text-footnote text-gray-600">#FFFFFF</p>
-              <div className="h-28 w-28 border border-gray-200 bg-white"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">black</p>
-              <p className="text-footnote text-gray-600">#000000</p>
-              <div className="h-28 w-28 bg-black"></div>
-            </div>
-          </div>
-          {/* 회색 계열 */}
-          <div className="flex flex-col gap-2">
-            <h2 className="text-title4">Gray</h2>
-            <div className="flex flex-wrap">
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-050</p>
-                <p className="text-footnote text-gray-600">#FCFCFC</p>
-                <div className="bg-gray-050 h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-100</p>
-                <p className="text-footnote text-gray-600">#F8F8F8</p>
-                <div className="h-28 w-28 bg-gray-100"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-200</p>
-                <p className="text-footnote text-gray-600">#F3F3F3</p>
-                <div className="h-28 w-28 bg-gray-200"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-300</p>
-                <p className="text-footnote text-gray-600">#EDEDED</p>
-                <div className="h-28 w-28 bg-gray-300"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-400</p>
-                <p className="text-footnote text-gray-600">#DDE0E4</p>
-                <div className="h-28 w-28 bg-gray-400"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-500-alternative</p>
-                <p className="text-footnote text-gray-600">#D4D7DD</p>
-                <div className="bg-gray-500-alternative h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-600-hint</p>
-                <p className="text-footnote text-gray-600">#BCC2CA</p>
-                <div className="bg-gray-600-hint h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-700-info</p>
-                <p className="text-footnote text-gray-600">#949CA8</p>
-                <div className="bg-gray-700-info h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-800</p>
-                <p className="text-footnote text-gray-600">#778292</p>
-                <div className="h-28 w-28 bg-gray-800"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-900</p>
-                <p className="text-footnote text-gray-600">#444A54</p>
-                <div className="h-28 w-28 bg-gray-900"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">gray-950-dark</p>
-                <p className="text-footnote text-gray-600">#252730</p>
-                <div className="bg-gray-950-dark h-28 w-28"></div>
-              </div>
-            </div>
-          </div>
-          {/* 파란색 계열 */}
-          <div className="flex flex-col gap-2">
-            <h2 className="text-title4">Blue</h2>
-            <div className="flex flex-wrap">
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-050-bg</p>
-                <p className="text-footnote text-gray-600">#EDF0FD</p>
-                <div className="bg-blue-050-bg h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-100</p>
-                <p className="text-footnote text-gray-600">#D9E0FB</p>
-                <div className="h-28 w-28 bg-blue-100"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-200</p>
-                <p className="text-footnote text-gray-600">#B7C9F7</p>
-                <div className="h-28 w-28 bg-blue-200"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-300</p>
-                <p className="text-footnote text-gray-600">#8FAEF4</p>
-                <div className="h-28 w-28 bg-blue-300"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-400</p>
-                <p className="text-footnote text-gray-600">#6F99F1</p>
-                <div className="h-28 w-28 bg-blue-400"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-500-secondary</p>
-                <p className="text-footnote text-gray-600">#4F7FEC</p>
-                <div className="bg-blue-500-secondary h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-600</p>
-                <p className="text-footnote text-gray-600">#3B68E9</p>
-                <div className="h-28 w-28 bg-blue-600"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-700</p>
-                <p className="text-footnote text-gray-600">#2E57E7</p>
-                <div className="h-28 w-28 bg-blue-700"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-800-primary</p>
-                <p className="text-footnote text-gray-600">#204AE5</p>
-                <div className="bg-blue-800-primary h-28 w-28"></div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <p className="text-caption3">blue-900</p>
-                <p className="text-footnote text-gray-600">#1939B5</p>
-                <div className="h-28 w-28 bg-blue-900"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Typography Section */}
-        <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
-          <h2 className="text-title2">Typography</h2>
-          <p className="text-largeTitle">Large Title 텍스트</p>
-          <p className="text-title1">Title 1 텍스트</p>
-          <p className="text-title2">Title 2 텍스트</p>
-          <p className="text-title3">Title 3 텍스트</p>
-          <p className="text-title4">Title 4 텍스트</p>
-          <p className="text-subtitle1">Subtitle 1 텍스트</p>
-          <p className="text-subtitle2">Subtitle 2 텍스트</p>
-          <p className="text-subtitle3">Subtitle 3 텍스트</p>
-          <p className="text-subtitle4">Subtitle 4 텍스트</p>
-          <p className="text-body1">Body 1 텍스트</p>
-          <p className="text-body2">Body 2 텍스트</p>
-          <p className="text-body3">Body 3 텍스트</p>
-          <p className="text-caption1">Caption 1 텍스트</p>
-          <p className="text-caption2">Caption 2 텍스트</p>
-          <p className="text-caption3">Caption 3 텍스트</p>
-          <p className="text-footnote">Footnote 텍스트</p>
-        </div>
-
-        {/* Border Radius Section */}
-        <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
-          <h2 className="text-title2">Border Radius</h2>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">small</p>
-              <p className="text-footnote text-gray-600">8px</p>
-              <div className="rounded-small h-28 w-28 bg-gray-900"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">medium</p>
-              <p className="text-footnote text-gray-600">10px</p>
-              <div className="rounded-medium h-28 w-28 bg-gray-900"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">large</p>
-              <p className="text-footnote text-gray-600">12px</p>
-              <div className="rounded-large h-28 w-28 bg-gray-900"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Box Shadow Section */}
-        <div className="rounded-large flex flex-col gap-2 border border-gray-400 p-4">
-          <h2 className="text-title2">Box Shadow</h2>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">shadow1</p>
-              <p className="text-footnote text-gray-600">y: 4px</p>
-              <div className="shadow-shadow1 h-28 w-28 border border-gray-200 bg-white"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">shadow2</p>
-              <p className="text-footnote text-gray-600">y: 8px</p>
-              <div className="shadow-shadow2 h-28 w-28 border border-gray-200 bg-white"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">shadow3</p>
-              <p className="text-footnote text-gray-600">y: 16px</p>
-              <div className="shadow-shadow3 h-28 w-28 border border-gray-200 bg-white"></div>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-caption3">shadow4</p>
-              <p className="text-footnote text-gray-600">y: 24px</p>
-              <div className="shadow-shadow4 h-28 w-28 border border-gray-200 bg-white"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
