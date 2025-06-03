@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import HeartButton from "./HeartButton";
 
 interface PropertyCardProps {
   itemId: number;
@@ -74,17 +75,7 @@ const PropertyCard = ({
             <div className="text-grey-100 text-subtitle2 flex-1 justify-start">
               {transactionType} {price}
             </div>
-            <button
-              onClick={handleLikeClick}
-              className="relative h-6 w-6 cursor-pointer overflow-hidden"
-            >
-              <Image
-                src={isLiked ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
-                alt={isLiked ? "찜하기 완료" : "찜하기"}
-                width={24}
-                height={24}
-              />
-            </button>
+            <HeartButton itemId={itemId} />
           </div>
 
           {/* 주소와 건물 정보 */}
