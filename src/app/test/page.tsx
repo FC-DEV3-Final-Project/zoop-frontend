@@ -15,7 +15,6 @@ export default function Test() {
           buildingType="아파트"
           area="34.5㎡"
           tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
-          liked={false}
         />
         <PropertyCard
           itemId={2}
@@ -28,7 +27,6 @@ export default function Test() {
           buildingType="아파트"
           area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
-          liked={true}
           small={true}
         />
       </div>
