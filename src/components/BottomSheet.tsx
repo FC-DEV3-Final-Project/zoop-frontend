@@ -11,10 +11,12 @@ interface BottomSheetProps {
   title: string;
   items: BottomSheetItem[];
   onSelect: (item: BottomSheetItem) => void;
+  selectedValue?: string;
 }
 
-const BottomSheet = ({ trigger, title, items, onSelect }: BottomSheetProps) => {
+const BottomSheet = ({ trigger, title, items, onSelect, selectedValue }: BottomSheetProps) => {
   const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -28,18 +30,21 @@ const BottomSheet = ({ trigger, title, items, onSelect }: BottomSheetProps) => {
           </SheetHeader>
 
           <div className="flex h-[110px] flex-col">
-            {items.map((item) => (
-              <button
-                className="flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-[#F4F4F4]"
-                key={item.value}
-                onClick={() => {
-                  onSelect(item);
-                  setOpen(false);
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
+            {items.map((item) => {
+              const isSelected = item.value === selectedValue;
+              return (
+                <button
+                  className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 ${isSelected ? "bg-[#F4F4F4]" : ""} hover:bg-[#F4F4F4]`}
+                  key={item.value}
+                  onClick={() => {
+                    onSelect(item);
+                    setOpen(false);
+                  }}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
         </SheetContent>
       </Sheet>

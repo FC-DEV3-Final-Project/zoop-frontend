@@ -7,12 +7,10 @@ export default function Test() {
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   const handleSelect = (item: { label: string; value: string }) => {
-    console.log("선택된 정렬: ", item);
     setSelectedItem(item);
   };
   return (
     <div className="flex min-h-screen flex-col items-start justify-center gap-4 p-8">
-      <div>선택된 정렬: {selectedItem ? selectedItem.label : "없음"}</div>
       <BottomSheet
         trigger={
           <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
@@ -25,6 +23,7 @@ export default function Test() {
           { label: "가격 높은 순", value: "high" },
           { label: "낮은 가격 순", value: "low" },
         ]}
+        selectedValue={selectedItem?.value}
         onSelect={handleSelect}
       />
 
