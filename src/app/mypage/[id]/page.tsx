@@ -89,43 +89,48 @@ export default function MyPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 pb-6 pt-7">
-      {/* 유저 정보 */}
-      <div className="mx-auto flex w-full max-w-[320px] items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
-            <img src={userData.profileImage} alt="프로필" className="h-full w-full object-cover" />
-          </div>
-          <span className="text-base font-semibold text-black">{userData.name}</span>
-        </div>
-        <button
-          onClick={handleEdit}
-          className="rounded bg-neutral-100 px-3 py-1 text-sm text-black"
-        >
-          내 정보 수정
-        </button>
-      </div>
-
-      {/* 리뷰 박스 */}
-      <div className="flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 shadow outline outline-1 outline-offset-[-1px] outline-neutral-200">
-        <div className="inline-flex items-center justify-between self-stretch bg-white">
-          <div className="text-base font-bold text-black">나의 리뷰</div>
-          <button onClick={handleMoreReviews} className="flex items-center gap-1">
-            <div className="text-sm text-neutral-600">더보기</div>
-            <div className="relative h-3.5 w-3.5 overflow-hidden">
-              <div className="absolute left-[4.81px] top-[2.19px] h-2.5 w-1.5 bg-neutral-600" />
+    <div className="flex flex-col">
+      {/* 상단: 프로필 + 리뷰 */}
+      <section className="flex inline-flex flex-col items-start justify-start gap-6 border-b bg-white px-5 pb-6 pt-7">
+        {/* 유저 정보 */}
+        <div className="flex inline-flex w-full items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
+              <img
+                src={userData.profileImage}
+                alt="프로필"
+                className="h-full w-full object-cover"
+              />
             </div>
+            <span className="text-base font-semibold text-black">{userData.name}</span>
+          </div>
+          <button
+            onClick={handleEdit}
+            className="rounded bg-neutral-100 px-3 py-1 text-sm text-black"
+          >
+            내 정보 수정
           </button>
         </div>
-        <div className="flex flex-col items-start self-stretch">
-          {userData.reviews.map((review, idx) => (
-            <ReviewItem key={idx} {...review} />
-          ))}
-        </div>
-      </div>
 
-      {/* 매물 탭/리스트 */}
-      <div>
+        {/* 리뷰 박스 */}
+        <div className="flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 shadow3 outline outline-1 outline-offset-[-1px] outline-neutral-200">
+          <div className="inline-flex items-center justify-between self-stretch bg-white">
+            <div className="text-base font-bold text-black">나의 리뷰</div>
+            <button onClick={handleMoreReviews} className="flex items-center gap-1">
+              <div className="text-sm text-neutral-600">더보기</div>
+              <img src="/icons/arrow-right.svg" alt="더보기" className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="flex flex-col items-start self-stretch">
+            {userData.reviews.map((review, idx) => (
+              <ReviewItem key={idx} {...review} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 하단: 매물 탭/리스트 */}
+      <section>
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         <div className="mt-2 flex flex-col gap-2">
           <div className="flex items-center justify-between rounded bg-white px-5 py-4">
@@ -149,7 +154,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
             />
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
