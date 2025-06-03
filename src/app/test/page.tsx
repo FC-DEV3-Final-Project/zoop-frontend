@@ -1,16 +1,31 @@
 "use client";
-import BottomSheet from "@/components/BottomSheet";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Tab } from "@/components/Tab";
+import BottomSheet from "@/components/BottomSheet";
+
+const tabItems = [
+  { label: "상세 정보", value: "detail" },
+  { label: "리뷰", value: "review" },
+];
+
+const tabItems2 = [
+  { label: "월세", value: "one" },
+  { label: "전세", value: "two" },
+  { label: "매매", value: "three" },
+];
 
 export default function Test() {
+  const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   const handleSelect = (item: { label: string; value: string }) => {
     setSelectedItem(item);
   };
+
   return (
-    <div className="flex min-h-screen flex-col items-start justify-center gap-4 p-8">
+    <div className="flex flex-col items-center justify-center gap-1 p-4">
       <BottomSheet
         trigger={
           <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
@@ -27,6 +42,7 @@ export default function Test() {
         onSelect={handleSelect}
       />
 
+      <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">Color</h1>
@@ -49,6 +65,8 @@ export default function Test() {
           <div className="flex flex-wrap">
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-050</p>
+              <p className="text-footnote text-gray-600">#FCFCFC</p>
+              <div className="h-28 w-28 bg-gray-050"></div>
               <p className="text-footnote text-gray-600">#FCFCFC</p>
               <div className="h-28 w-28 bg-gray-050"></div>
             </div>
@@ -76,14 +94,20 @@ export default function Test() {
               <p className="text-caption3">gray-500-alternative</p>
               <p className="text-footnote text-gray-600">#D4D7DD</p>
               <div className="h-28 w-28 bg-gray-500-alternative"></div>
+              <p className="text-footnote text-gray-600">#D4D7DD</p>
+              <div className="h-28 w-28 bg-gray-500-alternative"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-600-hint</p>
               <p className="text-footnote text-gray-600">#BCC2CA</p>
               <div className="h-28 w-28 bg-gray-600-hint"></div>
+              <p className="text-footnote text-gray-600">#BCC2CA</p>
+              <div className="h-28 w-28 bg-gray-600-hint"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-700-info</p>
+              <p className="text-footnote text-gray-600">#949CA8</p>
+              <div className="h-28 w-28 bg-gray-700-info"></div>
               <p className="text-footnote text-gray-600">#949CA8</p>
               <div className="h-28 w-28 bg-gray-700-info"></div>
             </div>
@@ -101,6 +125,8 @@ export default function Test() {
               <p className="text-caption3">gray-950-dark</p>
               <p className="text-footnote text-gray-600">#252730</p>
               <div className="h-28 w-28 bg-gray-950-dark"></div>
+              <p className="text-footnote text-gray-600">#252730</p>
+              <div className="h-28 w-28 bg-gray-950-dark"></div>
             </div>
           </div>
         </div>
@@ -110,6 +136,8 @@ export default function Test() {
           <div className="flex flex-wrap">
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-050-bg</p>
+              <p className="text-footnote text-gray-600">#EDF0FD</p>
+              <div className="h-28 w-28 bg-blue-050-bg"></div>
               <p className="text-footnote text-gray-600">#EDF0FD</p>
               <div className="h-28 w-28 bg-blue-050-bg"></div>
             </div>
@@ -161,9 +189,8 @@ export default function Test() {
           </div>
         </div>
       </div>
-
       {/* Typography Section */}
-      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
         <p className="text-largeTitle">Large Title 텍스트</p>
         <p className="text-title1">Title 1 텍스트</p>
@@ -182,13 +209,14 @@ export default function Test() {
         <p className="text-caption3">Caption 3 텍스트</p>
         <p className="text-footnote">Footnote 텍스트</p>
       </div>
-
       {/* Border Radius Section */}
-      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Border Radius</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">small</p>
+            <p className="text-footnote text-gray-600">8px</p>
+            <div className="h-28 w-28 rounded-small bg-gray-900"></div>
             <p className="text-footnote text-gray-600">8px</p>
             <div className="h-28 w-28 rounded-small bg-gray-900"></div>
           </div>
@@ -196,21 +224,26 @@ export default function Test() {
             <p className="text-caption3">medium</p>
             <p className="text-footnote text-gray-600">10px</p>
             <div className="h-28 w-28 rounded-medium bg-gray-900"></div>
+            <p className="text-footnote text-gray-600">10px</p>
+            <div className="h-28 w-28 rounded-medium bg-gray-900"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">large</p>
             <p className="text-footnote text-gray-600">12px</p>
             <div className="h-28 w-28 rounded-large bg-gray-900"></div>
+            <p className="text-footnote text-gray-600">12px</p>
+            <div className="h-28 w-28 rounded-large bg-gray-900"></div>
           </div>
         </div>
       </div>
-
       {/* Box Shadow Section */}
-      <div className="flex flex-col gap-2 rounded-large border border-gray-400 p-4">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Box Shadow</h2>
         <div className="flex flex-wrap gap-4">
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow1</p>
+            <p className="text-footnote text-gray-600">y: 4px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow1"></div>
             <p className="text-footnote text-gray-600">y: 4px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow1"></div>
           </div>
@@ -218,9 +251,13 @@ export default function Test() {
             <p className="text-caption3">shadow2</p>
             <p className="text-footnote text-gray-600">y: 8px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow2"></div>
+            <p className="text-footnote text-gray-600">y: 8px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow2"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow3</p>
+            <p className="text-footnote text-gray-600">y: 16px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow3"></div>
             <p className="text-footnote text-gray-600">y: 16px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow3"></div>
           </div>
@@ -228,7 +265,34 @@ export default function Test() {
             <p className="text-caption3">shadow4</p>
             <p className="text-footnote text-gray-600">y: 24px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow4"></div>
+            <p className="text-footnote text-gray-600">y: 24px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow4"></div>
           </div>
+        </div>
+      </div>
+
+      {/** Button Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h2 className="text-title2">Button</h2>
+        <Button variant={"default"}>다음</Button>
+        <Button variant={"default"} disabled>
+          다음
+        </Button>
+      </div>
+
+      {/* Tab Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h2 className="text-title2">Tab</h2>
+        <Tab tabOptions={tabItems} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "detail" && <p>상세 정보 내용입니다.</p>}
+          {selectedTab === "review" && <p>리뷰 내용입니다.</p>}
+        </div>
+        <Tab tabOptions={tabItems2} selected={selectedTab} onChange={setSelectedTab} />
+        <div className="mt-4 text-body1">
+          {selectedTab === "one" && <p>월세</p>}
+          {selectedTab === "two" && <p>전세</p>}
+          {selectedTab === "three" && <p>매매</p>}
         </div>
       </div>
     </div>
