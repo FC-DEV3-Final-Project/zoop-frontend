@@ -26,22 +26,25 @@ export default function Test() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
-      <BottomSheet
-        trigger={
-          <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
-            {selectedItem?.label ?? "정렬 방식"}
-            <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
-          </button>
-        }
-        title="정렬 방식"
-        items={[
-          { label: "가격 높은 순", value: "high" },
-          { label: "낮은 가격 순", value: "low" },
-        ]}
-        selectedValue={selectedItem?.value}
-        onSelect={handleSelect}
-      />
-
+      {/* BottomSheet Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">BottomSheet</h1>
+        <BottomSheet
+          trigger={
+            <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+              {selectedItem?.label ?? "정렬 방식"}
+              <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
+            </button>
+          }
+          title="정렬 방식"
+          items={[
+            { label: "가격 높은 순", value: "high" },
+            { label: "낮은 가격 순", value: "low" },
+          ]}
+          selectedValue={selectedItem?.value}
+          onSelect={handleSelect}
+        />
+      </div>
       <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
