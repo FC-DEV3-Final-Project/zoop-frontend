@@ -13,6 +13,7 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: "zoop",
 };
+
 export const viewport = {
   width: "device-width",
   initialScale: 1,
