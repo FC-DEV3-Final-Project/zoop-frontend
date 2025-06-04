@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 const TAB_LIST = [
   { label: "거래정보", value: "deal" },
-  { label: "매물정보", value: "property" },
+  { label: "매물정보", value: "info" },
   { label: "위치정보", value: "location" },
   { label: "상세설명", value: "description" },
   { label: "실거래가", value: "price" },
@@ -34,7 +34,7 @@ export default function ScrollableTabBar() {
                 "w-[25%] min-w-[25%] whitespace-nowrap border-b-2 py-[18px] text-center",
                 isActive
                   ? "border-blue-800-primary text-title4 text-blue-800-primary"
-                  : "border-transparent text-subtitle3 text-gray-800",
+                  : "border-gray-400 text-subtitle3 text-gray-800",
               )}
             >
               {tab.label}
