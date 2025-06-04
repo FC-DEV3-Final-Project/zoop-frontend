@@ -122,9 +122,13 @@ export default function MyPage({ params }: { params: { id: string } }) {
             </button>
           </div>
           <div className="flex flex-col items-start self-stretch">
-            {userData.reviews.map((review, idx) => (
-              <ReviewItem key={idx} {...review} />
-            ))}
+            {userData.reviews.length > 0 ? (
+              userData.reviews.map((review, idx) => <ReviewItem key={idx} {...review} />)
+            ) : (
+              <div className="h-5 justify-center self-stretch font-['Pretendard'] text-sm font-normal leading-tight text-black">
+                내가 작성한 리뷰가 없어요
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -133,31 +137,31 @@ export default function MyPage({ params }: { params: { id: string } }) {
       <section>
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         {/* <div className="mt-2 flex flex-col gap-2"> */}
-          <div className="flex items-center justify-between rounded bg-white px-5 py-4">
-            <div className="justify-center">
-              <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
-              <span className="text-sm text-black">의 매물</span>
-            </div>
-            <div className="flex justify-start items-center gap-1">
-              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-              <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
-            </div>
+        <div className="flex items-center justify-between rounded bg-white px-5 py-4">
+          <div className="justify-center">
+            <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
+            <span className="text-sm text-black">의 매물</span>
           </div>
-          {currentProperties.map((property, index) => (
-            <PropertyCard
-              key={property.id}
-              itemId={property.id}
-              itemNumber={index + 1}
-              imageUrl={property.imageUrl}
-              transactionType={property.transactionType}
-              price={property.price}
-              buildingType={property.buildingType}
-              area={property.area}
-              address={property.address}
-              detailAddress={property.detailAddress}
-              tags={property.tags}
-            />
-          ))}
+          <div className="flex items-center justify-start gap-1">
+            <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+            <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+          </div>
+        </div>
+        {currentProperties.map((property, index) => (
+          <PropertyCard
+            key={property.id}
+            itemId={property.id}
+            itemNumber={index + 1}
+            imageUrl={property.imageUrl}
+            transactionType={property.transactionType}
+            price={property.price}
+            buildingType={property.buildingType}
+            area={property.area}
+            address={property.address}
+            detailAddress={property.detailAddress}
+            tags={property.tags}
+          />
+        ))}
         {/* </div> */}
       </section>
     </div>
