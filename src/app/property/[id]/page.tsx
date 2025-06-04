@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Tab } from "@/components/Tab";
-import PropertyDetailTab from "./components/PropertyDetailTab";
-import PropertyReviewTab from "./components/PropertyReviewTab";
+import PropertyDetailTab from "./components/detail/PropertyDetailTab";
+import PropertyReviewTab from "./components/review/PropertyReviewTab";
 import PropertyImageCarousel from "./components/PropertyImageCarousel";
 
 const TAB_OPTIONS = [
