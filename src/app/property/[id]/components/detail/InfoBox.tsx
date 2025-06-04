@@ -1,6 +1,17 @@
 import Image from "next/image";
 
 export default function PropertyInfoBox() {
+  const infoColumns = [
+    [
+      { icon: "/icons/building.svg", label: "아파트" },
+      { icon: "/icons/stairs.svg", label: "2층" },
+    ],
+    [
+      { icon: "/icons/ruler.svg", label: "34.59m²" },
+      { icon: "/icons/parking.svg", label: "가능" },
+    ],
+  ];
+
   return (
     <div className="flex w-full flex-col gap-[24px] bg-white px-[20px] py-[18px] text-black">
       <div className="flex justify-between">
@@ -27,29 +38,16 @@ export default function PropertyInfoBox() {
       {/* 아이콘 섹션 */}
       <div className="flex w-full items-end justify-between">
         <div className="flex gap-[47px]">
-          {/* 아파트 / 2층 */}
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <Image src="/icons/share.svg" alt="건물" width={24} height={24} />
-              <span>아파트</span>
+          {infoColumns.map((column, colIdx) => (
+            <div key={colIdx} className="flex flex-col gap-3">
+              {column.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <Image src={item.icon} alt={item.label} width={24} height={24} />
+                  <span>{item.label}</span>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-2">
-              <Image src="/icons/share.svg" alt="층수" width={24} height={24} />
-              <span>2층</span>
-            </div>
-          </div>
-
-          {/* 면적 / 주차 */}
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <Image src="/icons/share.svg" alt="면적" width={24} height={24} />
-              <span>34.59m²</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Image src="/icons/share.svg" alt="주차" width={24} height={24} />
-              <span>가능</span>
-            </div>
-          </div>
+          ))}
         </div>
         <div className="whitespace-nowrap text-body2 text-gray-800">19시간전</div>
       </div>
