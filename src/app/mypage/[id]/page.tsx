@@ -48,6 +48,50 @@ export default function MyPage({ params }: { params: { id: string } }) {
       detailAddress: "201동 1103호",
       tags: ["헬스장 근처", "카페많음", "대학교 인접"],
     },
+    {
+      id: 3,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "5억 3,000",
+      buildingType: "주상복합",
+      area: "34.5㎡",
+      address: "방배마에스트로",
+      detailAddress: "1동 703호",
+      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+    },
+    {
+      id: 4,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "2억 7,500",
+      buildingType: "주상복합",
+      area: "38.67㎡",
+      address: "방배마에스트로",
+      detailAddress: "201동 1103호",
+      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
+    },
+    {
+      id: 5,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "5억 3,000",
+      buildingType: "주상복합",
+      area: "34.5㎡",
+      address: "방배마에스트로",
+      detailAddress: "1동 703호",
+      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+    },
+    {
+      id: 6,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "2억 7,500",
+      buildingType: "주상복합",
+      area: "38.67㎡",
+      address: "방배마에스트로",
+      detailAddress: "201동 1103호",
+      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
+    },
   ];
 
   const recentProperties = [
@@ -89,8 +133,8 @@ export default function MyPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="flex flex-col">
-      {/* 상단: 프로필 + 리뷰 */}
+    <div className="flex h-screen flex-col">
+      {/* 상단: 프로필/리뷰 */}
       <section className="flex inline-flex flex-col items-start justify-start gap-6 border-b bg-white px-5 pb-6 pt-7">
         {/* 유저 정보 */}
         <div className="flex inline-flex w-full items-center justify-between">
@@ -113,7 +157,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* 리뷰 박스 */}
-        <div className="flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 shadow3 outline outline-1 outline-offset-[-1px] outline-neutral-200">
+        <div className="shadow3 flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 outline outline-1 outline-offset-[-1px] outline-neutral-200">
           <div className="inline-flex items-center justify-between self-stretch bg-white">
             <div className="text-base font-bold text-black">나의 리뷰</div>
             <button onClick={handleMoreReviews} className="flex items-center gap-1">
@@ -132,37 +176,40 @@ export default function MyPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </section>
-
-      {/* 하단: 매물 탭/리스트 */}
-      <section>
-        <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
-        {/* <div className="mt-2 flex flex-col gap-2"> */}
-        <div className="flex items-center justify-between rounded bg-white px-5 py-4">
-          <div className="justify-center">
-            <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
-            <span className="text-sm text-black">의 매물</span>
-          </div>
-          <div className="flex items-center justify-start gap-1">
-            <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-            <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+      {/* 하단: 탭바 + 리스트 */}
+      <section className="flex flex-col">
+        {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
+        <div className="sticky top-16 z-10 bg-white">
+          <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
+          <div className="flex items-center justify-between rounded bg-white px-5 py-4">
+            <div className="justify-center">
+              <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
+              <span className="text-sm text-black">의 매물</span>
+            </div>
+            <div className="flex items-center justify-start gap-1">
+              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+              <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+            </div>
           </div>
         </div>
-        {currentProperties.map((property, index) => (
-          <PropertyCard
-            key={property.id}
-            itemId={property.id}
-            itemNumber={index + 1}
-            imageUrl={property.imageUrl}
-            transactionType={property.transactionType}
-            price={property.price}
-            buildingType={property.buildingType}
-            area={property.area}
-            address={property.address}
-            detailAddress={property.detailAddress}
-            tags={property.tags}
-          />
-        ))}
-        {/* </div> */}
+        {/* 매물 리스트만 스크롤 */}
+        <div className="overflow-y-auto">
+          {currentProperties.map((property, index) => (
+            <PropertyCard
+              key={property.id}
+              itemId={property.id}
+              itemNumber={index + 1}
+              imageUrl={property.imageUrl}
+              transactionType={property.transactionType}
+              price={property.price}
+              buildingType={property.buildingType}
+              area={property.area}
+              address={property.address}
+              detailAddress={property.detailAddress}
+              tags={property.tags}
+            />
+          ))}
+        </div>
       </section>
     </div>
   );
