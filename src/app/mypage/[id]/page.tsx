@@ -146,11 +146,11 @@ export default function MyPage({ params }: { params: { id: string } }) {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-base font-semibold text-black">{userData.name}</span>
+            <span className="text-subtitle2">{userData.name}</span>
           </div>
           <button
             onClick={handleEdit}
-            className="rounded bg-neutral-100 px-3 py-1 text-sm text-black"
+            className="rounded bg-neutral-100 px-3 py-1 text-body2"
           >
             내 정보 수정
           </button>
@@ -159,9 +159,9 @@ export default function MyPage({ params }: { params: { id: string } }) {
         {/* 리뷰 박스 */}
         <div className="shadow3 flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 outline outline-1 outline-offset-[-1px] outline-neutral-200">
           <div className="inline-flex items-center justify-between self-stretch bg-white">
-            <div className="text-base font-bold text-black">나의 리뷰</div>
+            <div className="text-title4">나의 리뷰</div>
             <button onClick={handleMoreReviews} className="flex items-center gap-1">
-              <div className="text-sm text-neutral-600">더보기</div>
+              <div className="text-body2 text-neutral-600">더보기</div>
               <img src="/icons/arrow-right.svg" alt="더보기" className="h-4 w-4" />
             </button>
           </div>
@@ -169,7 +169,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
             {userData.reviews.length > 0 ? (
               userData.reviews.map((review, idx) => <ReviewItem key={idx} {...review} />)
             ) : (
-              <div className="h-5 justify-center self-stretch font-['Pretendard'] text-sm font-normal leading-tight text-black">
+              <div className="h-5 justify-center self-stretch text-body2 leading-tight">
                 내가 작성한 리뷰가 없어요
               </div>
             )}
@@ -183,12 +183,12 @@ export default function MyPage({ params }: { params: { id: string } }) {
           <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
           <div className="flex items-center justify-between rounded bg-white px-5 py-4">
             <div className="justify-center">
-              <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
-              <span className="text-sm text-black">의 매물</span>
+              <span className="text-subtitle4">{currentProperties.length}건</span>
+              <span className="text-body2">의 매물</span>
             </div>
             <div className="flex items-center justify-start gap-1">
               <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-              <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+              <span className="cursor-pointer text-body2">지도에서 보기</span>
             </div>
           </div>
         </div>
