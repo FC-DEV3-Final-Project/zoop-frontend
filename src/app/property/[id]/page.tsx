@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Tab } from "@/components/Tab";
-import PropertyDetailTab from "./PropertyDetailTab";
-import PropertyReviewTab from "./PropertyReviewTab";
-import PropertyImageCarousel from "./PropertyImageCarousel";
+import PropertyDetailTab from "./components/PropertyDetailTab";
+import PropertyReviewTab from "./components/PropertyReviewTab";
+import PropertyImageCarousel from "./components/PropertyImageCarousel";
 
 const TAB_OPTIONS = [
   { label: "상세 정보", value: "detail" },
@@ -23,7 +23,7 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
       <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={setSelectedTab} />
 
       {/* 탭 콘텐츠 */}
-      <div className="mt-4 px-4">
+      <div>
         {selectedTab === "detail" && <PropertyDetailTab id={params.id} />}
         {selectedTab === "review" && <PropertyReviewTab id={params.id} />}
       </div>
