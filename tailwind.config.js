@@ -64,6 +64,7 @@ export default {
         shadow2: "0 8px 4px rgba(31, 34, 39, 0.08)",
         shadow3: "0 16px 4px rgba(31, 34, 39, 0.08)",
         shadow4: "0 24px 4px rgba(31, 34, 39, 0.08)",
+        selectCard: "0px 0px 0px 0px rgba(0, 0, 0, 0.05), 0px 4px 6px 0px rgba(0, 0, 0, 0.03)",
       },
     },
   },

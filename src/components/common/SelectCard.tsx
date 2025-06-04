@@ -16,7 +16,7 @@ const SelectCard = ({ option, selected, setSelected }: SelectCardProps) => {
       key={option}
       onClick={() => setSelected(option)}
       className={clsx(
-        "shadow-customCard relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1",
+        "shadow-selectCard relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1",
         isSelected ? "bg-blue-100" : "bg-white",
       )}
     >
