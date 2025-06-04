@@ -21,7 +21,7 @@ const BottomSheet = ({ trigger, title, items, onSelect, selectedValue }: BottomS
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{trigger}</SheetTrigger>
 
-      <SheetContent className="mx-auto w-full max-w-[600px] rounded-t-xl bg-white">
+      <SheetContent className="absolute mx-auto w-full max-w-[600px] rounded-t-xl bg-white">
         <SheetHeader>
           <SheetTitle className="flex h-[40px] items-center justify-center text-body1">
             {title}
