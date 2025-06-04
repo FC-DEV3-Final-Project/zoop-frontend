@@ -132,11 +132,16 @@ export default function MyPage({ params }: { params: { id: string } }) {
       {/* 하단: 매물 탭/리스트 */}
       <section>
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
-        <div className="mt-2 flex flex-col gap-2">
+        {/* <div className="mt-2 flex flex-col gap-2"> */}
           <div className="flex items-center justify-between rounded bg-white px-5 py-4">
-            <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
-            <span className="text-sm text-black">의 매물</span>
-            <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+            <div className="justify-center">
+              <span className="text-sm font-bold text-black">{currentProperties.length}건</span>
+              <span className="text-sm text-black">의 매물</span>
+            </div>
+            <div className="flex justify-start items-center gap-1">
+              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+              <span className="cursor-pointer text-sm text-black">지도에서 보기</span>
+            </div>
           </div>
           {currentProperties.map((property, index) => (
             <PropertyCard
@@ -153,7 +158,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
               tags={property.tags}
             />
           ))}
-        </div>
+        {/* </div> */}
       </section>
     </div>
   );
