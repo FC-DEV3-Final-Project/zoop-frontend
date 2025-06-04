@@ -4,17 +4,23 @@ import Image from "next/image";
 
 interface SelectCardProps {
   option: string;
-  selected: string;
-  setSelected: (option: string) => void;
+  selected: string[];
+  setSelected: (option: string[]) => void;
 }
 
 const SelectCard = ({ option, selected, setSelected }: SelectCardProps) => {
-  const isSelected = selected === option;
+  const isSelected = selected.includes(option);
 
   return (
     <button
       key={option}
-      onClick={() => setSelected(option)}
+      onClick={() =>
+        setSelected(
+          selected.includes(option)
+            ? selected.filter((item) => item !== option)
+            : [...selected, option],
+        )
+      }
       className={clsx(
         "shadow-selectCard relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1",
         isSelected ? "bg-blue-100" : "bg-white",
