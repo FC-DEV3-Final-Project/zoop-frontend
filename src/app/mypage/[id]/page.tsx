@@ -135,7 +135,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
   return (
     <div className="flex h-screen flex-col">
       {/* 상단: 프로필/리뷰 */}
-      <section className="flex inline-flex flex-col items-start justify-start gap-6 border-b bg-white px-5 pb-6 pt-7">
+      <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
         {/* 유저 정보 */}
         <div className="flex inline-flex w-full items-center justify-between">
           <div className="flex items-center gap-4">
@@ -178,7 +178,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
       </section>
       {/* 하단: 탭바 + 리스트 */}
       <section className="flex flex-col">
-        {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
+        {/* 스크롤시 탭바 + 매물 헤더 상단 고정 */}
         <div className="sticky top-16 z-10 bg-white">
           <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
           <div className="flex items-center justify-between rounded bg-white px-5 py-4">
