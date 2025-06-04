@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function InfoSection() {
   return (
-    <section id="info" className="mb-2 scroll-mt-[80px] bg-white px-8 py-5">
+    <section id="info" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">매물정보</div>
       <Image src="" alt="매물정보 사진" className="mb-5" />
       <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] border-b-[1px] border-b-gray-200 pb-8 text-subtitle3 text-black">

@@ -1,6 +1,6 @@
 export default function DealSection() {
   return (
-    <section id="deal" className="mb-2 scroll-mt-[80px] bg-white px-8 py-5">
+    <section id="deal" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">거래정보</div>
       <div className="grid grid-cols-[auto_1fr] gap-x-[63px] gap-y-[20px] text-subtitle3 text-black">
         <div>거래방식</div>

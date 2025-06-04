@@ -8,7 +8,7 @@ export default function PriceSection() {
   ];
 
   return (
-    <section id="price" className="mb-2 scroll-mt-[80px] bg-white px-8 py-5">
+    <section id="price" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">실거래가</div>
       <div className="grid grid-cols-3 border-b-[1px] border-b-gray-500-alternative pb-[9.5px] text-body2 text-gray-800">
         <span>계약일</span>
