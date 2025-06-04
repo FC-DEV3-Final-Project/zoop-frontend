@@ -17,13 +17,14 @@ const tabItems2 = [
   { label: "매매", value: "three" },
 ];
 
+const sortOptions = [
+  { label: "가격 높은 순", value: "high" },
+  { label: "가격 낮은 순", value: "low" },
+];
+
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
-
-  const handleSelect = (item: { label: string; value: string }) => {
-    setSelectedItem(item);
-  };
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
@@ -38,12 +39,11 @@ export default function Test() {
             </button>
           }
           title="정렬 방식"
-          items={[
-            { label: "가격 높은 순", value: "high" },
-            { label: "낮은 가격 순", value: "low" },
-          ]}
+          items={sortOptions}
           selectedValue={selectedItem?.value}
-          onSelect={handleSelect}
+          onSelect={(item) => {
+            setSelectedItem(item);
+          }}
         />
       </div>
       <h1 className="text-title1">Guide</h1>
