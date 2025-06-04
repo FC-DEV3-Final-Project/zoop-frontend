@@ -1,10 +1,10 @@
-import PropertyInfoBox from "./PropertyInfoBox";
+import InfoBox from "./InfoBox";
 import ScrollableTabBar from "./ScrollableTabBar";
 
 export default function PropertyDetailTab({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-2">
-      <PropertyInfoBox />
+      <InfoBox />
       <ScrollableTabBar />
     </div>
   );
