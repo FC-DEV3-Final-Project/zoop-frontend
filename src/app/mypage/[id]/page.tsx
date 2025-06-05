@@ -132,6 +132,10 @@ export default function MyPage({ params }: { params: { id: string } }) {
     alert("리뷰 더보기 클릭!");
   };
 
+  const handleMapView = () => {
+    alert("지도에서 보기 클릭!");
+  };
+
   return (
     <div className="flex h-screen flex-col">
       {/* 상단: 프로필/리뷰 */}
@@ -186,10 +190,10 @@ export default function MyPage({ params }: { params: { id: string } }) {
               <span className="text-subtitle4">{currentProperties.length}건</span>
               <span className="text-body2">의 매물</span>
             </div>
-            <div className="flex items-center justify-start gap-1">
+            <button onClick={handleMapView} className="flex items-center justify-start gap-1">
               <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-              <span className="cursor-pointer text-body2">지도에서 보기</span>
-            </div>
+              <span className="text-body2">지도에서 보기</span>
+            </button>
           </div>
         </div>
         {/* 매물 리스트만 스크롤 */}
