@@ -23,9 +23,14 @@ interface RawProperty {
 interface PropertyListSectionProps {
   tabOptions: TabOption[];
   propertyMap: { [tabValue: string]: RawProperty[] };
+  showMapViewButton?: boolean;
 }
 
-const PropertyListSection = ({ tabOptions, propertyMap }: PropertyListSectionProps) => {
+const PropertyListSection = ({
+  tabOptions,
+  propertyMap,
+  showMapViewButton = true,
+}: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
 
   const handleMapView = () => {
@@ -49,10 +54,12 @@ const PropertyListSection = ({ tabOptions, propertyMap }: PropertyListSectionPro
             <span className="text-subtitle4">{currentProperties.length}건</span>
             <span className="text-body2">의 매물</span>
           </div>
-          <button onClick={handleMapView} className="flex items-center justify-start gap-1">
-            <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-            <span className="text-body2">지도에서 보기</span>
-          </button>
+          {showMapViewButton && (
+            <button onClick={handleMapView} className="flex items-center justify-start gap-1">
+              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+              <span className="text-body2">지도에서 보기</span>
+            </button>
+          )}
         </div>
       </div>
       {/* 매물 리스트만 스크롤 */}
