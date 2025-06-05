@@ -1,6 +1,7 @@
 "use client";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRef, useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const tabOptions = [
   { label: "월세", value: "rent" },
@@ -87,7 +88,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
     if (!el) return;
 
     const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-    
+
     if (el.scrollHeight > lineHeight + 1) {
       setIsTruncated(true);
     }
@@ -175,6 +176,10 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
           sale: Properties,
         }}
       />
+      {/* 공인중개사에게 전화 걸기 버튼 */}
+      <div className="fixed bottom-4 left-1/2 z-50 w-full -translate-x-1/2 px-4">
+        <Button variant="default">공인중개사에게 전화 걸기</Button>
+      </div>
     </>
   );
 }
