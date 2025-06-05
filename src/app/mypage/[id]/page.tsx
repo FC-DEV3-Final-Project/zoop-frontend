@@ -1,6 +1,6 @@
 "use client";
-import ReviewItem from "@/components/ReviewItem";
-import PropertyListSection from "@/components/PropertyListSection";
+import ReviewItem from "@/components/common/ReviewItem";
+import PropertyListSection from "@/components/common/PropertyListSection";
 
 export default function MyPage({ params }: { params: { id: string } }) {
   // 임시 데이터
