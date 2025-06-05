@@ -87,9 +87,8 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
     if (!el) return;
 
     const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-    const maxHeight = lineHeight * 2;
-
-    if (el.scrollHeight > maxHeight + 1) {
+    
+    if (el.scrollHeight > lineHeight + 1) {
       setIsTruncated(true);
     }
   }, []);
