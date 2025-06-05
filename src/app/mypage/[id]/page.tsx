@@ -1,12 +1,8 @@
 "use client";
-import { useState } from "react";
-import { Tab } from "@/components/Tab";
-import PropertyCard from "@/components/common/PropertyCard";
 import ReviewItem from "@/components/ReviewItem";
+import PropertyListSection from "@/components/PropertyListSection";
 
 export default function MyPage({ params }: { params: { id: string } }) {
-  const [selectedTab, setSelectedTab] = useState("liked");
-
   // 임시 데이터
   const userData = {
     profileImage: "/imgs/default-profile.png",
@@ -26,6 +22,75 @@ export default function MyPage({ params }: { params: { id: string } }) {
   };
 
   const likedProperties = [
+    {
+      id: 1,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "1억 3,000",
+      buildingType: "주상복합",
+      area: "34.5㎡",
+      address: "방배마에스트로",
+      detailAddress: "1동 703호",
+      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+    },
+    {
+      id: 2,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "2억 7,500",
+      buildingType: "주상복합",
+      area: "38.67㎡",
+      address: "방배마에스트로",
+      detailAddress: "201동 1103호",
+      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
+    },
+    {
+      id: 3,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "5억 3,000",
+      buildingType: "주상복합",
+      area: "34.5㎡",
+      address: "방배마에스트로",
+      detailAddress: "1동 703호",
+      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+    },
+    {
+      id: 4,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "2억 7,500",
+      buildingType: "주상복합",
+      area: "38.67㎡",
+      address: "방배마에스트로",
+      detailAddress: "201동 1103호",
+      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
+    },
+    {
+      id: 5,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "5억 3,000",
+      buildingType: "주상복합",
+      area: "34.5㎡",
+      address: "방배마에스트로",
+      detailAddress: "1동 703호",
+      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+    },
+    {
+      id: 6,
+      imageUrl: "/imgs/propertyExample.png",
+      transactionType: "전세",
+      price: "2억 7,500",
+      buildingType: "주상복합",
+      area: "38.67㎡",
+      address: "방배마에스트로",
+      detailAddress: "201동 1103호",
+      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
+    },
+  ];
+
+  const recentProperties = [
     {
       id: 1,
       imageUrl: "/imgs/propertyExample.png",
@@ -94,36 +159,10 @@ export default function MyPage({ params }: { params: { id: string } }) {
     },
   ];
 
-  const recentProperties = [
-    {
-      id: 3,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "월세",
-      price: "1억 5,000",
-      buildingType: "아파트",
-      area: "59.8㎡",
-      address: "래미안아파트",
-      detailAddress: "105동 1203호",
-      tags: ["풀옵션", "xx역 도보 5분", "공원근처"],
-    },
-    {
-      id: 4,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "3억 2,000",
-      buildingType: "아파트",
-      area: "84.5㎡",
-      address: "자이아파트",
-      detailAddress: "203동 504호",
-      tags: ["풀옵션", "xx역 도보 3분", "학교근처"],
-    },
-  ];
-
   const tabOptions = [
     { label: "찜한 매물", value: "liked" },
     { label: "최근 본 매물", value: "recent" },
   ];
-  const currentProperties = selectedTab === "liked" ? likedProperties : recentProperties;
 
   const handleEdit = () => {
     alert("내 정보 수정 클릭!");
@@ -152,10 +191,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
             </div>
             <span className="text-subtitle2">{userData.name}</span>
           </div>
-          <button
-            onClick={handleEdit}
-            className="rounded bg-neutral-100 px-3 py-1 text-body2"
-          >
+          <button onClick={handleEdit} className="rounded bg-neutral-100 px-3 py-1 text-body2">
             내 정보 수정
           </button>
         </div>
@@ -181,40 +217,13 @@ export default function MyPage({ params }: { params: { id: string } }) {
         </div>
       </section>
       {/* 하단: 탭바 + 리스트 */}
-      <section className="flex flex-col">
-        {/* 스크롤시 탭바 + 매물 헤더 상단 고정 */}
-        <div className="sticky top-16 z-10 bg-white">
-          <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
-          <div className="flex items-center justify-between rounded bg-white px-5 py-4">
-            <div className="justify-center">
-              <span className="text-subtitle4">{currentProperties.length}건</span>
-              <span className="text-body2">의 매물</span>
-            </div>
-            <button onClick={handleMapView} className="flex items-center justify-start gap-1">
-              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
-              <span className="text-body2">지도에서 보기</span>
-            </button>
-          </div>
-        </div>
-        {/* 매물 리스트만 스크롤 */}
-        <div className="overflow-y-auto">
-          {currentProperties.map((property, index) => (
-            <PropertyCard
-              key={property.id}
-              itemId={property.id}
-              itemNumber={index + 1}
-              imageUrl={property.imageUrl}
-              transactionType={property.transactionType}
-              price={property.price}
-              buildingType={property.buildingType}
-              area={property.area}
-              address={property.address}
-              detailAddress={property.detailAddress}
-              tags={property.tags}
-            />
-          ))}
-        </div>
-      </section>
+      <PropertyListSection
+        tabOptions={tabOptions}
+        propertyMap={{
+          liked: likedProperties,
+          recent: recentProperties,
+        }}
+      />
     </div>
   );
 }
