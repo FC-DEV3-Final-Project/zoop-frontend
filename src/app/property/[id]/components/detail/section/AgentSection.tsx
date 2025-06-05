@@ -81,7 +81,15 @@ export default function AgentSection() {
       </p>
       <div className="mt-4">
         {/* 우선은 홈으로 연동해놨는데 추후 수정할 예정 */}
-        <GrayButton label="해당 부동산의 다른 매물 보러가기" onClick={() => router.push("/")} />
+        <GrayButton
+          label={
+            <div className="flex items-center justify-center gap-2">
+              <span>해당 부동산의 다른 매물 보러가기</span>
+              <img src="/icons/arrow-right.svg" alt="arrow" width={14} height={14} />
+            </div>
+          }
+          onClick={() => router.push("/")}
+        />{" "}
       </div>
     </section>
   );

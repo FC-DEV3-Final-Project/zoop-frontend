@@ -40,7 +40,17 @@ export default function DescriptionSection() {
       {isOverflowing && (
         <div className="mt-8">
           <GrayButton
-            label={isExpanded ? "접기" : "전체 설명 보기"}
+            label={
+              <div className="flex items-center justify-center gap-2">
+                <span>{isExpanded ? "접기" : "전체 설명 보기"}</span>
+                <img
+                  src={isExpanded ? "/icons/arrow-up.svg" : "/icons/arrow-down.svg"}
+                  alt="arrow"
+                  width={14}
+                  height={14}
+                />
+              </div>
+            }
             onClick={() => setIsExpanded((prev) => !prev)}
           />
         </div>

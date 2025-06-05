@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 interface GrayButtonProps {
-  label: string;
+  label: ReactNode;
   onClick?: () => void;
   isToggle?: boolean;
   isExpanded?: boolean;
