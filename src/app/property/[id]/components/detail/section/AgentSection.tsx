@@ -1,52 +1,77 @@
 import { Button } from "@/components/ui/button";
 
 export default function AgentSection() {
+  const agentInfo = [
+    { label: "대표", value: "김정순" },
+    { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
+    {
+      label: "전화",
+      value: ["031-271-5309", "010-8711-6151"],
+    },
+    {
+      label: "최근 3개월 집주인확인",
+      value: "169건",
+    },
+  ];
+
+  const feeInfo = [
+    {
+      label: "중개보수",
+      values: ["최대 204만원(VAT 별도)", "상한요율 0.4%", "약 561만원"],
+    },
+    {
+      label: "취득세",
+      values: ["취득세 510만원", "지방교육세 51만원", "농어촌특별세 -원"],
+    },
+  ];
+
   return (
     <section id="agent" className="mb-[75px] scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">중개정보</div>
       <div className="mb-5 text-subtitle1 text-black">일등 부동산 공인중개사사무소</div>
-
       <div className="flex flex-col gap-1 text-body2 text-black">
-        <div>
-          대표 <span className="text-subtitle4">김정순</span> 등록번호 ⌄
-        </div>
-        <div>경기도 수원시 장안구 경수대로 1083 1층</div>
-        <div>
-          전화 <span className="text-subtitle4">031-271-5309</span>,{" "}
-          <span className="text-subtitle4">010-8711-6151</span>
-        </div>
-        <div>
-          최근 3개월 집주인확인 <span className="text-subtitle4">169건</span>
-        </div>
-      </div>
-
-      <div className="border-b-[1px] border-b-gray-200 pb-4">
-        <span></span>
-      </div>
-      <div className="mb-5 mt-4 text-subtitle1">중개보수 및 세금정보</div>
-      {/* 중개보수 */}
-      <div className="grid grid-cols-[70px_1fr] gap-x-[18px]">
-        <div className="text-body2">중개보수</div>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <span>최대 204만원(VAT 별도) › </span>
+        {agentInfo.map((item, idx) => (
+          <div key={idx}>
+            {/* label 존재 mapping */}
+            {item.label && (
+              <>
+                {item.label}{" "}
+                {Array.isArray(item.value) ? (
+                  item.value.map((v, i) => (
+                    <span key={i} className="text-caption1">
+                      {v}
+                      {i !== item.value.length - 1 && ", "}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-caption1">{item.value}</span>
+                )}
+                {item.label === "대표" && " 등록번호 ⌄"}
+              </>
+            )}
+            {/* label 제외하는 주소 */}
+            {!item.label && <>{item.value}</>}
           </div>
-          <div>상한요율 0.4%</div>
-          <div>약 561만원</div>
-        </div>
+        ))}
       </div>
 
-      {/* 취득세 */}
-      <div className="mt-4 grid grid-cols-[70px_1fr] gap-x-[18px]">
-        <div className="text-body2">취득세</div>
-        <div className="flex flex-col gap-2">
-          <div>취득세 510만원</div>
-          <div>지방교육세 51만원</div>
-          <div>농어촌특별세 -원</div>
-        </div>
-      </div>
+      <div className="border-b-[1px] border-b-gray-200 pb-4" />
 
-      {/* 안내 문구 */}
+      <div className="mb-5 mt-4 text-subtitle1">중개보수 및 세금정보</div>
+      {feeInfo.map((item, idx) => (
+        <div
+          key={idx}
+          className={`${idx !== 0 ? "mt-4" : ""} grid grid-cols-[70px_1fr] gap-x-[18px] text-body2 text-black`}
+        >
+          <div>{item.label}</div>
+          <div className="flex flex-col gap-2">
+            {item.values.map((text, i) => (
+              <div key={i}>{text}</div>
+            ))}
+          </div>
+        </div>
+      ))}
+
       <p className="mt-4 text-footnote text-black">
         중개보수 및 세금 정보는 실제 적용되는 금액과 다를 수 있습니다.
       </p>
