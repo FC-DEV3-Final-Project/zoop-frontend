@@ -1,4 +1,10 @@
-export default function PropertyInfoBox() {
+import HeartButton from "@/components/common/HeartButton";
+
+interface InfoBoxProps {
+  itemId: number;
+}
+
+export default function InfoBox({ itemId }: InfoBoxProps) {
   const infoColumns = [
     [
       { icon: "/icons/building.svg", label: "아파트" },
@@ -15,15 +21,7 @@ export default function PropertyInfoBox() {
       <div className="flex justify-between">
         <div className="text-subtitle2">방배마에스트로(주상복합) 1동 703호</div>
         <div className="flex gap-[13px]">
-          <button>
-            <img
-              src="/icons/heart-outline.svg"
-              alt="heart-icon"
-              width={24}
-              height={24}
-              cursor-pointer
-            />
-          </button>
+          <HeartButton itemId={itemId} />
           <button>
             <img src="/icons/share.svg" alt="share" width={24} height={24} cursor-pointer />
           </button>
