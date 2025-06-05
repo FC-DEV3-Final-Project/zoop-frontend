@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function PropertyInfoBox() {
   const infoColumns = [
     [
@@ -18,7 +16,7 @@ export default function PropertyInfoBox() {
         <div className="text-subtitle2">방배마에스트로(주상복합) 1동 703호</div>
         <div className="flex gap-[13px]">
           <button>
-            <Image
+            <img
               src="/icons/heart-outline.svg"
               alt="heart-icon"
               width={24}
@@ -27,7 +25,7 @@ export default function PropertyInfoBox() {
             />
           </button>
           <button>
-            <Image src="/icons/share.svg" alt="share" width={24} height={24} cursor-pointer />
+            <img src="/icons/share.svg" alt="share" width={24} height={24} cursor-pointer />
           </button>
         </div>
       </div>
@@ -42,7 +40,7 @@ export default function PropertyInfoBox() {
             <div key={colIdx} className="flex flex-col gap-3">
               {column.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <Image src={item.icon} alt={item.label} width={24} height={24} />
+                  <img src={item.icon} alt={item.label} width={24} height={24} />
                   <span>{item.label}</span>
                 </div>
               ))}
