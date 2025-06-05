@@ -1,6 +1,10 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { useRouter } from "next/navigation";
+import GrayButton from "../GrayButton";
 
 export default function AgentSection() {
+  const router = useRouter();
   const agentInfo = [
     { label: "대표", value: "김정순" },
     { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
@@ -76,9 +80,8 @@ export default function AgentSection() {
         중개보수 및 세금 정보는 실제 적용되는 금액과 다를 수 있습니다.
       </p>
       <div className="mt-4">
-        <Button variant="default" disabled>
-          해당 부동산의 다른 매물 보러가기
-        </Button>
+        {/* 우선은 홈으로 연동해놨는데 추후 수정할 예정 */}
+        <GrayButton label="해당 부동산의 다른 매물 보러가기" onClick={() => router.push("/")} />
       </div>
     </section>
   );
