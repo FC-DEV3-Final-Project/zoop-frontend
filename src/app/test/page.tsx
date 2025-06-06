@@ -44,6 +44,7 @@ export default function Test() {
           onSelect={(item) => {
             setSelectedItem(item);
           }}
+          toggleable={true}
         />
       </div>
       <h1 className="text-title1">Guide</h1>

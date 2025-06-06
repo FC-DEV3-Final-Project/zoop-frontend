@@ -10,12 +10,26 @@ interface BottomSheetProps {
   trigger: React.ReactNode;
   title: string;
   items: BottomSheetItem[];
-  onSelect: (item: BottomSheetItem) => void;
+  onSelect: (item: BottomSheetItem | null) => void;
   selectedValue?: string;
+  toggleable?: boolean;
 }
 
-const BottomSheet = ({ trigger, title, items, onSelect, selectedValue }: BottomSheetProps) => {
+const BottomSheet = ({ trigger, title, items, onSelect, selectedValue, toggleable = false }: BottomSheetProps) => {
   const [open, setOpen] = useState(false);
+
+  const handleToggleSelect = (item: BottomSheetItem) => {
+    const isSelected = item.value === selectedValue;
+    onSelect(isSelected ? null : item);
+    setOpen(false);
+  }
+  
+  const handleOnlySelect = (item: BottomSheetItem) => {
+    onSelect(item);
+    setOpen(false);
+  }
+
+  const handleClick = toggleable ? handleToggleSelect : handleOnlySelect;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -35,10 +49,7 @@ const BottomSheet = ({ trigger, title, items, onSelect, selectedValue }: BottomS
               <button
                 className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 ${isSelected ? "bg-[#F4F4F4]" : ""} hover:bg-[#F4F4F4]`}
                 key={item.value}
-                onClick={() => {
-                  onSelect(item);
-                  setOpen(false);
-                }}
+                onClick={() => handleClick(item)}
               >
                 {item.label}
               </button>
