@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import GrayButton from "../GrayButton";
+import GrayButton from "../components/GrayButton";
 
 export default function AgentSection() {
   const router = useRouter();

@@ -2,8 +2,8 @@
 
 import { useState, use } from "react";
 import { Tab } from "@/components/Tab";
-import DetailTab from "./components/detail/DetailTab";
-import ReviewTab from "./components/review/ReviewTab";
+import DetailTab from "./detail/DetailTab";
+import ReviewTab from "./review/ReviewTab";
 import ImageCarousel from "./components/ImageCarousel";
 
 const TAB_OPTIONS = [

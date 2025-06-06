@@ -1,5 +1,5 @@
 import InfoBox from "./InfoBox";
-import ScrollableTabBar from "./ScrollableTabBar";
+import ScrollableTabBar from "./components/ScrollableTabBar";
 import SectionList from "./SectionList";
 
 interface DetailTabProps {
