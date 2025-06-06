@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function NicknameEditPage() {
+export default function EditNickname() {
   const [nickname, setNickname] = useState("");
   const router = useRouter();
 
