@@ -27,10 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
-        <div className="relative mx-auto flex h-screen w-full max-w-[600px] flex-col bg-gray-100">
-          <Header />
-          <main className="h-full pt-[64px]">{children}</main>
-        </div>
+        <div className="mx-auto min-h-screen w-full max-w-[600px] bg-[#f8f8f8]">{children}</div>
       </body>
     </html>
   );
