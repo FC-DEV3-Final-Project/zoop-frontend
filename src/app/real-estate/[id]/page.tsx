@@ -97,27 +97,23 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
   return (
     <>
       <div className="flex flex-col gap-3 bg-white p-5">
-        <div className="text-center text-xl font-semibold leading-7 text-black">
+        <div className="text-center text-xl font-semibold text-black">
           일등 부동산 공인중개사사무소
         </div>
         <div className="flex gap-5">
-          {/* 프로필/대표 */}
-          <div className="flex w-24 min-w-24 max-w-24 flex-shrink-0 flex-col items-center gap-1">
-            {/* 프로필 */}
+          <div className="flex w-24 flex-shrink-0 flex-col items-center gap-1">
             <div className="h-24 w-full rounded-lg bg-black" />
-            {/* 대표 */}
             <div className="flex w-full items-center justify-center gap-1">
-              <div className="text-xs font-medium leading-none text-black">대표</div>
-              <div className="text-sm font-semibold leading-tight text-black">김정순</div>
+              <div className="text-xs font-medium text-black">대표</div>
+              <div className="text-sm font-semibold text-black">김정순</div>
             </div>
           </div>
-          {/* 정보 영역 */}
           <div className="flex flex-col gap-1">
             <div className="flex h-24 flex-col gap-[3px]">
               <div className="flex items-center gap-1">
-                <div className="text-xs font-medium leading-none text-black">등록번호</div>
+                <div className="text-xs font-medium text-black">등록번호</div>
                 <div className="flex items-center rounded-lg bg-zinc-100 px-2 py-0.5">
-                  <div className="text-xs font-medium leading-none text-black">44862989</div>
+                  <div className="text-xs font-medium text-black">44862989</div>
                 </div>
               </div>
               <div className="flex w-full items-start gap-2">
@@ -140,28 +136,26 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <div className="text-xs font-medium leading-none text-black">
-                  최근 3개월 집주인확인
-                </div>
-                <div className="text-xs font-semibold leading-none text-black">169건</div>
+                <div className="text-xs font-medium text-black">최근 3개월 집주인확인</div>
+                <div className="text-xs font-semibold text-black">169건</div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="text-xs font-medium leading-none text-blue-700">영업중</div>
-                <div className="text-xs font-semibold leading-none text-black">10:00~</div>
+                <div className="text-xs font-medium text-blue-700">영업중</div>
+                <div className="text-xs font-semibold text-black">10:00~</div>
               </div>
             </div>
             <div className="flex w-full items-center gap-1">
               <div className="flex items-center gap-0.5">
-                <div className="text-sm font-medium leading-tight text-black">매매</div>
-                <div className="text-sm font-semibold leading-tight text-blue-700">30</div>
+                <div className="text-sm font-medium text-black">매매</div>
+                <div className="text-sm font-semibold text-blue-700">30</div>
               </div>
               <div className="flex items-center gap-0.5">
-                <div className="text-sm font-medium leading-tight text-black">전세</div>
-                <div className="text-sm font-semibold leading-tight text-blue-700">4</div>
+                <div className="text-sm font-medium text-black">전세</div>
+                <div className="text-sm font-semibold text-blue-700">4</div>
               </div>
               <div className="flex items-center gap-0.5">
-                <div className="text-sm font-medium leading-tight text-black">월세</div>
-                <div className="text-sm font-semibold leading-tight text-blue-700">19</div>
+                <div className="text-sm font-medium text-black">월세</div>
+                <div className="text-sm font-semibold text-blue-700">19</div>
               </div>
             </div>
           </div>
@@ -178,9 +172,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
       />
       {/* 공인중개사에게 전화 걸기 버튼 */}
       <div className="fixed bottom-0 left-1/2 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
-        <Button variant="default">
-          공인중개사에게 전화 걸기
-        </Button>
+        <Button variant="default">공인중개사에게 전화 걸기</Button>
       </div>
     </>
   );
