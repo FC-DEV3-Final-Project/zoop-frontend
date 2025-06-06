@@ -10,7 +10,7 @@ export default function MyPage({ params }: { params: Promise<{ id: string }> }) 
 
   // 임시 데이터
   const userData = {
-    profileImage: "/imgs/default-profile.png",
+    profileImage: "/imgs/default-profile.jpg",
     name: "지윤",
     reviews: [
       {
