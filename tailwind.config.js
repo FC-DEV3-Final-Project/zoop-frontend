@@ -65,7 +65,31 @@ export default {
         shadow3: "0 16px 4px rgba(31, 34, 39, 0.08)",
         shadow4: "0 24px 4px rgba(31, 34, 39, 0.08)",
       },
+      keyframes: {
+        "slide-in-from-bottom": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-out-to-bottom": {
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
+        "fade-in-0": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "fade-out-0": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "slide-in-from-bottom": "slide-in-from-bottom 0.5s ease-out",
+        "slide-out-to-bottom": "slide-out-to-bottom 0.5s ease-in",
+        "fade-in-0": "fade-in-0 0.3s ease-out",
+        "fade-out-0": "fade-out-0 0.3s ease-in",
+      },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide"), require("@tailwindcss/line-clamp")],
+  plugins: [require("tailwind-scrollbar-hide"), require("@tailwindcss/line-clamp"), require("tailwindcss-animate")],
 };
