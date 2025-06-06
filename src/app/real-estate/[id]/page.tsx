@@ -177,7 +177,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
         }}
       />
       {/* 공인중개사에게 전화 걸기 버튼 */}
-      <div className="fixed bottom-0 left-1/2 w-full -translate-x-1/2 bg-white px-5 py-3">
+      <div className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 bg-white px-5 py-3">
         <Button variant="default">공인중개사에게 전화 걸기</Button>
       </div>
     </>
