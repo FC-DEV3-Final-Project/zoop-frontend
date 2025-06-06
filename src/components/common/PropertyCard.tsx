@@ -42,7 +42,7 @@ const PropertyCard = ({
       onClick={handleCardClick}
     >
       {/* 이미지 섹션 */}
-      <div className="rounded-small relative h-24 w-24 shrink-0 overflow-hidden">
+      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-small">
         <img
           src={imageUrl}
           alt={`${buildingType} ${area}`}
@@ -61,7 +61,7 @@ const PropertyCard = ({
         <div className="flex flex-col gap-0.5 self-stretch">
           {/* 제목과 하트 버튼 */}
           <div className="inline-flex items-center justify-between self-stretch">
-            <div className="text-grey-100 text-subtitle2 flex-1 justify-start">
+            <div className="text-grey-100 flex-1 justify-start text-subtitle2">
               {transactionType} {price}
             </div>
             <HeartButton itemId={itemId} />
@@ -70,10 +70,10 @@ const PropertyCard = ({
           {/* 주소와 건물 정보 */}
           <div className="flex flex-col items-start gap-0.5 self-stretch">
             <div className="inline-flex items-center gap-1 self-stretch">
-              <p className="text-grey-100 text-body2 max-w-fit truncate">{address}</p>
-              <p className="text-body2 min-w-fit text-black">{detailAddress}</p>
+              <p className="text-grey-100 max-w-fit truncate text-body2">{address}</p>
+              <p className="min-w-fit text-body2 text-black">{detailAddress}</p>
             </div>
-            <div className="text-body2 h-5 self-stretch">
+            <div className="h-5 self-stretch text-body2">
               {buildingType}, {area}
             </div>
           </div>
@@ -84,7 +84,7 @@ const PropertyCard = ({
           {tags.map((tag, index) => (
             <div
               key={index}
-              className="text-footnote flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] bg-[#E8EAEE] px-2 py-0.5 text-center"
+              className="flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] bg-[#E8EAEE] px-2 py-0.5 text-center text-footnote"
             >
               {tag}
             </div>
@@ -96,3 +96,5 @@ const PropertyCard = ({
 };
 
 export default PropertyCard;
+
+export type { PropertyCardProps };
