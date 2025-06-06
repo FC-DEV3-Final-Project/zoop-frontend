@@ -11,7 +11,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
   const userData = {
     profileImage: "/imgs/default-profile.png",
     name: "지윤",
-    reviews: [
+    posts: [
       {
         content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
         likes: 3,
@@ -171,7 +171,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
   const handleEdit = () => {
     alert("내 정보 수정 클릭!");
   };
-  const handleMoreReviews = () => {
+  const handleMorePosts = () => {
     router.push(`/mypage/${id}/myposts`);
   };
 
@@ -181,7 +181,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex h-screen flex-col">
-      {/* 상단: 프로필/리뷰 */}
+      {/* 상단: 프로필/포스트 */}
       <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
         {/* 유저 정보 */}
         <div className="flex inline-flex w-full items-center justify-between">
@@ -200,21 +200,21 @@ export default function MyPage({ params }: { params: { id: string } }) {
           </button>
         </div>
 
-        {/* 리뷰 박스 */}
+        {/* 포스트 박스 */}
         <div className="shadow3 flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 outline outline-1 outline-offset-[-1px] outline-neutral-200">
           <div className="inline-flex items-center justify-between self-stretch bg-white">
-            <div className="text-title4">나의 리뷰</div>
-            <button onClick={handleMoreReviews} className="flex items-center gap-1">
+            <div className="text-title4">내가 쓴 글</div>
+            <button onClick={handleMorePosts} className="flex items-center gap-1">
               <div className="text-body2 text-neutral-600">더보기</div>
               <img src="/icons/arrow-right.svg" alt="더보기" className="h-4 w-4" />
             </button>
           </div>
           <div className="flex flex-col items-start self-stretch">
-            {userData.reviews.length > 0 ? (
-              userData.reviews.map((review, idx) => <PostPreview key={idx} {...review} />)
+            {userData.posts.length > 0 ? (
+              userData.posts.map((post, idx) => <PostPreview key={idx} {...post} />)
             ) : (
               <div className="h-5 justify-center self-stretch text-body2 leading-tight">
-                내가 작성한 리뷰가 없어요
+                내가 작성한 글이 없어요
               </div>
             )}
           </div>
