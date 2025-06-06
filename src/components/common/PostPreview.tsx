@@ -1,10 +1,10 @@
-type ReviewItemProps = {
+type PostPreviewProps = {
   content: string;
   likes: number;
   comments: number;
 };
 
-export default function ReviewItem({ content, likes, comments }: ReviewItemProps) {
+export default function PostPreview({ content, likes, comments }: PostPreviewProps) {
   return (
     <div className="flex h-8 w-full items-center gap-6 py-[5px] pr-[3px]">
       <div className="flex-1 truncate text-sm">{content}</div>
