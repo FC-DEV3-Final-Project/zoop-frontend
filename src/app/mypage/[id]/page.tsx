@@ -1,8 +1,12 @@
 "use client";
 import ReviewItem from "@/components/common/ReviewItem";
 import PropertyListSection from "@/components/common/PropertyListSection";
+import { useRouter, useParams } from "next/navigation";
 
 export default function MyPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
+  const { id } = useParams();
+
   // 임시 데이터
   const userData = {
     profileImage: "/imgs/default-profile.png",
@@ -168,7 +172,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
     alert("내 정보 수정 클릭!");
   };
   const handleMoreReviews = () => {
-    alert("리뷰 더보기 클릭!");
+    router.push(`/mypage/${id}/mycomments`);
   };
 
   const handleMapView = () => {
