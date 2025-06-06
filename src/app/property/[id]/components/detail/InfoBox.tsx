@@ -23,7 +23,13 @@ export default function InfoBox({ itemId }: InfoBoxProps) {
         <div className="flex gap-[13px]">
           <HeartButton itemId={itemId} />
           <button>
-            <img src="/icons/share.svg" alt="share" width={24} height={24} cursor-pointer />
+            <img
+              src="/icons/share.svg"
+              alt="share"
+              width={24}
+              height={24}
+              className="cursor-pointer"
+            />
           </button>
         </div>
       </div>

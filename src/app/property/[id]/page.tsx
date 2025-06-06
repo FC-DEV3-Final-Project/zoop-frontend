@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { Tab } from "@/components/Tab";
 import DetailTab from "./components/detail/DetailTab";
 import ReviewTab from "./components/review/ReviewTab";
@@ -11,7 +11,8 @@ const TAB_OPTIONS = [
   { label: "리뷰", value: "review" },
 ];
 
-export default function PropertyPage({ params }: { params: { id: string } }) {
+export default function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const [selectedTab, setSelectedTab] = useState("detail");
 
   return (
@@ -24,8 +25,8 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
 
       {/* 탭 콘텐츠 */}
       <div>
-        {selectedTab === "detail" && <DetailTab id={params.id} />}
-        {selectedTab === "review" && <ReviewTab id={params.id} />}
+        {selectedTab === "detail" && <DetailTab id={id} />}
+        {selectedTab === "review" && <ReviewTab id={id} />}
       </div>
     </>
   );
