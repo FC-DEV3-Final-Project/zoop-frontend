@@ -48,7 +48,7 @@ export default function ReviewTab({ id }: { id: string }) {
             <div className="rounded-lg border border-blue-800-primary px-3 py-1 text-center text-caption1 text-blue-800-primary">
               GOOD
             </div>
-            <ul className="space-y-[2px] text-body2 text-black">
+            <ul className="mx-2 space-y-[2px] text-body2 text-black">
               <li>1. 주차 공간 편리</li>
               <li>2. 역과 가까워 교통이 편리</li>
               <li>3. 가성비가 좋음</li>
@@ -60,7 +60,7 @@ export default function ReviewTab({ id }: { id: string }) {
             <div className="rounded-lg border border-blue-800-primary px-3 py-1 text-center text-caption1 text-blue-800-primary">
               BAD
             </div>
-            <ul className="space-y-[2px] text-body2 text-black">
+            <ul className="mx-2 space-y-[2px] text-body2 text-black">
               <li>1. 관리비가 높아 부담</li>
               <li>2. 주변 상가로 인한 소음</li>
               <li>3. 방구조가 좁고 불편</li>
