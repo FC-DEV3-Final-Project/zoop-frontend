@@ -1,8 +1,13 @@
 "use client";
 import ReviewItem from "@/components/common/ReviewItem";
 import PropertyListSection from "@/components/common/PropertyListSection";
+import { useRouter } from "next/navigation";
+import { use } from "react";
 
-export default function MyPage({ params }: { params: { id: string } }) {
+export default function MyPage({ params }: { params: Promise<{ id: string }> }) {
+  const router = useRouter();
+  const { id } = use(params);
+
   // 임시 데이터
   const userData = {
     profileImage: "/imgs/default-profile.png",
@@ -165,7 +170,7 @@ export default function MyPage({ params }: { params: { id: string } }) {
   ];
 
   const handleEdit = () => {
-    alert("내 정보 수정 클릭!");
+    router.push(`/mypage/${id}/user-info`);
   };
   const handleMoreReviews = () => {
     alert("리뷰 더보기 클릭!");
