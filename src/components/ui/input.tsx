@@ -4,13 +4,23 @@ import { cn } from "@/lib/utils";
 type InputStyleSize = "basic" | "small";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type: "text";
   styleSize: InputStyleSize;
   placeholder: string;
   icon?: React.ReactNode;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSend: () => void;
 }
 
-export default function Input({ styleSize, icon, placeholder, className }: InputProps) {
+export default function Input({
+  styleSize,
+  icon,
+  placeholder,
+  className,
+  value,
+  onChange,
+  onSend,
+}: InputProps) {
   const baseStyle = cn(
     "flex items-center",
     "w-full rounded-lg bg-gray-200",
@@ -28,15 +38,31 @@ export default function Input({ styleSize, icon, placeholder, className }: Input
 
   const combinedClassName = cn(baseStyle, sizeClasses[styleSize], className);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSend?.();
+    }
+  };
+
   return (
     <div className="relative w-full">
-      <input type="text" className={combinedClassName} placeholder={placeholder} />
-      <div
-        className="text-muted-foreground absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-        onClick={() => console.log("아이콘 클릭됨")}
-      >
-        {icon}
-      </div>
+      <input
+        type="text"
+        className={combinedClassName}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onKeyDown={handleKeyDown}
+      />
+      {icon && (
+        <button
+          type="button"
+          onClick={onSend}
+          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+        >
+          {icon}
+        </button>
+      )}
     </div>
   );
 }
