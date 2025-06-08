@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tab } from "@/components/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
-import { Input } from "@/components/ui/input";
+import Input from "@/components/ui/input";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -30,12 +30,14 @@ export default function Test() {
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
       {/* Input Section */}
-      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 bg-[#DFDFDF] p-4">
         <h1 className="text-title1">Input</h1>
+        <Input type="text" styleSize="small" placeholder="작은 입력" />
         <Input
           type="text"
-          placeholder="검색어를 입력하세요"
-          icon={<img src="/icons/search.svg" alt="검색 아이콘" className="h-4 w-4" />}
+          styleSize="basic"
+          placeholder="기본 입력"
+          icon={<img src="/icons/unmute.svg" className="h-[20px] w-[20px]" alt="search" />}
         />
       </div>
       {/* BottomSheet Section */}
