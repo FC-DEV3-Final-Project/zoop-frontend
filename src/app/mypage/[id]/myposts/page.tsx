@@ -72,11 +72,13 @@ export default function MyPostsPage() {
   return (
     <div className="flex w-full flex-col bg-gray-100">
       <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
-
       <div className="flex flex-col gap-1">
         {postData[selectedTab as keyof PostData].map((post, idx) => (
           <MyPostItem key={idx} {...post} />
         ))}
+      </div>
+      <div className="flex h-[104px] items-center justify-center text-body2 text-gray-700-info">
+        더 이상 표시할 콘텐츠가 없습니다
       </div>
     </div>
   );
