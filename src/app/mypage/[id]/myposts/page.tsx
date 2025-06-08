@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Tab } from "@/components/Tab";
 import { MyPostItem } from "@/components/common/MyPostItem";
 
@@ -68,13 +69,20 @@ const postData: PostData = {
 
 export default function MyPostsPage() {
   const [selectedTab, setSelectedTab] = useState("review");
+  const router = useRouter();
+
+  const handlePostClick = (title: string) => {
+    router.push(`/review/${title}`);
+  };
 
   return (
     <div className="flex w-full flex-col bg-gray-100">
       <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
       <div className="flex flex-col gap-1">
         {postData[selectedTab as keyof PostData].map((post, idx) => (
-          <MyPostItem key={idx} {...post} />
+          <div key={idx} onClick={() => handlePostClick(post.title)}>
+            <MyPostItem {...post} />
+          </div>
         ))}
       </div>
       <div className="flex h-[104px] items-center justify-center text-body2 text-gray-700-info">
