@@ -13,17 +13,17 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export default function Input({ styleSize, icon, placeholder, className }: InputProps) {
   const baseStyle = cn(
     "flex items-center",
-    "w-full rounded-[8px] bg-gray-200",
-    "placeholder-[#778292]",
+    "w-full rounded-lg bg-gray-200",
+    "placeholder-gray-800",
     "focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1", // 포커스 스타일
     "disabled:cursor-not-allowed disabled:opacity-50",
-    "px-[12px]",
+    "px-3",
     className,
   );
 
   const sizeClasses: Record<InputStyleSize, string> = {
-    small: "text-[14px] py-[6px]",
-    basic: "text-[16px] py-[12px]  pr-[40px]",
+    small: "text-body2 py-[6px]",
+    basic: "text-subtitle3 py-3 pr-10",
   };
 
   const combinedClassName = cn(baseStyle, sizeClasses[styleSize], className);
