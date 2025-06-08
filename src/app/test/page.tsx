@@ -274,6 +274,19 @@ export default function Test() {
           detailAddress="101동 703호"
           buildingType="아파트"
           area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isActive={false}
+        />
+        <PropertyCard
+          itemId={3}
+          itemNumber={3}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
           small={true}
         />
