@@ -70,10 +70,10 @@ export default function MyPostsPage() {
   const [selectedTab, setSelectedTab] = useState("review");
 
   return (
-    <div className="flex w-full flex-col items-start">
+    <div className="flex w-full flex-col bg-gray-100">
       <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
 
-      <div className="flex w-full flex-col gap-1 bg-stone-50">
+      <div className="flex flex-col gap-1">
         {postData[selectedTab as keyof PostData].map((post, idx) => (
           <MyPostItem key={idx} {...post} />
         ))}
