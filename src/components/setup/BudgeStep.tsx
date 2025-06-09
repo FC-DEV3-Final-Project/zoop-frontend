@@ -10,7 +10,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
   const [monthlyRent, setMonthlyRent] = useState("0"); // 월세
 
   return (
-    <div className="relative flex h-full flex-col gap-5">
+    <div className="flex h-full flex-col gap-5">
       <h1 className="text-[22px] font-medium">생각해 둔 예산을 알려주세요</h1>
       <div className="flex flex-col gap-1">
         <div className="relative">
@@ -35,7 +35,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
         </div>
       </div>
 
-      <div className="absolute bottom-3 w-full">
+      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
         <Button onClick={onNext} disabled={deposit === "0" || monthlyRent === "0"}>
           결과 확인하기
         </Button>

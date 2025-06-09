@@ -58,7 +58,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
   };
 
   return (
-    <div className="relative flex h-full flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <h1 className="text-[22px] font-medium">원하는 지역을 알려주세요</h1>
       <div className="relative">
         <input
@@ -89,7 +89,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
         </div>
       )}
 
-      <div className="absolute bottom-3 w-full">
+      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
         <Button onClick={onNext} disabled={input.length === 0}>
           다음
         </Button>
