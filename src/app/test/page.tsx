@@ -288,7 +288,7 @@ export default function Test() {
           buildingType="아파트"
           area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
-          small={true}
+          size="sm"
         />
       </div>
     </div>
