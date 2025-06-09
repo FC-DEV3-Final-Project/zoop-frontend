@@ -38,32 +38,12 @@ export default function InfoSection() {
       <div className="mb-5 text-title2 text-black">매물정보</div>
       {/* <Image src="" alt="매물정보 사진" className="mb-5" /> */}
       <div className="mb-5 h-[200px] w-full rounded-small bg-gray-500"></div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] border-b-[1px] border-b-gray-200 pb-8 text-subtitle3 text-black">
+      <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] pb-8 text-subtitle3 text-black">
         {infoList.map(([label, value], idx) => (
           <React.Fragment key={idx}>
             <div>{label}</div>
             <div>{value}</div>
           </React.Fragment>
-        ))}
-      </div>
-
-      <div className="mb-5 mt-8 text-subtitle1 text-black">시설정보</div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-[76px] gap-y-[20px] border-b-[1px] border-b-gray-200 pb-8 text-subtitle3 text-black">
-        {facilityList.map(([label, value], idx) => (
-          <React.Fragment key={idx}>
-            <div>{label}</div>
-            <div>{value}</div>
-          </React.Fragment>
-        ))}
-      </div>
-
-      <div className="mb-5 mt-8 text-subtitle1 text-black">추가옵션</div>
-      <div className="flex flex-wrap gap-y-5">
-        {optionList.map((opt, idx) => (
-          <div key={idx} className="flex w-1/4 flex-col items-center justify-center gap-1">
-            <img src={opt.icon} alt={opt.label} className="h-6 w-6" />
-            <span className="text-body4 text-black">{opt.label}</span>
-          </div>
         ))}
       </div>
     </section>
