@@ -6,8 +6,8 @@ interface BudgeStepProps {
 }
 
 const BudgeStep = ({ onNext }: BudgeStepProps) => {
-  const [deposit, setDeposit] = useState(0); // 보증금
-  const [monthlyRent, setMonthlyRent] = useState(0); // 월세
+  const [deposit, setDeposit] = useState("0"); // 보증금
+  const [monthlyRent, setMonthlyRent] = useState("0"); // 월세
 
   return (
     <div className="relative flex h-full flex-col gap-5">
@@ -16,9 +16,9 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
         <div className="relative">
           <label className="text-subtitle2 text-gray-800">보증금</label>
           <input
-            className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 outline-none placeholder:text-[20px]"
+            className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 text-[20px] font-medium outline-none"
             value={deposit}
-            onChange={(e) => setDeposit(Number(e.target.value))}
+            onChange={(e) => setDeposit(e.target.value)}
           />
           <div className="absolute right-0 top-7 text-[20px] font-medium">만원</div>
           <div className="mt-[2px] flex w-full justify-end text-subtitle3 text-gray-800">0만원</div>
@@ -26,9 +26,9 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
         <div className="relative">
           <label className="text-subtitle2 text-gray-800">월세</label>
           <input
-            className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 outline-none placeholder:text-[20px]"
+            className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 text-[20px] font-medium outline-none"
             value={monthlyRent}
-            onChange={(e) => setMonthlyRent(Number(e.target.value))}
+            onChange={(e) => setMonthlyRent(e.target.value)}
           />
           <div className="absolute right-0 top-7 text-[20px] font-medium">만원</div>
           <div className="mt-[2px] flex w-full justify-end text-subtitle3 text-gray-800">0만원</div>
@@ -36,7 +36,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
       </div>
 
       <div className="absolute bottom-4 w-full">
-        <Button onClick={onNext} disabled={deposit === 0 || monthlyRent === 0}>
+        <Button onClick={onNext} disabled={deposit === "0" || monthlyRent === "0"}>
           결과 확인하기
         </Button>
       </div>
