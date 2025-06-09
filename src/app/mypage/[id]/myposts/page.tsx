@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Tab } from "@/components/Tab";
-import { MyPostItem } from "@/components/common/MyPostItem";
+import { MyPostItem } from "@/components/mypage/myposts/MyPostItem";
 
 const tabOptions = [
   { label: "리뷰", value: "review" },
