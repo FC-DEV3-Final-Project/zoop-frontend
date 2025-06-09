@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const EditProfileImage = () => {
@@ -9,7 +7,7 @@ const EditProfileImage = () => {
     <div className="relative flex h-full flex-col">
       {/* 아이콘 */}
       <button className="absolute right-5 top-3">
-        <Image src="/icons/x.svg" alt="닫기" width={24} height={24} />
+        <img src="/icons/x.svg" alt="닫기" className="h-6 w-6" />
       </button>
       {/* 이미지 영역 */}
       <div className="flex flex-1 items-center justify-center">

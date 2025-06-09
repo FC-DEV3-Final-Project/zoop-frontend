@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 // 임시 데이터
 const userData = {
@@ -27,10 +28,17 @@ const UserInfoPage = () => {
         {/* 상단 프로필 이미지 영역 */}
         <div className="flex h-40 items-center justify-center self-stretch px-5 py-3.5">
           <button
-            onClick={() => handleEditProfileImage()}
+            onClick={handleEditProfileImage}
             className="h-16 w-16 overflow-hidden rounded-full bg-gray-100"
           >
-            <img src={userData.profileImage} alt="프로필" className="h-full w-full object-cover" />
+            <Image
+              src={userData.profileImage}
+              alt="프로필"
+              width={64}
+              height={64}
+              className="h-full w-full object-cover"
+              priority
+            />
           </button>
         </div>
         {/* 하단 영역 */}
@@ -39,7 +47,7 @@ const UserInfoPage = () => {
           <div className="flex flex-col">
             <div className="flex justify-between p-4">
               <span className="text-subtitle2">닉네임</span>
-              <button className="flex gap-2" onClick={() => handleEditNickname()}>
+              <button className="flex gap-2" onClick={handleEditNickname}>
                 <span className="text-body1">{userData.nickname}</span>
                 <img src="/icons/arrow-right.svg" alt="수정" className="h-6 w-6" />
               </button>

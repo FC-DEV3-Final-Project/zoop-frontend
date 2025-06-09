@@ -2,6 +2,7 @@
 import PostPreview from "@/components/common/PostPreview";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
 
 const MyPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -187,10 +188,13 @@ const MyPage = ({ params }: { params: { id: string } }) => {
         <div className="flex inline-flex w-full items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
-              <img
+              <Image
                 src={userData.profileImage}
                 alt="프로필"
+                width={40}
+                height={40}
                 className="h-full w-full object-cover"
+                priority
               />
             </div>
             <span className="text-subtitle2">{userData.name}</span>
