@@ -194,6 +194,7 @@ export default function Test() {
           </div>
         </div>
       </div>
+      
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
@@ -302,7 +303,7 @@ export default function Test() {
       </div>
 
       {/* propertyCard Section */}
-      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
         <h2 className="text-title2">Property Card</h2>
         <PropertyCard
           itemId={1}
@@ -326,8 +327,21 @@ export default function Test() {
           detailAddress="101동 703호"
           buildingType="아파트"
           area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isActive={false}
+        />
+        <PropertyCard
+          itemId={3}
+          itemNumber={3}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
-          small={true}
+          size="sm"
         />
       </div>
     </div>
