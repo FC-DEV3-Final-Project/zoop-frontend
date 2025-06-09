@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tab } from "@/components/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
+import Dropdown from "@/components/Dropdown";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -22,12 +23,28 @@ const sortOptions = [
   { label: "가격 낮은 순", value: "low" },
 ];
 
+const dropItems = [
+  { label: "삭제하기", value: "delete" },
+  { label: "편집하기", value: "edit" },
+];
+
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
+      {/* DropDown Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">DropDown</h1>
+        <Dropdown
+          items={dropItems}
+          onSelect={(item) => {
+            console.log("선택한 값:", item.label);
+          }}
+        />
+      </div>
+
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">BottomSheet</h1>
