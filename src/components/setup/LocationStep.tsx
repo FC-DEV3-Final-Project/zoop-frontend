@@ -42,6 +42,21 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
   // 임시
   const filteredData = dummyData.filter((item) => item.title.includes(searchKeyword));
 
+  const highlightText = (text: string, keyword: string) => {
+    if (!keyword) return text;
+
+    const index = text.indexOf(keyword);
+    if (index === -1) return text;
+
+    return (
+      <>
+        {text.slice(0, index)}
+        <span className="text-blue-800">{text.slice(index, index + keyword.length)}</span>
+        {text.slice(index + keyword.length)}
+      </>
+    );
+  };
+
   return (
     <div className="relative flex h-full flex-col gap-5">
       <h1 className="text-[22px] font-medium">원하는 지역을 알려주세요</h1>
@@ -67,7 +82,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
           <ul className="flex h-[270px] flex-col gap-[6px] overflow-y-auto">
             {filteredData.map((item, idx) => (
               <li key={idx} className="py-[10px]">
-                <div className="text-body1">{item.title}</div>
+                <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
                 <div className="text-body2">{item.detail}</div>
               </li>
             ))}
