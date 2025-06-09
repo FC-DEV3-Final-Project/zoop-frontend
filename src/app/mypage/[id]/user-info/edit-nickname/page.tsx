@@ -1,15 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const EditNickname = () => {
   const [nickname, setNickname] = useState("");
-  const router = useRouter();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
 
   return (
     <div className="relative">
@@ -19,7 +13,7 @@ const EditNickname = () => {
           <input
             type="text"
             value={nickname}
-            onChange={handleChange}
+            onChange={(e) => setNickname(e.target.value)}
             maxLength={20}
             placeholder="닉네임을 입력해주세요."
             className="w-full text-caption2 placeholder-gray-300 focus:outline-none"
