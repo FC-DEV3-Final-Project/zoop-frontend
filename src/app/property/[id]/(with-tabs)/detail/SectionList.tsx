@@ -3,7 +3,6 @@ import DealSection from "./section/DealSection";
 import DescriptionSection from "./section/DescriptionSection";
 import InfoSection from "./section/InfoSection";
 import LocationSection from "./section/LocationSection";
-import PriceSection from "./section/PriceSection";
 
 export default function SectionList() {
   return (
@@ -12,7 +11,6 @@ export default function SectionList() {
       <InfoSection />
       <LocationSection />
       <DescriptionSection />
-      <PriceSection />
       <AgentSection />
     </div>
   );
