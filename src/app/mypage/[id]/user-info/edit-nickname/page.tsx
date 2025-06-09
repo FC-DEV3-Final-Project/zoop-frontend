@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function EditNickname() {
+const EditNickname = () => {
   const [nickname, setNickname] = useState("");
   const router = useRouter();
 
@@ -31,4 +31,6 @@ export default function EditNickname() {
       </div>
     </div>
   );
-}
+};
+
+export default EditNickname;

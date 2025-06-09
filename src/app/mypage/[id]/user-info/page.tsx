@@ -9,7 +9,7 @@ const userData = {
   email: "00000@kakao.com",
 };
 
-export default function UserInfoPage() {
+const UserInfoPage = () => {
   const router = useRouter();
   const { id } = useParams();
 
@@ -62,4 +62,6 @@ export default function UserInfoPage() {
       </div>
     </>
   );
-}
+};
+
+export default UserInfoPage;

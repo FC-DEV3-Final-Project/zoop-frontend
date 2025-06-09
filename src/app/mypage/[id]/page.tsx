@@ -3,7 +3,7 @@ import PostPreview from "@/components/common/PostPreview";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRouter, useParams } from "next/navigation";
 
-export default function MyPage({ params }: { params: { id: string } }) {
+const MyPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const { id } = useParams();
 
@@ -230,4 +230,6 @@ export default function MyPage({ params }: { params: { id: string } }) {
       />
     </div>
   );
-}
+};
+
+export default MyPage;

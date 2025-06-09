@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function EditProfileImage() {
+const EditProfileImage = () => {
   return (
     <div className="relative flex h-full flex-col">
       {/* 아이콘 */}
@@ -28,4 +28,6 @@ export default function EditProfileImage() {
       </div>
     </div>
   );
-}
+};
+
+export default EditProfileImage;
