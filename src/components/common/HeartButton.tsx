@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useLike } from "@/hooks/property/useLike";
+import { useLike } from "@/hooks/common/useLike";
 
 interface HeartButtonProps {
   itemId: number;

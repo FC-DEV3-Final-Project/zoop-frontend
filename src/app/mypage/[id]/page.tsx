@@ -1,5 +1,5 @@
 "use client";
-import PostPreview from "@/components/common/PostPreview";
+import PostPreview from "@/components/mypage/PostPreview";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
