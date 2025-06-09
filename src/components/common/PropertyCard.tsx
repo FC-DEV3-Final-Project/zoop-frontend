@@ -14,7 +14,7 @@ interface PropertyCardProps {
   address: string;
   detailAddress: string;
   tags: string[];
-  small?: boolean;
+  size?: "sm" | "md";
   isActive?: boolean;
 }
 
@@ -29,7 +29,7 @@ const PropertyCard = ({
   address,
   detailAddress,
   tags,
-  small = false,
+  size = "md",
   isActive = true,
 }: PropertyCardProps) => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const PropertyCard = ({
 
   return (
     <div
-      className={`flex w-full items-center gap-3 self-stretch bg-white ${small ? "px-3" : "px-5"} cursor-pointer py-2.5`}
+      className={`flex w-full items-center gap-3 self-stretch bg-white ${size === "sm" ? "px-3" : "px-5"} cursor-pointer py-2.5`}
       onClick={handleCardClick}
     >
       {/* 이미지 섹션 */}
