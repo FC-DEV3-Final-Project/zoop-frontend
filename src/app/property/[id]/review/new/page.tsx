@@ -1,14 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SelectButtonGroup from "@/components/property/review/new/SelectButtonGroup";
 import ReviewTextarea from "@/components/property/review/new/ReviewTextarea";
 import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
 
 const NewReviewPage = () => {
+  const router = useRouter();
   const [residence, setResidence] = useState("current");
   const [hasChild, setHasChild] = useState("none");
+
+  const handleSubmit = () => {
+    router.push("/property/${id}/review");
+  };
 
   return (
     <div className="flex h-full flex-col bg-white">
@@ -57,7 +63,7 @@ const NewReviewPage = () => {
 
       {/* 하단 버튼 */}
       <div className="sticky bottom-0 left-0 w-full bg-white px-5 py-3">
-        <Button variant="default" className="w-full">
+        <Button variant="default" className="w-full" onClick={handleSubmit}>
           등록하기
         </Button>
       </div>
