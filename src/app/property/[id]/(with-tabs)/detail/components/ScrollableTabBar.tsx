@@ -3,12 +3,12 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-const TAB_LIST = [
+const tab_list = [
   { label: "거래정보", value: "deal" },
   { label: "매물정보", value: "info" },
+  { label: "시설정보", value: "facility" },
   { label: "위치정보", value: "location" },
   { label: "상세설명", value: "description" },
-  { label: "실거래가", value: "price" },
   { label: "중개정보", value: "agent" },
 ];
 
@@ -24,7 +24,7 @@ export default function ScrollableTabBar() {
       }}
     >
       <div className="flex w-[600px] max-w-full">
-        {TAB_LIST.map((tab) => {
+        {tab_list.map((tab) => {
           const isActive = selected === tab.value;
           return (
             <button
