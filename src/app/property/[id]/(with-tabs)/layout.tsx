@@ -4,7 +4,7 @@ import { use } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { Tab } from "@/components/Tab";
-import ImageCarousel from "../components/ImageCarousel";
+import ImageCarousel from "@/components/property/ImageCarousel";
 
 const TAB_OPTIONS = [
   { label: "상세 정보", value: "detail" },
@@ -34,7 +34,7 @@ export default function PropertyLayout({
 
   return (
     <>
-      {selectedTab === "detail" && <ImageCarousel />}
+      <ImageCarousel />
       <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
       <div>{children}</div>
     </>

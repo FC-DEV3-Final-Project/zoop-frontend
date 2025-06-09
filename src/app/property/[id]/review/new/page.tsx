@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import SelectButtonGroup from "./components/SelectButtonGroup";
-import ReviewTextarea from "./components/ReviewTextarea";
-import StarRating from "./components/StarRating";
+import SelectButtonGroup from "@/components/property/review/new/SelectButtonGroup";
+import ReviewTextarea from "@/components/property/review/new/ReviewTextarea";
+import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
 
 export default function NewReviewPage() {

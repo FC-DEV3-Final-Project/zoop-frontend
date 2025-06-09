@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "@/components/property/review/ReviewCard";
 
 const mock_reviews = [
   {

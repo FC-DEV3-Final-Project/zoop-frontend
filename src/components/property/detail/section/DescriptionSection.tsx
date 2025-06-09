@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import GrayButton from "../components/GrayButton";
+import GrayButton from "@/components/property/detail/GrayButton";
 
 export default function DescriptionSection() {
   const textRef = useRef<HTMLDivElement>(null);

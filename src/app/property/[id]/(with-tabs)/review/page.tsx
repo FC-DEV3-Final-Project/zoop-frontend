@@ -1,8 +1,8 @@
 "use client";
 
 import { use } from "react";
-import EnvironmentTabs from "./EnvironmentTabs";
-import ReviewList from "./ReviewList";
+import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
+import ReviewList from "@/components/property/review/ReviewList";
 
 export default function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);

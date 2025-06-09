@@ -1,9 +1,9 @@
 "use client";
 
 import { use } from "react";
-import InfoBox from "./detail/InfoBox";
-import ScrollableTabBar from "./detail/components/ScrollableTabBar";
-import SectionList from "./detail/SectionList";
+import InfoBox from "@/components/property/detail/InfoBox";
+import ScrollableTabBar from "@/components/property/detail/ScrollableTabBar";
+import SectionList from "@/components/property/detail/SectionList";
 
 export default function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
