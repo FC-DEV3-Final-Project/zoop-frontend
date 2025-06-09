@@ -3,25 +3,48 @@
 import { useState } from "react";
 
 export default function StarRating() {
-  const [rating, setRating] = useState(0); // 0 ~ 5
+  const [rating, setRating] = useState(0);
+
+  const handleClick = (index: number, isHalf: boolean) => {
+    const newRating = isHalf ? index + 0.5 : index + 1;
+    setRating(newRating);
+  };
+
+  const renderStarIcon = (index: number) => {
+    if (rating >= index + 1) return "/icons/star-filled.svg";
+    if (rating >= index + 0.5) return "/icons/star-half.svg";
+    return "/icons/star-unfilled.svg";
+  };
 
   return (
     <div className="flex items-center justify-between">
-      {/* 별 5개 */}
       <div className="flex gap-[4px]">
         {[0, 1, 2, 3, 4].map((i) => (
-          <button key={i} type="button" onClick={() => setRating(i + 1)}>
+          <div key={i} className="relative h-8 w-8">
+            {/* 왼쪽 (0.5점) */}
+            <button
+              type="button"
+              className="absolute left-0 top-0 z-10 h-full w-1/2"
+              onClick={() => handleClick(i, true)}
+            />
+            {/* 오른쪽 (1점) */}
+            <button
+              type="button"
+              className="absolute right-0 top-0 z-10 h-full w-1/2"
+              onClick={() => handleClick(i, false)}
+            />
+            {/* 별 아이콘 */}
             <img
-              src={i < rating ? "/icons/star-filled.svg" : "/icons/star-unfilled.svg"}
-              alt={i < rating ? "filled-star" : "unfilled-star"}
+              src={renderStarIcon(i)}
+              alt="star"
+              className="pointer-events-none"
               width={32}
               height={32}
             />
-          </button>
+          </div>
         ))}
       </div>
 
-      {/* 점수 텍스트 */}
       <span className="text-title3 text-black">{rating.toFixed(1)}</span>
     </div>
   );
