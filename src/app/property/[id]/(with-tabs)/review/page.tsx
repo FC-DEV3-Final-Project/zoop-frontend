@@ -4,7 +4,7 @@ import { use } from "react";
 import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
 import ReviewList from "@/components/property/review/ReviewList";
 
-function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
+const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
 
   return (
@@ -87,6 +87,6 @@ function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
       <ReviewList />
     </>
   );
-}
+};
 
 export default ReviewPage;

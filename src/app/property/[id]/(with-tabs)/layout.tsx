@@ -11,13 +11,13 @@ const TAB_OPTIONS = [
   { label: "리뷰", value: "review" },
 ];
 
-function PropertyLayout({
+const PropertyLayout = ({
   children,
   params,
 }: {
   children: ReactNode;
   params: Promise<{ id: string }>;
-}) {
+}) => {
   const { id } = use(params);
   const router = useRouter();
   const pathname = usePathname();
@@ -39,6 +39,6 @@ function PropertyLayout({
       <div>{children}</div>
     </>
   );
-}
+};
 
 export default PropertyLayout;

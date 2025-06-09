@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import ReviewCard from "@/components/property/review/ReviewCard";
 import CommentList from "@/components/property/review/CommentList";
 
-function ReviewDetailPage() {
+const ReviewDetailPage = () => {
   const { reviewId } = useParams();
 
   const mock_reviews = [
@@ -44,6 +44,6 @@ function ReviewDetailPage() {
       <CommentList reviewId={review.id} />
     </div>
   );
-}
+};
 
 export default ReviewDetailPage;

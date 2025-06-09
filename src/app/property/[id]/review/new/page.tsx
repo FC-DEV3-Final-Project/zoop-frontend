@@ -6,7 +6,7 @@ import ReviewTextarea from "@/components/property/review/new/ReviewTextarea";
 import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
 
-function NewReviewPage() {
+const NewReviewPage = () => {
   const [residence, setResidence] = useState("current");
   const [hasChild, setHasChild] = useState("none");
 
@@ -63,6 +63,6 @@ function NewReviewPage() {
       </div>
     </div>
   );
-}
+};
 
 export default NewReviewPage;
