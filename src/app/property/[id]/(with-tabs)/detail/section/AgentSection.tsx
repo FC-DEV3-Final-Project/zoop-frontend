@@ -6,9 +6,9 @@ import GrayButton from "../components/GrayButton";
 export default function AgentSection() {
   const router = useRouter();
   const agentInfo = [
+    { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
     { label: "대표", value: "김정순" },
     { label: "등록번호", value: "44862989" },
-    { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
     {
       label: "전화",
       value: ["031-271-5309", "010-8711-6151"],
@@ -29,8 +29,8 @@ export default function AgentSection() {
   return (
     <section id="agent" className="mb-[75px] scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">중개정보</div>
-      <div className="mb-5 text-subtitle1 text-black">일등 부동산 공인중개사사무소</div>
-      <div className="flex flex-col gap-1 text-body2 text-black">
+      <div className="mb-5 text-title3 text-black">일등 부동산 공인중개사사무소</div>
+      <div className="flex flex-col gap-1 text-caption1 text-black">
         {agentInfo.map((item, idx) => (
           <div key={idx}>
             {/* label 존재 mapping */}
@@ -45,14 +45,14 @@ export default function AgentSection() {
                     </span>
                   ))
                 ) : (
-                  <span className="text-caption1">{item.value}</span>
+                  <span className="text-body2">{item.value}</span>
                 )}
                 {item.label === "대표"}
               </>
             )}
 
             {/* label 제외하는 주소 */}
-            {!item.label && <>{item.value}</>}
+            {!item.label && <div className="text-body2">{item.value}</div>}
           </div>
         ))}
       </div>
