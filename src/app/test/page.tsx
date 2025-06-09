@@ -194,6 +194,7 @@ export default function Test() {
           </div>
         </div>
       </div>
+      
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
