@@ -31,10 +31,13 @@ const Page = () => {
 
   return (
     <>
-      {/** Progress */}
-      <div
+      {/** Progress Bar */}
+      <div className="w-full bg-gray-300 h-[4px]">
+        <div
         className={`h-[4px] rounded-br-[16px] rounded-tr-[16px] bg-blue-800-primary transition-all duration-300 ${getProgressWidthClass(currentStep)}`}
       />
+      </div>
+     
       <div className="h-[calc(100%-4px)] px-5 pt-10">
         <Funnel>
           <Step name="1">
