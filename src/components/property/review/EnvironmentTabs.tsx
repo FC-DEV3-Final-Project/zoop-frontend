@@ -32,12 +32,12 @@ const tabs = [
 const EnvironmentTabs = () => {
   return (
     <Tabs defaultValue="transport" className="w-full">
-      <TabsList className="relative z-10 flex w-full justify-start gap-0 bg-white p-0">
+      <TabsList className="z-5 relative flex w-full justify-start gap-0 bg-white p-0">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
             value={tab.value}
-            className={`-mb-px rounded-t-[10px] border border-b-blue-800-primary bg-blue-050-bg px-4 py-2 text-subtitle4 text-blue-800-primary data-[state=active]:relative data-[state=active]:z-20 data-[state=inactive]:border-x-0 data-[state=active]:border-b-0 data-[state=inactive]:border-t-0 data-[state=active]:border-x-blue-800-primary data-[state=active]:border-t-blue-800-primary data-[state=active]:bg-white data-[state=active]:text-blue-800-primary data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-[1px] data-[state=active]:after:w-full data-[state=active]:after:bg-white data-[state=active]:after:content-['']`}
+            className={`data-[state=active]:z-5 -mb-px rounded-t-[10px] border border-b-blue-800-primary bg-blue-050-bg px-4 py-2 text-subtitle4 text-blue-800-primary data-[state=active]:relative data-[state=inactive]:border-x-0 data-[state=active]:border-b-0 data-[state=inactive]:border-t-0 data-[state=active]:border-x-blue-800-primary data-[state=active]:border-t-blue-800-primary data-[state=active]:bg-white data-[state=active]:text-blue-800-primary data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-[1px] data-[state=active]:after:w-full data-[state=active]:after:bg-white data-[state=active]:after:content-['']`}
           >
             {tab.name}
           </TabsTrigger>
