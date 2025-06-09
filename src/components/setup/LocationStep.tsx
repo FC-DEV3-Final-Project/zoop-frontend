@@ -75,7 +75,6 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
           onClick={handleSearch}
         />
       </div>
-
       {searchKeyword && (
         <div className="flex flex-col gap-4 overflow-hidden">
           <div className="text-body2 text-gray-800">검색결과 ({filteredData.length})</div>
@@ -90,7 +89,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
         </div>
       )}
 
-      <div className="absolute bottom-4 w-full">
+      <div className="absolute bottom-3 w-full">
         <Button onClick={onNext} disabled={input.length === 0}>
           다음
         </Button>

@@ -35,7 +35,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
         </div>
       </div>
 
-      <div className="absolute bottom-4 w-full">
+      <div className="absolute bottom-3 w-full">
         <Button onClick={onNext} disabled={deposit === "0" || monthlyRent === "0"}>
           결과 확인하기
         </Button>
