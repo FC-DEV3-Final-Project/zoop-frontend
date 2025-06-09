@@ -17,7 +17,7 @@ const HeartButton = ({ itemId }: HeartButtonProps) => {
       className="relative h-6 w-6 cursor-pointer overflow-hidden"
     >
       <Image
-        src={isLiked ? "/icons/heart_true.svg" : "/icons/heart_false.svg"}
+        src={isLiked ? "/icons/heart-filled.svg" : "/icons/heart-outline.svg"}
         alt={isLiked ? "찜하기 완료" : "찜하기"}
         width={24}
         height={24}
