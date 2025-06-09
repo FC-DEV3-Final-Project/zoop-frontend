@@ -23,10 +23,10 @@ const sortOptions = [
   { label: "가격 낮은 순", value: "low" },
 ];
 
-const dropItems = [
-  { label: "삭제하기", value: "delete" },
-  { label: "편집하기", value: "edit" },
-];
+// const dropItems = [
+//   { label: "삭제하기", value: "delete" },
+//   { label: "편집하기", value: "edit" },
+// ];
 
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
@@ -38,11 +38,12 @@ export default function Test() {
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">DropDown</h1>
         <Dropdown
-          items={dropItems}
-          onSelect={(item) => {
-            console.log("선택한 값:", item.label);
-          }}
+          items={[
+            { type: "edit", label: "수정하기" },
+            { type: "delete", label: "삭제하기" },
+          ]}
         />
+        <Dropdown items={[{ type: "delete", label: "삭제하기" }]} />
       </div>
 
       {/* BottomSheet Section */}

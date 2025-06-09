@@ -1,17 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface DropdownItem {
-  value: string;
-  label: string;
-}
+type DropdownItemType = "edit" | "delete";
+
+const DefaultSetting: Record<
+  DropdownItemType,
+  {
+    icon: React.ReactNode;
+    onClick: () => void;
+  }
+> = {
+  edit: {
+    icon: <img src="/icons/write.svg" alt="편집하기" className="h-[18px] w-[18px]" />,
+    onClick: () => {
+      console.log("편집하기 클릭");
+    },
+  },
+  delete: {
+    icon: <img src="/icons/trash.svg" alt="삭제하기" className="h-4[18px] w-[18px]" />,
+    onClick: () => {
+      console.log("삭제 클릭");
+    },
+  },
+};
 
 interface DropdownProps {
-  items: DropdownItem[];
-  onSelect: (item: DropdownItem) => void;
+  items: {
+    type: DropdownItemType;
+    label: string;
+  }[];
 }
 
-const Dropdown = ({ items, onSelect }: DropdownProps) => {
+const Dropdown = ({ items }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -26,36 +46,39 @@ const Dropdown = ({ items, onSelect }: DropdownProps) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative">
-      {/* 아이콘 버튼 */}
+    <div ref={dropdownRef} className="relative w-fit">
       <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
         <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
 
-      {/* 드롭다운 리스트 */}
       {open && (
-        <ul className="absolute rounded-lg border border-gray-300 bg-gray-100/90">
+        <div className="absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90">
           {items.map((item, index) => {
             const isFirst = index === 0;
             const isOnlyOne = items.length === 1;
 
+            const base = DefaultSetting[item.type];
+            const isDelete = item.type === "delete";
+
             return (
-              <li
-                key={item.value}
+              <button
+                key={item.type}
                 onClick={() => {
-                  onSelect(item);
+                  base.onClick();
                   setOpen(false);
                 }}
                 className={cn(
-                  "cursor-pointer px-[12px] py-[8px] text-[13px] font-normal leading-[150%] hover:text-blue-600",
-                  isFirst && !isOnlyOne && "border-grat-300 border-b",
+                  "flex items-center gap-[7px] px-[12px] py-[8px]",
+                  "cursor-pointer text-[13px]",
+                  isFirst && !isOnlyOne && "border-b border-gray-300",
                 )}
               >
-                {item.label}
-              </li>
+                <span className={isDelete ? "text-blue-600" : "text-black"}>{item.label}</span>
+                <span className={isDelete ? "text-blue-600" : "text-gray-300"}>{base.icon}</span>
+              </button>
             );
           })}
-        </ul>
+        </div>
       )}
     </div>
   );
