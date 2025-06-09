@@ -8,10 +8,7 @@ const EditNickname = () => {
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.length <= 20) {
-      setNickname(value);
-    }
+    setNickname(e.target.value);
   };
 
   return (
@@ -23,6 +20,7 @@ const EditNickname = () => {
             type="text"
             value={nickname}
             onChange={handleChange}
+            maxLength={20}
             placeholder="닉네임을 입력해주세요."
             className="w-full text-caption2 placeholder-gray-300 focus:outline-none"
           />
