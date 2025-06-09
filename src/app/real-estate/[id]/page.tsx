@@ -9,7 +9,7 @@ const tabOptions = [
   { label: "매매", value: "sale" },
 ];
 
-const Properties = [
+const properties = [
   {
     id: 1,
     imageUrl: "/imgs/propertyExample.png",
@@ -165,9 +165,9 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
         showMapViewButton={false}
         tabOptions={tabOptions}
         propertyMap={{
-          rent: Properties,
-          lease: Properties,
-          sale: Properties,
+          rent: properties,
+          lease: properties,
+          sale: properties,
         }}
       />
       {/* 공인중개사에게 전화 걸기 버튼 */}
