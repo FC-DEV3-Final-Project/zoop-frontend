@@ -4,11 +4,11 @@ type PostPreviewProps = {
   comments: number;
 };
 
-export default function PostPreview({ content, likes, comments }: PostPreviewProps) {
+const PostPreview = ({ content, likes, comments }: PostPreviewProps) => {
   return (
     <div className="flex h-8 w-full items-center gap-6 py-[5px] pr-[3px]">
       <div className="flex-1 truncate">{content}</div>
-        
+
       {/* 아이콘 영역*/}
       <div className="flex items-center gap-1 text-body3 text-gray-600-hint">
         <div className="flex w-[26px] gap-0.5">
@@ -22,4 +22,6 @@ export default function PostPreview({ content, likes, comments }: PostPreviewPro
       </div>
     </div>
   );
-}
+};
+
+export default PostPreview;

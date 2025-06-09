@@ -67,7 +67,7 @@ const postData: PostData = {
   ],
 };
 
-export default function MyPostsPage() {
+const MyPostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("review");
   const router = useRouter();
 
@@ -90,4 +90,6 @@ export default function MyPostsPage() {
       </div>
     </div>
   );
-}
+};
+
+export default MyPostsPage;
