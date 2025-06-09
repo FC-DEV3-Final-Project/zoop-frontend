@@ -71,7 +71,7 @@ export default function ReviewCard({
         <p className="text-subtitle3 text-black">{content}</p>
 
         {/* 날짜 */}
-        <p className="text-body3 text-gray-700-info">{date}</p>
+        <p className="text-right text-body3 text-gray-700-info">{date}</p>
       </div>
 
       {/* 하단 버튼 */}
