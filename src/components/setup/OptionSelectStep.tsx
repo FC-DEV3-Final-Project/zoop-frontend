@@ -13,7 +13,7 @@ const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => 
 
   return (
     <div className="flex h-full flex-col gap-5">
-      <h1 className="text-[22px] font-medium">원하는 {title}를 선택해주세요.</h1>
+      <h1 className="text-title5">원하는 {title}를 선택해주세요.</h1>
       <div className="flex flex-col gap-[10px]">
         <div className="flex justify-end text-body2 text-gray-800">중복 선택 가능</div>
         <div className="flex flex-col gap-4">
