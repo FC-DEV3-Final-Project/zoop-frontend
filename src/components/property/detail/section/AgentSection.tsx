@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import GrayButton from "@/components/property/detail/GrayButton";
 
-export default function AgentSection() {
+const AgentSection = () => {
   const router = useRouter();
   const agentInfo = [
     { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
@@ -90,4 +90,6 @@ export default function AgentSection() {
       </div>
     </section>
   );
-}
+};
+
+export default AgentSection;

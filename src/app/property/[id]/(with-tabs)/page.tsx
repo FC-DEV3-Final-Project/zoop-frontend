@@ -5,7 +5,7 @@ import InfoBox from "@/components/property/detail/InfoBox";
 import ScrollableTabBar from "@/components/property/detail/ScrollableTabBar";
 import SectionList from "@/components/property/detail/SectionList";
 
-export default function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
+function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
 
   return (
@@ -16,3 +16,5 @@ export default function PropertyDetailPage({ params }: { params: Promise<{ id: s
     </div>
   );
 }
+
+export default PropertyDetailPage;

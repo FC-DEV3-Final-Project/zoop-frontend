@@ -3,7 +3,7 @@
 import { use } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
-import { Tab } from "@/components/Tab";
+import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
 
 const TAB_OPTIONS = [
@@ -11,7 +11,7 @@ const TAB_OPTIONS = [
   { label: "리뷰", value: "review" },
 ];
 
-export default function PropertyLayout({
+function PropertyLayout({
   children,
   params,
 }: {
@@ -40,3 +40,5 @@ export default function PropertyLayout({
     </>
   );
 }
+
+export default PropertyLayout;

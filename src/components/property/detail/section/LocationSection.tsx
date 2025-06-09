@@ -1,4 +1,4 @@
-export default function LocationSection() {
+const LocationSection = () => {
   return (
     <section id="location" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">위치정보</div>
@@ -7,4 +7,6 @@ export default function LocationSection() {
       <div className="h-[210px] w-full rounded-small bg-gray-500"></div>
     </section>
   );
-}
+};
+
+export default LocationSection;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function StarRating() {
+const StarRating = () => {
   const [rating, setRating] = useState(0);
 
   const handleClick = (index: number, isHalf: boolean) => {
@@ -48,4 +48,6 @@ export default function StarRating() {
       <span className="text-title3 text-black">{rating.toFixed(1)}</span>
     </div>
   );
-}
+};
+
+export default StarRating;

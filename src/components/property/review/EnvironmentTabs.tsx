@@ -29,7 +29,7 @@ const tabs = [
   },
 ];
 
-export default function EnvironmentTabs() {
+const EnvironmentTabs = () => {
   return (
     <Tabs defaultValue="transport" className="w-full">
       <TabsList className="relative z-10 flex w-full justify-start gap-0 bg-white p-0">
@@ -59,4 +59,6 @@ export default function EnvironmentTabs() {
       ))}
     </Tabs>
   );
-}
+};
+
+export default EnvironmentTabs;

@@ -4,7 +4,7 @@ import { use } from "react";
 import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
 import ReviewList from "@/components/property/review/ReviewList";
 
-export default function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
+function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
 
   return (
@@ -88,3 +88,5 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
     </>
   );
 }
+
+export default ReviewPage;

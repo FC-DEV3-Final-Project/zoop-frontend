@@ -12,7 +12,7 @@ const tab_list = [
   { label: "중개정보", value: "agent" },
 ];
 
-export default function ScrollableTabBar() {
+const ScrollableTabBar = () => {
   const [selected, setSelected] = useState("deal");
 
   return (
@@ -44,4 +44,6 @@ export default function ScrollableTabBar() {
       </div>
     </div>
   );
-}
+};
+
+export default ScrollableTabBar;

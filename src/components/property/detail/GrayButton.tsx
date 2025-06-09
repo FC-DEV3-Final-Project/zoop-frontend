@@ -7,12 +7,7 @@ interface GrayButtonProps {
   isExpanded?: boolean;
 }
 
-export default function GrayButton({
-  label,
-  onClick,
-  isToggle = false,
-  isExpanded = false,
-}: GrayButtonProps) {
+const GrayButton = ({ label, onClick, isToggle = false, isExpanded = false }: GrayButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -21,4 +16,6 @@ export default function GrayButton({
       {isToggle ? (isExpanded ? "접기" : "전체 설명 보기") : label}
     </button>
   );
-}
+};
+
+export default GrayButton;

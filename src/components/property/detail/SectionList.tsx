@@ -5,7 +5,7 @@ import InfoSection from "@/components/property/detail/section/InfoSection";
 import LocationSection from "@/components/property/detail/section/LocationSection";
 import FacilitySection from "@/components/property/detail/section/FacilitySection";
 
-export default function SectionList() {
+const SectionList = () => {
   return (
     <div className="flex flex-col bg-gray-100">
       <DealSection />
@@ -16,4 +16,6 @@ export default function SectionList() {
       <AgentSection />
     </div>
   );
-}
+};
+
+export default SectionList;

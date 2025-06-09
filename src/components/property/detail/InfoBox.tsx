@@ -4,7 +4,7 @@ interface InfoBoxProps {
   itemId: number;
 }
 
-export default function InfoBox({ itemId }: InfoBoxProps) {
+const InfoBox = ({ itemId }: InfoBoxProps) => {
   const infoColumns = [
     [
       { icon: "/icons/building.svg", label: "아파트" },
@@ -55,4 +55,6 @@ export default function InfoBox({ itemId }: InfoBoxProps) {
       </div>
     </div>
   );
-}
+};
+
+export default InfoBox;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function InfoSection() {
+const InfoSection = () => {
   const infoList = [
     ["전용/공급면적", "34.59m²/52.03m²"],
     ["건축물 용도", "공동주택"],
@@ -33,4 +33,6 @@ export default function InfoSection() {
       </div>
     </section>
   );
-}
+};
+
+export default InfoSection;

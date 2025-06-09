@@ -6,7 +6,7 @@ import { useState } from "react";
 const mockImages = Array(20).fill(null); // 추후 이미지로 대체
 const mockTags = ["반려동물 입주", "역세권", "대학가"]; // 추후 태그 대체
 
-export default function ImageCarousel() {
+const ImageCarousel = () => {
   const [index, setIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
@@ -87,4 +87,6 @@ export default function ImageCarousel() {
       />
     </div>
   );
-}
+};
+
+export default ImageCarousel;

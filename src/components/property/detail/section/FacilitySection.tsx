@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function FacilitySection() {
+const FacilitySection = () => {
   const facilityData = {
     냉방시설: "개별난방",
     옵션: ["천장에어컨", "욕조, 샤워부스", "싱크대", "가스레인지", "세탁기", "냉장고"],
@@ -29,4 +29,6 @@ export default function FacilitySection() {
       </div>
     </section>
   );
-}
+};
+
+export default FacilitySection;

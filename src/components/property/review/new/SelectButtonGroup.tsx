@@ -11,7 +11,7 @@ interface SelectButtonGroupProps {
   onChange: (value: string) => void;
 }
 
-export default function SelectButtonGroup({ options, selected, onChange }: SelectButtonGroupProps) {
+const SelectButtonGroup = ({ options, selected, onChange }: SelectButtonGroupProps) => {
   return (
     <div className="flex gap-[10px]">
       {options.map((opt) => {
@@ -33,4 +33,6 @@ export default function SelectButtonGroup({ options, selected, onChange }: Selec
       })}
     </div>
   );
-}
+};
+
+export default SelectButtonGroup;

@@ -19,7 +19,7 @@ const mock_comments = [
   },
 ];
 
-export default function CommentList({ reviewId }: CommentListProps) {
+const CommentList = ({ reviewId }: CommentListProps) => {
   return (
     <div className="flex flex-col bg-gray-100">
       {mock_comments.map((comment) => (
@@ -47,4 +47,6 @@ export default function CommentList({ reviewId }: CommentListProps) {
       ))}
     </div>
   );
-}
+};
+
+export default CommentList;

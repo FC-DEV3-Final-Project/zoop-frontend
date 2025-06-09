@@ -30,7 +30,7 @@ const mock_reviews = [
   },
 ];
 
-export default function ReviewList() {
+const ReviewList = () => {
   const router = useRouter();
 
   return (
@@ -44,4 +44,6 @@ export default function ReviewList() {
       ))}
     </div>
   );
-}
+};
+
+export default ReviewList;

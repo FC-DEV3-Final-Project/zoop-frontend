@@ -13,7 +13,7 @@ interface ReviewCardProps {
   onClick?: () => void;
 }
 
-export default function ReviewCard({
+const ReviewCard = ({
   nickname,
   date,
   content,
@@ -24,7 +24,7 @@ export default function ReviewCard({
   residenceStatus,
   hasChildStatus,
   onClick,
-}: ReviewCardProps) {
+}: ReviewCardProps) => {
   return (
     <div onClick={onClick} className="cursor-pointer">
       <div className="flex flex-col gap-4 border-b border-t border-gray-300 bg-white px-5 py-4">
@@ -89,4 +89,6 @@ export default function ReviewCard({
       </div>
     </div>
   );
-}
+};
+
+export default ReviewCard;

@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import ReviewCard from "@/components/property/review/ReviewCard";
 import CommentList from "@/components/property/review/CommentList";
 
-export default function ReviewDetailPage() {
+function ReviewDetailPage() {
   const { reviewId } = useParams();
 
   const mock_reviews = [
@@ -35,6 +35,7 @@ export default function ReviewDetailPage() {
   ];
 
   const review = mock_reviews.find((r) => String(r.id) === String(reviewId));
+  /* 디자인 추가 고려 */
   if (!review) return <div>리뷰를 찾을 수 없습니다.</div>;
 
   return (
@@ -44,3 +45,5 @@ export default function ReviewDetailPage() {
     </div>
   );
 }
+
+export default ReviewDetailPage;

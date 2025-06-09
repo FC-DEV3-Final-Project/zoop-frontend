@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function DealSection() {
+const DealSection = () => {
   const dealInfo = [
     {
       label: "거래방식",
@@ -34,4 +34,6 @@ export default function DealSection() {
       </div>
     </section>
   );
-}
+};
+
+export default DealSection;
