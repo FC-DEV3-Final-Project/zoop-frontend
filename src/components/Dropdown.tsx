@@ -26,30 +26,35 @@ const Dropdown = ({ items, onSelect }: DropdownProps) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative inline-block">
+    <div ref={dropdownRef} className="relative">
       {/* 아이콘 버튼 */}
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        className="cursor-pointer border border-black"
-      >
-        <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-5 w-5" />
+      <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
+        <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
 
       {/* 드롭다운 리스트 */}
       {open && (
-        <ul className="absolute mt-2 min-w-[100px] rounded-md border border-black bg-white">
-          {items.map((item) => (
-            <li
-              key={item.value}
-              onClick={() => {
-                onSelect(item);
-                setOpen(false); // 선택 후 닫기
-              }}
-              className="cursor-pointer"
-            >
-              {item.label}
-            </li>
-          ))}
+        <ul className="absolute rounded-lg border border-gray-300 bg-gray-100/90">
+          {items.map((item, index) => {
+            const isFirst = index === 0;
+            const isOnlyOne = items.length === 1;
+
+            return (
+              <li
+                key={item.value}
+                onClick={() => {
+                  onSelect(item);
+                  setOpen(false);
+                }}
+                className={cn(
+                  "cursor-pointer px-[12px] py-[8px] text-[13px] font-normal leading-[150%] hover:text-blue-600",
+                  isFirst && !isOnlyOne && "border-grat-300 border-b",
+                )}
+              >
+                {item.label}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
