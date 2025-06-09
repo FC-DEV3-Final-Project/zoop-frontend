@@ -29,7 +29,9 @@ const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => 
       </div>
 
       <div className="absolute bottom-4 w-full">
-        <Button onClick={onNext}>다음</Button>
+        <Button onClick={onNext} disabled={selected.length === 0}>
+          다음
+        </Button>
       </div>
     </div>
   );
