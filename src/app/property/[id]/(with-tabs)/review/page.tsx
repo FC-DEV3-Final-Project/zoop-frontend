@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import EnvironmentTabs from "./EnvironmentTabs";
+import ReviewList from "./ReviewList";
 
 export default function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -17,17 +18,13 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
           <div className="flex w-full flex-row justify-between gap-[14px]">
             {/* 왼쪽: 점수 + 별 */}
             <div className="flex basis-1/2 flex-col items-center gap-3 px-2 py-[10px]">
-              <div className="mb-[12px] w-full text-center text-largeTitle text-black">4.46</div>
+              <div className="w-full text-center text-largeTitle text-black">4.46</div>
               <div className="flex">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <img
-                    key={i}
-                    src={`/icons/${i < 4 ? "star-filled" : "star-unfilled"}.svg`}
-                    alt="star"
-                    width={24}
-                    height={24}
-                  />
-                ))}
+                <img src="/icons/star-filled.svg" alt="filled-star" width={24} height={24} />
+                <img src="/icons/star-filled.svg" alt="filled-star" width={24} height={24} />
+                <img src="/icons/star-filled.svg" alt="filled-star" width={24} height={24} />
+                <img src="/icons/star-filled.svg" alt="filled-star" width={24} height={24} />
+                <img src="/icons/star-unfilled.svg" alt="unfilled-star" width={24} height={24} />
               </div>
             </div>
 
@@ -87,6 +84,7 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
           <button className="text-body2 text-gray-600-hint">내 리뷰</button>
         </div>
       </div>
+      <ReviewList />
     </>
   );
 }
