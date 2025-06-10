@@ -24,9 +24,9 @@ const UserInfoPage = () => {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative flex flex-col gap-[5px]">
         {/* 상단 프로필 이미지 영역 */}
-        <div className="flex h-40 items-center justify-center self-stretch px-5 py-3.5">
+        <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">
           <button
             onClick={handleEditProfileImage}
             className="relative h-16 w-16 rounded-full bg-gray-100"
@@ -45,7 +45,7 @@ const UserInfoPage = () => {
           </button>
         </div>
         {/* 하단 영역 */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 bg-white">
           {/* 정보 영역 */}
           <div className="flex flex-col">
             <div className="flex justify-between p-4">
