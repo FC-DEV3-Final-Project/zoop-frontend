@@ -11,8 +11,8 @@ interface FunnelProps {
   children: Array<React.ReactElement<StepProps>>;
 }
 
-const useFunnel = (defaultStep: string, lastStep: string) => {
-  const [step, setStep] = useState(defaultStep);
+const useFunnel = ({ lastStep }: { lastStep: string }) => {
+  const [step, setStep] = useState("1");
 
   const Step = (props: StepProps): React.ReactElement => {
     return <>{props.children}</>;

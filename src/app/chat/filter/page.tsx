@@ -14,7 +14,7 @@ const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
 const HOUSING_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
 
 const Page = () => {
-  const { Funnel, Step, currentStep, prevStep, nextStep } = useFunnel("1", "4");
+  const { Funnel, Step, currentStep, prevStep, nextStep } = useFunnel({ lastStep: "4" });
   const router = useRouter();
 
   const getProgressWidthClass = (step: string) => {
