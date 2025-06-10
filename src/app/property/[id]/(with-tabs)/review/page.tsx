@@ -81,16 +81,7 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
 
-        <div className="flex justify-between px-5 py-3">
-          <div className="text-body1 text-black">정보 줍줍 54건</div>
-          <div className="flex gap-2">
-            <button className="text-caption1 text-blue-800-primary">추천순</button>
-            <button className="text-body2 text-gray-600-hint">최신순</button>
-            <button className="text-body2 text-gray-600-hint">내 리뷰</button>
-          </div>
-        </div>
-
-        <ReviewList />
+        <ReviewList complexId={id} />
       </div>
 
       {/* 하단 버튼 */}
@@ -98,7 +89,7 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Button
           variant="default"
           className="w-full"
-          onClick={() => router.push("/property/111/review/new")}
+          onClick={() => router.push("/property/${id}/review/new")}
         >
           리뷰 작성하기
         </Button>

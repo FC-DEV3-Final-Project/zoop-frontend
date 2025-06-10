@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import ReviewCard from "@/components/property/review/ReviewCard";
+type SortType = "recommended" | "latest" | "mine";
 
 const mock_reviews = [
   {
@@ -30,19 +32,62 @@ const mock_reviews = [
   },
 ];
 
-const ReviewList = () => {
+const ReviewList = ({ complexId }: { complexId: string }) => {
   const router = useRouter();
 
+  const [sortType, setSortType] = useState<SortType>("recommended");
+  const [reviews, setReviews] = useState<typeof mock_reviews>([]);
+
+  useEffect(() => {
+    // 이곳에 sortType 기반 API 호출 넣으면 됨
+    // 예시: fetchReviews({ complexId, sortType }).then(setReviews)
+    setReviews(mock_reviews); // mock으로 대체 중
+  }, [sortType]);
+
   return (
-    <div className="flex flex-col gap-2 bg-gray-100">
-      {mock_reviews.map((review, index) => (
+    <>
+      {/* 상단: 리뷰 건수 + 정렬 버튼 */}
+      <div className="flex justify-between px-5 py-3">
+        <div className="text-body1 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+        <div className="flex gap-2">
+          <button
+            className={`text-caption1 ${
+              sortType === "recommended" ? "text-blue-800-primary" : "text-gray-600-hint"
+            }`}
+            onClick={() => setSortType("recommended")}
+          >
+            추천순
+          </button>
+          <button
+            className={`text-body2 ${
+              sortType === "latest" ? "text-blue-800-primary" : "text-gray-600-hint"
+            }`}
+            onClick={() => setSortType("latest")}
+          >
+            최신순
+          </button>
+          <button
+            className={`text-body2 ${
+              sortType === "mine" ? "text-blue-800-primary" : "text-gray-600-hint"
+            }`}
+            onClick={() => setSortType("mine")}
+          >
+            내 리뷰
+          </button>
+        </div>
+      </div>
+
+      {/* 리뷰 카드 리스트 */}
+      {reviews.map((review) => (
         <ReviewCard
-          key={index}
+          key={review.id}
           {...review}
-          onClick={() => router.push(`/property/123/review/${review.id}`)} // 예시로 propertyId를 123으로 가정
+          onClick={() => {
+            router.push(`/property/${complexId}/review/${review.id}`);
+          }}
         />
       ))}
-    </div>
+    </>
   );
 };
 
