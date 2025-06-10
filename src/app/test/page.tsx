@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Tab } from "@/components/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
+
+import { Header } from "@/layout/Header";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -27,7 +30,14 @@ export default function Test() {
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1 p-4">
+    <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
+      {/** Header Section */}
+      <Header bgColorClassName="bg-gray-100">
+        <Header.Prev onClick={() => alert("뒤로가기 클릭")} />
+        <Header.Title>Guide</Header.Title>
+        <Header.Close onClick={() => alert("닫기 클릭")} />
+      </Header>
+
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">BottomSheet</h1>
@@ -47,7 +57,6 @@ export default function Test() {
           toggleable={true}
         />
       </div>
-      <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">Color</h1>
@@ -194,7 +203,7 @@ export default function Test() {
           </div>
         </div>
       </div>
-      
+
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
@@ -303,7 +312,7 @@ export default function Test() {
       </div>
 
       {/* propertyCard Section */}
-      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Property Card</h2>
         <PropertyCard
           itemId={1}
