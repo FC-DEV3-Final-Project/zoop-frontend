@@ -52,7 +52,7 @@ const PropertyListSection = ({
         <div className="flex items-center justify-between rounded bg-white px-5 py-4">
           <div className="justify-center">
             <span className="text-subtitle4">{currentProperties.length}건</span>
-            <span className="text-body2">의 매물</span>
+            <span className="text-caption2">의 매물</span>
           </div>
           {showMapViewButton && (
             <button onClick={handleMapView} className="flex items-center justify-start gap-1">
