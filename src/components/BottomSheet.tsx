@@ -42,8 +42,11 @@ const BottomSheet = ({
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{trigger}</SheetTrigger>
 
-      <SheetContent className="absolute mx-auto h-auto w-full max-w-[600px] rounded-t-xl bg-white">
-        <SheetHeader>
+      <SheetContent
+        side="bottom"
+        className="absolute mx-auto h-auto w-full max-w-[600px] rounded-t-xl bg-white"
+      >
+        <SheetHeader className="items-center gap-0 pt-[14px]">
           <SheetTitle className="flex h-[40px] items-center justify-center text-body1">
             {title}
           </SheetTitle>
