@@ -26,11 +26,6 @@ const sortOptions = [
   { label: "가격 낮은 순", value: "low" },
 ];
 
-// const dropItems = [
-//   { label: "삭제하기", value: "delete" },
-//   { label: "편집하기", value: "edit" },
-// ];
-
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
