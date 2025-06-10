@@ -37,6 +37,7 @@ const MyPage = ({ params }: { params: { id: string } }) => {
       address: "방배마에스트로",
       detailAddress: "1동 703호",
       tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
+      isActive: false,
     },
     {
       id: 2,
@@ -231,6 +232,7 @@ const MyPage = ({ params }: { params: { id: string } }) => {
           liked: likedProperties,
           recent: recentProperties,
         }}
+        isNumberVisible={false}
       />
     </div>
   );
