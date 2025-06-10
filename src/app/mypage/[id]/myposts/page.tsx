@@ -70,6 +70,21 @@ const postData: PostData = {
       date: "2025.05.20",
       likes: 2,
       reply: "맞아요 교통이 정말 편해요",
+    }, {
+      type: "comment",
+      title: "방배마에스트로(주상복합)",
+      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+      date: "2025.05.20",
+      likes: 2,
+      reply: "맞아요 교통이 정말 편해요",
+    },
+    {
+      type: "comment",
+      title: "방배마에스트로(주상복합)",
+      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+      date: "2025.05.20",
+      likes: 2,
+      reply: "맞아요 교통이 정말 편해요",
     },
     // ... 더 많은 댓글 데이터
   ],
@@ -116,7 +131,7 @@ const MyPostsPage = () => {
             ))}
           </div>
           <div className="flex h-[60px] items-center justify-center">
-            <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없습니다</div>
+            <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없어요</div>
           </div>
         </>
       )}
