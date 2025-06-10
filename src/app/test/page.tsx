@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Tab from "@/components/common/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
+import BottomSheet from "@/components/BottomSheet";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -16,11 +17,36 @@ const tabItems2 = [
   { label: "매매", value: "three" },
 ];
 
+const sortOptions = [
+  { label: "가격 높은 순", value: "high" },
+  { label: "가격 낮은 순", value: "low" },
+];
+
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
+  const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
+      {/* BottomSheet Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">BottomSheet</h1>
+        <BottomSheet
+          trigger={
+            <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+              {selectedItem?.label ?? "정렬 방식"}
+              <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
+            </button>
+          }
+          title="정렬 방식"
+          items={sortOptions}
+          selectedValue={selectedItem?.value}
+          onSelect={(item) => {
+            setSelectedItem(item);
+          }}
+          toggleable={true}
+        />
+      </div>
       <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
@@ -44,6 +70,8 @@ export default function Test() {
           <div className="flex flex-wrap">
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-050</p>
+              <p className="text-footnote text-gray-600">#FCFCFC</p>
+              <div className="h-28 w-28 bg-gray-050"></div>
               <p className="text-footnote text-gray-600">#FCFCFC</p>
               <div className="h-28 w-28 bg-gray-050"></div>
             </div>
@@ -71,14 +99,20 @@ export default function Test() {
               <p className="text-caption3">gray-500-alternative</p>
               <p className="text-footnote text-gray-600">#D4D7DD</p>
               <div className="h-28 w-28 bg-gray-500-alternative"></div>
+              <p className="text-footnote text-gray-600">#D4D7DD</p>
+              <div className="h-28 w-28 bg-gray-500-alternative"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-600-hint</p>
               <p className="text-footnote text-gray-600">#BCC2CA</p>
               <div className="h-28 w-28 bg-gray-600-hint"></div>
+              <p className="text-footnote text-gray-600">#BCC2CA</p>
+              <div className="h-28 w-28 bg-gray-600-hint"></div>
             </div>
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">gray-700-info</p>
+              <p className="text-footnote text-gray-600">#949CA8</p>
+              <div className="h-28 w-28 bg-gray-700-info"></div>
               <p className="text-footnote text-gray-600">#949CA8</p>
               <div className="h-28 w-28 bg-gray-700-info"></div>
             </div>
@@ -96,6 +130,8 @@ export default function Test() {
               <p className="text-caption3">gray-950-dark</p>
               <p className="text-footnote text-gray-600">#252730</p>
               <div className="h-28 w-28 bg-gray-950-dark"></div>
+              <p className="text-footnote text-gray-600">#252730</p>
+              <div className="h-28 w-28 bg-gray-950-dark"></div>
             </div>
           </div>
         </div>
@@ -105,6 +141,8 @@ export default function Test() {
           <div className="flex flex-wrap">
             <div className="flex flex-col items-center gap-1">
               <p className="text-caption3">blue-050-bg</p>
+              <p className="text-footnote text-gray-600">#EDF0FD</p>
+              <div className="h-28 w-28 bg-blue-050-bg"></div>
               <p className="text-footnote text-gray-600">#EDF0FD</p>
               <div className="h-28 w-28 bg-blue-050-bg"></div>
             </div>
@@ -156,6 +194,7 @@ export default function Test() {
           </div>
         </div>
       </div>
+
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
@@ -184,14 +223,20 @@ export default function Test() {
             <p className="text-caption3">small</p>
             <p className="text-footnote text-gray-600">8px</p>
             <div className="h-28 w-28 rounded-small bg-gray-900"></div>
+            <p className="text-footnote text-gray-600">8px</p>
+            <div className="h-28 w-28 rounded-small bg-gray-900"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">medium</p>
             <p className="text-footnote text-gray-600">10px</p>
             <div className="h-28 w-28 rounded-medium bg-gray-900"></div>
+            <p className="text-footnote text-gray-600">10px</p>
+            <div className="h-28 w-28 rounded-medium bg-gray-900"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">large</p>
+            <p className="text-footnote text-gray-600">12px</p>
+            <div className="h-28 w-28 rounded-large bg-gray-900"></div>
             <p className="text-footnote text-gray-600">12px</p>
             <div className="h-28 w-28 rounded-large bg-gray-900"></div>
           </div>
@@ -205,9 +250,13 @@ export default function Test() {
             <p className="text-caption3">shadow1</p>
             <p className="text-footnote text-gray-600">y: 4px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow1"></div>
+            <p className="text-footnote text-gray-600">y: 4px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow1"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow2</p>
+            <p className="text-footnote text-gray-600">y: 8px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow2"></div>
             <p className="text-footnote text-gray-600">y: 8px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow2"></div>
           </div>
@@ -215,9 +264,13 @@ export default function Test() {
             <p className="text-caption3">shadow3</p>
             <p className="text-footnote text-gray-600">y: 16px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow3"></div>
+            <p className="text-footnote text-gray-600">y: 16px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow3"></div>
           </div>
           <div className="flex flex-col items-center gap-1">
             <p className="text-caption3">shadow4</p>
+            <p className="text-footnote text-gray-600">y: 24px</p>
+            <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow4"></div>
             <p className="text-footnote text-gray-600">y: 24px</p>
             <div className="h-28 w-28 border border-gray-200 bg-white shadow-shadow4"></div>
           </div>
@@ -274,8 +327,21 @@ export default function Test() {
           detailAddress="101동 703호"
           buildingType="아파트"
           area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isActive={false}
+        />
+        <PropertyCard
+          itemId={3}
+          itemNumber={3}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
-          small={true}
+          size="sm"
         />
       </div>
     </div>
