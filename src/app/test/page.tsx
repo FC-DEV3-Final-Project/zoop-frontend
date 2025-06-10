@@ -33,9 +33,10 @@ export default function Test() {
     <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
       {/** Header Section */}
       <Header bgColorClassName="bg-gray-100">
-        <Header.Prev onClick={() => alert("뒤로가기 클릭")} />
+        <Header.Hamburger onHamburgerClick={() => alert("뒤로가기 클릭")} />
+        <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
         <Header.Title>Guide</Header.Title>
-        <Header.Close onClick={() => alert("닫기 클릭")} />
+        <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
 
       {/* BottomSheet Section */}

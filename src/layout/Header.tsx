@@ -22,14 +22,14 @@ const Root = ({ children, bgColorClassName = "bg-white" }: HeaderRootProps) => {
   );
 };
 
-const Prev = ({ onClick }: { onClick?: () => void }) => (
-  <button onClick={onClick} className="flex justify-center">
+const Prev = ({ onPrevClick }: { onPrevClick?: () => void }) => (
+  <button onClick={onPrevClick} className="flex justify-center">
     <Image src={ArrowLeftIcon} alt="뒤로가기" width={24} height={24} />
   </button>
 );
 
-const Hamburger = ({ onClick }: { onClick?: () => void }) => (
-  <button onClick={onClick} className="flex justify-center">
+const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
+  <button onClick={onHamburgerClick} className="flex justify-center">
     <Image src={HamburgerIcon} alt="메뉴" width={24} height={24} />
   </button>
 );
@@ -38,14 +38,14 @@ const Title = ({ children }: { children: string }) => (
   <h1 className="absolute left-1/2 -translate-x-1/2 text-subtitle2">{children}</h1>
 );
 
-const Close = ({ onClick }: { onClick?: () => void }) => (
-  <button onClick={onClick} className="flex justify-center">
+const Close = ({ onCloseClick }: { onCloseClick?: () => void }) => (
+  <button onClick={onCloseClick} className="flex justify-center">
     <Image src={CloseIcon} alt="닫기" width={24} height={24} />
   </button>
 );
 
-const Alarm = ({ onClick }: { onClick?: () => void }) => (
-  <button onClick={onClick} className="flex justify-center">
+const Alarm = ({ onAlarmClick }: { onAlarmClick?: () => void }) => (
+  <button onClick={onAlarmClick} className="flex justify-center">
     <Image src={AlarmIcon} alt="알람" width={24} height={24} />
   </button>
 );
