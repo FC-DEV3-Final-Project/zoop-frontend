@@ -29,16 +29,19 @@ const UserInfoPage = () => {
         <div className="flex h-40 items-center justify-center self-stretch px-5 py-3.5">
           <button
             onClick={handleEditProfileImage}
-            className="h-16 w-16 overflow-hidden rounded-full bg-gray-100"
+            className="relative h-16 w-16 rounded-full bg-gray-100"
           >
             <Image
               src={userData.profileImage}
               alt="프로필"
               width={64}
               height={64}
-              className="h-full w-full object-cover"
+              className="h-full w-full overflow-hidden rounded-full object-cover"
               priority
             />
+            <div className="absolute bottom-0 right-0">
+              <img src="/icons/image-upload.svg" alt="이미지 업로드" />
+            </div>
           </button>
         </div>
         {/* 하단 영역 */}
