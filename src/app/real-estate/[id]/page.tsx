@@ -10,6 +10,18 @@ const tabOptions = [
   { label: "매매", value: "sale" },
 ];
 
+const realEstateData = {
+  name: "일등 부동산 공인중개사사무소",
+  representative: "김정순",
+  registrationNumber: "44862989",
+  phone: "031-271-5309, 010-8711-6151",
+  address:
+    "경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층",
+  sale: 30,
+  lease: 4,
+  rent: 19,
+};
+
 const properties = [
   {
     id: 1,
@@ -97,27 +109,18 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <RealEstateInfo
-        name="일등 부동산 공인중개사사무소"
-        representative="김정순"
-        registrationNumber="44862989"
-        phone="031-271-5309, 010-8711-6151"
-        address="경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층"
-        stats={{
-          sale: 30,
-          lease: 4,
-          rent: 19,
-        }}
-      />
-      <PropertyListSection
-        showMapViewButton={false}
-        tabOptions={tabOptions}
-        propertyMap={{
-          rent: properties,
-          lease: properties,
-          sale: properties,
-        }}
-      />
+      <RealEstateInfo {...realEstateData} />
+      <div className="pb-[76px]">
+        <PropertyListSection
+          showMapViewButton={false}
+          tabOptions={tabOptions}
+          propertyMap={{
+            rent: properties,
+            lease: properties,
+            sale: properties,
+          }}
+        />
+      </div>
       {/* 공인중개사에게 전화 걸기 버튼 */}
       <div className="fixed bottom-0 left-1/2 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
         <Button variant="default">공인중개사에게 전화 걸기</Button>

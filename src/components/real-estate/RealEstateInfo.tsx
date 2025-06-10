@@ -6,11 +6,9 @@ interface RealEstateInfoProps {
   registrationNumber: string;
   phone: string;
   address: string;
-  stats: {
-    sale: number;
-    lease: number;
-    rent: number;
-  };
+  sale: number;
+  lease: number;
+  rent: number;
 }
 
 const STATS_ITEMS = [
@@ -25,7 +23,9 @@ export default function RealEstateInfo({
   registrationNumber,
   phone,
   address,
-  stats,
+  sale,
+  lease,
+  rent,
 }: RealEstateInfoProps) {
   return (
     <div className="flex flex-col gap-3 bg-white p-5">
@@ -54,7 +54,9 @@ export default function RealEstateInfo({
         {STATS_ITEMS.map(({ label, key }) => (
           <div key={key} className="flex gap-0.5">
             <span className="text-caption2">{label}</span>
-            <span className="text-caption1 text-blue-800-primary">{stats[key]}</span>
+            <span className="text-caption1 text-blue-800-primary">
+              {key === "sale" ? sale : key === "lease" ? lease : rent}
+            </span>
           </div>
         ))}
       </div>
