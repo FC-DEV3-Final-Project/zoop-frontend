@@ -4,21 +4,21 @@ import Image from "next/image";
 
 interface SelectCardProps {
   option: string;
-  selected: string[];
-  setSelected: (option: string[]) => void;
+  selectedCards: string[];
+  setSelectedCards: (option: string[]) => void;
 }
 
-const SelectCard = ({ option, selected, setSelected }: SelectCardProps) => {
-  const isSelected = selected.includes(option);
+const SelectCard = ({ option, selectedCards, setSelectedCards }: SelectCardProps) => {
+  const isSelected = selectedCards.includes(option);
 
   return (
     <button
       key={option}
       onClick={() =>
-        setSelected(
-          selected.includes(option)
-            ? selected.filter((item) => item !== option)
-            : [...selected, option],
+        setSelectedCards(
+          selectedCards.includes(option)
+            ? selectedCards.filter((item) => item !== option)
+            : [...selectedCards, option],
         )
       }
       className={clsx(
