@@ -32,7 +32,15 @@ export default function Test() {
   const [inputText, setInputText] = useState(""); // input에 입력한 텍스트 관리
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1 p-4">
+    <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
+      {/** Header Section */}
+      <Header bgColorClassName="bg-gray-100">
+        <Header.Hamburger onHamburgerClick={() => alert("뒤로가기 클릭")} />
+        <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
+        <Header.Title>Guide</Header.Title>
+        <Header.Close onCloseClick={() => alert("닫기 클릭")} />
+      </Header>
+
       {/* Input Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 bg-[#DFDFDF] p-4">
         <h1 className="text-title1">Input</h1>
@@ -46,15 +54,6 @@ export default function Test() {
           }}
         />
       </div>
-
-    <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
-      {/** Header Section */}
-      <Header bgColorClassName="bg-gray-100">
-        <Header.Hamburger onHamburgerClick={() => alert("뒤로가기 클릭")} />
-        <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
-        <Header.Title>Guide</Header.Title>
-        <Header.Close onCloseClick={() => alert("닫기 클릭")} />
-      </Header>
 
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
