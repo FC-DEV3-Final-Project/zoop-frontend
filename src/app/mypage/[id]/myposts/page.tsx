@@ -63,6 +63,14 @@ const postData: PostData = {
       likes: 2,
       reply: "맞아요 교통이 정말 편해요",
     },
+    {
+      type: "comment",
+      title: "방배마에스트로(주상복합)",
+      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+      date: "2025.05.20",
+      likes: 2,
+      reply: "맞아요 교통이 정말 편해요",
+    },
     // ... 더 많은 댓글 데이터
   ],
 };
@@ -81,31 +89,33 @@ const MyPostsPage = () => {
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
       </div>
       {postData[selectedTab as keyof PostData].length === 0 ? (
-        <div className="flex flex-1 items-center justify-center text-center font-['Pretendard'] text-base font-medium leading-snug text-black">
-          {selectedTab === "review" ? (
-            <>
-              작성한 리뷰가 없어요.
-              <br />
-              매물에 대한 리뷰를 작성해보세요!
-            </>
-          ) : (
-            <>
-              작성한 댓글이 없어요.
-              <br />
-              리뷰에 대한 댓글을 작성해보세요!
-            </>
-          )}
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="text-center text-body1">
+            {selectedTab === "review" ? (
+              <>
+                작성한 리뷰가 없어요.
+                <br />
+                매물에 대한 리뷰를 작성해보세요!
+              </>
+            ) : (
+              <>
+                작성한 댓글이 없어요.
+                <br />
+                리뷰에 대한 댓글을 작성해보세요!
+              </>
+            )}
+          </div>
         </div>
       ) : (
         <>
-          <div className="flex flex-col gap-1">
+          <div className="mb-8 flex flex-col gap-1">
             {postData[selectedTab as keyof PostData].map((post, idx) => (
               <div key={idx} onClick={() => handlePostClick(post.title)}>
                 <MyPostItem {...post} />
               </div>
             ))}
           </div>
-          <div className="flex h-[104px] items-center justify-center">
+          <div className="flex h-[60px] items-center justify-center">
             <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없습니다</div>
           </div>
         </>
