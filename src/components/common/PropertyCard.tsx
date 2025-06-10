@@ -16,6 +16,7 @@ interface PropertyCardProps {
   tags: string[];
   size?: "sm" | "md";
   isActive?: boolean;
+  isNumberVisible?: boolean;
 }
 
 const PropertyCard = ({
@@ -31,6 +32,7 @@ const PropertyCard = ({
   tags,
   size = "md",
   isActive = true,
+  isNumberVisible = true,
 }: PropertyCardProps) => {
   const router = useRouter();
 
@@ -51,7 +53,7 @@ const PropertyCard = ({
           className="cur h-full w-full object-cover"
         />
         {/* 목록 번호 */}
-        {itemNumber && isActive && (
+        {itemNumber && isActive && isNumberVisible && (
           <div className="absolute left-0 top-0 flex h-5 w-5 items-center overflow-hidden rounded-br bg-black px-[8px] pb-[3px] pl-[7px] pt-[2px]">
             <p className="text-[10px] font-medium text-white">{itemNumber}</p>
           </div>
