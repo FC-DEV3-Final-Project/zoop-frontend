@@ -69,7 +69,7 @@ const Dropdown = ({ items }: DropdownProps) => {
                 }}
                 className={cn(
                   "flex items-center gap-[7px] px-[12px] py-[8px]",
-                  "cursor-pointer text-[13px]",
+                  "cursor-pointer text-body2",
                   isFirst && !isOnlyOne && "border-b border-gray-300",
                 )}
               >
