@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Tab } from "@/components/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
 import Dropdown from "@/components/Dropdown";
+
+import { Header } from "@/layout/Header";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -33,7 +36,15 @@ export default function Test() {
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1 p-4">
+    <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
+      {/** Header Section */}
+      <Header bgColorClassName="bg-gray-100">
+        <Header.Hamburger onHamburgerClick={() => alert("뒤로가기 클릭")} />
+        <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
+        <Header.Title>Guide</Header.Title>
+        <Header.Close onCloseClick={() => alert("닫기 클릭")} />
+      </Header>
+
       {/* DropDown Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">DropDown</h1>
@@ -65,7 +76,6 @@ export default function Test() {
           toggleable={true}
         />
       </div>
-      <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">Color</h1>
@@ -212,6 +222,7 @@ export default function Test() {
           </div>
         </div>
       </div>
+
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
@@ -344,8 +355,21 @@ export default function Test() {
           detailAddress="101동 703호"
           buildingType="아파트"
           area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isActive={false}
+        />
+        <PropertyCard
+          itemId={3}
+          itemNumber={3}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
           tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
-          small={true}
+          size="sm"
         />
       </div>
     </div>
