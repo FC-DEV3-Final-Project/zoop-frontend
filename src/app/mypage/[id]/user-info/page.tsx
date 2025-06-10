@@ -24,7 +24,8 @@ const UserInfoPage = () => {
 
   return (
     <>
-      <div className="relative flex flex-col gap-[5px]">
+      <div className="h-full bg-white">
+      <div className="relative flex flex-col gap-[5px] bg-gray-100">
         {/* 상단 프로필 이미지 영역 */}
         <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">
           <button
@@ -68,6 +69,7 @@ const UserInfoPage = () => {
               로그아웃
             </button>
             <button className="h-[28px] text-[13px] text-gray-500-alternative">회원탈퇴</button>
+          </div>
           </div>
         </div>
       </div>
