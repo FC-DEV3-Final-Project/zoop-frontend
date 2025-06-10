@@ -26,8 +26,7 @@ const sortOptions = [
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
-  const [noIconText, setNoIconText] = useState(""); // 아이콘 없음
-  const [iconText, setIconText] = useState(""); // 아이콘 있음
+  const [inputText, setInputText] = useState(""); // input에 입력한 텍스트 관리
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-4">
@@ -35,27 +34,16 @@ export default function Test() {
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 bg-[#DFDFDF] p-4">
         <h1 className="text-title1">Input</h1>
         <Input
-          styleSize="small"
           placeholder="Enter로 전송하세요"
-          value={noIconText}
-          onChange={(e) => setNoIconText(e.target.value)}
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
           onSend={() => {
-            console.log("전송됨 (아이콘 없음):", noIconText);
-            setNoIconText("");
+            console.log("전송됨:", inputText);
+            setInputText("");
           }}
-        />
-        <Input
-          styleSize="basic"
-          placeholder="아이콘 클릭 또는 Enter로 전송"
-          value={iconText}
-          onChange={(e) => setIconText(e.target.value)}
-          onSend={() => {
-            console.log("전송됨 (아이콘 있음):", iconText);
-            setIconText("");
-          }}
-          icon={<img src="/icons/send.svg" alt="전송" className="h-[20px] w-[20px]" />}
         />
       </div>
+
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">BottomSheet</h1>
