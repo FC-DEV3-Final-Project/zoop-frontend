@@ -102,7 +102,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
         representative="김정순"
         registrationNumber="44862989"
         phone="031-271-5309, 010-8711-6151"
-        address="경기도 수원시 장안구 경수대로 1083 1층"
+        address="경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층"
         stats={{
           sale: 30,
           lease: 4,
