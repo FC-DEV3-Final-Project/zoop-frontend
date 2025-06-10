@@ -20,6 +20,8 @@ const tabItems2 = [
 const sortOptions = [
   { label: "가격 높은 순", value: "high" },
   { label: "가격 낮은 순", value: "low" },
+  { label: "면적 넓은 순", value: "wide " },
+  { label: "면적 좁은 순", value: "narrow " },
 ];
 
 export default function Test() {
@@ -33,8 +35,8 @@ export default function Test() {
         <h1 className="text-title1">BottomSheet</h1>
         <BottomSheet
           trigger={
-            <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
-              {selectedItem?.label ?? "정렬 방식"}
+            <button className="flex w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+              {selectedItem?.label ?? "AI추천 순"}
               <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
             </button>
           }
