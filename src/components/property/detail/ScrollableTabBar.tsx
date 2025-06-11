@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 
 const tab_list = [
@@ -14,7 +14,6 @@ const tab_list = [
 
 const ScrollableTabBar = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [selected, setSelected] = useState("deal");
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const handleClick = (value: string) => {
     setSelected(value);
@@ -25,23 +24,17 @@ const ScrollableTabBar = ({ onSelect }: { onSelect: (value: string) => void }) =
     <div
       className="sticky top-[114px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
       style={{
-        scrollbarWidth: "none", // Firefox 대응
-        msOverflowStyle: "none", // IE 대응 (의미 없다고 함..)
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
       }}
     >
       <div className="flex w-[600px] max-w-full">
-        {tab_list.map((tab, idx) => {
+        {tab_list.map((tab) => {
           const isActive = selected === tab.value;
           return (
             <button
               key={tab.value}
-              ref={(el: HTMLButtonElement | null) => {
-                tabRefs.current[idx] = el;
-              }}
-              onClick={() => {
-                handleClick(tab.value);
-                tabRefs.current[idx]?.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={() => handleClick(tab.value)}
               className={clsx(
                 "w-[25%] min-w-[25%] whitespace-nowrap border-b-2 py-[18px] text-center",
                 isActive
