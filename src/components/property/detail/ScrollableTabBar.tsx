@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
+import { useAutoScroll } from "@/hooks/property/useAutoScroll";
 
 const tab_list = [
   { label: "거래정보", value: "deal" },
@@ -14,14 +15,18 @@ const tab_list = [
 
 const ScrollableTabBar = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [selected, setSelected] = useState("deal");
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollTabOnClick = useAutoScroll(scrollRef);
 
-  const handleClick = (value: string) => {
+  const handleClick = (value: string, e: React.MouseEvent<HTMLButtonElement>) => {
     setSelected(value);
     onSelect(value);
+    scrollTabOnClick(e.currentTarget);
   };
 
   return (
     <div
+      ref={scrollRef}
       className="sticky top-[114px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
       style={{
         scrollbarWidth: "none",
@@ -34,7 +39,7 @@ const ScrollableTabBar = ({ onSelect }: { onSelect: (value: string) => void }) =
           return (
             <button
               key={tab.value}
-              onClick={() => handleClick(tab.value)}
+              onClick={(e) => handleClick(tab.value, e)}
               className={clsx(
                 "w-[25%] min-w-[25%] whitespace-nowrap border-b-2 py-[18px] text-center",
                 isActive
