@@ -30,7 +30,7 @@ const EditNickname = () => {
             }}
             maxLength={20}
             placeholder=" 닉네임을 입력해주세요. (최대 20자)"
-            className="w-full text-caption2 placeholder-gray-300 focus:outline-none"
+            className="w-full text-body1 placeholder-gray-300 focus:outline-none"
           />
           <button
             onClick={handleDuplicateCheck}
