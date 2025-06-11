@@ -26,7 +26,7 @@ const PropertyLayout = ({
 
   const handleTabChange = (tab: string) => {
     const targetPath = tab === "review" ? `/property/${id}/review` : `/property/${id}`;
-    router.push(targetPath);
+    router.push(targetPath, { scroll: false });
 
     // 라우팅 이후 스크롤이 급하게 이동하는 것을 방지하기 위해
     // 약간의 딜레이를 주어 스크롤 위치를 부드럽게 조정
