@@ -8,6 +8,7 @@ import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
 
 import { Header } from "@/layout/Header";
+import Input from "@/components/ui/input";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -28,6 +29,7 @@ const sortOptions = [
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
+  const [inputText, setInputText] = useState(""); // input에 입력한 텍스트 관리
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
@@ -38,6 +40,20 @@ export default function Test() {
         <Header.Title>Guide</Header.Title>
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
+
+      {/* Input Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 bg-[#DFDFDF] p-4">
+        <h1 className="text-title1">Input</h1>
+        <Input
+          placeholder="Enter로 전송하세요"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          onSend={() => {
+            console.log("전송됨:", inputText);
+            setInputText("");
+          }}
+        />
+      </div>
 
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
