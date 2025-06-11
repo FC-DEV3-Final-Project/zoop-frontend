@@ -20,6 +20,7 @@ const tabItems2 = [
   { label: "매매", value: "three" },
 ];
 
+// BottomSheet 관련로직
 const sortOptions = [
   { label: "가격 높은 순", value: "high" },
   { label: "가격 낮은 순", value: "low" },
@@ -27,6 +28,7 @@ const sortOptions = [
   { label: "면적 좁은 순", value: "narrow " },
 ];
 
+// BottomSheet 관련로직
 const phonNumber = [
   { label: "031-271-5309", value: 312715309 },
   { label: "010-1234-1234", value: 1012341234 },
@@ -34,12 +36,10 @@ const phonNumber = [
 
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
-  const [selectedItem, setSelectedItem] = useState<{ label: string; value: number } | null>(null);
-  const [inputText, setInputText] = useState(""); // input에 입력한 텍스트 관리
-  const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
+  const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
 
+  // BottomSheet 관련로직
   const handleSelect = (item: { label: string; value: string }) => {
-    // 현재 선택된 아이템이면 해제, 아니면 선택
     if (selectedText?.value === item.value) {
       setSelectedText(null);
     } else {
