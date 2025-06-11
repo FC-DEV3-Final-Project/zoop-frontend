@@ -35,7 +35,9 @@ const PropertyLayout = ({
   return (
     <div className="pt-16">
       <ImageCarousel />
-      <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
+      <div className="sticky top-16 z-10 bg-white">
+        <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
+      </div>
       <div>{children}</div>
     </div>
   );
