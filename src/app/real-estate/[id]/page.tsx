@@ -1,6 +1,5 @@
 "use client";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
 
