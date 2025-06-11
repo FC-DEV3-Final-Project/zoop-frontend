@@ -12,7 +12,7 @@ export default function Input({ placeholder, className, value, onChange, onSend 
   const baseStyle = cn(
     "w-[270px] rounded-lg bg-gray-200 pl-9",
     "placeholder-gray-800",
-    "text-body2 py-[6px] pr-3",
+    "text-subtitle3 py-[6px] pr-3",
     "focus-visible:outline-none focus-visible:ring-0", // 포커스 스타일 제거
     className,
   );
