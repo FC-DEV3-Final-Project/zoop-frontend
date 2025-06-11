@@ -11,6 +11,9 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "zoop",
+  other: {
+    "format-detection": "telephone=no",
+  }, // 전화번호가 자동으로 <a href="tel:...">로 감싸지며 SSR/CSR 결과가 달라져 hydration 오류 발생. 방지하기 위해 format-detection 메타 태그로 자동 링크 비활성화 처리함
 };
 
 export const viewport = {

@@ -9,7 +9,7 @@ type TabProps = {
   onChange: (value: string) => void;
 };
 
-export const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
+const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
   const widthClass = tabOptions.length === 2 ? "w-1/2" : "w-1/3";
 
   return (
@@ -34,3 +34,5 @@ export const Tab = ({ tabOptions, selected, onChange }: TabProps) => {
     </div>
   );
 };
+
+export default Tab;

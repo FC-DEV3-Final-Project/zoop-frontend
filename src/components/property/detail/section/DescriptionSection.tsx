@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import GrayButton from "../GrayButton";
+import GrayButton from "@/components/property/detail/GrayButton";
 
-export default function DescriptionSection() {
+const DescriptionSection = () => {
   const textRef = useRef<HTMLDivElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -57,4 +57,6 @@ export default function DescriptionSection() {
       )}
     </section>
   );
-}
+};
+
+export default DescriptionSection;

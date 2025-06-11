@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropertyCard from "@/components/common/PropertyCard";
-import { Tab } from "@/components/Tab";
+import Tab from "@/components/common/Tab";
 import type { PropertyCardProps } from "@/components/common/PropertyCard";
 
 interface TabOption {
