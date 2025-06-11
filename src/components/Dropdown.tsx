@@ -3,35 +3,21 @@ import { cn } from "@/lib/utils";
 
 type DropdownItemType = "edit" | "delete";
 
-const DefaultSetting: Record<
-  DropdownItemType,
-  {
-    icon: React.ReactNode;
-    onClick: () => void;
-  }
-> = {
-  edit: {
-    icon: <img src="/icons/write.svg" alt="편집하기" className="h-[18px] w-[18px]" />,
-    onClick: () => {
-      console.log("편집하기 클릭");
-    },
-  },
-  delete: {
-    icon: <img src="/icons/trash.svg" alt="삭제하기" className="h-4[18px] w-[18px]" />,
-    onClick: () => {
-      console.log("삭제 클릭");
-    },
-  },
+const ICONS: Record<DropdownItemType, React.ReactNode> = {
+  edit: <img src="/icons/write.svg" alt="편집하기" className="h-[18px] w-[18px]" />,
+  delete: <img src="/icons/trash.svg" alt="삭제하기" className="h-4[18px] w-[18px]" />,
 };
 
 interface DropdownProps {
   items: {
     type: DropdownItemType;
     label: string;
+    onClick: () => void;
   }[];
+  className?: string;
 }
 
-const Dropdown = ({ items }: DropdownProps) => {
+const Dropdown = ({ items, className }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -56,15 +42,14 @@ const Dropdown = ({ items }: DropdownProps) => {
           {items.map((item, index) => {
             const isFirst = index === 0;
             const isOnlyOne = items.length === 1;
-
-            const base = DefaultSetting[item.type];
             const isDelete = item.type === "delete";
+            const icon = ICONS[item.type];
 
             return (
               <button
                 key={item.type}
                 onClick={() => {
-                  base.onClick();
+                  item.onClick();
                   setOpen(false);
                 }}
                 className={cn(
@@ -74,7 +59,7 @@ const Dropdown = ({ items }: DropdownProps) => {
                 )}
               >
                 <span className={isDelete ? "text-blue-600" : "text-black"}>{item.label}</span>
-                <span className={isDelete ? "text-blue-600" : "text-gray-300"}>{base.icon}</span>
+                <span className={isDelete ? "text-blue-600" : "text-gray-300"}>{icon}</span>
               </button>
             );
           })}
