@@ -14,22 +14,13 @@ export const handlers = [
   // }),
 
   //테스트
-  http.get("/api/user", () => {
+  http.get("/api/user-info", () => {
     return HttpResponse.json(
       {
         id: 1,
         name: "홍길동",
-        email: "hong@example.com",
-        createdAt: new Date().toISOString(),
-        profile: {
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-          bio: "안녕하세요! 반갑습니다.",
-        },
-        stats: {
-          posts: 15,
-          followers: 120,
-          following: 45,
-        },
+        email: "hong@kakao.com",
+        profileImage: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
       },
       {
         status: 200,

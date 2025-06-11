@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function MswTestPage() {
   const [data, setData] = useState<any>(null);
@@ -11,7 +11,7 @@ export default function MswTestPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/user");
+      const response = await fetch("/api/user-info");
       const result = await response.json();
       setData(result);
     } catch (err) {
@@ -36,9 +36,18 @@ export default function MswTestPage() {
       {error && <div className="mb-4 text-red-500">{error}</div>}
 
       {data && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">응답 데이터:</h2>
-          <pre className="rounded bg-gray-100 p-4">{JSON.stringify(data, null, 2)}</pre>
+        <div className="rounded-lg border p-6 shadow-sm">
+          <div className="flex items-center space-x-4">
+            {data.profileImage && (
+              <div className="relative h-20 w-20 overflow-hidden rounded-full">
+                <img src={data.profileImage} alt="프로필 이미지" className="object-cover" />
+              </div>
+            )}
+            <div>
+              <h2 className="text-xl font-semibold">{data.name}</h2>
+              <p className="text-gray-600">{data.email}</p>
+            </div>
+          </div>
         </div>
       )}
     </div>
