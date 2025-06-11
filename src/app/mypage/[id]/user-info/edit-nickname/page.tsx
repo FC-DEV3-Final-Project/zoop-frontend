@@ -47,7 +47,7 @@ const EditNickname = () => {
           <p className="text-footnote text-[#FF0000]">이미 사용중인 닉네임입니다</p>
         )}
         {isValid === true && (
-          <p className="text-footnote text-[#00FF00]">사용 가능한 닉네임입니다</p>
+          <p className="text-footnote text-blue-800-primary">사용 가능한 닉네임입니다</p>
         )}
       </div>
       <div className="absolute bottom-4 left-1/2 w-full -translate-x-1/2 px-4">
