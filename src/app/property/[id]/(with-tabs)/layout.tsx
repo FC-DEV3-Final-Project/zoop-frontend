@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
 
-const TAB_OPTIONS = [
+const tab_options = [
   { label: "상세 정보", value: "detail" },
   { label: "리뷰", value: "review" },
 ];
@@ -39,7 +39,7 @@ const PropertyLayout = ({
     <div className="pt-16">
       <ImageCarousel />
       <div className="sticky top-16 z-10 bg-white">
-        <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
+        <Tab tabOptions={tab_options} selected={selectedTab} onChange={handleTabChange} />
       </div>
       <div>{children}</div>
     </div>
