@@ -2,6 +2,8 @@
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { Button } from "@/components/ui/button";
 import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
+import { Header } from "@/layout/Header";
+import { useRouter } from "next/navigation";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -92,9 +94,13 @@ const properties = [
 ];
 
 export default function RealEstatePage({ params }: { params: { id: string } }) {
-
+  const router = useRouter();
   return (
     <>
+    <Header>
+      <Header.Prev onPrevClick={() => router.back()} />
+      <Header.Title>{realEstateData.name}</Header.Title>
+    </Header>
       <RealEstateInfo {...realEstateData} />
       <div className="pb-[76px]">
         <PropertyListSection
@@ -113,6 +119,4 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
       </div>
     </>
   );
-}
-
 }
