@@ -5,12 +5,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Tab from "@/components/common/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
-import BottomSheet from "@/components/BottomSheet";
 import Dropdown from "@/components/Dropdown";
 
 import { Header } from "@/layout/Header";
 import Input from "@/components/ui/input";
-import BottomS from "@/components/BottomS";
+import BottomSheet from "@/components/BottomSheet";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -99,7 +98,7 @@ export default function Test() {
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">BottomSheet</h1>
-        <BottomS
+        <BottomSheet
           trigger={
             <button className="flex w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
               공인중개사 전화 걸기
@@ -125,9 +124,9 @@ export default function Test() {
               );
             })
           }
-        </BottomS>
+        </BottomSheet>
 
-        <BottomS
+        <BottomSheet
           trigger={
             <button className="flex w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
               {selectedText?.label ?? "AI추천 순"}
@@ -157,7 +156,7 @@ export default function Test() {
               );
             })
           }
-        </BottomS>
+        </BottomSheet>
       </div>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
