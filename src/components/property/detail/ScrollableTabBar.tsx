@@ -12,12 +12,17 @@ const tab_list = [
   { label: "중개정보", value: "agent" },
 ];
 
-const ScrollableTabBar = () => {
+const ScrollableTabBar = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [selected, setSelected] = useState("deal");
+
+  const handleClick = (value: string) => {
+    setSelected(value);
+    onSelect(value);
+  };
 
   return (
     <div
-      className="w-full overflow-x-auto bg-white scrollbar-hide"
+      className="sticky top-[114px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
       style={{
         scrollbarWidth: "none", // Firefox 대응
         msOverflowStyle: "none", // IE 대응 (의미 없다고 함..)
@@ -29,7 +34,7 @@ const ScrollableTabBar = () => {
           return (
             <button
               key={tab.value}
-              onClick={() => setSelected(tab.value)}
+              onClick={() => handleClick(tab.value)}
               className={clsx(
                 "w-[25%] min-w-[25%] whitespace-nowrap border-b-2 py-[18px] text-center",
                 isActive
