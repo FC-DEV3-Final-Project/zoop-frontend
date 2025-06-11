@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import HeartButton from "./HeartButton";
 
-interface PropertyCardProps {
+export interface PropertyCardProps {
   itemId: number;
   itemNumber?: number;
   imageUrl: string;

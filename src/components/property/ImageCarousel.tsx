@@ -1,40 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCarousel } from "@/hooks/property/useCarousel";
 
 const mockImages = Array(20).fill(null); // 추후 이미지로 대체
 const mockTags = ["반려동물 입주", "역세권", "대학가"]; // 추후 태그 대체
 
-export default function ImageCarousel() {
-  const [index, setIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-
-  const goPrev = () => {
-    setIndex((prev) => (prev - 1 + mockImages.length) % mockImages.length);
-  };
-
-  const goNext = () => {
-    setIndex((prev) => (prev + 1) % mockImages.length);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const deltaX = touchEndX - touchStartX;
-
-    if (deltaX > 50) {
-      goPrev();
-    } else if (deltaX < -50) {
-      goNext();
-    }
-
-    setTouchStartX(null);
-  };
+const ImageCarousel = () => {
+  const { index, goNext, goPrev, handleTouchStart, handleTouchEnd } = useCarousel(
+    mockImages.length,
+  );
 
   return (
     <div
@@ -42,7 +17,7 @@ export default function ImageCarousel() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* 이미지 슬라이드 (지금은 회색 박스 + 숫자) */}
+      {/* 이미지 슬라이드 */}
       <div
         className="flex transition-transform duration-300 ease-in-out"
         style={{
@@ -61,8 +36,7 @@ export default function ImageCarousel() {
       </div>
 
       <div className="absolute bottom-3 left-0 right-0 flex items-center justify-between px-3">
-        {/* 태그 - 하드코딩 수정 예정 */}
-        {/* border-radius 값 스타일 시트 미반영 추후 수정 */}
+        {/* 태그 */}
         <div className="flex items-center gap-[10px] rounded-[20px] bg-white/50 px-[12px] py-[4px]">
           <Image src="/icons/smile.svg" alt="icon" width={22} height={22} />
           <span className="text-subtitle2 text-blue-800">{mockTags.join(" / ")}</span>
@@ -87,4 +61,6 @@ export default function ImageCarousel() {
       />
     </div>
   );
-}
+};
+
+export default ImageCarousel;
