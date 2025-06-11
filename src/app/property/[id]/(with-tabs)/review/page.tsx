@@ -5,6 +5,7 @@ import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
 import ReviewList from "@/components/property/review/ReviewList";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Header } from "@/layout/Header";
 
 const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -12,6 +13,10 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className="flex h-full flex-col bg-white">
+      <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>방배</Header.Title>
+      </Header>
       {/* 본문 영역: overflow 스크롤 */}
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col gap-6 p-5">

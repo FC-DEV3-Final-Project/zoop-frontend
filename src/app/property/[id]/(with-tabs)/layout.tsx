@@ -33,11 +33,11 @@ const PropertyLayout = ({
   };
 
   return (
-    <>
+    <div className="pt-16">
       <ImageCarousel />
       <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
       <div>{children}</div>
-    </>
+    </div>
   );
 };
 

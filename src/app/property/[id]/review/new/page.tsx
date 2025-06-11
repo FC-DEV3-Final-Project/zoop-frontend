@@ -6,6 +6,7 @@ import SelectButtonGroup from "@/components/property/review/new/SelectButtonGrou
 import ReviewTextarea from "@/components/property/review/new/ReviewTextarea";
 import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
+import { Header } from "@/layout/Header";
 
 const NewReviewPage = () => {
   const router = useRouter();
@@ -18,8 +19,12 @@ const NewReviewPage = () => {
 
   return (
     <div className="flex h-full flex-col bg-white">
+      <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>리뷰 작성하기</Header.Title>
+      </Header>
       {/* 본문 스크롤 영역 */}
-      <div className="flex-1 overflow-y-auto px-5 pb-[88px] pt-8">
+      <div className="flex-1 overflow-y-auto px-5 pb-[88px] pt-24">
         <div className="mb-[30px] text-title2 text-blue-800-primary">
           방배마에스트로[주상복합] 아파트
         </div>

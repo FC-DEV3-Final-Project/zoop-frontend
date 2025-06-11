@@ -1,11 +1,13 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ReviewCard from "@/components/property/review/ReviewCard";
 import CommentList from "@/components/property/review/CommentList";
+import { Header } from "@/layout/Header";
 
 const ReviewDetailPage = () => {
   const { reviewId } = useParams();
+  const router = useRouter();
 
   const mock_reviews = [
     {
@@ -39,10 +41,16 @@ const ReviewDetailPage = () => {
   if (!review) return <div>리뷰를 찾을 수 없습니다.</div>;
 
   return (
-    <div className="flex h-full flex-col bg-white">
-      <ReviewCard {...review} />
-      <CommentList reviewId={review.id} />
-    </div>
+    <>
+      <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>리뷰 줍줍</Header.Title>
+      </Header>
+      <div className="flex h-full min-h-screen flex-col bg-white pt-16">
+        <ReviewCard {...review} />
+        <CommentList reviewId={review.id} />
+      </div>
+    </>
   );
 };
 
