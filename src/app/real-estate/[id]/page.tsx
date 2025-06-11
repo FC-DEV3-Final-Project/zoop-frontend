@@ -114,3 +114,5 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
     </>
   );
 }
+
+}

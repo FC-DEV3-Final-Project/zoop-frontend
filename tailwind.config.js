@@ -41,6 +41,9 @@ export default {
         title2: ["20px", { fontWeight: "700", lineHeight: "1.4" }],
         title3: ["18px", { fontWeight: "700", lineHeight: "1.4" }],
         title4: ["16px", { fontWeight: "700", lineHeight: "1.4" }],
+        title5: ["22px", { fontWeight: "600", lineHeight: "1.4" }],
+        title6: ["20px", { fontWeight: "600", lineHeight: "1.4" }],
+        title7: ["20px", { fontWeight: "500", lineHeight: "1.4" }],
         subtitle1: ["18px", { fontWeight: "600", lineHeight: "1.4" }],
         subtitle2: ["16px", { fontWeight: "600", lineHeight: "1.4" }],
         subtitle3: ["16px", { fontWeight: "400", lineHeight: "1.4" }],
@@ -48,7 +51,6 @@ export default {
         body1: ["16px", { fontWeight: "500", lineHeight: "1.4" }],
         body2: ["14px", { fontWeight: "400", lineHeight: "1.4" }],
         body3: ["12px", { fontWeight: "400", lineHeight: "1.4" }],
-        body4: ["12px", { fontWeight: "400", lineHeight: "1.4" }],
         caption1: ["14px", { fontWeight: "600", lineHeight: "1.4" }],
         caption2: ["14px", { fontWeight: "500", lineHeight: "1.4" }],
         caption3: ["12px", { fontWeight: "500", lineHeight: "1.4" }],
@@ -64,8 +66,33 @@ export default {
         shadow2: "0 8px 4px rgba(31, 34, 39, 0.08)",
         shadow3: "0 16px 4px rgba(31, 34, 39, 0.08)",
         shadow4: "0 24px 4px rgba(31, 34, 39, 0.08)",
+        selectCard: "0px 0px 0px 0px rgba(0, 0, 0, 0.05), 0px 4px 6px 0px rgba(0, 0, 0, 0.03)",
+      },
+      keyframes: {
+        "slide-in-from-bottom": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-out-to-bottom": {
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
+        "fade-in-0": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "fade-out-0": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "slide-in-from-bottom": "slide-in-from-bottom 0.5s ease-out",
+        "slide-out-to-bottom": "slide-out-to-bottom 0.5s ease-in",
+        "fade-in-0": "fade-in-0 0.3s ease-out",
+        "fade-out-0": "fade-out-0 0.3s ease-in",
       },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide"), require("@tailwindcss/line-clamp")],
+  plugins: [require("tailwind-scrollbar-hide"), require("tailwindcss-animate")],
 };
