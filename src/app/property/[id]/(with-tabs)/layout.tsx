@@ -25,11 +25,9 @@ const PropertyLayout = ({
   const selectedTab = pathname.includes("/review") ? "review" : "detail";
 
   const handleTabChange = (tab: string) => {
-    if (tab === "review") {
-      router.push(`/property/${id}/review`);
-    } else {
-      router.push(`/property/${id}`);
-    }
+    const targetPath = tab === "review" ? `/property/${id}/review` : `/property/${id}`;
+
+    router.push(targetPath);
   };
 
   return (
