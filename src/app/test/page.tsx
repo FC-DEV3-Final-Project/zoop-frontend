@@ -9,6 +9,7 @@ import BottomSheet from "@/components/BottomSheet";
 import Dropdown from "@/components/Dropdown";
 
 import { Header } from "@/layout/Header";
+import Input from "@/components/ui/input";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -29,6 +30,7 @@ const sortOptions = [
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
+  const [inputText, setInputText] = useState(""); // input에 입력한 텍스트 관리
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
