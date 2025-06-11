@@ -2,17 +2,37 @@
 
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // 임시 데이터
-const userData = {
-  profileImage: "/imgs/default-profile.jpg",
-  nickname: "지윤",
-  email: "00000@kakao.com",
-};
-
+// const userData = {
+//   profileImage: "/imgs/default-profile.jpg",
+//   nickname: "지윤",
+//   email: "00000@kakao.com",
+// };
 const UserInfoPage = () => {
   const router = useRouter();
   const { id } = useParams();
+
+  const [account, setAccount] = useState<{
+    email: string;
+    nickname: string;
+    profileImage: string;
+  } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const res = await fetch(`/api/mypage/${id}/user-info`);
+        const data = await res.json();
+        setAccount(data.account);
+      } catch (e) {
+        setError("유저 정보를 불러오지 못했습니다.");
+      }
+    };
+    fetchUserInfo();
+  }, [id]);
 
   const handleEditNickname = () => {
     router.push(`/mypage/${id}/user-info/edit-nickname`);
@@ -21,6 +41,14 @@ const UserInfoPage = () => {
   const handleEditProfileImage = () => {
     router.push(`/mypage/${id}/user-info/edit-profile-image`);
   };
+
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
+
+  if (!account) {
+    return <div className="p-4">로딩 중...</div>;
+  }
 
   return (
     <>
@@ -32,7 +60,7 @@ const UserInfoPage = () => {
             className="h-16 w-16 overflow-hidden rounded-full bg-gray-100"
           >
             <Image
-              src={userData.profileImage}
+              src={account.profileImage}
               alt="프로필"
               width={64}
               height={64}
@@ -48,14 +76,14 @@ const UserInfoPage = () => {
             <div className="flex justify-between p-4">
               <span className="text-subtitle2">닉네임</span>
               <button className="flex gap-2" onClick={handleEditNickname}>
-                <span className="text-body1">{userData.nickname}</span>
+                <span className="text-body1">{account.nickname}</span>
                 <img src="/icons/arrow-right.svg" alt="수정" className="h-6 w-6" />
               </button>
             </div>
             <div className="flex justify-between p-4">
               <span className="text-subtitle2">카카오계정</span>
               <div className="flex gap-2">
-                <span className="text-body1">{userData.email}</span>
+                <span className="text-body1">{account.email}</span>
               </div>
             </div>
           </div>
