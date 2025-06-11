@@ -44,7 +44,7 @@ const BottomSheet = ({
 
       <SheetContent
         side="bottom"
-        className="absolute mx-auto h-auto w-full max-w-[600px] rounded-t-xl bg-white"
+        className="sticky mx-auto w-full max-w-[600px] rounded-t-xl bg-white"
       >
         <SheetHeader className="items-center gap-0 pt-[14px]">
           <SheetTitle className="flex h-[40px] items-center justify-center text-body1">
@@ -57,7 +57,7 @@ const BottomSheet = ({
             const isSelected = item.value === selectedValue;
             return (
               <button
-                className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 ${isSelected ? "bg-gray-200" : ""} hover:bg-gray-200`}
+                className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 ${isSelected ? "bg-gray-200 text-subtitle2" : ""} hover:bg-gray-200`}
                 key={item.value}
                 onClick={() => handleClick(item)}
               >
