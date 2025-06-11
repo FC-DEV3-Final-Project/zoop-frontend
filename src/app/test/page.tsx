@@ -2,14 +2,12 @@
 
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import Tab from "@/components/common/Tab";
-import PropertyCard from "@/components/common/PropertyCard";
-import Dropdown from "@/components/Dropdown";
-
 import { Header } from "@/layout/Header";
-import Input from "@/components/ui/input";
-import BottomSheet from "@/components/BottomSheet";
+import { Button } from "@/components/ui/button";
+import BottomSheet from "@/components/common/BottomSheet";
+import Dropdown from "@/components/common/Dropdown";
+import PropertyCard from "@/components/common/PropertyCard";
+import Tab from "@/components/common/Tab";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
