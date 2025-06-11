@@ -9,13 +9,11 @@ interface RealEstateInfoProps {
   sale: number;
   lease: number;
   rent: number;
+  statsItems: Array<{
+    label: string;
+    value: string;
+  }>;
 }
-
-const STATS_ITEMS = [
-  { label: "매매", key: "sale" },
-  { label: "전세", key: "lease" },
-  { label: "월세", key: "rent" },
-] as const;
 
 export default function RealEstateInfo({
   name,
@@ -26,6 +24,7 @@ export default function RealEstateInfo({
   sale,
   lease,
   rent,
+  statsItems,
 }: RealEstateInfoProps) {
   return (
     <div className="flex flex-col gap-3 bg-white p-5">
@@ -51,11 +50,11 @@ export default function RealEstateInfo({
         </div>
       </div>
       <div className="flex gap-1">
-        {STATS_ITEMS.map(({ label, key }) => (
-          <div key={key} className="flex gap-0.5">
+        {statsItems.map(({ label, value }) => (
+          <div key={value} className="flex gap-0.5">
             <span className="text-caption2">{label}</span>
             <span className="text-caption1 text-blue-800-primary">
-              {key === "sale" ? sale : key === "lease" ? lease : rent}
+              {value === "sale" ? sale : value === "lease" ? lease : rent}
             </span>
           </div>
         ))}

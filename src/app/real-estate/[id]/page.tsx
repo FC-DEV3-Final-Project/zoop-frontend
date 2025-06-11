@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
 
-const tabOptions = [
+const statsItems = [
   { label: "월세", value: "rent" },
   { label: "전세", value: "lease" },
   { label: "매매", value: "sale" },
@@ -20,6 +20,7 @@ const realEstateData = {
   sale: 30,
   lease: 4,
   rent: 19,
+  statsItems,
 };
 
 const properties = [
@@ -92,20 +93,6 @@ const properties = [
 ];
 
 export default function RealEstatePage({ params }: { params: { id: string } }) {
-  const textRef = useRef<HTMLDivElement>(null);
-  const [isTruncated, setIsTruncated] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  useEffect(() => {
-    const el = textRef.current;
-    if (!el) return;
-
-    const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-
-    if (el.scrollHeight > lineHeight + 1) {
-      setIsTruncated(true);
-    }
-  }, []);
 
   return (
     <>
@@ -113,7 +100,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
       <div className="pb-[76px]">
         <PropertyListSection
           showMapViewButton={false}
-          tabOptions={tabOptions}
+          tabOptions={statsItems}
           propertyMap={{
             rent: properties,
             lease: properties,
