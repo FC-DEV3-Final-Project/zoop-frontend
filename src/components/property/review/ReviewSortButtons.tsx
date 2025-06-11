@@ -1,6 +1,6 @@
 interface ReviewSortButtonsProps {
   sortType: "recommended" | "latest" | "mine";
-  onChange: (type: "recommended" | "latest" | "mine") => void;
+  onChange: (type: "recommended" | "latest") => void;
 }
 
 const ReviewSortButtons = ({ sortType, onChange }: ReviewSortButtonsProps) => {
@@ -14,9 +14,6 @@ const ReviewSortButtons = ({ sortType, onChange }: ReviewSortButtonsProps) => {
       </button>
       <button className={getClass("latest")} onClick={() => onChange("latest")}>
         최신순
-      </button>
-      <button className={getClass("mine")} onClick={() => onChange("mine")}>
-        내 리뷰
       </button>
     </div>
   );
