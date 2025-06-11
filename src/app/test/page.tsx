@@ -49,8 +49,6 @@ export default function Test() {
     }
   };
 
-  const callPhon = (item: { label: string; value: number }) => {};
-
   return (
     <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
       {/** Header Section */}
@@ -108,14 +106,12 @@ export default function Test() {
         >
           {(close) =>
             phonNumber.map((item) => {
-              // const isSelected = item.value === selectedItem?.value;
               return (
                 <button
                   key={item.value}
                   className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200`}
                   onClick={() => {
                     console.log("선택된 항목:", item);
-                    callPhon(item);
                     close();
                   }}
                 >
