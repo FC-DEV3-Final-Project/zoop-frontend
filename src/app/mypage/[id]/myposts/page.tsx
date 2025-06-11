@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Tab } from "@/components/Tab";
 import { MyPostItem } from "@/components/mypage/myposts/MyPostItem";
+import { Header } from "@/layout/Header";
 
 const tabOptions = [
   { label: "리뷰", value: "review" },
@@ -100,7 +101,12 @@ const MyPostsPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-col bg-gray-100">
+  <>
+    <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>내가 쓴 글</Header.Title>
+      </Header>
+    <div className="flex w-full flex-col bg-gray-100 pt-16">
       <div className="sticky top-16 z-10 bg-white">
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
       </div>
@@ -120,6 +126,7 @@ const MyPostsPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
