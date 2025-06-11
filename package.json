@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^5.77.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -18,6 +21,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.0",
+    "tailwind-scrollbar-hide": "^4.0.0",
     "tailwindcss": "^3.4.17",
     "zustand": "^5.0.5"
   },
@@ -33,7 +37,8 @@
     "postcss": "^8.4.35",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tw-animate-css": "^1.3.0",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   }
 }
