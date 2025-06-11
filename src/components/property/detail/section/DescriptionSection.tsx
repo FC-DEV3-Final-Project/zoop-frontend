@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, forwardRef } from "react";
 import GrayButton from "@/components/property/detail/GrayButton";
 
-const DescriptionSection = () => {
+const DescriptionSection = forwardRef<HTMLElement>((_, ref) => {
   const textRef = useRef<HTMLDivElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -21,7 +21,7 @@ const DescriptionSection = () => {
   }, []);
 
   return (
-    <section id="description" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
+    <section ref={ref} id="description" className="mb-2 scroll-mt-[174px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">상세설명</div>
       <div className="mb-4 text-caption1 text-black">
         [이수역] 방배 마에스트로 주상복합아파트(전세5억3천만원)
@@ -57,6 +57,6 @@ const DescriptionSection = () => {
       )}
     </section>
   );
-};
+});
 
 export default DescriptionSection;

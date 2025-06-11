@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { forwardRef } from "react";
 import GrayButton from "@/components/property/detail/GrayButton";
 
-const AgentSection = () => {
+const AgentSection = forwardRef<HTMLElement>((_, ref) => {
   const router = useRouter();
   const agentInfo = [
     { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
@@ -27,7 +28,7 @@ const AgentSection = () => {
   ];
 
   return (
-    <section id="agent" className="mb-[75px] scroll-mt-[80px] bg-white px-5 py-8">
+    <section ref={ref} id="agent" className="mb-[75px] scroll-mt-[174px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">중개정보</div>
       <div className="mb-5 text-title3 text-black">일등 부동산 공인중개사사무소</div>
       <div className="flex flex-col gap-1 text-caption1 text-black">
@@ -90,6 +91,6 @@ const AgentSection = () => {
       </div>
     </section>
   );
-};
+});
 
 export default AgentSection;
