@@ -13,11 +13,11 @@ const FacilitySection = () => {
   return (
     <section id="facility" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">시설정보</div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-[76px] gap-y-[20px] text-caption2 text-black">
+      <div className="grid grid-cols-[auto_1fr] gap-x-[76px] gap-y-[20px] text-black">
         {Object.entries(facilityData).map(([label, value]) => (
           <React.Fragment key={label}>
-            <div>{label}</div>
-            <div className="flex flex-col gap-1">
+            <div className="text-caption2">{label}</div>
+            <div className="flex flex-col gap-1 text-body2">
               {Array.isArray(value) ? (
                 value.map((item, i) => <div key={i}>{item}</div>)
               ) : (

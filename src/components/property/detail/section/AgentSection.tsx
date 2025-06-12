@@ -63,10 +63,10 @@ const AgentSection = () => {
       {feeInfo.map((item, idx) => (
         <div
           key={idx}
-          className={`${idx !== 0 ? "mt-4" : ""} grid grid-cols-[70px_1fr] gap-x-[18px] text-body2 text-black`}
+          className={`${idx !== 0 ? "mt-4" : ""} grid grid-cols-[70px_1fr] gap-x-[18px] text-black`}
         >
-          <div>{item.label}</div>
-          <div className="flex flex-col gap-2">
+          <div className="text-caption2">{item.label}</div>
+          <div className="flex flex-col gap-2 text-body2">
             {item.values.map((text, i) => (
               <div key={i}>{text}</div>
             ))}

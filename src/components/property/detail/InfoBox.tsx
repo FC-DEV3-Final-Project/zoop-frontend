@@ -44,8 +44,8 @@ const InfoBox = ({ itemId }: InfoBoxProps) => {
             <div key={colIdx} className="flex flex-col gap-3">
               {column.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <img src={item.icon} alt={item.label} width={24} height={24} />
-                  <span>{item.label}</span>
+                  <img src={item.icon} alt={item.label} width={18} height={18} />
+                  <span className="text-body2">{item.label}</span>
                 </div>
               ))}
             </div>

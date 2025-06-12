@@ -23,11 +23,11 @@ const InfoSection = () => {
       <div className="mb-5 text-title2 text-black">매물정보</div>
       {/* <Image src="" alt="매물정보 사진" className="mb-5" /> */}
       <div className="mb-5 h-[200px] w-full rounded-small bg-gray-500"></div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] text-caption2 text-black">
+      <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] text-black">
         {infoList.map(([label, value], idx) => (
           <React.Fragment key={idx}>
-            <div>{label}</div>
-            <div>{value}</div>
+            <div className="text-caption2">{label}</div>
+            <div className="text-body2">{value}</div>
           </React.Fragment>
         ))}
       </div>

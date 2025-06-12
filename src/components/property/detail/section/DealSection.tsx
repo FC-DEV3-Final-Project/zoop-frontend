@@ -24,11 +24,13 @@ const DealSection = () => {
   return (
     <section id="deal" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
       <div className="mb-5 text-title2 text-black">거래정보</div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-[63px] gap-y-5 text-caption2 text-black">
+      <div className="grid grid-cols-[auto_1fr] gap-x-[63px] gap-y-5 text-black">
         {dealInfo.map((item, idx) => (
           <React.Fragment key={idx}>
-            <div>{item.label}</div>
-            <div>{item.label === "거래방식" ? `${item.type} ${item.amount}` : item.value}</div>
+            <div className="text-caption2">{item.label}</div>
+            <div className="text-body2">
+              {item.label === "거래방식" ? `${item.type} ${item.amount}` : item.value}
+            </div>
           </React.Fragment>
         ))}
       </div>
