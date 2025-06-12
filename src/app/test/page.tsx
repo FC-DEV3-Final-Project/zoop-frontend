@@ -354,8 +354,8 @@ export default function Test() {
         <h2 className="text-title2">Property Card</h2>
         <p>기본 카드</p>
         <PropertyCard
-          itemId={1}
-          itemNumber={1}
+          id={1}
+          order={1}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -367,8 +367,8 @@ export default function Test() {
         />
         <p>{"isNumberVisible={false}"}</p>
         <PropertyCard
-          itemId={1}
-          itemNumber={1}
+          id={1}
+          order={1}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -381,8 +381,8 @@ export default function Test() {
         />
         <p>{"isActive={false}"}</p>
         <PropertyCard
-          itemId={2}
-          itemNumber={2}
+          id={2}
+          order={2}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -395,8 +395,8 @@ export default function Test() {
         />
         <p>{"size='sm'"}</p>
         <PropertyCard
-          itemId={3}
-          itemNumber={3}
+          id={3}
+          order={3}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
