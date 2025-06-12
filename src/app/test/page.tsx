@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+
+import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
-import { Tab } from "@/components/Tab";
+import BottomSheet from "@/components/common/BottomSheet";
+import Dropdown from "@/components/common/Dropdown";
 import PropertyCard from "@/components/common/PropertyCard";
-import BottomSheet from "@/components/BottomSheet";
+import Tab from "@/components/common/Tab";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -17,37 +20,138 @@ const tabItems2 = [
   { label: "매매", value: "three" },
 ];
 
+// BottomSheet 관련로직
 const sortOptions = [
   { label: "가격 높은 순", value: "high" },
   { label: "가격 낮은 순", value: "low" },
+  { label: "면적 넓은 순", value: "wide " },
+  { label: "면적 좁은 순", value: "narrow " },
+];
+
+// BottomSheet 관련로직
+const phonNumber = [
+  { label: "031-271-5309", value: 312715309 },
+  { label: "010-1234-1234", value: 1012341234 },
 ];
 
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
-  const [selectedItem, setSelectedItem] = useState<{ label: string; value: string } | null>(null);
+  const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
+
+  // BottomSheet 관련로직
+  const handleSelect = (item: { label: string; value: string }) => {
+    if (selectedText?.value === item.value) {
+      setSelectedText(null);
+    } else {
+      setSelectedText(item);
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1 p-4">
+    <div className="flex flex-col items-center justify-center gap-1 px-4 pt-16">
+      {/** Header Section */}
+      <Header bgColorClassName="bg-gray-100">
+        <Header.Hamburger onHamburgerClick={() => alert("뒤로가기 클릭")} />
+        <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
+        <Header.Title>Guide</Header.Title>
+        <Header.Close onCloseClick={() => alert("닫기 클릭")} />
+      </Header>
+
+      {/* DropDown Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">DropDown</h1>
+        <Dropdown
+          items={[
+            {
+              type: "edit",
+              label: "편집하기",
+              onClick: () => {
+                console.log("편집 버튼 클릭됨");
+              },
+            },
+            {
+              type: "delete",
+              label: "삭제하기",
+              onClick: () => {
+                console.log("삭제 버튼 클릭됨");
+              },
+            },
+          ]}
+        />
+        <Dropdown
+          items={[
+            {
+              type: "delete",
+              label: "삭제하기",
+              onClick: () => {
+                console.log("삭제 버튼 클릭됨");
+              },
+            },
+          ]}
+        />
+      </div>
+
       {/* BottomSheet Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">BottomSheet</h1>
         <BottomSheet
           trigger={
-            <button className="flex cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
-              {selectedItem?.label ?? "정렬 방식"}
+            <button className="flex w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+              공인중개사 전화 걸기
+            </button>
+          }
+          title="전화 걸기"
+        >
+          {(close) =>
+            phonNumber.map((item) => {
+              return (
+                <button
+                  key={item.value}
+                  className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200`}
+                  onClick={() => {
+                    console.log("선택된 항목:", item);
+                    close();
+                  }}
+                >
+                  {item.label}
+                </button>
+              );
+            })
+          }
+        </BottomSheet>
+
+        <BottomSheet
+          trigger={
+            <button className="flex w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1">
+              {selectedText?.label ?? "AI추천 순"}
               <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
             </button>
           }
           title="정렬 방식"
-          items={sortOptions}
-          selectedValue={selectedItem?.value}
-          onSelect={(item) => {
-            setSelectedItem(item);
-          }}
-          toggleable={true}
-        />
+        >
+          {(close) =>
+            sortOptions.map((item) => {
+              const isSelected = item.value === selectedText?.value;
+              return (
+                <button
+                  key={item.value}
+                  className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200 ${
+                    isSelected ? "bg-gray-200 text-subtitle2" : ""
+                  }`}
+                  onClick={() => {
+                    console.log("선택된 항목:", item);
+                    setSelectedText(item); // 필요시 선택 항목 반영
+                    handleSelect(item);
+                    close();
+                  }}
+                >
+                  {item.label}
+                </button>
+              );
+            })
+          }
+        </BottomSheet>
       </div>
-      <h1 className="text-title1">Guide</h1>
       {/* Color Section */}
       <div className="flex flex-col gap-4 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">Color</h1>
@@ -194,7 +298,7 @@ export default function Test() {
           </div>
         </div>
       </div>
-      
+
       {/* Typography Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Typography</h2>
@@ -303,11 +407,12 @@ export default function Test() {
       </div>
 
       {/* propertyCard Section */}
-      <div className="flex flex-col w-full gap-2 p-4 border border-gray-400 rounded-large">
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Property Card</h2>
+        <p>기본 카드</p>
         <PropertyCard
-          itemId={1}
-          itemNumber={1}
+          id={1}
+          order={1}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -317,9 +422,24 @@ export default function Test() {
           area="34.5㎡"
           tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
         />
+        <p>{"isNumberVisible={false}"}</p>
         <PropertyCard
-          itemId={2}
-          itemNumber={2}
+          id={1}
+          order={1}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isNumberVisible={false}
+        />
+        <p>{"isActive={false}"}</p>
+        <PropertyCard
+          id={2}
+          order={2}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -330,9 +450,10 @@ export default function Test() {
           tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
           isActive={false}
         />
+        <p>{"size='sm'"}</p>
         <PropertyCard
-          itemId={3}
-          itemNumber={3}
+          id={3}
+          order={3}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"

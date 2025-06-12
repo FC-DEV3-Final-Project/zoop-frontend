@@ -1,35 +1,24 @@
 import { useState } from "react";
-import PropertyCard from "@/components/common/PropertyCard";
-import { Tab } from "@/components/Tab";
-import type { PropertyCardProps } from "@/components/common/PropertyCard";
+import PropertyCard, { PropertyCardProps } from "@/components/common/PropertyCard";
+import Tab from "@/components/common/Tab";
 
 interface TabOption {
   label: string;
   value: string;
 }
 
-interface RawProperty {
-  id: number;
-  imageUrl: string;
-  transactionType: string;
-  price: string;
-  buildingType: string;
-  area: string;
-  address: string;
-  detailAddress: string;
-  tags: string[];
-}
-
 interface PropertyListSectionProps {
   tabOptions: TabOption[];
-  propertyMap: { [tabValue: string]: RawProperty[] };
+  propertyMap: { [tabValue: string]: PropertyCardProps[] };
   showMapViewButton?: boolean;
+  isNumberVisible?: boolean;
 }
 
 const PropertyListSection = ({
   tabOptions,
   propertyMap,
   showMapViewButton = true,
+  isNumberVisible = true,
 }: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
 
@@ -37,12 +26,7 @@ const PropertyListSection = ({
     alert("지도에서 보기 클릭!");
   };
 
-  const currentProperties: PropertyCardProps[] = (propertyMap[selectedTab] || []).map(
-    ({ id, ...rest }) => ({
-      itemId: id,
-      ...rest,
-    }),
-  );
+  const currentProperties = propertyMap[selectedTab] || [];
 
   return (
     <section className="flex flex-col">
@@ -65,19 +49,7 @@ const PropertyListSection = ({
       {/* 매물 리스트만 스크롤 */}
       <div className="overflow-y-auto">
         {currentProperties.map((property, index) => (
-          <PropertyCard
-            key={property.itemId}
-            itemId={property.itemId}
-            itemNumber={index + 1}
-            imageUrl={property.imageUrl}
-            transactionType={property.transactionType}
-            price={property.price}
-            buildingType={property.buildingType}
-            area={property.area}
-            address={property.address}
-            detailAddress={property.detailAddress}
-            tags={property.tags}
-          />
+          <PropertyCard key={property.id} {...property} />
         ))}
       </div>
     </section>
