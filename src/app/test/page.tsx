@@ -409,9 +409,10 @@ export default function Test() {
       {/* propertyCard Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Property Card</h2>
+        <p>기본 카드</p>
         <PropertyCard
-          itemId={1}
-          itemNumber={1}
+          id={1}
+          order={1}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -421,9 +422,24 @@ export default function Test() {
           area="34.5㎡"
           tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
         />
+        <p>{"isNumberVisible={false}"}</p>
         <PropertyCard
-          itemId={2}
-          itemNumber={2}
+          id={1}
+          order={1}
+          imageUrl="/imgs/propertyExample.png"
+          transactionType="전세"
+          price="5억 3,000"
+          address="방배마에스트로{주상복합}"
+          detailAddress="101동 703호"
+          buildingType="아파트"
+          area="34.5㎡"
+          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          isNumberVisible={false}
+        />
+        <p>{"isActive={false}"}</p>
+        <PropertyCard
+          id={2}
+          order={2}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
@@ -434,9 +450,10 @@ export default function Test() {
           tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
           isActive={false}
         />
+        <p>{"size='sm'"}</p>
         <PropertyCard
-          itemId={3}
-          itemNumber={3}
+          id={3}
+          order={3}
           imageUrl="/imgs/propertyExample.png"
           transactionType="전세"
           price="5억 3,000"
