@@ -10,13 +10,19 @@ const MyPage = () => {
   const router = useRouter();
   const { id } = useParams();
 
+  // 1. 기본 정보(프로필, 리뷰 등)
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // 2. 찜한 매물
+  const [likedList, setLikedList] = useState<any[]>([]);
+  const [likedError, setLikedError] = useState<string | null>(null);
+
   useEffect(() => {
+    // /mypage/home fetch
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/mypage/home");
+        const res = await fetch("/mypage/home");
         const result = await res.json();
         setData(result.data);
       } catch (e) {
@@ -24,6 +30,20 @@ const MyPage = () => {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    // /mypage/liked-items fetch
+    const fetchLiked = async () => {
+      try {
+        const res = await fetch("/mypage/liked-items");
+        const result = await res.json();
+        setLikedList(result.bookmarkedProperties);
+      } catch (e) {
+        setLikedError("찜한 매물 데이터를 불러오지 못했습니다.");
+      }
+    };
+    fetchLiked();
   }, []);
 
   if (error) {
@@ -34,7 +54,7 @@ const MyPage = () => {
     return <div className="p-4">로딩 중...</div>;
   }
 
-  const { profile, myReviews, bookmarkedProperties, recentViewedProperties } = data;
+  const { profile, myReviews, recentViewedProperties } = data;
 
   const tabOptions = [
     { label: "찜한 매물", value: "liked" },
@@ -46,10 +66,6 @@ const MyPage = () => {
   };
   const handleMorePosts = () => {
     router.push(`/mypage/${id}/myposts`);
-  };
-
-  const handleMapView = () => {
-    alert("지도에서 보기 클릭!");
   };
 
   return (
@@ -113,11 +129,12 @@ const MyPage = () => {
         <PropertyListSection
           tabOptions={tabOptions}
           propertyMap={{
-            liked: bookmarkedProperties,
+            liked: likedList,
             recent: recentViewedProperties,
           }}
           isNumberVisible={false}
         />
+        {likedError && <div className="p-4 text-red-500">{likedError}</div>}
       </div>
     </>
   );
