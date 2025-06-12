@@ -9,7 +9,11 @@ const DealSection = forwardRef<HTMLElement, {}>((_, ref) => {
   ];
 
   return (
-    <section ref={ref} id="deal" className="mb-2 scroll-mt-[174px] bg-white px-5 py-8">
+    <section
+      ref={ref}
+      id="deal"
+      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+    >
       <div className="mb-5 text-title2 text-black">거래정보</div>
       <div className="grid grid-cols-[auto_1fr] gap-x-[63px] gap-y-5 text-caption2 text-black">
         {dealInfo.map((item, idx) => (

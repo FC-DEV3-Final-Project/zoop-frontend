@@ -20,7 +20,11 @@ const InfoSection = forwardRef<HTMLElement>((_, ref) => {
   ];
 
   return (
-    <section ref={ref} id="info" className="mb-2 scroll-mt-[174px] bg-white px-5 py-8">
+    <section
+      ref={ref}
+      id="info"
+      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+    >
       <div className="mb-5 text-title2 text-black">매물정보</div>
       {/* <Image src="" alt="매물정보 사진" className="mb-5" /> */}
       <div className="mb-5 h-[200px] w-full rounded-small bg-gray-500"></div>

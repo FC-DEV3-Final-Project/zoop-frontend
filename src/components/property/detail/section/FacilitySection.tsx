@@ -12,7 +12,11 @@ const FacilitySection = forwardRef<HTMLElement>((_, ref) => {
   };
 
   return (
-    <section ref={ref} id="facility" className="mb-2 scroll-mt-[174px] bg-white px-5 py-8">
+    <section
+      ref={ref}
+      id="facility"
+      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+    >
       <div className="mb-5 text-title2 text-black">시설정보</div>
       <div className="grid grid-cols-[auto_1fr] gap-x-[76px] gap-y-[20px] text-caption2 text-black">
         {Object.entries(facilityData).map(([label, value]) => (

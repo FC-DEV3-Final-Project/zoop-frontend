@@ -28,7 +28,11 @@ const AgentSection = forwardRef<HTMLElement>((_, ref) => {
   ];
 
   return (
-    <section ref={ref} id="agent" className="mb-[75px] scroll-mt-[174px] bg-white px-5 py-8">
+    <section
+      ref={ref}
+      id="agent"
+      className="mb-[75px] min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+    >
       <div className="mb-5 text-title2 text-black">중개정보</div>
       <div className="mb-5 text-title3 text-black">일등 부동산 공인중개사사무소</div>
       <div className="flex flex-col gap-1 text-caption1 text-black">
