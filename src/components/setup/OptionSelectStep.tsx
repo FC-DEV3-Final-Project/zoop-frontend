@@ -9,7 +9,7 @@ interface OptionSelectStepProps {
 }
 
 const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedOption, setSelectedOption] = useState<string[]>([]);
 
   return (
     <div className="flex h-full flex-col gap-5">
@@ -21,15 +21,15 @@ const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => 
             <SelectCard
               key={option}
               option={option}
-              selected={selected}
-              setSelected={setSelected}
+              selectedCards={selectedOption}
+              setSelectedCards={setSelectedOption}
             />
           ))}
         </div>
       </div>
 
       <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
-        <Button onClick={onNext} disabled={selected.length === 0}>
+        <Button onClick={onNext} disabled={selectedOption.length === 0}>
           다음
         </Button>
       </div>
