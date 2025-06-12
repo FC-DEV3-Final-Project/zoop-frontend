@@ -94,7 +94,7 @@ const PropertyCard = ({
 
         {/* 태그 리스트 */}
         <div className="flex h-[19px] flex-wrap items-center gap-1 self-stretch overflow-hidden">
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <div
               key={index}
               className={`flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] px-2 py-0.5 text-center text-footnote ${isActive ? "bg-[#E8EAEE]" : "bg-gray-200 text-gray-700-info"}`}

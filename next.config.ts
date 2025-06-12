@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "k.kakaocdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.example.com",
+      },
       // 필요시 추가
     ],
   }

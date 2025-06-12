@@ -4,167 +4,37 @@ import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
+import { useEffect, useState } from "react";
 
-const MyPage = ({ params }: { params: { id: string } }) => {
+const MyPage = () => {
   const router = useRouter();
   const { id } = useParams();
 
-  // 임시 데이터
-  const userData = {
-    profileImage: "/imgs/default-profile.jpg",
-    name: "지윤",
-    posts: [
-      {
-        content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-        likes: 3,
-        comments: 5,
-      },
-      {
-        content: "아이들 학교가 가까워서 좋아요. 교통도 편리해서 좋아요",
-        likes: 2,
-        comments: 3,
-      },
-    ],
-  };
+  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const likedProperties = [
-    {
-      id: 1,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "1억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-      isActive: false,
-    },
-    {
-      id: 2,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-    {
-      id: 3,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "5억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    },
-    {
-      id: 4,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-    {
-      id: 5,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "5억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    },
-    {
-      id: 6,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/mypage/home");
+        const result = await res.json();
+        setData(result.data);
+      } catch (e) {
+        setError("데이터를 불러오지 못했습니다.");
+      }
+    };
+    fetchData();
+  }, []);
 
-  const recentProperties = [
-    {
-      id: 1,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "5억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    },
-    {
-      id: 2,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-    {
-      id: 3,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "5억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    },
-    {
-      id: 4,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-    {
-      id: 5,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "5억 3,000",
-      buildingType: "주상복합",
-      area: "34.5㎡",
-      address: "방배마에스트로",
-      detailAddress: "1동 703호",
-      tags: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    },
-    {
-      id: 6,
-      imageUrl: "/imgs/propertyExample.png",
-      transactionType: "전세",
-      price: "2억 7,500",
-      buildingType: "주상복합",
-      area: "38.67㎡",
-      address: "방배마에스트로",
-      detailAddress: "201동 1103호",
-      tags: ["헬스장 근처", "카페많음", "대학교 인접"],
-    },
-  ];
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
+
+  if (!data) {
+    return <div className="p-4">로딩 중...</div>;
+  }
+
+  const { profile, myReviews, bookmarkedProperties, recentViewedProperties } = data;
 
   const tabOptions = [
     { label: "찜한 매물", value: "liked" },
@@ -197,7 +67,7 @@ const MyPage = ({ params }: { params: { id: string } }) => {
             <div className="flex items-center gap-4">
               <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
                 <Image
-                  src={userData.profileImage}
+                  src={profile.profileImageUrl}
                   alt="프로필"
                   width={40}
                   height={40}
@@ -205,7 +75,7 @@ const MyPage = ({ params }: { params: { id: string } }) => {
                   priority
                 />
               </div>
-              <span className="text-subtitle2">{userData.name}</span>
+              <span className="text-subtitle2">{profile.nickname}</span>
             </div>
             <button onClick={handleEdit} className="rounded bg-neutral-100 px-3 py-1 text-body2">
               내 정보 수정
@@ -222,8 +92,15 @@ const MyPage = ({ params }: { params: { id: string } }) => {
               </button>
             </div>
             <div className="flex flex-col items-start self-stretch">
-              {userData.posts.length > 0 ? (
-                userData.posts.map((post, idx) => <PostPreview key={idx} {...post} />)
+              {myReviews && myReviews.length > 0 ? (
+                myReviews.map((post: any, idx: number) => (
+                  <PostPreview
+                    key={post.reviweId || idx}
+                    content={post.content}
+                    likes={post.likeCount}
+                    comments={post.commentCount}
+                  />
+                ))
               ) : (
                 <div className="h-5 justify-center self-stretch text-body2 leading-tight">
                   내가 작성한 글이 없어요
@@ -236,8 +113,8 @@ const MyPage = ({ params }: { params: { id: string } }) => {
         <PropertyListSection
           tabOptions={tabOptions}
           propertyMap={{
-            liked: likedProperties,
-            recent: recentProperties,
+            liked: bookmarkedProperties,
+            recent: recentViewedProperties,
           }}
           isNumberVisible={false}
         />
