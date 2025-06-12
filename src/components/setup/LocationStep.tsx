@@ -9,21 +9,22 @@ interface LocationStepProps {
 
 // 임시
 const dummyData = [
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-2" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 104-2" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-2" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 108-2" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
-  { title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "1", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-2" },
+  { id: "2", title: "이수역 7호선", detail: "서울 동작구 동작대로 104-2" },
+  { id: "3", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-2" },
+  { id: "4", title: "이수역 7호선", detail: "서울 동작구 동작대로 108-2" },
+  { id: "5", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "6", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "7", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "8", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "9", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
+  { id: "10", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
 ];
 
 const LocationStep = ({ onNext }: LocationStepProps) => {
   const [input, setInput] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const handleSearch = () => {
     if (input.trim()) {
@@ -78,19 +79,29 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
       {searchKeyword && (
         <div className="flex flex-col gap-4">
           <div className="text-body2 text-gray-800">검색결과 ({filteredData.length})</div>
-          <ul className="flex h-[calc(100vh-342px)] flex-col gap-[6px] overflow-y-auto">
-            {filteredData.map((item, idx) => (
-              <li key={idx} className="border-b-[0.5px] border-gray-200 py-[10px]">
-                <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
-                <div className="text-body2">{item.detail}</div>
-              </li>
-            ))}
+          <ul className="flex h-[calc(100vh-342px)] flex-col overflow-y-auto">
+            {filteredData.map((item, idx) => {
+              const isSelected = selectedLocation === item.id;
+
+              return (
+                <li
+                  key={idx}
+                  onClick={() => setSelectedLocation(item.id)}
+                  className={`cursor-pointer border-b-[0.5px] border-gray-200 px-5 py-[10px] transition-colors ${
+                    isSelected ? "bg-gray-100" : "bg-white"
+                  }`}
+                >
+                  <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
+                  <div className="text-body2">{item.detail}</div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
 
       <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
-        <Button onClick={onNext} disabled={input.length === 0}>
+        <Button onClick={onNext} disabled={selectedLocation === ""}>
           다음
         </Button>
       </div>
