@@ -79,24 +79,36 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
       {searchKeyword && (
         <div className="flex flex-col gap-4">
           <div className="text-body2 text-gray-800">검색결과 ({filteredData.length})</div>
-          <ul className="flex h-[calc(100vh-342px)] flex-col overflow-y-auto">
-            {filteredData.map((item, idx) => {
-              const isSelected = selectedLocation === item.id;
+          <div className="h-[calc(100vh-342px)] overflow-y-auto">
+            {filteredData.length > 0 ? (
+              <ul className="flex flex-col">
+                {filteredData.map((item, idx) => {
+                  const isSelected = selectedLocation === item.id;
 
-              return (
-                <li
-                  key={idx}
-                  onClick={() => setSelectedLocation(item.id)}
-                  className={`cursor-pointer border-b-[0.5px] border-gray-200 px-5 py-[10px] transition-colors ${
-                    isSelected ? "bg-gray-100" : "bg-white"
-                  }`}
-                >
-                  <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
-                  <div className="text-body2">{item.detail}</div>
-                </li>
-              );
-            })}
-          </ul>
+                  return (
+                    <li
+                      key={idx}
+                      onClick={() => setSelectedLocation(item.id)}
+                      className={`cursor-pointer border-b-[0.5px] border-gray-200 px-5 py-[10px] transition-colors ${
+                        isSelected ? "bg-gray-100" : "bg-white"
+                      }`}
+                    >
+                      <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
+                      <div className="text-body2">{item.detail}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="flex h-full flex-col items-center justify-center gap-2 whitespace-nowrap text-center">
+                <h1 className="text-subtitle1">원하는 검색 결과가 없으신가요?</h1>
+                <p className="text-body2 text-gray-700">
+                  철자나 띄어쓰기를 확인하거나, <br />
+                  인근 지역으로 검색해보세요!
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
