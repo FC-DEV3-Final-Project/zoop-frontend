@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
 import Image from "next/image";
@@ -25,6 +25,10 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
   const [input, setInput] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
+
+  useEffect(() => {
+    setSelectedLocation("");
+  }, [searchKeyword]);
 
   const handleSearch = () => {
     if (input.trim()) {
