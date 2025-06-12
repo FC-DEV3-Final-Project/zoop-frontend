@@ -17,12 +17,19 @@ export const MyPostItem = ({
   comments,
   reply,
 }: MyPostItemProps) => {
+  const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    alert("더보기 버튼 클릭");
+  };
+
   return (
     <div className="flex flex-col gap-1 bg-white p-5">
       {/* 건물명, 더보기 버튼 */}
       <div className="flex items-center">
         <div className="flex-1 text-caption2 text-blue-700">{title}</div>
-        <img src="/icons/more.svg" alt="more" className="h-4 w-4" />
+        <button onClick={handleMoreClick}>
+          <img src="/icons/more.svg" alt="more" className="h-4 w-4" />
+        </button>
       </div>
       {/* 내용 */}
       <div className={`text-caption2 ${type === "comment" ? "truncate text-gray-700-info" : ""}`}>
