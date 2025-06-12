@@ -12,7 +12,7 @@ const MyPage = () => {
 
   // 1. 기본 정보(프로필, 리뷰 등)
   const [data, setData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [profileError, setProfileError] = useState<string | null>(null);
 
   // 2. 찜한 매물
   const [likedList, setLikedList] = useState<any[]>([]);
@@ -26,7 +26,7 @@ const MyPage = () => {
         const result = await res.json();
         setData(result.data);
       } catch (e) {
-        setError("데이터를 불러오지 못했습니다.");
+        setProfileError("데이터를 불러오지 못했습니다.");
       }
     };
     fetchData();
@@ -45,10 +45,6 @@ const MyPage = () => {
     };
     fetchLiked();
   }, []);
-
-  if (error) {
-    return <div className="p-4 text-red-500">{error}</div>;
-  }
 
   if (!data) {
     return <div className="p-4">로딩 중...</div>;
@@ -80,10 +76,10 @@ const MyPage = () => {
         <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
           {/* 유저 정보 */}
           <UserProfile profile={profile} onEdit={handleEdit} />
-
           {/* 포스트 박스 */}
           <PostPreview posts={myReviews} onMorePosts={handleMorePosts} />
         </section>
+        {profileError && <div className="p-4 text-red-500">{profileError}</div>}
         
         {/* 하단: 탭바 + 리스트 */}
         <PropertyListSection
