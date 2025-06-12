@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Tab } from "@/components/Tab";
+import Tab from "@/components/common/Tab";
 import { MyPostItem } from "@/components/mypage/myposts/MyPostItem";
 import { Header } from "@/layout/Header";
 
