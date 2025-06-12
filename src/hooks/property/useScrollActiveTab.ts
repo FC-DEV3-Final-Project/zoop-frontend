@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useAutoScroll } from "@/hooks/property/useAutoScroll";
+import { useScrollIfHidden } from "@/hooks/property/useScrollIfHidden";
 
 export const useScrollActiveTab = (
   selected: string,
   containerRef: React.RefObject<HTMLElement | null>,
 ) => {
-  const scrollTabOnClick = useAutoScroll(containerRef);
+  const scrollTabOnClick = useScrollIfHidden(containerRef);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // 선택된 탭이 바뀔 때 자동 스크롤

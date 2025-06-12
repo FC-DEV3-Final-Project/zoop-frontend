@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 
-export const useAutoScroll = (containerRef: RefObject<HTMLElement | null>) => {
+export const useScrollIfHidden = (containerRef: RefObject<HTMLElement | null>) => {
   const scrollIfNeeded = (element: HTMLElement | null) => {
     if (!element || !containerRef.current) return;
 
