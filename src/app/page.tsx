@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+
+import ChatBubble from "@/components/common/ChatBubble";
 import {
   Sheet,
   SheetContent,
@@ -22,10 +25,22 @@ export default function Home() {
       </Header>
       <div className="flex flex-col min-h-screen">
         <div className="fixed top-16 w-full border-t-[1px] border-gray-400" />
-        <main className="mt-16">
-          <h1 className="text-2xl font-bold">홈(채팅)페이지입니다</h1>
+        <main className="p-5 mt-16">
+          <ChatBubble className="flex flex-col gap-2">
+            <p>
+              OO님 반가워요. <br /> OO님께 딱 맞는 매물을 추천해드릴게요. <br /> 지역, 매매 형태,
+              주거 형태, 예산을 선택해 주세요.
+            </p>
+            <Link
+              href={"/chat/filter"}
+              className="w-full rounded-[50px] bg-blue-50 py-2 text-center text-caption1"
+            >
+              필터 설정하기
+            </Link>
+          </ChatBubble>
         </main>
       </div>
+      {/** History SideBar */}
       <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>
