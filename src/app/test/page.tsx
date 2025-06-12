@@ -3,9 +3,10 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Tab } from "@/components/Tab";
+import Tab from "@/components/common/Tab";
 import PropertyCard from "@/components/common/PropertyCard";
 import BottomSheet from "@/components/BottomSheet";
+import Dropdown from "@/components/Dropdown";
 
 import { Header } from "@/layout/Header";
 import Input from "@/components/ui/input";
@@ -41,17 +42,37 @@ export default function Test() {
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
 
-      {/* Input Section */}
-      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 bg-[#DFDFDF] p-4">
-        <h1 className="text-title1">Input</h1>
-        <Input
-          placeholder="Enter로 전송하세요"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          onSend={() => {
-            console.log("전송됨:", inputText);
-            setInputText("");
-          }}
+      {/* DropDown Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">DropDown</h1>
+        <Dropdown
+          items={[
+            {
+              type: "edit",
+              label: "편집하기",
+              onClick: () => {
+                console.log("편집 버튼 클릭됨");
+              },
+            },
+            {
+              type: "delete",
+              label: "삭제하기",
+              onClick: () => {
+                console.log("삭제 버튼 클릭됨");
+              },
+            },
+          ]}
+        />
+        <Dropdown
+          items={[
+            {
+              type: "delete",
+              label: "삭제하기",
+              onClick: () => {
+                console.log("삭제 버튼 클릭됨");
+              },
+            },
+          ]}
         />
       </div>
 

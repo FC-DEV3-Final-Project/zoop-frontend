@@ -4,7 +4,7 @@ interface InfoBoxProps {
   itemId: number;
 }
 
-export default function InfoBox({ itemId }: InfoBoxProps) {
+const InfoBox = ({ itemId }: InfoBoxProps) => {
   const infoColumns = [
     [
       { icon: "/icons/building.svg", label: "아파트" },
@@ -23,7 +23,13 @@ export default function InfoBox({ itemId }: InfoBoxProps) {
         <div className="flex gap-[13px]">
           <HeartButton itemId={itemId} />
           <button>
-            <img src="/icons/share.svg" alt="share" width={24} height={24} cursor-pointer />
+            <img
+              src="/icons/share.svg"
+              alt="share"
+              width={24}
+              height={24}
+              className="cursor-pointer"
+            />
           </button>
         </div>
       </div>
@@ -49,4 +55,6 @@ export default function InfoBox({ itemId }: InfoBoxProps) {
       </div>
     </div>
   );
-}
+};
+
+export default InfoBox;
