@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import SelectCard from "../common/SelectCard";
+import FilterOptionCard from "../common/FilterOptionCard";
 
 interface OptionSelectStepProps {
   onNext: () => void;
@@ -18,7 +18,7 @@ const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => 
         <div className="flex justify-end text-body2 text-gray-800">중복 선택 가능</div>
         <div className="flex flex-col gap-4">
           {options.map((option) => (
-            <SelectCard
+            <FilterOptionCard
               key={option}
               option={option}
               selectedCards={selectedOption}
