@@ -27,11 +27,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
+
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
         <div className="mx-auto min-h-screen w-full max-w-[600px] bg-[#f8f8f8]">
-          <MSWComponent>{children}</MSWComponent>
+          {useMock && <MSWComponent>{children}</MSWComponent>}
+          {!useMock && children}
         </div>
       </body>
     </html>
