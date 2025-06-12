@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 
-interface BudgeStepProps {
+interface BudgetStepProps {
   onNext: () => void;
 }
 
-const BudgeStep = ({ onNext }: BudgeStepProps) => {
+const BudgetStep = ({ onNext }: BudgetStepProps) => {
   const [deposit, setDeposit] = useState("0"); // 보증금
   const [monthlyRent, setMonthlyRent] = useState("0"); // 월세
 
   return (
-    <div className="flex h-full flex-col gap-5">
+    <div className="flex flex-col h-full gap-5">
       <h1 className="text-[22px] font-medium">생각해 둔 예산을 알려주세요</h1>
       <div className="flex flex-col gap-1">
         <div className="relative">
-          <label className="text-subtitle2 text-gray-800">보증금</label>
+          <label className="text-gray-800 text-subtitle2">보증금</label>
           <input
             className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 text-[20px] font-medium outline-none"
             value={deposit}
@@ -24,7 +24,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
           <div className="mt-[2px] flex w-full justify-end text-subtitle3 text-gray-800">0만원</div>
         </div>
         <div className="relative">
-          <label className="text-subtitle2 text-gray-800">월세</label>
+          <label className="text-gray-800 text-subtitle2">월세</label>
           <input
             className="w-full appearance-none border-b-[2px] border-gray-500-alternative bg-transparent py-2 text-[20px] font-medium outline-none"
             value={monthlyRent}
@@ -35,7 +35,7 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
         </div>
       </div>
 
-      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
+      <div className="absolute w-full px-5 transform -translate-x-1/2 bottom-3 left-1/2">
         <Button onClick={onNext} disabled={deposit === "0" || monthlyRent === "0"}>
           결과 확인하기
         </Button>
@@ -44,4 +44,4 @@ const BudgeStep = ({ onNext }: BudgeStepProps) => {
   );
 };
 
-export default BudgeStep;
+export default BudgetStep;
