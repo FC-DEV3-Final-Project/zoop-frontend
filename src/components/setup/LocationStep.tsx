@@ -80,7 +80,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
           <div className="text-body2 text-gray-800">검색결과 ({filteredData.length})</div>
           <ul className="flex h-[270px] flex-col gap-[6px] overflow-y-auto">
             {filteredData.map((item, idx) => (
-              <li key={idx} className="py-[10px]">
+              <li key={idx} className="border-b-[0.5px] border-gray-200 py-[10px]">
                 <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
                 <div className="text-body2">{item.detail}</div>
               </li>
