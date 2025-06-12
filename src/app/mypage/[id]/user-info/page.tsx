@@ -20,7 +20,8 @@ const UserInfoPage = () => {
   };
 
   const handleEditProfileImage = () => {
-    router.push(`/mypage/${id}/user-info/edit-profile-image`);
+    // router.push(`/mypage/${id}/user-info/edit-profile-image`);
+    alert("바텀시트 추가 예정");
   };
 
   return (
