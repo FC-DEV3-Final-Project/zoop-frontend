@@ -29,7 +29,7 @@ const EditNickname = () => {
         <div className="flex w-full flex-col items-start justify-start gap-[10px] p-5 pt-[81px]">
           <div className="justify-center text-subtitle2">닉네임</div>
           <div
-            className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${isValid === false ? "outline-[#FF0000]" : "outline-blue-800-primary"}`}
+            className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${isValid === false ? "outline-[#FF0000]" : isValid === true ? "outline-blue-800-primary" : "outline-gray-200"}`}
           >
             <input
               type="text"
@@ -43,6 +43,7 @@ const EditNickname = () => {
             />
             <button
               onClick={handleDuplicateCheck}
+              disabled={nickname.length === 0}
               className={`inline-flex items-center justify-center rounded-small px-4 py-1 outline outline-1 outline-offset-[-1px] ${
                 nickname.length > 0
                   ? "bg-blue-050-bg text-blue-700 outline-blue-800-primary"
