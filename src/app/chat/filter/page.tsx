@@ -21,12 +21,12 @@ const Page = () => {
 
   return (
     <div className="min-h-screen">
-      <Header bgColorClassName="bg-gray-100">
+      <Header>
         <Header.Prev onPrevClick={prevStep} />
         <Header.Title>필터 설정하기</Header.Title>
         <Header.Close onCloseClick={() => router.push("/")} />
       </Header>
-      <main className="relative min-h-screen pt-16">
+      <main className="relative min-h-screen bg-white pt-16">
         <ProgressBar currentStep={currentStep} />
 
         <div className="px-5 pt-10">
