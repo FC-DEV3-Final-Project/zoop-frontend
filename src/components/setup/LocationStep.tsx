@@ -23,7 +23,7 @@ const dummyData = [
 
 const LocationStep = ({ onNext }: LocationStepProps) => {
   const [input, setInput] = useState("");
-  const [searchKeyword, setSearchKeyword] = useState("이수");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleSearch = () => {
     if (input.trim()) {
