@@ -1,27 +1,72 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Header } from "@/layout/Header";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const EditNickname = () => {
+  const router = useRouter();
   const [nickname, setNickname] = useState("");
+  const [isValid, setIsValid] = useState<boolean | null>(null);
+
+  const handleDuplicateCheck = () => {
+    if (nickname === "test") {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+  };
 
   return (
-    <div className="relative">
-      <div className="absolute top-[61px] inline-flex w-full flex-col items-start justify-start gap-4 p-5">
-        <div className="justify-center text-subtitle2">닉네임</div>
-        <div className="flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] outline-gray-200">
-          <input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            maxLength={20}
-            placeholder="닉네임을 입력해주세요."
-            className="w-full text-caption2 placeholder-gray-300 focus:outline-none"
-          />
-          <div className="text-caption1 text-gray-300">{nickname.length}/20</div>
+    <>
+      <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>내 정보</Header.Title>
+        <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
+      </Header>
+      <div className="relative min-h-screen bg-white pt-16">
+        <div className="flex w-full flex-col items-start justify-start gap-[10px] p-5 pt-[81px]">
+          <div className="justify-center text-subtitle2">닉네임</div>
+          <div
+            className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${isValid === false ? "outline-[#FF0000]" : isValid === true ? "outline-blue-800-primary" : "outline-gray-200"}`}
+          >
+            <input
+              type="text"
+              value={nickname}
+              onChange={(e) => {
+                setNickname(e.target.value);
+              }}
+              maxLength={20}
+              placeholder=" 닉네임을 입력해주세요. (최대 20자)"
+              className="w-full text-body1 placeholder-gray-300 focus:outline-none"
+            />
+            <button
+              onClick={handleDuplicateCheck}
+              disabled={nickname.length === 0}
+              className={`inline-flex items-center justify-center rounded-small px-4 py-1 outline outline-1 outline-offset-[-1px] ${
+                nickname.length > 0
+                  ? "bg-blue-050-bg text-blue-700 outline-blue-800-primary"
+                  : "bg-gray-200 text-gray-700-info outline-gray-500-alternative"
+              }`}
+            >
+              <p className="justify-start whitespace-nowrap text-caption1">중복확인</p>
+            </button>
+          </div>
+          {isValid === false && (
+            <p className="text-footnote text-[#FF0000]">이미 사용중인 닉네임입니다</p>
+          )}
+          {isValid === true && (
+            <p className="text-footnote text-blue-800-primary">사용 가능한 닉네임입니다</p>
+          )}
+        </div>
+        <div className="absolute bottom-4 left-1/2 w-full -translate-x-1/2 px-4">
+          <Button variant={"default"} disabled={!isValid}>
+            확인
+          </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

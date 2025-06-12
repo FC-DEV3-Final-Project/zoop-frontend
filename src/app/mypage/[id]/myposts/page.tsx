@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Tab } from "@/components/Tab";
+import Tab from "@/components/common/Tab";
 import { MyPostItem } from "@/components/mypage/myposts/MyPostItem";
+import { Header } from "@/layout/Header";
 
 const tabOptions = [
   { label: "리뷰", value: "review" },
@@ -29,32 +30,56 @@ type PostData = {
 // 임시 데이터
 const postData: PostData = {
   review: [
+    // {
+    //   type: "review",
+    //   title: "방배마에스트로(주상복합)",
+    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+    //   date: "2025.05.21",
+    //   likes: 0,
+    //   comments: 2,
+    // },
+    // {
+    //   type: "review",
+    //   title: "방배마에스트로(주상복합)",
+    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+    //   date: "2025.05.20",
+    //   likes: 2,
+    //   comments: 3,
+    // },
+    // {
+    //   type: "review",
+    //   title: "방배마에스트로(주상복합)",
+    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+    //   date: "2025.05.19",
+    //   likes: 3,
+    //   comments: 5,
+    // },
+  ],
+  comment: [
     {
-      type: "review",
-      title: "방배마에스트로(주상복합)",
-      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.21",
-      likes: 0,
-      comments: 2,
-    },
-    {
-      type: "review",
+      type: "comment",
       title: "방배마에스트로(주상복합)",
       content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
       date: "2025.05.20",
       likes: 2,
-      comments: 3,
+      reply: "맞아요 교통이 정말 편해요",
     },
     {
-      type: "review",
+      type: "comment",
       title: "방배마에스트로(주상복합)",
       content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.19",
-      likes: 3,
-      comments: 5,
+      date: "2025.05.20",
+      likes: 2,
+      reply: "맞아요 교통이 정말 편해요",
     },
-  ],
-  comment: [
+    {
+      type: "comment",
+      title: "방배마에스트로(주상복합)",
+      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
+      date: "2025.05.20",
+      likes: 2,
+      reply: "맞아요 교통이 정말 편해요",
+    },
     {
       type: "comment",
       title: "방배마에스트로(주상복합)",
@@ -76,19 +101,32 @@ const MyPostsPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-col bg-gray-100">
-      <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
-      <div className="flex flex-col gap-1">
-        {postData[selectedTab as keyof PostData].map((post, idx) => (
-          <div key={idx} onClick={() => handlePostClick(post.title)}>
-            <MyPostItem {...post} />
-          </div>
-        ))}
+  <>
+    <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>내가 쓴 글</Header.Title>
+      </Header>
+    <div className="flex w-full flex-col bg-gray-100 pt-16">
+      <div className="sticky top-16 z-10 bg-white">
+        <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
       </div>
-      <div className="flex h-[104px] items-center justify-center text-body2 text-gray-700-info">
-        더 이상 표시할 콘텐츠가 없습니다
+      <div>
+        <div className="mb-8 flex flex-col gap-1">
+          {postData[selectedTab as keyof PostData].map((post, idx) => (
+            <div key={idx} onClick={() => handlePostClick(post.title)}>
+              <MyPostItem {...post} />
+            </div>
+          ))}
+        </div>
+ 
+        <div className= {`${postData[selectedTab as keyof PostData].length === 0 ? "fixed inset-0 flex items-center justify-center " : ""}`}>
+          <div className={"flex h-[60px] items-center justify-center"}>
+            <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없어요.</div>
+          </div>
+        </div>
       </div>
     </div>
+    </>
   );
 };
 
