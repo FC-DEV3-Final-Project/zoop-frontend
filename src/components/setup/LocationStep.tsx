@@ -23,7 +23,7 @@ const dummyData = [
 
 const LocationStep = ({ onNext }: LocationStepProps) => {
   const [input, setInput] = useState("");
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("이수");
 
   const handleSearch = () => {
     if (input.trim()) {
@@ -76,9 +76,9 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
         />
       </div>
       {searchKeyword && (
-        <div className="flex flex-col gap-4 overflow-hidden">
+        <div className="flex flex-col gap-4">
           <div className="text-body2 text-gray-800">검색결과 ({filteredData.length})</div>
-          <ul className="flex h-[270px] flex-col gap-[6px] overflow-y-auto">
+          <ul className="flex h-[calc(100vh-342px)] flex-col gap-[6px] overflow-y-auto">
             {filteredData.map((item, idx) => (
               <li key={idx} className="border-b-[0.5px] border-gray-200 py-[10px]">
                 <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
