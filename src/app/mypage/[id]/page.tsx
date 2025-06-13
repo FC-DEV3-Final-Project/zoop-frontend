@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
 import PostPreview from "@/components/mypage/PostPreview";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
-import { PropertyCardProps } from "@/components/common/PropertyCard";
+// import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
+// import { PropertyCardProps } from "@/components/common/PropertyCard";
 
 const MyPage = () => {
   const router = useRouter();
@@ -15,26 +15,7 @@ const MyPage = () => {
   // 1. 기본 정보(프로필, 리뷰 등)
   const [data, setData] = useState<any>(null);
   const [profileError, setProfileError] = useState<string | null>(null);
-
-  // 2. 찜한 매물 무한 스크롤
-  const fetchLikedItems = async (page: number) => {
-    try {
-      const res = await fetch(`/mypage/liked-items?page=${page}`);
-      const result = await res.json();
-      return result.bookmarkedProperties as PropertyCardProps[];
-    } catch (e) {
-      setLikedError("찜한 매물 데이터를 불러오지 못했습니다.");
-      return [];
-    }
-  };
-
-  const {
-    items: likedList,
-    loader: likedLoader,
-    hasMore: hasMoreLiked,
-    loading: loadingLiked,
-  } = useInfiniteScroll<PropertyCardProps>(fetchLikedItems, []);
-  const [likedError, setLikedError] = useState<string | null>(null);
+  // const [likedError, setLikedError] = useState<string | null>(null);
 
   useEffect(() => {
     // /mypage/home fetch
@@ -54,7 +35,7 @@ const MyPage = () => {
     return <div className="p-4">로딩 중...</div>;
   }
 
-  const { profile, myReviews, recentViewedProperties } = data;
+  const { profile, myReviews, recentViewedProperties, bookmarkedProperties } = data;
 
   const tabOptions = [
     { label: "찜한 매물", value: "liked" },
@@ -89,22 +70,10 @@ const MyPage = () => {
         <PropertyListSection
           tabOptions={tabOptions}
           propertyMap={{
-            liked: likedList,
+            liked: bookmarkedProperties,
             recent: recentViewedProperties,
           }}
           isNumberVisible={false}
-          loaders={{
-            liked: likedLoader,
-          }}
-          loadingStates={{
-            liked: loadingLiked,
-          }}
-          hasMore={{
-            liked: hasMoreLiked,
-          }}
-          errors={{
-            liked: likedError,
-          }}
         />
       </div>
     </>

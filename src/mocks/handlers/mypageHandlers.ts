@@ -48,6 +48,82 @@ export const mypageHandlers = [
             },
           ],
           myComments: null,
+          bookmarkedProperties: [
+            {
+              propertyId: 101,
+              order: 1,
+              transactionType: "전세",
+              price1: 65000,
+              price: "6억5,000",
+              tags: ["신축", "풀옵션", "역세권"],
+              address: "1찜mock 관악산대창센시티(101동) 101동",
+              aptName: "남현한일유앤아이",
+              detailAddress: "101동",
+              buildingType: "아파트",
+              area: "34.5",
+              isActive: true,
+              isBookmarked: true,
+              imageUrl: "/imgs/propertyExample.png",
+              latitude: 37.5575,
+              longitude: 126.9239,
+            },
+            {
+              propertyId: 102,
+              order: 1,
+              transactionType: "전세",
+              price1: 65000,
+              price: "6억5,000",
+              tags: ["신축", "풀옵션", "역세권"],
+              address: "2찜mock 관악산대창센시티(101동) 101동",
+              aptName: "남현한일유앤아이",
+              detailAddress: "101동",
+              buildingType: "아파트",
+              area: "34.5",
+              isActive: true,
+              isBookmarked: true,
+              imageUrl: "/imgs/propertyExample.png",
+              latitude: 37.5575,
+              longitude: 126.9239,
+            },
+          ],
+          recentViewedProperties: [
+            {
+              propertyId: 201,
+              order: 1,
+              transactionType: "전세",
+              price1: 65000,
+              price: "6억5,000",
+              tags: ["신축", "풀옵션", "역세권"],
+              address: "1최근mock 관악산대창센시티(101동) 101동",
+              aptName: "남현한일유앤아이",
+              detailAddress: "101동",
+              buildingType: "아파트",
+              area: "34.5",
+              isActive: true,
+              isBookmarked: true,
+              imageUrl: "/imgs/propertyExample.png",
+              latitude: 37.5575,
+              longitude: 126.9239,
+            },
+            {
+              propertyId: 202,
+              order: 2,
+              transactionType: "전세",
+              price1: 65000,
+              price: "6억5,000",
+              tags: ["신축", "풀옵션", "역세권"],
+              address: "2최근mock 관악산대창센시티(101동) 101동",
+              aptName: "남현한일유앤아이",
+              detailAddress: "101동",
+              buildingType: "아파트",
+              area: "34.5",
+              isActive: true,
+              isBookmarked: true,
+              imageUrl: "/imgs/propertyExample.png",
+              latitude: 37.5575,
+              longitude: 126.9239,
+            },
+          ],
         },
       },
       {
@@ -64,7 +140,7 @@ export const mypageHandlers = [
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 0;
     const size = Number(url.searchParams.get("size")) || 2;
-  
+
     if (page === 0) {
       return HttpResponse.json({
         content: [
@@ -96,7 +172,7 @@ export const mypageHandlers = [
         hasNext: false,
       });
     }
-  
+
     return HttpResponse.json({
       content: [],
       page,
