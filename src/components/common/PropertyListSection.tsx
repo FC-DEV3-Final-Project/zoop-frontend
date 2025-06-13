@@ -12,6 +12,10 @@ interface PropertyListSectionProps {
   propertyMap: { [tabValue: string]: PropertyCardProps[] };
   showMapViewButton?: boolean;
   isNumberVisible?: boolean;
+  loaders?: { [tabValue: string]: React.RefObject<HTMLDivElement | null> };
+  loadingStates?: { [tabValue: string]: boolean };
+  hasMore?: { [tabValue: string]: boolean };
+  errors?: { [tabValue: string]: string | null };
 }
 
 const PropertyListSection = ({
@@ -19,6 +23,10 @@ const PropertyListSection = ({
   propertyMap,
   showMapViewButton = true,
   isNumberVisible = true,
+  loaders,
+  loadingStates,
+  hasMore,
+  errors,
 }: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
 
@@ -27,6 +35,10 @@ const PropertyListSection = ({
   };
 
   const currentProperties = propertyMap[selectedTab] || [];
+  const currentLoader = loaders?.[selectedTab];
+  const isLoading = loadingStates?.[selectedTab];
+  const hasMoreItems = hasMore?.[selectedTab];
+  const currentError = errors?.[selectedTab];
 
   return (
     <section className="flex flex-col">
@@ -51,6 +63,12 @@ const PropertyListSection = ({
         {currentProperties.map((property, index) => (
           <PropertyCard key={property.id} {...property} isNumberVisible={isNumberVisible} />
         ))}
+        {hasMoreItems && (
+          <div ref={currentLoader} className="h-4 w-full">
+            {isLoading && <div className="text-center">로딩 중...</div>}
+          </div>
+        )}
+        {currentError && <div className="p-4 text-red-500">{currentError}</div>}
       </div>
     </section>
   );

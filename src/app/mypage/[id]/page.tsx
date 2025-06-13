@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
 import PostPreview from "@/components/mypage/PostPreview";
 import PropertyListSection from "@/components/common/PropertyListSection";
+import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
+import { PropertyCardProps } from "@/components/common/PropertyCard";
 
 const MyPage = () => {
   const router = useRouter();
@@ -14,8 +16,24 @@ const MyPage = () => {
   const [data, setData] = useState<any>(null);
   const [profileError, setProfileError] = useState<string | null>(null);
 
-  // 2. 찜한 매물
-  const [likedList, setLikedList] = useState<any[]>([]);
+  // 2. 찜한 매물 무한 스크롤
+  const fetchLikedItems = async (page: number) => {
+    try {
+      const res = await fetch(`/mypage/liked-items?page=${page}`);
+      const result = await res.json();
+      return result.bookmarkedProperties as PropertyCardProps[];
+    } catch (e) {
+      setLikedError("찜한 매물 데이터를 불러오지 못했습니다.");
+      return [];
+    }
+  };
+
+  const {
+    items: likedList,
+    loader: likedLoader,
+    hasMore: hasMoreLiked,
+    loading: loadingLiked,
+  } = useInfiniteScroll<PropertyCardProps>(fetchLikedItems, []);
   const [likedError, setLikedError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,20 +48,6 @@ const MyPage = () => {
       }
     };
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    // /mypage/liked-items fetch
-    const fetchLiked = async () => {
-      try {
-        const res = await fetch("/mypage/liked-items");
-        const result = await res.json();
-        setLikedList(result.bookmarkedProperties);
-      } catch (e) {
-        setLikedError("찜한 매물 데이터를 불러오지 못했습니다.");
-      }
-    };
-    fetchLiked();
   }, []);
 
   if (!data) {
@@ -80,7 +84,7 @@ const MyPage = () => {
           <PostPreview posts={myReviews} onMorePosts={handleMorePosts} />
         </section>
         {profileError && <div className="p-4 text-red-500">{profileError}</div>}
-        
+
         {/* 하단: 탭바 + 리스트 */}
         <PropertyListSection
           tabOptions={tabOptions}
@@ -89,8 +93,19 @@ const MyPage = () => {
             recent: recentViewedProperties,
           }}
           isNumberVisible={false}
+          loaders={{
+            liked: likedLoader,
+          }}
+          loadingStates={{
+            liked: loadingLiked,
+          }}
+          hasMore={{
+            liked: hasMoreLiked,
+          }}
+          errors={{
+            liked: likedError,
+          }}
         />
-        {likedError && <div className="p-4 text-red-500">{likedError}</div>}
       </div>
     </>
   );
