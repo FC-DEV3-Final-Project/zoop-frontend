@@ -50,7 +50,7 @@ export const mypageHandlers = [
           myComments: null,
           bookmarkedProperties: [
             {
-              propertyId: 101,
+              id: 101,
               order: 1,
               transactionType: "전세",
               price1: 65000,
@@ -68,7 +68,7 @@ export const mypageHandlers = [
               longitude: 126.9239,
             },
             {
-              propertyId: 102,
+              id: 102,
               order: 1,
               transactionType: "전세",
               price1: 65000,
@@ -88,7 +88,7 @@ export const mypageHandlers = [
           ],
           recentViewedProperties: [
             {
-              propertyId: 201,
+              id: 201,
               order: 1,
               transactionType: "전세",
               price1: 65000,
@@ -106,7 +106,7 @@ export const mypageHandlers = [
               longitude: 126.9239,
             },
             {
-              propertyId: 202,
+              id: 202,
               order: 2,
               transactionType: "전세",
               price1: 65000,
