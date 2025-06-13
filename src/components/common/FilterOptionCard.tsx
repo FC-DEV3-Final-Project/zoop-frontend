@@ -2,27 +2,21 @@ import clsx from "clsx";
 import React from "react";
 import Image from "next/image";
 
-interface SelectCardProps {
+interface FilterOptionCardProps {
   option: string;
   selectedCards: string[];
-  setSelectedCards: (option: string[]) => void;
+  onSelect: (option: string) => void;
 }
 
-const SelectCard = ({ option, selectedCards, setSelectedCards }: SelectCardProps) => {
+const FilterOptionCard = ({ option, selectedCards, onSelect }: FilterOptionCardProps) => {
   const isSelected = selectedCards.includes(option);
 
   return (
     <button
       key={option}
-      onClick={() =>
-        setSelectedCards(
-          selectedCards.includes(option)
-            ? selectedCards.filter((item) => item !== option)
-            : [...selectedCards, option],
-        )
-      }
+      onClick={() => onSelect(option)}
       className={clsx(
-        "shadow-selectCard relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1",
+        "relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1 shadow-selectCard",
         isSelected ? "bg-blue-100" : "bg-white",
       )}
     >
@@ -39,4 +33,4 @@ const SelectCard = ({ option, selectedCards, setSelectedCards }: SelectCardProps
   );
 };
 
-export default SelectCard;
+export default FilterOptionCard;
