@@ -1,16 +1,9 @@
 "use client";
-
 import Link from "next/link";
 
 import ChatBubble from "@/components/common/ChatBubble";
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import SideBar from "@/components/chat/SideBar";
 import { Header } from "@/layout/Header";
 
 export default function Home() {
@@ -23,9 +16,9 @@ export default function Home() {
         <Header.Title>ZOOP</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <div className="fixed top-16 w-full border-t-[1px] border-gray-400" />
-        <main className="p-5 mt-16">
+        <main className="mt-16 p-5">
           <ChatBubble className="flex flex-col gap-2">
             <p>
               OO님 반가워요. <br /> OO님께 딱 맞는 매물을 추천해드릴게요. <br /> 지역, 매매 형태,
@@ -40,19 +33,7 @@ export default function Home() {
           </ChatBubble>
         </main>
       </div>
-      {/** History SideBar */}
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>
-            <div>검색창</div>
-          </SheetTitle>
-          <div>새로운 대화 시작하기</div>
-        </SheetHeader>
-        <div>히스토리 목록</div>
-        <SheetFooter>
-          <div>내 프로필</div>
-        </SheetFooter>
-      </SheetContent>
+      <SideBar />
     </Sheet>
   );
 }
