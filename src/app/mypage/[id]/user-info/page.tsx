@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
+import BottomSheet from "@/components/common/BottomSheet";
 
 // 임시 데이터
 // const userData = {
@@ -40,8 +41,11 @@ const UserInfoPage = () => {
   };
 
   const handleEditProfileImage = () => {
-    // router.push(`/mypage/${id}/user-info/edit-profile-image`);
-    alert("바텀시트 추가 예정");
+    alert("프로필 이미지 변경");
+  };
+
+  const handleDeleteProfileImage = () => {
+    alert("프로필 사진 삭제");
   };
 
   if (error) {
@@ -63,22 +67,50 @@ const UserInfoPage = () => {
         <div className="relative flex flex-col gap-[5px] bg-gray-100">
           {/* 상단 프로필 이미지 영역 */}
           <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">
-            <button
-              onClick={handleEditProfileImage}
-              className="relative h-16 w-16 rounded-full bg-gray-100"
+            <BottomSheet
+              trigger={
+                <button
+                  // onClick={handleEditProfileImage}
+                  className="relative h-16 w-16 rounded-full bg-gray-100"
+                >
+                  <Image
+                    src={account.profileImage}
+                    alt="프로필"
+                    width={64}
+                    height={64}
+                    className="h-full w-full overflow-hidden rounded-full object-cover"
+                    priority
+                  />
+                  <div className="absolute bottom-0 right-0">
+                    <img src="/icons/image-upload.svg" alt="이미지 업로드" />
+                  </div>
+                </button>
+              }
+              title="프로필 변경"
             >
-              <Image
-                src={account.profileImage}
-                alt="프로필"
-                width={64}
-                height={64}
-                className="h-full w-full overflow-hidden rounded-full object-cover"
-                priority
-              />
-              <div className="absolute bottom-0 right-0">
-                <img src="/icons/image-upload.svg" alt="이미지 업로드" />
-              </div>
-            </button>
+              {(close) => (
+                <div>
+                  <button
+                    className="flex h-[48px] w-full cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200"
+                    onClick={() => {
+                      handleEditProfileImage();
+                      close();
+                    }}
+                  >
+                    파일에서 가져오기
+                  </button>
+                  <button
+                    className="flex h-[48px] w-full cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200"
+                    onClick={() => {
+                      handleDeleteProfileImage();
+                      close();
+                    }}
+                  >
+                    프로필 사진 삭제
+                  </button>
+                </div>
+              )}
+            </BottomSheet>
           </div>
           {/* 하단 영역 */}
           <div className="flex flex-col gap-8 bg-white">
