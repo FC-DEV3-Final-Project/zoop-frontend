@@ -1,3 +1,5 @@
+import Dropdown from "@/components/common/Dropdown";
+
 type MyPostItemProps = {
   type: "review" | "comment";
   title: string;
@@ -27,9 +29,17 @@ export const MyPostItem = ({
       {/* 건물명, 더보기 버튼 */}
       <div className="flex items-center">
         <div className="flex-1 text-caption2 text-blue-700">{title}</div>
-        <button onClick={handleMoreClick}>
-          <img src="/icons/more.svg" alt="more" className="h-4 w-4" />
-        </button>
+        <Dropdown
+          items={[
+            {
+              type: "delete",
+              label: "삭제하기",
+              onClick: () => {
+                alert("삭제 버튼 클릭됨");
+              },
+            },
+          ]}
+        />
       </div>
       {/* 내용 */}
       <div className={`text-caption2 ${type === "comment" ? "truncate text-gray-700-info" : ""}`}>

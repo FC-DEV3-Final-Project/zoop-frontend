@@ -3,8 +3,7 @@
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import InfoBox from "@/components/property/detail/InfoBox";
-import ScrollableTabBar from "@/components/property/detail/ScrollableTabBar";
-import SectionList from "@/components/property/detail/SectionList";
+import ScrollableSection from "@/components/property/detail/ScrollableSection";
 import { Header } from "@/layout/Header";
 
 const PropertyDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -19,8 +18,7 @@ const PropertyDetailPage = ({ params }: { params: Promise<{ id: string }> }) => 
       </Header>
       <div className="flex flex-col gap-2">
         <InfoBox itemId={Number(id)} />
-        <ScrollableTabBar />
-        <SectionList />
+        <ScrollableSection />
       </div>
     </>
   );
