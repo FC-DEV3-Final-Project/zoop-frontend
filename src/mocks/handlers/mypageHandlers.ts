@@ -144,8 +144,8 @@ export const mypageHandlers = [
     if (page === 0) {
       return HttpResponse.json({
         content: [
-          { propertyId: 1, address: "1번매물" },
-          { propertyId: 2, address: "2번매물" },
+          { id: 1, address: "1번매물" },
+          { id: 2, address: "2번매물" },
         ],
         page: 0,
         size: 2,
@@ -154,8 +154,8 @@ export const mypageHandlers = [
     } else if (page === 1) {
       return HttpResponse.json({
         content: [
-          { propertyId: 3, address: "3번매물" },
-          { propertyId: 4, address: "4번매물" },
+          { id: 3, address: "3번매물" },
+          { id: 4, address: "4번매물" },
         ],
         page: 1,
         size: 2,
@@ -164,8 +164,8 @@ export const mypageHandlers = [
     } else if (page === 2) {
       return HttpResponse.json({
         content: [
-          { propertyId: 5, address: "5번매물" },
-          { propertyId: 6, address: "6번매물" },
+          { id: 5, address: "5번매물" },
+          { id: 6, address: "6번매물" },
         ],
         page: 2,
         size: 2,
