@@ -1,35 +1,54 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import SelectCard from "../common/SelectCard";
+import FilterOptionCard from "../common/FilterOptionCard";
 
 interface OptionSelectStepProps {
   onNext: () => void;
   title: string;
   options: string[];
+  multiSelect?: boolean;
 }
 
-const OptionSelectStep = ({ onNext, title, options }: OptionSelectStepProps) => {
-  const [selected, setSelected] = useState<string[]>([]);
+const OptionSelectStep = ({
+  onNext,
+  title,
+  options,
+  multiSelect = true,
+}: OptionSelectStepProps) => {
+  const [selectedOption, setSelectedOption] = useState<string[]>([]);
 
+  const handleSelect = (option: string) => {
+    if (multiSelect) {
+      setSelectedOption((prev) =>
+        prev.includes(option) ? prev.filter((item) => item !== option) : [...prev, option],
+      );
+    } else {
+      setSelectedOption((prev) => (prev.includes(option) ? [] : [option]));
+    }
+  };
   return (
-    <div className="flex h-full flex-col gap-5">
-      <h1 className="text-title5">원하는 {title}를 선택해주세요.</h1>
+    <div className="flex flex-col h-full gap-5">
+      <h1 className="text-title5">원하는 {title}를 선택해주세요</h1>
       <div className="flex flex-col gap-[10px]">
-        <div className="flex justify-end text-body2 text-gray-800">중복 선택 가능</div>
+        {multiSelect ? (
+          <div className="flex justify-end text-gray-800 text-body2">중복 선택 가능</div>
+        ) : (
+          <div className="h-5" />
+        )}
         <div className="flex flex-col gap-4">
           {options.map((option) => (
-            <SelectCard
+            <FilterOptionCard
               key={option}
               option={option}
-              selected={selected}
-              setSelected={setSelected}
+              selectedCards={selectedOption}
+              onSelect={handleSelect}
             />
           ))}
         </div>
       </div>
 
-      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
-        <Button onClick={onNext} disabled={selected.length === 0}>
+      <div className="absolute w-full px-5 transform -translate-x-1/2 bottom-3 left-1/2">
+        <Button onClick={onNext} disabled={selectedOption.length === 0}>
           다음
         </Button>
       </div>
