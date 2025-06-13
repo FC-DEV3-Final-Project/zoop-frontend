@@ -10,7 +10,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({ placeholder, className, value, onChange, onSend }: InputProps) {
   const baseStyle = cn(
-    "w-[270px] rounded-lg bg-gray-200 pl-9",
+    "w-full rounded-lg bg-gray-200 pl-9",
     "placeholder-gray-800",
     "text-subtitle3 py-[6px] pr-3",
     "focus-visible:outline-none focus-visible:ring-0", // 포커스 스타일 제거
@@ -24,7 +24,7 @@ export default function Input({ placeholder, className, value, onChange, onSend 
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <img src="/icons/search.svg" className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
       <input
         type="text"
