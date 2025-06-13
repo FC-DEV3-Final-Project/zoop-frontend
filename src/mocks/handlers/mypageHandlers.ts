@@ -60,154 +60,48 @@ export const mypageHandlers = [
   }),
 
   // /api/mypage/home mock
-  http.get("/mypage/liked-items", ({ request }) => {
+  http.get("/mypage/bookmarked-properties", ({ request }) => {
     const url = new URL(request.url);
-    const page = Number(url.searchParams.get("page")) || 1;
-    const pageSize = 3; // 한 페이지당 3개씩
-
-    const allProperties = [
-      {
-        id: 101,
-        order: 1,
-        transactionType: "전세",
-        price1: 65000,
-        price: "6억5,000",
-        tags: ["신축", "풀옵션", "역세권"],
-        address: "1찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        isActive: true,
-        isBookmarked: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.5575,
-        longitude: 126.9239,
-      },
-      {
-        id: 102,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "2찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 103,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "3찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 104,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "4찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 105,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "5찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 106,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "6찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 107,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "7찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 108,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "8찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 109,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "9찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-      {
-        id: 110,
-        order: 1,
-        transactionType: "전세",
-        price: "6억5,000",
-        address: "10찜mock 관악산대창센시티(101동) 101동",
-        aptName: "남현한일유앤아이",
-        detailAddress: "101동",
-        buildingType: "아파트",
-        area: "34.5",
-        imageUrl: "/imgs/propertyExample.png",
-      },
-    ];
-
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const paginatedProperties = allProperties.slice(startIndex, endIndex);
-
-    return HttpResponse.json(
-      {
-        bookmarkedProperties: paginatedProperties,
-      },
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    const page = Number(url.searchParams.get("page")) || 0;
+    const size = Number(url.searchParams.get("size")) || 2;
+  
+    if (page === 0) {
+      return HttpResponse.json({
+        content: [
+          { propertyId: 1, address: "1번매물" },
+          { propertyId: 2, address: "2번매물" },
+        ],
+        page: 0,
+        size: 2,
+        hasNext: true,
+      });
+    } else if (page === 1) {
+      return HttpResponse.json({
+        content: [
+          { propertyId: 3, address: "3번매물" },
+          { propertyId: 4, address: "4번매물" },
+        ],
+        page: 1,
+        size: 2,
+        hasNext: true,
+      });
+    } else if (page === 2) {
+      return HttpResponse.json({
+        content: [
+          { propertyId: 5, address: "5번매물" },
+          { propertyId: 6, address: "6번매물" },
+        ],
+        page: 2,
+        size: 2,
+        hasNext: false,
+      });
+    }
+  
+    return HttpResponse.json({
+      content: [],
+      page,
+      size,
+      hasNext: false,
+    });
   }),
 ];
