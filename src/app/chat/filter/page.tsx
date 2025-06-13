@@ -21,12 +21,12 @@ const Page = () => {
 
   return (
     <div className="min-h-screen">
-      <Header bgColorClassName="bg-gray-100">
+      <Header>
         <Header.Prev onPrevClick={prevStep} />
         <Header.Title>필터 설정하기</Header.Title>
         <Header.Close onCloseClick={() => router.push("/")} />
       </Header>
-      <main className="relative min-h-screen pt-16">
+      <main className="relative min-h-screen pt-16 bg-white">
         <ProgressBar currentStep={currentStep} />
 
         <div className="px-5 pt-10">
@@ -35,7 +35,12 @@ const Page = () => {
               <LocationStep onNext={nextStep} />
             </Step>
             <Step name="2">
-              <OptionSelectStep onNext={nextStep} title="매매 형태" options={TRANSACTION_OPTIONS} />
+              <OptionSelectStep
+                onNext={nextStep}
+                title="매매 형태"
+                options={TRANSACTION_OPTIONS}
+                multiSelect={false}
+              />
             </Step>
             <Step name="3">
               <OptionSelectStep onNext={nextStep} title="주거 형태" options={HOUSING_OPTIONS} />

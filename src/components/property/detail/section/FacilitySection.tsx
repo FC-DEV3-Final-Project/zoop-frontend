@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import { forwardRef } from "react";
 
-const FacilitySection = () => {
+const FacilitySection = forwardRef<HTMLElement>((_, ref) => {
   const facilityData = {
     냉방시설: "개별난방",
     옵션: ["천장에어컨", "욕조, 샤워부스", "싱크대", "가스레인지", "세탁기", "냉장고"],
@@ -11,7 +12,11 @@ const FacilitySection = () => {
   };
 
   return (
-    <section id="facility" className="mb-2 scroll-mt-[80px] bg-white px-5 py-8">
+    <section
+      ref={ref}
+      id="facility"
+      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+    >
       <div className="mb-5 text-title2 text-black">시설정보</div>
       <div className="grid grid-cols-[auto_1fr] gap-x-[76px] gap-y-[20px] text-black">
         {Object.entries(facilityData).map(([label, value]) => (
@@ -29,6 +34,6 @@ const FacilitySection = () => {
       </div>
     </section>
   );
-};
+});
 
 export default FacilitySection;
