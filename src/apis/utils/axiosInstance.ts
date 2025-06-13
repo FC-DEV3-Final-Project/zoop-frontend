@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use((config) => {
   } else {
     config.headers["Content-Type"] = "application/json";
   }
-
+  console.log("axiosInstance headers 확인:", config.headers); // 해더 확인
   return config;
 });
 
