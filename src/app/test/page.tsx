@@ -8,6 +8,7 @@ import BottomSheet from "@/components/common/BottomSheet";
 import Dropdown from "@/components/common/Dropdown";
 import PropertyCard from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import MapListDialog from "@/components/map/MapListDialog";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -37,6 +38,7 @@ const phonNumber = [
 export default function Test() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
+  const [open, setOpen] = useState(false);
 
   // BottomSheet 관련로직
   const handleSelect = (item: { label: string; value: string }) => {
@@ -56,6 +58,16 @@ export default function Test() {
         <Header.Title>Guide</Header.Title>
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
+      {/* Dialog Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h2 className="text-title2">Dialog</h2>
+        <button onClick={() => setOpen(true)} className="rounded bg-blue-600 px-4 py-2 text-white">
+          검색 결과 보기
+        </button>
+
+        {/* Dialog 컴포넌트 */}
+        <MapListDialog open={open} onOpenChange={setOpen} />
+      </div>
 
       {/* DropDown Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
