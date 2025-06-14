@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
+import { useScrollActiveTab } from "@/hooks/property/useScrollActiveTab";
 
 const tab_list = [
   { label: "거래정보", value: "deal" },
@@ -12,16 +13,25 @@ const tab_list = [
   { label: "중개정보", value: "agent" },
 ];
 
-const ScrollableTabBar = () => {
-  const [selected, setSelected] = useState("deal");
+interface ScrollableTabBarProps {
+  selected: string;
+  onSelect: (value: string) => void;
+}
+
+const ScrollableTabBar = ({ selected, onSelect }: ScrollableTabBarProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { registerRef, scrollTabOnClick } = useScrollActiveTab(selected, scrollRef);
+
+  const handleClick = (value: string, e: React.MouseEvent<HTMLButtonElement>) => {
+    onSelect(value);
+    scrollTabOnClick(e.currentTarget);
+  };
 
   return (
     <div
-      className="w-full overflow-x-auto bg-white scrollbar-hide"
-      style={{
-        scrollbarWidth: "none", // Firefox 대응
-        msOverflowStyle: "none", // IE 대응 (의미 없다고 함..)
-      }}
+      ref={scrollRef}
+      className="sticky top-[114px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       <div className="flex w-[600px] max-w-full">
         {tab_list.map((tab) => {
@@ -29,7 +39,8 @@ const ScrollableTabBar = () => {
           return (
             <button
               key={tab.value}
-              onClick={() => setSelected(tab.value)}
+              ref={registerRef(tab.value)}
+              onClick={(e) => handleClick(tab.value, e)}
               className={clsx(
                 "w-[25%] min-w-[25%] whitespace-nowrap border-b-2 py-[18px] text-center",
                 isActive
