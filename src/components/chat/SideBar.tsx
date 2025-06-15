@@ -43,26 +43,25 @@ const SideBar = () => {
       </SheetHeader>
 
       {/** 테스트를 위한 임시 데이터 */}
-      <ul className="overflow-auto pb-[100px]">
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} isSelected={true} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+      <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
+        <li>
+          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">오늘</h1>
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} isSelected={true} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        </li>
+        <li>
+          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">어제</h1>
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        </li>
+        <li>
+          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">저번주</h1>
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        </li>
       </ul>
 
       <SheetFooter

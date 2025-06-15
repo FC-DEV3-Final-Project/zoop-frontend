@@ -20,7 +20,7 @@ const SideBarItem = ({ chatRoomId, title, isSelected = false }: SideBarItemProps
   };
 
   return (
-    <li
+    <div
       className={`relative flex justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
     >
       <span className="text-body2">{title}</span>
@@ -38,7 +38,7 @@ const SideBarItem = ({ chatRoomId, title, isSelected = false }: SideBarItemProps
           },
         ]}
       />
-    </li>
+    </div>
   );
 };
 
