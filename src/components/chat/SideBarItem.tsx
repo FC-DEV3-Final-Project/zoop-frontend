@@ -26,20 +26,22 @@ const SideBarItem = ({ chatRoomId, title, isSelected = false, onClick }: SideBar
       onClick={onClick}
     >
       <span className="text-body2">{title}</span>
-      <Dropdown
-        items={[
-          {
-            type: "edit",
-            label: "제목 편집하기",
-            onClick: handleEditTilte,
-          },
-          {
-            type: "delete",
-            label: "목록에서 삭제",
-            onClick: handleDeleteChat,
-          },
-        ]}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <Dropdown
+          items={[
+            {
+              type: "edit",
+              label: "제목 편집하기",
+              onClick: handleEditTilte,
+            },
+            {
+              type: "delete",
+              label: "목록에서 삭제",
+              onClick: handleDeleteChat,
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 };
