@@ -1,9 +1,9 @@
 "use client";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import { Button } from "@/components/ui/button";
 import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
+import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -23,6 +23,11 @@ const realEstateData = {
   rent: 19,
   statsItems,
 };
+
+const phoneNumbers = [
+  { label: "registrationNumber", value: "02-888-3111" },
+  { label: "cellPhoneNo", value: "010-1111-1111" },
+];
 
 const properties = [
   {
@@ -97,10 +102,10 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
   const router = useRouter();
   return (
     <>
-    <Header>
-      <Header.Prev onPrevClick={() => router.back()} />
-      <Header.Title>{realEstateData.name}</Header.Title>
-    </Header>
+      <Header>
+        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Title>{realEstateData.name}</Header.Title>
+      </Header>
       <RealEstateInfo {...realEstateData} />
       <div className="pb-[76px]">
         <PropertyListSection
@@ -113,10 +118,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
           }}
         />
       </div>
-      {/* 공인중개사에게 전화 걸기 버튼 */}
-      <div className="fixed bottom-0 left-1/2 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
-        <Button variant="default">공인중개사에게 전화 걸기</Button>
-      </div>
+      <RealEstateCallButton phonNumber={phoneNumbers} />
     </>
   );
 }
