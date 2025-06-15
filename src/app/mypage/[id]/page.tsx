@@ -13,7 +13,7 @@ const MyPage = ({ params }: { params: { id: string } }) => {
   const userData = {
     profile: {
       nickname: "지윤",
-      profileImageUrl: "https://cdn.example.com/profile.jpg",
+      profileImageUrl: "/imgs/default-profile.jpg",
     },
     activity: {
       likedPropertyCount: 12,
