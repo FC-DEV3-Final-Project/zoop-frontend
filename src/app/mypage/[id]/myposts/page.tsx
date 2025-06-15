@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
@@ -16,71 +16,53 @@ type PostData = {
   comments: PostItem[] | null;
 };
 
-// 임시 데이터
-const posts = {
-  reviews: [
-    {
-      reviewId: 1,
-      content: "좋은 매물이네요.",
-      createdAt: "2025-05-28",
-      likeCount: 12,
-      commentCount: 3,
-      item: {
-        complexId: 2,
-        articleName: "관악산대창센시티 단지",
-      },
-    },
-    {
-      reviewId: 2,
-      content: "좋은 매물이네요.",
-      createdAt: "2025-05-28",
-      likeCount: 12,
-      commentCount: 3,
-      item: {
-        propertyId: 101,
-        articleName: "관악산대창센시티(101동)",
-      },
-    },
-  ],
-  comments: [
-    {
-      commentId: 55,
-      content: "저도 이 매물 관심 있었어요!",
-      createdAt: "2025-06-08",
-      likeCount: 7,
-      review: {
-        reviewId: 1,
-        content: "좋은 매물이네요.",
-        item: {
-          complexId: 2,
-          articleName: "관악산대창센시티 단지",
-        },
-      },
-    },
-    {
-      commentId: 55,
-      content: "저도 이 매물 관심 있었어요!",
-      createdAt: "2025-06-08",
-      likeCount: 7,
-      review: {
-        reviewId: 1,
-        content: "좋은 매물이네요.",
-        item: {
-          propertyId: 2,
-          articleName: "관악산대창센시티 단지",
-        },
-      },
-    },
-  ],
-};
-
 const MyPostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("reviews");
+  const [posts, setPosts] = useState<PostData>({
+    reviews: null,
+    comments: null,
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [reviewsResponse, commentsResponse] = await Promise.all([
+          fetch("/mypage/reviews"),
+          fetch("/mypage/comments"),
+        ]);
+
+        const [reviewsData, commentsData] = await Promise.all([
+          reviewsResponse.json(),
+          commentsResponse.json(),
+        ]);
+
+        setPosts({
+          reviews: reviewsData.reviews,
+          comments: commentsData.comments,
+        });
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handlePostClick = (title: string) => {
     router.push(`/review/${title}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-body2 text-gray-700-info">로딩 중...</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -94,7 +76,7 @@ const MyPostsPage = () => {
         </div>
         <div>
           <div className="mb-8 flex flex-col gap-1">
-            {posts[selectedTab as keyof PostData].map((post, idx) => (
+            {posts[selectedTab as keyof PostData]?.map((post, idx) => (
               <MyPostItem
                 key={idx}
                 type={selectedTab === "reviews" ? "review" : "comment"}
@@ -104,7 +86,7 @@ const MyPostsPage = () => {
           </div>
 
           <div
-            className={`${posts[selectedTab as keyof PostData].length === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
+            className={`${posts[selectedTab as keyof PostData]?.length === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
           >
             <div className={"flex h-[60px] items-center justify-center"}>
               <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없어요.</div>
