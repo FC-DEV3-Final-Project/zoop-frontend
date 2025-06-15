@@ -6,6 +6,12 @@ interface RealEstateCallButtonProps {
 }
 
 const RealEstateCallButton = ({ phonNumber }: RealEstateCallButtonProps) => {
+
+  const handleCall = (value: string) => {
+    window.open(`tel:${value}`, "_blank");
+    close();
+  };
+
   return (
     <BottomSheet
       trigger={
@@ -22,8 +28,7 @@ const RealEstateCallButton = ({ phonNumber }: RealEstateCallButtonProps) => {
               key={idx}
               className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200`}
               onClick={() => {
-                alert(item.value);
-                close();
+                handleCall(item.value);
               }}
             >
               {item.value}
