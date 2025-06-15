@@ -14,10 +14,11 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
+  position?: "left" | "right";
   className?: string;
 }
 
-const Dropdown = ({ items, className }: DropdownProps) => {
+const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +39,12 @@ const Dropdown = ({ items, className }: DropdownProps) => {
       </button>
 
       {open && (
-        <div className="absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90">
+        <div
+          className={cn(
+            "absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
+            position === "right" ? "right-0" : "left-0", // 👈 간단하게 위치 제어
+          )}
+        >
           {items.map((item, index) => {
             const isFirst = index === 0;
             const isOnlyOne = items.length === 1;

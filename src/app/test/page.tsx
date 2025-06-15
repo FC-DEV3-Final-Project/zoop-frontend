@@ -60,34 +60,38 @@ export default function Test() {
       {/* DropDown Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">DropDown</h1>
+        <div className="flex justify-end">
+          <Dropdown
+            items={[
+              {
+                type: "edit",
+                label: "편집하기",
+                onClick: () => {
+                  console.log("편집 버튼 클릭됨");
+                },
+              },
+              {
+                type: "delete",
+                label: "삭제하기",
+                onClick: () => {
+                  console.log("삭제 버튼 클릭됨");
+                },
+              },
+            ]}
+          />
+        </div>
         <Dropdown
           items={[
             {
-              type: "edit",
-              label: "편집하기",
-              onClick: () => {
-                console.log("편집 버튼 클릭됨");
-              },
-            },
-            {
               type: "delete",
               label: "삭제하기",
+
               onClick: () => {
                 console.log("삭제 버튼 클릭됨");
               },
             },
           ]}
-        />
-        <Dropdown
-          items={[
-            {
-              type: "delete",
-              label: "삭제하기",
-              onClick: () => {
-                console.log("삭제 버튼 클릭됨");
-              },
-            },
-          ]}
+          position="left" // 왼쪽 정렬
         />
       </div>
 
