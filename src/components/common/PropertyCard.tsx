@@ -3,22 +3,6 @@
 import { useRouter } from "next/navigation";
 import HeartButton from "./HeartButton";
 
-// interface PropertyCardProps {
-//   id: number;
-//   order?: number;
-//   imageUrl: string;
-//   transactionType: string;
-//   price: string;
-//   buildingType: string;
-//   area: string;
-//   address: string;
-//   detailAddress: string;
-//   tags: string[];
-//   isActive?: boolean;
-//   size?: "sm" | "md";
-//   isNumberVisible?: boolean;
-// }
-
 interface PropertyCardProps {
   propertyId: number;
   order: number;
@@ -123,7 +107,7 @@ const PropertyCard = ({
               <p className="min-w-fit text-body2">{buildingName}</p>
             </div>
             <div className="h-5 self-stretch text-body2">
-              {realestateTypeName}, {area2}
+              {realestateTypeName}, {area2}㎡
             </div>
           </div>
         </div>
