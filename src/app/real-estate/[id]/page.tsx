@@ -16,7 +16,7 @@ const realEstateData = {
   realtorName: "일등 부동산 공인중개사사무소",
   establishRegistrationNo: "44862989",
   representative: "김정순",
-  phone: "031-271-5309, 010-8711-6151",
+  phone: "031-271-5309, 010-8711-6151", // 추가 예정
   address:
     "경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층",
   dealCount: 19,
