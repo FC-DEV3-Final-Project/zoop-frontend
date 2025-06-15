@@ -5,10 +5,13 @@ import ChatBubble from "@/components/chat/ChatBubble";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideBar from "@/components/chat/SideBar";
 import { Header } from "@/layout/Header";
+import { useState } from "react";
 
 export default function Home() {
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
   return (
-    <Sheet>
+    <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen}>
       <Header bgColorClassName="bg-gray-100">
         <SheetTrigger>
           <Header.Hamburger />
@@ -33,7 +36,7 @@ export default function Home() {
           </ChatBubble>
         </main>
       </div>
-      <SideBar />
+      <SideBar onClose={() => setSideBarOpen(false)} />
     </Sheet>
   );
 }

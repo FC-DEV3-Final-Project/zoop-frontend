@@ -10,7 +10,11 @@ import LogoIcon from "../../../public/icons/logo.svg";
 
 import SideBarItem from "./SideBarItem";
 
-const SideBar = () => {
+interface SideBarProps {
+  onClose?: () => void;
+}
+
+const SideBar = ({ onClose }: SideBarProps) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState("chat-1");
@@ -19,6 +23,13 @@ const SideBar = () => {
     alert("새로운 대화 시작하기");
 
     // TODO : 채팅방 생성 API
+  };
+
+  const handleItemClick = (chatId: string) => {
+    setSelectedChatId(chatId);
+    onClose?.(); // 아이템 클릭 시 사이드바 닫기
+
+    // TODO: 채팅 불러오기 API
   };
 
   return (
@@ -68,19 +79,19 @@ const SideBar = () => {
             chatRoomId="chat-1"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-1"}
-            onClick={() => setSelectedChatId("chat-1")} // 클릭 핸들러 추가
+            onClick={() => handleItemClick("chat-1")}
           />
           <SideBarItem
             chatRoomId="chat-2"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-2"}
-            onClick={() => setSelectedChatId("chat-2")}
+            onClick={() => handleItemClick("chat-2")}
           />
           <SideBarItem
             chatRoomId="chat-3"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-3"}
-            onClick={() => setSelectedChatId("chat-3")}
+            onClick={() => handleItemClick("chat-3")}
           />
         </li>
         <li>
@@ -89,19 +100,19 @@ const SideBar = () => {
             chatRoomId="chat-4"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-4"}
-            onClick={() => setSelectedChatId("chat-4")} // 클릭 핸들러 추가
+            onClick={() => handleItemClick("chat-4")}
           />
           <SideBarItem
             chatRoomId="chat-5"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-5"}
-            onClick={() => setSelectedChatId("chat-5")}
+            onClick={() => handleItemClick("chat-5")}
           />
           <SideBarItem
             chatRoomId="chat-6"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-6"}
-            onClick={() => setSelectedChatId("chat-6")}
+            onClick={() => handleItemClick("chat-6")}
           />
         </li>
         <li>
@@ -110,19 +121,19 @@ const SideBar = () => {
             chatRoomId="chat-7"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-7"}
-            onClick={() => setSelectedChatId("chat-7")} // 클릭 핸들러 추가
+            onClick={() => handleItemClick("chat-7")}
           />
           <SideBarItem
             chatRoomId="chat-8"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-8"}
-            onClick={() => setSelectedChatId("chat-8")}
+            onClick={() => handleItemClick("chat-8")}
           />
           <SideBarItem
             chatRoomId="chat-9"
             title={"이수역 / 전세 / 아파트 / 6억"}
             isSelected={selectedChatId === "chat-9"}
-            onClick={() => setSelectedChatId("chat-9")}
+            onClick={() => handleItemClick("chat-9")}
           />
         </li>
       </ul>
