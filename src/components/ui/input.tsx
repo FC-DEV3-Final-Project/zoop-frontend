@@ -34,7 +34,7 @@ export default function Input({
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <img src="/icons/search.svg" className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
       <input
         type="text"
