@@ -41,9 +41,11 @@ function SheetContent({
   className,
   children,
   side = "right",
+  isFullWidth = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left";
+  isFullWidth?: boolean;
 }) {
   return (
     <SheetPortal>
@@ -55,7 +57,12 @@ function SheetContent({
           side === "right" &&
             "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
           side === "left" &&
-            "inset-y-0 left-0 h-full w-3/4 border-r bg-white data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+            cn(
+              "inset-y-0 left-0 h-full border-r bg-white",
+              "transition-all duration-300 ease-in-out",
+              isFullWidth ? "w-full max-w-full" : "w-3/4 sm:max-w-sm",
+              "data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
+            ),
           side === "top" &&
             "inset-x-0 top-0 h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
           side === "bottom" &&

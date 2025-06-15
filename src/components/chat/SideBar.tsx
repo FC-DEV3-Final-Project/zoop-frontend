@@ -10,6 +10,7 @@ import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   const handelNewChat = () => {
     alert("새로운 대화 시작하기");
@@ -18,18 +19,28 @@ const SideBar = () => {
   };
 
   return (
-    <SheetContent side="left" className="gap-0">
-      <SheetHeader className="flex flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
-        <SheetTitle>
-          <div>
+    <SheetContent side="left" isFullWidth={isFocused} onOpenAutoFocus={(e) => e.preventDefault()}>
+      <SheetHeader className="flex w-full flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
+        <SheetTitle className="w-full">
+          <div className="flex w-full justify-between gap-2">
             <Input
+              className="flex-1"
               placeholder="검색"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
+              onFocus={() => setIsFocused(true)}
               onSend={() => {
                 alert("검색");
               }}
             />
+            {isFocused && (
+              <button
+                onClick={() => setIsFocused(false)}
+                className="whitespace-nowrap text-subtitle3"
+              >
+                취소
+              </button>
+            )}
           </div>
         </SheetTitle>
         <button
