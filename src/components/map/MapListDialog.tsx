@@ -17,6 +17,18 @@ const sortOptions = [
   { label: "면적 좁은 순", value: "narrow " },
 ];
 
+const properties = Array.from({ length: 10 }, (_, i) => ({
+  id: i + 1,
+  order: i + 1,
+  imageUrl: "/imgs/propertyExample.png",
+  transactionType: "전세",
+  price: "5억 3,000",
+  address: "방배마에스트로{주상복합}",
+  detailAddress: `101동 ${700 + i}호`,
+  buildingType: "아파트",
+  area: "34.5㎡",
+  tags: ["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"],
+}));
 const MapListDialog = ({ open, onOpenChange }: Props) => {
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
@@ -80,18 +92,21 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
                 </BottomSheet>
               </div>
             </div>
-            <PropertyCard
-              id={1}
-              order={1}
-              imageUrl="/imgs/propertyExample.png"
-              transactionType="전세"
-              price="5억 3,000"
-              address="방배마에스트로{주상복합}"
-              detailAddress="101동 703호"
-              buildingType="아파트"
-              area="34.5㎡"
-              tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
-            />
+            {properties.map((item) => (
+              <PropertyCard
+                key={item.id}
+                id={item.id}
+                order={item.order}
+                imageUrl={item.imageUrl}
+                transactionType={item.transactionType}
+                price={item.price}
+                address={item.address}
+                detailAddress={item.detailAddress}
+                buildingType={item.buildingType}
+                area={item.area}
+                tags={item.tags}
+              />
+            ))}
           </div>
         </div>
       </DialogContent>
