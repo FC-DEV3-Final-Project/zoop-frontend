@@ -53,12 +53,17 @@ const EditNickname = () => {
               <p className="justify-start whitespace-nowrap text-caption1">중복확인</p>
             </button>
           </div>
-          {isValid === false && (
-            <p className="text-footnote text-[#FF0000]">이미 사용중인 닉네임입니다</p>
-          )}
-          {isValid === true && (
-            <p className="text-footnote text-blue-800-primary">사용 가능한 닉네임입니다</p>
-          )}
+          <p
+            className={`text-body3 ${isValid ? "text-blue-800-primary" : isValid === false ? "text-[#FF0000]" : "text-gray-700-info"}`}
+          >
+            {nickname
+              ? isValid
+                ? "사용 가능한 닉네임입니다"
+                : isValid === false
+                  ? "이미 사용중인 닉네임입니다"
+                  : "2~10자, 한글·영문·숫자만 가능 (공백·특수문자 제외)"
+              : ""}
+          </p>
         </div>
         <div className="absolute bottom-4 left-1/2 w-full -translate-x-1/2 px-4">
           <Button variant={"default"} disabled={!isValid}>
