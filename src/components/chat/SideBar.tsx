@@ -13,6 +13,7 @@ import SideBarItem from "./SideBarItem";
 const SideBar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [selectedChatId, setSelectedChatId] = useState("chat-1");
 
   const handelNewChat = () => {
     alert("새로운 대화 시작하기");
@@ -63,21 +64,66 @@ const SideBar = () => {
       <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
         <li>
           <h1 className="px-5 py-[14px] text-caption1 text-gray-800">오늘</h1>
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} isSelected={true} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem
+            chatRoomId="chat-1"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-1"}
+            onClick={() => setSelectedChatId("chat-1")} // 클릭 핸들러 추가
+          />
+          <SideBarItem
+            chatRoomId="chat-2"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-2"}
+            onClick={() => setSelectedChatId("chat-2")}
+          />
+          <SideBarItem
+            chatRoomId="chat-3"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-3"}
+            onClick={() => setSelectedChatId("chat-3")}
+          />
         </li>
         <li>
           <h1 className="px-5 py-[14px] text-caption1 text-gray-800">어제</h1>
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem
+            chatRoomId="chat-4"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-4"}
+            onClick={() => setSelectedChatId("chat-4")} // 클릭 핸들러 추가
+          />
+          <SideBarItem
+            chatRoomId="chat-5"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-5"}
+            onClick={() => setSelectedChatId("chat-5")}
+          />
+          <SideBarItem
+            chatRoomId="chat-6"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-6"}
+            onClick={() => setSelectedChatId("chat-6")}
+          />
         </li>
         <li>
           <h1 className="px-5 py-[14px] text-caption1 text-gray-800">저번주</h1>
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
-          <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+          <SideBarItem
+            chatRoomId="chat-7"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-7"}
+            onClick={() => setSelectedChatId("chat-7")} // 클릭 핸들러 추가
+          />
+          <SideBarItem
+            chatRoomId="chat-8"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-8"}
+            onClick={() => setSelectedChatId("chat-8")}
+          />
+          <SideBarItem
+            chatRoomId="chat-9"
+            title={"이수역 / 전세 / 아파트 / 6억"}
+            isSelected={selectedChatId === "chat-9"}
+            onClick={() => setSelectedChatId("chat-9")}
+          />
         </li>
       </ul>
 
