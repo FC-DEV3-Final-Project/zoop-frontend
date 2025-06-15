@@ -139,7 +139,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
       </ul>
 
       <SheetFooter
-        className="absolute bottom-0 left-0 right-0 px-5 py-6"
+        className="absolute -bottom-1 left-0 right-0 px-5 py-6"
         style={{
           background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 44%)",
           paddingTop: "40px",
