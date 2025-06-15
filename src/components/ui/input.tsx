@@ -1,5 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
+
+import ClearIcon from "../../../public/icons/close.svg";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
@@ -8,6 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onSend: () => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  onClear?: () => void;
 }
 
 export default function Input({
@@ -18,6 +22,7 @@ export default function Input({
   onSend,
   onFocus,
   onBlur,
+  onClear,
 }: InputProps) {
   const baseStyle = cn(
     "w-full rounded-lg bg-gray-200 pl-9",
@@ -46,6 +51,11 @@ export default function Input({
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
       />
+      {value.length > 0 && (
+        <button onClick={onClear} className="absolute right-3 top-1/2 -translate-y-1/2">
+          <Image src={ClearIcon} alt={"clear"} />
+        </button>
+      )}
     </div>
   );
 }

@@ -32,6 +32,7 @@ const SideBar = () => {
               onSend={() => {
                 alert("검색");
               }}
+              onClear={() => setSearchKeyword("")}
             />
             {isFocused && (
               <button
