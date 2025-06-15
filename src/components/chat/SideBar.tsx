@@ -6,6 +6,7 @@ import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet"
 import Input from "../ui/input";
 
 import NewChatIcon from "../../../public/icons/new-chat.svg";
+import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
   const [inputText, setInputText] = useState("");
@@ -40,21 +41,32 @@ const SideBar = () => {
           <Image src={NewChatIcon} alt={"새로운 채팅"} width={24} height={24} />
         </button>
       </SheetHeader>
-      <div className="relative z-0 overflow-y-auto">
-        {/** 스크롤 테스트 임시 div */}
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-        <div>히스토리 목록</div> <div>히스토리 목록</div> <div>히스토리 목록</div>
-      </div>
+
+      {/** 테스트를 위한 임시 데이터 */}
+      <ul className="overflow-auto pb-[100px]">
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} isSelected={true} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+        <SideBarItem title={"이수역 / 전세 / 아파트 / 6억"} />
+      </ul>
 
       <SheetFooter
-        className="absolute bottom-0 left-0 right-0 z-10 px-5 py-6"
+        className="absolute bottom-0 left-0 right-0 px-5 py-6"
         style={{
           background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 44%)",
           paddingTop: "40px",
