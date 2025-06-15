@@ -11,30 +11,6 @@ const tabOptions = [
   { label: "댓글", value: "comments" },
 ];
 
-// 타입 정의 추가
-// type Post = {
-//   reviewId?: number;
-//   commentId?: number;
-//   content: string;
-//   createdAt: string;
-//   likeCount: number;
-//   commentCount?: number;
-//   item?: {
-//     complexId?: number;
-//     propertyId?: number;
-//     articleName: string;
-//   };
-//   review?: {
-//     reviewId: number;
-//     content: string;
-//     item: {
-//       complexId?: number;
-//       propertyId?: number;
-//       articleName: string;
-//     };
-//   };
-// };
-
 type PostData = {
   reviews: PostItem[] | null;
   comments: PostItem[] | null;
@@ -50,8 +26,6 @@ const posts = {
       likeCount: 12,
       commentCount: 3,
       item: {
-        // 리뷰에 연관된 단지 정보(Complex) 가 존재할 경우: item.articleName은 단지 이름(complexName)을 사용합니다.
-        // 단지 정보가 없는 경우에는, item.articleName은 리뷰에 연결된 매물 정보의 articleName을 사용합니다.
         complexId: 2,
         articleName: "관악산대창센시티 단지",
       },
@@ -63,8 +37,6 @@ const posts = {
       likeCount: 12,
       commentCount: 3,
       item: {
-        // 리뷰에 연관된 단지 정보(Complex) 가 존재할 경우: item.articleName은 단지 이름(complexName)을 사용합니다.
-        // 단지 정보가 없는 경우에는, item.articleName은 리뷰에 연결된 매물 정보의 articleName을 사용합니다.
         propertyId: 101,
         articleName: "관악산대창센시티(101동)",
       },
@@ -80,8 +52,6 @@ const posts = {
         reviewId: 1,
         content: "좋은 매물이네요.",
         item: {
-          // 리뷰에 연관된 단지 정보(Complex) 가 존재할 경우: item.articleName은 단지 이름(complexName)을 사용합니다.
-          // 단지 정보가 없는 경우에는, item.articleName은 리뷰에 연결된 매물 정보의 articleName을 사용합니다.
           complexId: 2,
           articleName: "관악산대창센시티 단지",
         },
@@ -96,8 +66,6 @@ const posts = {
         reviewId: 1,
         content: "좋은 매물이네요.",
         item: {
-          // 리뷰에 연관된 단지 정보(Complex) 가 존재할 경우: item.articleName은 단지 이름(complexName)을 사용합니다.
-          // 단지 정보가 없는 경우에는, item.articleName은 리뷰에 연결된 매물 정보의 articleName을 사용합니다.
           propertyId: 2,
           articleName: "관악산대창센시티 단지",
         },
