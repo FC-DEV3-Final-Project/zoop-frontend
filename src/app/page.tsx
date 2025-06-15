@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import ChatBubble from "@/components/common/ChatBubble";
+import ChatBubble from "@/components/chat/ChatBubble";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideBar from "@/components/chat/SideBar";
 import { Header } from "@/layout/Header";
