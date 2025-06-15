@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 import Link from "next/link";
 
@@ -33,13 +34,15 @@ export default function LoginPage() {
 
           <span className="text-subtitle1">부동산 매물 추천 AI 챗봇</span>
         </div>
-
-        <Link href={kakaoUrl}>
-          <div className="mt-[173px] flex h-[50px] w-[560px] items-center justify-center gap-2 rounded-[8px] bg-yellow-300 font-medium">
+        <Button
+          asChild
+          className="mt-32 h-[50px] w-full rounded-[8px] bg-[#FEE500] text-base font-medium text-[#000000] hover:bg-[#fada0b]"
+        >
+          <Link href={kakaoUrl} className="flex w-full items-center justify-center gap-2">
             <img src="/icons/kakao-logo.svg" alt="카카오톡 로고" className="h-[18px] w-[18px]" />
             카카오톡으로 로그인
-          </div>
-        </Link>
+          </Link>
+        </Button>
       </div>
     </div>
   );
