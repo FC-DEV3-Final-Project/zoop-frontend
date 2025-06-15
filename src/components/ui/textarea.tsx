@@ -1,18 +1,65 @@
-import * as React from "react"
+import React, { useRef } from "react";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
-  return (
-    <textarea
-      data-slot="textarea"
-      className={cn(
-        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className
-      )}
-      {...props}
-    />
-  )
+interface AutoResizeTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSend: () => void;
 }
 
-export { Textarea }
+export default function AutoResizeTextarea({
+  placeholder,
+  className,
+  value,
+  onChange,
+  onSend,
+}: AutoResizeTextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const baseStyle = cn(
+    "w-[270px] max-h-[160px] rounded-lg bg-gray-200 pl-9 pr-3 py-[6px]",
+    "placeholder-gray-800",
+    "text-subtitle3 resize-none overflow-y-auto",
+    "focus-visible:outline-none focus-visible:ring-0",
+    className,
+  );
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      onSend?.();
+    }
+  };
+
+  const handleInput = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto"; // 높이 초기화
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`; // 최대 160px까지
+    }
+  };
+
+  return (
+    <div className="relative w-full">
+      <img
+        src="/icons/search.svg"
+        className="pointer-events-none absolute left-3 top-3 h-5 w-5"
+        alt="검색 아이콘"
+      />
+      <textarea
+        ref={textareaRef}
+        className={baseStyle}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          onChange(e);
+          handleInput();
+        }}
+        onKeyDown={handleKeyDown}
+        onInput={handleInput}
+        rows={1}
+      />
+    </div>
+  );
+}
