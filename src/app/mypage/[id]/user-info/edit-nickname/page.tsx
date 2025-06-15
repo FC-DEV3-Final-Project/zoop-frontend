@@ -38,7 +38,7 @@ const EditNickname = () => {
                 setNickname(e.target.value);
               }}
               maxLength={20}
-              placeholder=" 닉네임을 입력해주세요. (최대 20자)"
+              placeholder=" 닉네임을 입력해주세요."
               className="w-full text-body1 placeholder-gray-300 focus:outline-none"
             />
             <button
