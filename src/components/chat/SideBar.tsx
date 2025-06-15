@@ -6,6 +6,8 @@ import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet"
 import Input from "../ui/input";
 
 import NewChatIcon from "../../../public/icons/new-chat.svg";
+import LogoIcon from "../../../public/icons/logo.svg";
+
 import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
@@ -23,17 +25,21 @@ const SideBar = () => {
       <SheetHeader className="flex w-full flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
         <SheetTitle className="w-full">
           <div className="flex w-full justify-between gap-2">
-            <Input
-              className="flex-1"
-              placeholder="검색"
-              value={searchKeyword}
-              onChange={(e) => setSearchKeyword(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onSend={() => {
-                alert("검색");
-              }}
-              onClear={() => setSearchKeyword("")}
-            />
+            <div className="flex gap-4">
+              <Image src={LogoIcon} alt={"logo"} />
+              <Input
+                className="flex-1"
+                placeholder="검색"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onSend={() => {
+                  alert("검색");
+                }}
+                onClear={() => setSearchKeyword("")}
+              />
+            </div>
+
             {isFocused && (
               <button
                 onClick={() => setIsFocused(false)}
