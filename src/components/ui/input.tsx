@@ -6,9 +6,19 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSend: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
-export default function Input({ placeholder, className, value, onChange, onSend }: InputProps) {
+export default function Input({
+  placeholder,
+  className,
+  value,
+  onChange,
+  onSend,
+  onFocus,
+  onBlur,
+}: InputProps) {
   const baseStyle = cn(
     "w-full rounded-lg bg-gray-200 pl-9",
     "placeholder-gray-800",
@@ -32,6 +42,8 @@ export default function Input({ placeholder, className, value, onChange, onSend 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onKeyDown={handleKeyDown}
       />
     </div>
