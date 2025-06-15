@@ -8,19 +8,20 @@ import { useRouter } from "next/navigation";
 const statsItems = [
   { label: "월세", value: "rent" },
   { label: "전세", value: "lease" },
-  { label: "매매", value: "sale" },
+  { label: "매매", value: "deal" },
 ];
 
 const realEstateData = {
-  name: "일등 부동산 공인중개사사무소",
+  realtyId: 1,
+  realtorName: "일등 부동산 공인중개사사무소",
+  establishRegistrationNo: "44862989",
   representative: "김정순",
-  registrationNumber: "44862989",
   phone: "031-271-5309, 010-8711-6151",
   address:
     "경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층",
-  sale: 30,
-  lease: 4,
-  rent: 19,
+  dealCount: 19,
+  leaseCount: 4,
+  rentCount: 30,
   statsItems,
 };
 
@@ -153,7 +154,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>{realEstateData.name}</Header.Title>
+        <Header.Title>{realEstateData.realtorName}</Header.Title>
       </Header>
       <RealEstateInfo {...realEstateData} />
       <div className="pb-[76px]">
