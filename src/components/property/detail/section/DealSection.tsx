@@ -1,11 +1,43 @@
-import React, { forwardRef } from "react";
+"use client";
 
-const DealSection = forwardRef<HTMLElement, {}>((_, ref) => {
+import React, { forwardRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTransaction } from "@/apis/property/detail/fetchTransaction";
+
+const DealSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["transaction", propertyId],
+    queryFn: () => fetchTransaction(propertyId),
+  });
+
+  if (isLoading || error || !data) return null;
+
+  const deal = data;
+
   const dealInfo = [
-    { label: "거래방식", type: "전세", amount: "5억 3,000만원" },
-    { label: "관리비", value: "18만원" },
-    { label: "융자금", value: "융자금 없음" },
-    { label: "입주가능일", value: "2025. 06. 중순" },
+    {
+      label: "거래방식",
+      type: deal.tradeTypeName,
+      amount:
+        deal.tradeTypeName === "월세"
+          ? `${deal.rentPrice}만원 / 보증금 ${deal.dealOrWarrantPrc}만원`
+          : `${deal.dealOrWarrantPrc}만원`,
+    },
+    {
+      label: "관리비",
+      value: `${deal.etcFeeAmount?.toLocaleString() ?? "0"}원`,
+    },
+    {
+      label: "융자금",
+      value: `${(deal.financePrice ?? 0).toLocaleString()}원`,
+    },
+    {
+      label: "입주가능일",
+      value:
+        typeof deal.moveInPossibleYmd === "string" && deal.moveInPossibleYmd.length === 8
+          ? `${deal.moveInPossibleYmd.slice(0, 4)}.${deal.moveInPossibleYmd.slice(4, 6)}.중순`
+          : "미정",
+    },
   ];
 
   return (

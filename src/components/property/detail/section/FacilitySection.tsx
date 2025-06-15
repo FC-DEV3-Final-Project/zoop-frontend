@@ -1,14 +1,33 @@
 "use client";
 
-import React from "react";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFacilities } from "@/apis/property/detail/fetchFacilities";
 
-const FacilitySection = forwardRef<HTMLElement>((_, ref) => {
+const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["facilities", propertyId],
+    queryFn: () => fetchFacilities(propertyId),
+  });
+
+  if (isLoading)
+    return (
+      <section ref={ref} id="facility" className="px-5 py-8">
+        로딩 중...
+      </section>
+    );
+  if (error || !data)
+    return (
+      <section ref={ref} id="facility" className="px-5 py-8">
+        에러 발생
+      </section>
+    );
+
   const facilityData = {
-    냉방시설: "개별난방",
-    옵션: ["천장에어컨", "욕조, 샤워부스", "싱크대", "가스레인지", "세탁기", "냉장고"],
-    보안시설: ["경비원", "인터폰", "카드키", "CCTV"],
-    기타시설: ["화재경보기", "베란다", "엘리베이터"],
+    냉방시설: data.heatMethodTypeName,
+    옵션: data.lifeFacilities,
+    보안시설: data.securityFacilities,
+    기타시설: data.etcFacilities,
   };
 
   return (
