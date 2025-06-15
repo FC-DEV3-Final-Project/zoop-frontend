@@ -17,7 +17,7 @@ const fetchInitialData = async () => {
 
 // 2. 추가 데이터 (bookmark API)
 const fetchLikedItems = async (page: number) => {
-  await new Promise((resolve) => setTimeout(resolve, 3000)); // 1초 대기
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
   const res = await fetch(`/mypage/bookmarked-properties?page=${page}`);
   const result = await res.json();
   return {

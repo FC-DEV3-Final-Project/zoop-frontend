@@ -13,7 +13,7 @@ interface PropertyListSectionProps {
   showMapViewButton?: boolean;
   isNumberVisible?: boolean;
   loaders?: { [tabValue: string]: React.RefObject<HTMLDivElement | null> };
-  loadingStates?: { [tabValue: string]: boolean };
+  loading?: { [tabValue: string]: boolean };
   hasMore?: { [tabValue: string]: boolean };
   errors?: { [tabValue: string]: string | null };
 }
@@ -24,7 +24,7 @@ const PropertyListSection = ({
   showMapViewButton = true,
   isNumberVisible = true,
   loaders,
-  loadingStates,
+  loading,
   hasMore,
   errors,
 }: PropertyListSectionProps) => {
@@ -36,7 +36,7 @@ const PropertyListSection = ({
 
   const currentProperties = propertyMap[selectedTab] || [];
   const currentLoader = loaders?.[selectedTab];
-  const isLoading = loadingStates?.[selectedTab];
+  const isLoading = loading?.[selectedTab];
   const hasMoreItems = hasMore?.[selectedTab];
   const currentError = errors?.[selectedTab];
 
@@ -64,7 +64,7 @@ const PropertyListSection = ({
           <PropertyCard key={property.id} {...property} isNumberVisible={isNumberVisible} />
         ))}
         {hasMoreItems && (
-          <div ref={currentLoader} className="h-4 w-full">
+          <div ref={currentLoader} className="h-10 w-full bg-red-500">
             {isLoading && <div className="text-center">로딩 중...</div>}
           </div>
         )}
