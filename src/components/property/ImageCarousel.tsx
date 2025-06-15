@@ -3,13 +3,20 @@
 import Image from "next/image";
 import { useCarousel } from "@/hooks/property/useCarousel";
 
-const mockImages = Array(20).fill(null); // 추후 이미지로 대체
-const mockTags = ["반려동물 입주", "역세권", "대학가"]; // 추후 태그 대체
+interface ImageCarouselProps {
+  propertyInfo: {
+    summary: string[];
+    images: {
+      imageUrl: string;
+      imageOrder: number;
+    }[];
+  };
+}
 
-const ImageCarousel = () => {
-  const { index, goNext, goPrev, handleTouchStart, handleTouchEnd } = useCarousel(
-    mockImages.length,
-  );
+const ImageCarousel = ({ propertyInfo }: ImageCarouselProps) => {
+  const { images, summary } = propertyInfo;
+
+  const { index, goNext, goPrev, handleTouchStart, handleTouchEnd } = useCarousel(images.length);
 
   return (
     <div
@@ -22,15 +29,20 @@ const ImageCarousel = () => {
         className="flex transition-transform duration-300 ease-in-out"
         style={{
           transform: `translateX(-${index * 100}%)`,
-          width: `${mockImages.length * 100}%`,
+          width: `${images.length * 100}%`,
         }}
       >
-        {mockImages.map((_, i) => (
+        {images.map((img, i) => (
           <div
             key={i}
-            className="flex h-[238px] w-full flex-shrink-0 items-center justify-center bg-gray-300"
+            className="relative flex h-[238px] w-full flex-shrink-0 items-center justify-center bg-black"
           >
-            {i + 1}
+            {/* <Image
+              src={img.imageUrl}
+              alt={`property-image-${i}`}
+              fill
+              style={{ objectFit: "cover" }}
+            /> */}
           </div>
         ))}
       </div>
@@ -39,12 +51,12 @@ const ImageCarousel = () => {
         {/* 태그 */}
         <div className="flex items-center gap-[10px] rounded-[20px] bg-white/50 px-[12px] py-[4px]">
           <Image src="/icons/smile.svg" alt="icon" width={22} height={22} />
-          <span className="text-subtitle2 text-blue-800">{mockTags.join(" / ")}</span>
+          <span className="text-subtitle2 text-blue-800">{summary.join(" / ")}</span>
         </div>
 
         {/* 이미지 넘버링 */}
         <div className="rounded-[20px] bg-black/40 px-[12px] py-[4px] text-body2 text-white">
-          {index + 1} / {mockImages.length}
+          {index + 1} / {images.length}
         </div>
       </div>
 

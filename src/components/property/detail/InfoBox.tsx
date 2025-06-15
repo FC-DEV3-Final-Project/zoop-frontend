@@ -1,43 +1,65 @@
 import HeartButton from "@/components/common/HeartButton";
+import { formatRelativeDate } from "@/utils/property/formatRelativeDate";
 
 interface InfoBoxProps {
-  itemId: number;
+  propertyInfo: {
+    propertyId: number;
+    articleName: string;
+    articleFeatureDesc: string;
+    tradeTypeName: string;
+    dealOrWarrantPrc: string;
+    realEstateTypeName: string;
+    correspondingFloorCount: string;
+    area2: string;
+    parkingPossibleYN: "Y" | "N";
+    exposeStartYMD: string;
+  };
 }
 
-const InfoBox = ({ itemId }: InfoBoxProps) => {
+const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
+  const {
+    propertyId,
+    articleName,
+    articleFeatureDesc,
+    tradeTypeName,
+    dealOrWarrantPrc,
+    realEstateTypeName,
+    correspondingFloorCount,
+    area2,
+    parkingPossibleYN,
+  } = propertyInfo;
+
+  const realestateTypeName = realEstateTypeName;
+  const parkingPossibleYn = parkingPossibleYN;
+
   const infoColumns = [
     [
-      { icon: "/icons/building.svg", label: "아파트" },
-      { icon: "/icons/stairs.svg", label: "2층" },
+      { icon: "/icons/building.svg", label: realestateTypeName },
+      { icon: "/icons/stairs.svg", label: `${correspondingFloorCount}층` },
     ],
     [
-      { icon: "/icons/ruler.svg", label: "34.59m²" },
-      { icon: "/icons/parking.svg", label: "가능" },
+      { icon: "/icons/ruler.svg", label: `${area2}m²` },
+      { icon: "/icons/parking.svg", label: parkingPossibleYn === "Y" ? "가능" : "불가능" },
     ],
   ];
 
   return (
     <div className="flex w-full flex-col gap-[24px] bg-white px-[20px] py-[18px] text-black">
       <div className="flex justify-between">
-        <div className="text-subtitle2">방배마에스트로(주상복합) 1동 703호</div>
+        <div className="text-subtitle2">{articleName}</div>
         <div className="flex gap-[13px]">
-          <HeartButton itemId={itemId} />
+          <HeartButton itemId={propertyId} />
           <button>
-            <img
-              src="/icons/share.svg"
-              alt="share"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-            />
+            <img src="/icons/share.svg" alt="share" width={24} height={24} />
           </button>
         </div>
       </div>
+
       <div className="flex flex-col gap-2">
-        <div className="text-title1">전세 5억 3,000</div>
-        <div className="text-subtitle3">이수역 도보2분거리 깔끔한 주상복합아파트</div>
+        <div className="text-title1">{`${tradeTypeName} ${dealOrWarrantPrc}`}</div>
+        <div className="text-subtitle3">{articleFeatureDesc}</div>
       </div>
-      {/* 아이콘 섹션 */}
+
       <div className="flex w-full items-end justify-between">
         <div className="flex gap-[47px]">
           {infoColumns.map((column, colIdx) => (
@@ -51,7 +73,9 @@ const InfoBox = ({ itemId }: InfoBoxProps) => {
             </div>
           ))}
         </div>
-        <div className="whitespace-nowrap text-body2 text-gray-800">19시간전</div>
+        <div className="whitespace-nowrap text-body2 text-gray-800">
+          {formatRelativeDate(propertyInfo.exposeStartYMD)}
+        </div>
       </div>
     </div>
   );
