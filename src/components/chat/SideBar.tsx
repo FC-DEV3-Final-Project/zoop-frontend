@@ -9,7 +9,7 @@ import NewChatIcon from "../../../public/icons/new-chat.svg";
 import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
-  const [inputText, setInputText] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const handelNewChat = () => {
     alert("새로운 대화 시작하기");
@@ -24,11 +24,10 @@ const SideBar = () => {
           <div>
             <Input
               placeholder="검색"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
               onSend={() => {
-                console.log("전송됨:", inputText);
-                setInputText("");
+                alert("검색");
               }}
             />
           </div>
