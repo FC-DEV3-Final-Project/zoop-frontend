@@ -1,12 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
 import { insertUserNickname } from "@/apis/login/user";
+import { useRouter } from "next/navigation";
+import useAuthFromHash from "@/hooks/common/useAuthFromHash";
 
 const Page = () => {
+  const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useAuthFromHash();
 
   const validateNickname = (value: string): string | null => {
     const trimmed = value.trim();
@@ -30,8 +35,8 @@ const Page = () => {
 
     try {
       await insertUserNickname(nickname);
-      // window.location.href = "/home";
       alert("통신 성공");
+      router.push("/");
     } catch (err) {
       alert("닉네임 등록 중 오류가 발생했습니다.");
     }
