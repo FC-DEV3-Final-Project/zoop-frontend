@@ -119,9 +119,14 @@ const MyPage = () => {
             <PropertyListSection
               tabOptions={tabOptions}
               isNumberVisible={false}
+              propertyCount={{
+                bookmarked: homeData.activity.bookmarkedCount,
+                recentViewed: homeData.activity.recentViewedCount,
+              }}
               propertyMap={{
                 bookmarked: bookmarkedItems as PropertyCardProps[],
-                recentViewed: (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
+                recentViewed:
+                  (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
               }}
               loaders={{
                 bookmarked: loader,

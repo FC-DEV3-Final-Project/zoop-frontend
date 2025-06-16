@@ -12,6 +12,7 @@ interface PropertyListSectionProps {
   propertyMap: { [tabValue: string]: PropertyCardProps[] };
   showMapViewButton?: boolean;
   isNumberVisible?: boolean;
+  propertyCount?: { [tabValue: string]: number };
   loaders?: { [tabValue: string]: React.RefObject<HTMLDivElement | null> };
   loading?: { [tabValue: string]: boolean };
   hasMore?: { [tabValue: string]: boolean };
@@ -23,6 +24,7 @@ const PropertyListSection = ({
   propertyMap,
   showMapViewButton = true,
   isNumberVisible = true,
+  propertyCount,
   loaders,
   loading,
   hasMore,
@@ -47,7 +49,7 @@ const PropertyListSection = ({
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         <div className="flex items-center justify-between rounded bg-white px-5 py-4">
           <div className="justify-center">
-            <span className="text-subtitle4">{currentProperties.length}건</span>
+            <span className="text-subtitle4">{propertyCount?.[selectedTab]}건</span>
             <span className="text-caption2">의 매물</span>
           </div>
           {showMapViewButton && (
