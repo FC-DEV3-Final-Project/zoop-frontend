@@ -1,10 +1,11 @@
-// 금액 옵션("1억", "5천만") 문자열을 숫자로 변환하는 함수
+// 금액 옵션("1억", "5천만" 등) 문자열을 숫자로 변환하는 함수
 export const parseKoreanMoneyToNumber = (str: string): number => {
   if (str.includes("억")) return parseInt(str) * 10000;
-  if (str.includes("천만")) return 1000;
-  if (str.includes("백만")) return 100;
+  if (str.includes("천만")) return parseInt(str) * 1000;
+  if (str.includes("백만")) return parseInt(str) * 100;
+  if (str.includes("만")) return parseInt(str);
 
-  return parseInt(str);
+  return 0;
 };
 
 // 숫자 문자열을 3자리마다 콤마가 찍힌 형식으로 변환하는 함수
