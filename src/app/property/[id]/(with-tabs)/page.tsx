@@ -24,16 +24,18 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
 
   if (isLoading || error || !basicInfo) return null;
 
+  const { articleName } = basicInfo;
+
   return (
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>{basicInfo.articleName}</Header.Title>
+        <Header.Title>{articleName}</Header.Title>
       </Header>
 
       <div className="flex flex-col gap-2">
         <InfoBox propertyInfo={basicInfo} />
-        <ScrollableSection propertyId={basicInfo.propertyId} />
+        <ScrollableSection propertyId={propertyId} />
       </div>
     </>
   );
