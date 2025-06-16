@@ -1,104 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
-import { MyPostItem } from "@/components/mypage/myposts/MyPostItem";
 import { Header } from "@/layout/Header";
+import { MyPostItem, PostItem } from "@/components/mypage/myposts/MyPostItem";
 
 const tabOptions = [
-  { label: "리뷰", value: "review" },
-  { label: "댓글", value: "comment" },
+  { label: "리뷰", value: "reviews" },
+  { label: "댓글", value: "comments" },
 ];
 
-// 타입 정의 추가
-type Post = {
-  type: "review" | "comment";
-  title: string;
-  content: string;
-  date: string;
-  likes: number;
-  comments?: number;
-  reply?: string;
-};
-
 type PostData = {
-  review: Post[];
-  comment: Post[];
-};
-
-// 임시 데이터
-const postData: PostData = {
-  review: [
-    // {
-    //   type: "review",
-    //   title: "방배마에스트로(주상복합)",
-    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-    //   date: "2025.05.21",
-    //   likes: 0,
-    //   comments: 2,
-    // },
-    // {
-    //   type: "review",
-    //   title: "방배마에스트로(주상복합)",
-    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-    //   date: "2025.05.20",
-    //   likes: 2,
-    //   comments: 3,
-    // },
-    // {
-    //   type: "review",
-    //   title: "방배마에스트로(주상복합)",
-    //   content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-    //   date: "2025.05.19",
-    //   likes: 3,
-    //   comments: 5,
-    // },
-  ],
-  comment: [
-    {
-      type: "comment",
-      title: "방배마에스트로(주상복합)",
-      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.20",
-      likes: 2,
-      reply: "맞아요 교통이 정말 편해요",
-    },
-    {
-      type: "comment",
-      title: "방배마에스트로(주상복합)",
-      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.20",
-      likes: 2,
-      reply: "맞아요 교통이 정말 편해요",
-    },
-    {
-      type: "comment",
-      title: "방배마에스트로(주상복합)",
-      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.20",
-      likes: 2,
-      reply: "맞아요 교통이 정말 편해요",
-    },
-    {
-      type: "comment",
-      title: "방배마에스트로(주상복합)",
-      content: "교통이 너무 편함 단, 출퇴근시 사람들 엄청 몰리기 때문에 일찍 나가야 함.",
-      date: "2025.05.20",
-      likes: 2,
-      reply: "맞아요 교통이 정말 편해요",
-    },
-    // ... 더 많은 댓글 데이터
-  ],
+  reviews: PostItem[] | null;
+  comments: PostItem[] | null;
 };
 
 const MyPostsPage = () => {
-  const [selectedTab, setSelectedTab] = useState("review");
+  const [selectedTab, setSelectedTab] = useState("reviews");
+  const [posts, setPosts] = useState<PostData>({
+    reviews: null,
+    comments: null,
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [reviewsResponse, commentsResponse] = await Promise.all([
+          fetch("/mypage/reviews"),
+          fetch("/mypage/comments"),
+        ]);
+
+        const [reviewsData, commentsData] = await Promise.all([
+          reviewsResponse.json(),
+          commentsResponse.json(),
+        ]);
+
+        setPosts({
+          reviews: reviewsData.reviews,
+          comments: commentsData.comments,
+        });
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handlePostClick = (title: string) => {
     router.push(`/review/${title}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-body2 text-gray-700-info">로딩 중...</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -112,13 +76,17 @@ const MyPostsPage = () => {
         </div>
         <div>
           <div className="mb-8 flex flex-col gap-1">
-            {postData[selectedTab as keyof PostData].map((post, idx) => (
-              <MyPostItem key={idx} {...post} />
+            {posts[selectedTab as keyof PostData]?.map((post, idx) => (
+              <MyPostItem
+                key={idx}
+                type={selectedTab === "reviews" ? "review" : "comment"}
+                {...post}
+              />
             ))}
           </div>
 
           <div
-            className={`${postData[selectedTab as keyof PostData].length === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
+            className={`${posts[selectedTab as keyof PostData]?.length === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
           >
             <div className={"flex h-[60px] items-center justify-center"}>
               <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없어요.</div>
