@@ -1,9 +1,9 @@
 "use client";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import { Button } from "@/components/ui/button";
 import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
+import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -16,7 +16,8 @@ const realEstateData = {
   realtorName: "일등 부동산 공인중개사사무소",
   establishRegistrationNo: "44862989",
   representative: "김정순",
-  phone: "031-271-5309, 010-8711-6151", // 추가 예정
+  representativeTelNo: "02-123-1234",
+  cellPhoneNo: "010-1111-1111",
   address:
     "경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층",
   dealCount: 19,
@@ -24,6 +25,11 @@ const realEstateData = {
   rentCount: 30,
   statsItems,
 };
+
+const phoneNumbers = [
+  { label: "registrationNumber", value: realEstateData.representativeTelNo },
+  { label: "cellPhoneNo", value: realEstateData.cellPhoneNo },
+];
 
 const properties = [
   {
@@ -168,10 +174,7 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
           }}
         />
       </div>
-      {/* 공인중개사에게 전화 걸기 버튼 */}
-      <div className="fixed bottom-0 left-1/2 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
-        <Button variant="default">공인중개사에게 전화 걸기</Button>
-      </div>
+      <RealEstateCallButton phonNumber={phoneNumbers} />
     </>
   );
 }
