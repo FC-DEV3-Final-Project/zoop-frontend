@@ -1,26 +1,20 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 interface FilterOptionCardProps {
   option: string;
   selectedCards: string[];
-  setSelectedCards: (option: string[]) => void;
+  onSelect: (option: string) => void;
 }
 
-const FilterOptionCard = ({ option, selectedCards, setSelectedCards }: FilterOptionCardProps) => {
+const FilterOptionCard = ({ option, selectedCards, onSelect }: FilterOptionCardProps) => {
   const isSelected = selectedCards.includes(option);
 
   return (
     <button
       key={option}
-      onClick={() =>
-        setSelectedCards(
-          selectedCards.includes(option)
-            ? selectedCards.filter((item) => item !== option)
-            : [...selectedCards, option],
-        )
-      }
+      onClick={() => onSelect(option)}
       className={clsx(
         "relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1 shadow-selectCard",
         isSelected ? "bg-blue-100" : "bg-white",
