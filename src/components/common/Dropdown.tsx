@@ -41,8 +41,7 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
       {open && (
         <div
           className={cn(
-            "absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
-            position === "right" ? "right-0" : "left-0", // 👈 간단하게 위치 제어
+            "absolute right-0 z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
           )}
         >
           {items.map((item, index) => {
