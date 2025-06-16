@@ -10,7 +10,7 @@ const ChatBubble = ({ children, className }: ChatBubbleProps) => {
   return (
     <span
       className={clsx(
-        "inline-block break-words rounded-[2px_16px_16px_16px] border border-gray-200 bg-white p-4 text-caption2",
+        "inline-block w-3/4 break-words rounded-[2px_16px_16px_16px] border border-gray-200 bg-white p-4 text-caption2",
         className,
       )}
     >
