@@ -5,22 +5,14 @@ import { useRouter } from "next/navigation";
 import InfoBox from "@/components/property/detail/InfoBox";
 import ScrollableSection from "@/components/property/detail/ScrollableSection";
 import { Header } from "@/layout/Header";
-import { useQuery } from "@tanstack/react-query";
-import { fetchBasicInfo } from "@/apis/property/detail/fetchBasicInfo";
+import { useBasicInfoQuery } from "@/queries/property/useBasicInfoQuery";
 
 function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const propertyId = Number(id);
   const router = useRouter();
 
-  const {
-    data: basicInfo,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["basicInfo", propertyId],
-    queryFn: () => fetchBasicInfo(propertyId),
-  });
+  const { data: basicInfo, isLoading, error } = useBasicInfoQuery(propertyId);
 
   if (isLoading || error || !basicInfo) return null;
 
