@@ -8,13 +8,15 @@ import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 
-const NewReviewPage = () => {
+const NewReviewPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
+  const propertyId = params.id;
+
   const [residence, setResidence] = useState("current");
   const [hasChild, setHasChild] = useState("none");
 
   const handleSubmit = () => {
-    router.push("/property/${id}/review"); // 주의: 문자열 템플릿을 적용하려면 백틱(``) 사용 필요
+    router.push(`/property/${propertyId}/review`);
   };
 
   return (
