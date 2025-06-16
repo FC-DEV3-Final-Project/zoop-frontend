@@ -4,7 +4,8 @@ interface RealEstateInfoProps {
   realtorName: string;
   establishRegistrationNo: string;
   representative: string;
-  phone: string;
+  representativeTelNo?: string;
+  cellPhoneNo?: string;
   address: string;
   dealCount: number;
   leaseCount: number;
@@ -19,7 +20,8 @@ export default function RealEstateInfo({
   realtorName,
   establishRegistrationNo,
   representative,
-  phone,
+  representativeTelNo,
+  cellPhoneNo,
   address,
   dealCount,
   leaseCount,
@@ -42,7 +44,9 @@ export default function RealEstateInfo({
         </div>
         <div className="flex gap-[3px]">
           <span className="text-caption3">전화</span>
-          <span className="text-body3">{phone}</span>
+          <span className="text-body3">
+            {[representativeTelNo, cellPhoneNo].filter(Boolean).join(", ")}
+          </span>
         </div>
         <div className="flex gap-[3px]">
           <span className="whitespace-nowrap text-caption3">주소</span>
