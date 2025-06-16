@@ -1,5 +1,6 @@
 // import { HttpResponse, http } from "msw";
 import { mypageHandlers } from "./mypageHandlers";
+import { reviewHandlers } from "./property/reviewHandlers";
 
 export const handlers = [
   //테스트
@@ -20,5 +21,6 @@ export const handlers = [
   //   );
   // }),
   ...mypageHandlers,
+  ...reviewHandlers,
   // ...다른 핸들러
-]
+];
