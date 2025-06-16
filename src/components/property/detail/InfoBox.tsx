@@ -29,17 +29,14 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
     parkingPossibleYN,
   } = propertyInfo;
 
-  const realestateTypeName = realEstateTypeName;
-  const parkingPossibleYn = parkingPossibleYN;
-
   const infoColumns = [
     [
-      { icon: "/icons/building.svg", label: realestateTypeName },
+      { icon: "/icons/building.svg", label: realEstateTypeName },
       { icon: "/icons/stairs.svg", label: `${correspondingFloorCount}층` },
     ],
     [
       { icon: "/icons/ruler.svg", label: `${area2}m²` },
-      { icon: "/icons/parking.svg", label: parkingPossibleYn === "Y" ? "가능" : "불가능" },
+      { icon: "/icons/parking.svg", label: parkingPossibleYN === "Y" ? "가능" : "불가능" },
     ],
   ];
 
