@@ -64,7 +64,7 @@ const PropertyListSection = ({
           <PropertyCard key={property.id} {...property} isNumberVisible={isNumberVisible} />
         ))}
         {hasMoreItems && (
-          <div ref={currentLoader} className="h-10 w-full bg-red-500">
+          <div ref={currentLoader} className="h-10 w-full">
             {isLoading && <div className="text-center">로딩 중...</div>}
           </div>
         )}

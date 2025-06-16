@@ -16,6 +16,8 @@ const MyPage = () => {
   const [homeData, setHomeData] = useState<any>(null);
   const [homeLoading, setHomeLoading] = useState(true);
 
+  const PAGE_SIZE = 2;
+
   // 1. 초기 데이터 (home API)
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -27,6 +29,7 @@ const MyPage = () => {
         const {
           profile,
           myReviews = [],
+          activity: { bookmarkedCount = 0, recentViewedCount = 0 } = {},
           bookmarkedProperties = [],
           recentViewedProperties = [],
         } = homeData.data || {};
@@ -34,6 +37,10 @@ const MyPage = () => {
         setHomeData({
           profile,
           myReviews,
+          activity: {
+            bookmarkedCount,
+            recentViewedCount,
+          },
           initialBookmarkedProperties: bookmarkedProperties,
           initialRecentViewedProperties: recentViewedProperties,
         });
@@ -50,6 +57,10 @@ const MyPage = () => {
 
   // 2. 추가 데이터 (bookmark API)
   const fetchBookmarkedItems = async (page: number) => {
+    if (!homeData?.activity?.bookmarkedCount || homeData.activity.bookmarkedCount < PAGE_SIZE) {
+      return { content: [], hasNext: false };
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 2000)); // 2초 대기
     const res = await fetch(`/mypage/bookmarked-properties?page=${page}`);
     const result = await res.json();
@@ -65,7 +76,9 @@ const MyPage = () => {
     loader,
     hasMore,
     loading: bookmarkedLoading,
-  } = useInfiniteScroll<PropertyCardProps>(fetchBookmarkedItems, []);
+  } = useInfiniteScroll<PropertyCardProps>(fetchBookmarkedItems, [
+    homeData?.initialBookmarkedProperties,
+  ]);
 
   // 최종 리스트 (초기 데이터 + 추가 데이터)
   const bookmarkedItems = [...(homeData?.initialBookmarkedProperties || []), ...additionalItems];

@@ -30,7 +30,7 @@ export const mypageHandlers = [
             profileImageUrl: "/imgs/default-profile.jpg",
           },
           activity: {
-            likedPropertyCount: 12,
+            bookmarkedCount: 2,
             recentViewedCount: 5,
           },
           myReviews: [

@@ -33,20 +33,20 @@ export function useInfiniteScroll<T>(
   }, [page, ...deps]);
 
   useEffect(() => {
-    if (!hasMore || loading || items.length === 0) return;
+    if (!hasMore || loading) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading) {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 1 },
+      { threshold: 0.1 },
     );
     if (loader.current) observer.observe(loader.current);
     return () => {
       if (loader.current) observer.unobserve(loader.current);
     };
-  }, [hasMore, loading, items.length]);
+  }, [hasMore, loading]);
 
   return { items, loader, hasMore, loading };
 }
