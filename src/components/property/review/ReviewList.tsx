@@ -25,7 +25,7 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
   return (
     <>
       <div className="flex justify-between px-5 py-3">
-        <div className="text-body1 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+        <div className="text-subtitle2 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
         <ReviewSortButtons sortType={sortType} onChange={setSortType} />
       </div>
 

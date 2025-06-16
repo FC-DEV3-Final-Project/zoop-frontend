@@ -41,7 +41,6 @@ const CommentList = ({ comments }: CommentListProps) => {
               <img src="/icons/thumbsup-outline.svg" alt="like" width={16} height={16} />
               {comment.likeCount > 0 ? `공감 ${comment.likeCount}` : "공감하기"}
             </button>
-
             <span className="text-footnote text-gray-700-info">
               {formatDate(comment.createdAt)}
             </span>

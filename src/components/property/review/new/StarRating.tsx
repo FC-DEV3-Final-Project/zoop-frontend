@@ -6,7 +6,7 @@ const StarRating = () => {
   const { rating, handleClick, renderStarIcon } = useStarRating();
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex h-[50px] items-center justify-between">
       <div className="flex gap-[4px]">
         {[0, 1, 2, 3, 4].map((i) => (
           <div key={i} className="relative h-8 w-8">

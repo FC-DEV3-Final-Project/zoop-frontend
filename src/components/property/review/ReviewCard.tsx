@@ -44,7 +44,7 @@ const ReviewCard = ({
             )}
             <div className="flex flex-col">
               <span className="text-body2 text-black">{nickname}</span>
-              <span className="text-body3 text-gray-800">
+              <span className="text-footnote text-gray-800">
                 {residenceStatus} / {hasChildStatus}
               </span>
             </div>
@@ -53,7 +53,7 @@ const ReviewCard = ({
         </div>
 
         {/* 별점 */}
-        <div className="flex items-center text-caption1 text-blue-800-primary">
+        <div className="flex h-[20px] items-center text-caption1 text-blue-800-primary">
           {[0, 1, 2, 3, 4].map((i) => (
             <img
               key={i}
@@ -61,9 +61,12 @@ const ReviewCard = ({
               alt="star"
               width={16}
               height={16}
+              className="block" // 중요!
             />
           ))}
-          <span className="ml-[5px] text-body2 text-black">{rating.toFixed(1)}</span>
+          <span className="ml-[5px] text-caption1 leading-none text-black">
+            {rating.toFixed(1)}
+          </span>
         </div>
 
         {/* 본문 */}
