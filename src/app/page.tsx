@@ -19,8 +19,8 @@ export default function Home() {
         <Header.Title>ZOOP</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="flex min-h-screen flex-col">
-        <div className="fixed top-16 w-full border-t-[1px] border-gray-400" />
+      <div className="flex min-h-screen w-full flex-col">
+        <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
         <main className="mt-16 p-5">
           <ChatBubble className="flex flex-col gap-2">
             <p>
