@@ -29,10 +29,14 @@ export default function useAuthFromHash({
     if (kakaoAccess) localStorage.setItem("kakao_access", kakaoAccess);
 
     if (needsNickname && redirectIfNicknameNeeded) {
-      router.replace("/login/nicknameForm");
+      if (needsNickname && redirectIfNicknameNeeded) {
+        router.replace("/login/nicknameForm");
+      } else {
+        router.replace("/"); // 메인 페이지로 이동
+      }
     }
 
-    // 해시 제거 (선택)
+    // 해시 제거
     window.history.replaceState(null, "", window.location.pathname);
   }, []);
 }
