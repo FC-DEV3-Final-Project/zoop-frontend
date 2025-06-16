@@ -1,18 +1,25 @@
+"use client";
+
 import { useRef, useEffect, useState } from "react";
 import ScrollableTabBar from "@/components/property/detail/ScrollableTabBar";
 import SectionList from "@/components/property/detail/SectionList";
 
 type SectionKey = "deal" | "info" | "facility" | "location" | "description" | "agent";
 
-const ScrollableSection = () => {
+interface ScrollableSectionProps {
+  propertyId: number;
+}
+
+const ScrollableSection = ({ propertyId }: ScrollableSectionProps) => {
   const sectionRefs: Record<SectionKey, React.RefObject<HTMLElement | null>> = {
-    deal: useRef(null),
-    info: useRef(null),
-    facility: useRef(null),
-    location: useRef(null),
-    description: useRef(null),
-    agent: useRef(null),
+    deal: useRef<HTMLElement>(null),
+    info: useRef<HTMLElement>(null),
+    facility: useRef<HTMLElement>(null),
+    location: useRef<HTMLElement>(null),
+    description: useRef<HTMLElement>(null),
+    agent: useRef<HTMLElement>(null),
   };
+
   const [activeSection, setActiveSection] = useState<SectionKey>("deal");
 
   useEffect(() => {
@@ -27,8 +34,8 @@ const ScrollableSection = () => {
       },
       {
         root: null,
-        threshold: 0.3, // 화면의 30% 이상 보여야 active 처리
-        rootMargin: "-120px 0px -40% 0px", // 상단은 헤더 공간, 하단은 늦게 반응
+        threshold: 0.3,
+        rootMargin: "-120px 0px -40% 0px",
       },
     );
 
@@ -49,7 +56,7 @@ const ScrollableSection = () => {
         selected={activeSection}
         onSelect={handleTabClick as (value: string) => void}
       />
-      <SectionList sectionRefs={sectionRefs} />
+      <SectionList sectionRefs={sectionRefs} propertyId={propertyId} />
     </div>
   );
 };
