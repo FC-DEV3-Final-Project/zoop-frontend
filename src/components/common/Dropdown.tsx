@@ -14,10 +14,11 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
+  position?: "right";
   className?: string;
 }
 
-const Dropdown = ({ items, className }: DropdownProps) => {
+const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,13 +33,17 @@ const Dropdown = ({ items, className }: DropdownProps) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative w-fit">
+    <div ref={dropdownRef} className={cn("relative w-fit", className)}>
       <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
         <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
 
       {open && (
-        <div className="absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90">
+        <div
+          className={cn(
+            "absolute right-0 z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
+          )}
+        >
           {items.map((item, index) => {
             const isFirst = index === 0;
             const isOnlyOne = items.length === 1;
