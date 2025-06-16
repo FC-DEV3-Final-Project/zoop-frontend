@@ -14,7 +14,7 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
-  position?: "left" | "right";
+  position?: "right";
   className?: string;
 }
 

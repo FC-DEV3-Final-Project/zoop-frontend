@@ -91,7 +91,6 @@ export default function Test() {
               },
             },
           ]}
-          position="left" // 왼쪽 정렬
         />
       </div>
 
