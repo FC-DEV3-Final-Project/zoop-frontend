@@ -8,7 +8,7 @@ import { Header } from "@/layout/Header";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBasicInfo } from "@/apis/property/detail/fetchBasicInfo";
 
-export default function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
+function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const propertyId = Number(id);
   const router = useRouter();
@@ -38,3 +38,5 @@ export default function PropertyDetailPage({ params }: { params: Promise<{ id: s
     </>
   );
 }
+
+export default PropertyDetailPage;
