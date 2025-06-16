@@ -3,11 +3,11 @@ import { useState } from "react";
 interface NicknameInputProps {
   nickname: string;
   setNickname: (nickname: string) => void;
-  isValid: boolean | null;
+  isValid: boolean;
   setIsValid: (isValid: boolean) => void;
 }
 
-const NicknameInput = ({ nickname, setNickname, isValid, setIsValid }: NicknameInputProps) => {
+const NicknameInput = ({ nickname, setNickname, isValid = false, setIsValid }: NicknameInputProps) => {
 
   const [status, setStatus] = useState<string>("");
 
@@ -37,6 +37,7 @@ const NicknameInput = ({ nickname, setNickname, isValid, setIsValid }: NicknameI
           value={nickname}
           onChange={(e) => {
             setNickname(e.target.value);
+            setIsValid(false);
           }}
           maxLength={20}
           placeholder=" 닉네임을 입력해주세요."
