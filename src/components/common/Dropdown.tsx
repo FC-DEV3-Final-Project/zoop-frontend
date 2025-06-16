@@ -14,7 +14,7 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
-  position?: "left" | "right";
+  position?: "right";
   className?: string;
 }
 
@@ -33,7 +33,7 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative w-fit">
+    <div ref={dropdownRef} className={cn("relative w-fit", className)}>
       <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
         <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
@@ -41,8 +41,7 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
       {open && (
         <div
           className={cn(
-            "absolute z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
-            position === "right" ? "right-0" : "left-0", // 👈 간단하게 위치 제어
+            "absolute right-0 z-10 w-max rounded-lg border border-gray-300 bg-gray-100/90",
           )}
         >
           {items.map((item, index) => {
