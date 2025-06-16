@@ -9,18 +9,28 @@ interface NicknameInputProps {
 
 const NicknameInput = ({ nickname, setNickname, isValid, setIsValid }: NicknameInputProps) => {
 
-  const handleDuplicateCheck = () => {
-    if (nickname === "test") {
-      setIsValid(false);
+  const [status, setStatus] = useState<string>("");
+
+  const handleNicknameValidation = () => {
+    // 유효성검사
+    const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
+    if (!nicknameRegex.test(nickname)) {
+      setStatus("invalid");
     } else {
-      setIsValid(true);
+      // 중복검사
+      if (nickname === "test") {
+        setStatus("duplicate");
+      } else {
+        setStatus("available");
+        setIsValid(true);
+      }
     }
   };
 
   return (
     <>
       <div
-        className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${isValid === false ? "outline-[#FF0000]" : isValid === true ? "outline-blue-800-primary" : "outline-gray-200"}`}
+        className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${status === "invalid" || status === "duplicate" ? "outline-[#FF0000]" : status === "available" ? "outline-blue-800-primary" : "outline-gray-200"}`}
       >
         <input
           type="text"
@@ -33,7 +43,7 @@ const NicknameInput = ({ nickname, setNickname, isValid, setIsValid }: NicknameI
           className="w-full text-body1 placeholder-gray-300 focus:outline-none"
         />
         <button
-          onClick={handleDuplicateCheck}
+          onClick={handleNicknameValidation}
           disabled={nickname.length === 0}
           className={`inline-flex items-center justify-center rounded-small px-4 py-1 outline outline-1 outline-offset-[-1px] ${
             nickname.length > 0
@@ -45,12 +55,12 @@ const NicknameInput = ({ nickname, setNickname, isValid, setIsValid }: NicknameI
         </button>
       </div>
       <p
-        className={`text-body3 ${isValid ? "text-blue-800-primary" : isValid === false ? "text-[#FF0000]" : "text-gray-700-info"}`}
+        className={`text-body3 ${status === "available" ? "text-blue-800-primary" : status === "invalid" || status === "duplicate" ? "text-[#FF0000]" : "text-gray-700-info"}`}
       >
         {nickname
-          ? isValid
+          ? status === "available"
             ? "사용 가능한 닉네임입니다"
-            : isValid === false
+            : status === "duplicate"
               ? "이미 사용중인 닉네임입니다"
               : "2~10자, 한글·영문·숫자만 가능 (공백·특수문자 제외)"
           : ""}
