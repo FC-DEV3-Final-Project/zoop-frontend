@@ -60,8 +60,8 @@ const PropertyListSection = ({
       </div>
       {/* 매물 리스트만 스크롤 */}
       <div className="overflow-y-auto">
-        {currentProperties.map((property, index) => (
-          <PropertyCard key={property.id} {...property} isNumberVisible={isNumberVisible} />
+        {currentProperties.map((property) => (
+          <PropertyCard key={property.propertyId} {...property} isNumberVisible={isNumberVisible} />
         ))}
         {hasMoreItems && (
           <div ref={currentLoader} className="h-16 w-full">

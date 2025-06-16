@@ -84,8 +84,8 @@ const MyPage = () => {
   const bookmarkedItems = [...(homeData?.initialBookmarkedProperties || []), ...additionalItems];
 
   const tabOptions = [
-    { label: "찜한 매물", value: "liked" },
-    { label: "최근 본 매물", value: "recent" },
+    { label: "찜한 매물", value: "bookmarked" },
+    { label: "최근 본 매물", value: "recentViewed" },
   ];
 
   const handleEdit = () => {
@@ -120,17 +120,17 @@ const MyPage = () => {
               tabOptions={tabOptions}
               isNumberVisible={false}
               propertyMap={{
-                liked: bookmarkedItems as PropertyCardProps[],
-                recent: (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
+                bookmarked: bookmarkedItems as PropertyCardProps[],
+                recentViewed: (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
               }}
               loaders={{
-                liked: loader,
+                bookmarked: loader,
               }}
               hasMore={{
-                liked: hasMore,
+                bookmarked: hasMore,
               }}
               loading={{
-                liked: bookmarkedLoading,
+                bookmarked: bookmarkedLoading,
               }}
             />
           </>
