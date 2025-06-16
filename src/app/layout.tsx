@@ -2,6 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import type { Metadata } from "next";
 import { MSWComponent } from "@/components/MSWComponent";
+import { QueryProvider } from "@/components/QueryProvider";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
@@ -33,8 +34,9 @@ export default function RootLayout({
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
         <div className="mx-auto min-h-screen w-full max-w-[600px] bg-[#f8f8f8]">
-          {useMock && <MSWComponent>{children}</MSWComponent>}
-          {!useMock && children}
+          <QueryProvider>
+            {useMock ? <MSWComponent>{children}</MSWComponent> : children}
+          </QueryProvider>
         </div>
       </body>
     </html>
