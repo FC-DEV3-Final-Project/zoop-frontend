@@ -6,9 +6,8 @@ interface RealEstateCallButtonProps {
 }
 
 const RealEstateCallButton = ({ phonNumber }: RealEstateCallButtonProps) => {
-
   const handleCall = (value: string) => {
-    window.open(`tel:${value}`, "_blank");
+    window.location.href = `tel:${value}`;
     close();
   };
 
