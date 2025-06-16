@@ -28,11 +28,11 @@ export default function useAuthFromHash({
     if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
     if (kakaoAccess) localStorage.setItem("kakao_access", kakaoAccess);
 
-    if (needsNickname && redirectIfNicknameNeeded) {
-      if (needsNickname && redirectIfNicknameNeeded) {
+    if (redirectIfNicknameNeeded) {
+      if (needsNickname) {
         router.replace("/login/nicknameForm");
       } else {
-        router.replace("/"); // 메인 페이지로 이동
+        router.replace("/"); // 기존 회원이면 메인 페이지로 이동
       }
     }
 
