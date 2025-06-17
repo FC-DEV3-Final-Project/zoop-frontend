@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
-import { PostItem as PostItemType } from "@/types/post";
+import { PostItemType } from "@/types/post";
 import { PostItem } from "@/components/mypage/posts/PostItem";
 
 const tabOptions = [

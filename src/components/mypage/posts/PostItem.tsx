@@ -1,10 +1,6 @@
 import Dropdown from "@/components/common/Dropdown";
-import { PostItem as PostItemType } from "@/types/post";
+import { PostItemProps } from "@/types/post";
 import { useRouter } from "next/navigation";
-
-type PostItemProps = PostItemType & {
-  type: "review" | "comment";
-};
 
 export const PostItem = ({
   type,
@@ -55,9 +51,7 @@ export const PostItem = ({
       </div>
       {type === "comment" && (
         <div className="flex items-center gap-1">
-          {/* <div className="py-[5px]"> */}
           <img src="/icons/reply-arrow.svg" alt="reply" className="h-[6px] w-[6px]" />
-          {/* </div> */}
           <div className="text-sm font-medium text-black">{content}</div>
         </div>
       )}
