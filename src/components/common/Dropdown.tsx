@@ -14,11 +14,10 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
-  position?: "right";
   className?: string;
 }
 
-const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
+const Dropdown = ({ items, className }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
