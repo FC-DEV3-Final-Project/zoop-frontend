@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 interface NicknameInputProps {
   nickname: string;
@@ -7,23 +8,36 @@ interface NicknameInputProps {
   setIsValid: (isValid: boolean) => void;
 }
 
-const NicknameInput = ({ nickname, setNickname, isValid = false, setIsValid }: NicknameInputProps) => {
-
+const NicknameInput = ({
+  nickname,
+  setNickname,
+  isValid = false,
+  setIsValid,
+}: NicknameInputProps) => {
   const [status, setStatus] = useState<string>("");
 
-  const handleNicknameValidation = () => {
+  const handleNicknameValidation = async () => {
     // 유효성검사
     const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
     if (!nicknameRegex.test(nickname)) {
       setStatus("invalid");
-    } else {
+      return;
+    }
+
+    try {
       // 중복검사
-      if (nickname === "test") {
+      const response = await axios.get(`/mypage/check-user-nickname?nickname=${nickname}`);
+      const { isDuplicated } = response.data;
+
+      if (isDuplicated) {
         setStatus("duplicate");
       } else {
         setStatus("available");
         setIsValid(true);
       }
+    } catch (error) {
+      console.error("닉네임 중복 검사 중 오류가 발생했습니다:", error);
+      setStatus("");
     }
   };
 
