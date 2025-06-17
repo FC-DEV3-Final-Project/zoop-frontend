@@ -29,13 +29,13 @@ const Prev = ({ onPrevClick }: { onPrevClick?: () => void }) => (
 );
 
 const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
-  <button onClick={onHamburgerClick} className="flex justify-center">
+  <div onClick={onHamburgerClick} className="flex justify-center cursor-pointer">
     <Image src={HamburgerIcon} alt="메뉴" width={24} height={24} />
-  </button>
+  </div>
 );
 
 const Title = ({ children }: { children: string }) => (
-  <h1 className="absolute left-1/2 -translate-x-1/2 text-subtitle2">{children}</h1>
+  <h1 className="absolute -translate-x-1/2 left-1/2 text-subtitle2">{children}</h1>
 );
 
 const Close = ({ onCloseClick }: { onCloseClick?: () => void }) => (
