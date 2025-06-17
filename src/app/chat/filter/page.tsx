@@ -16,7 +16,9 @@ const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
 const HOUSING_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
 
 const Page = () => {
-  const { Funnel, Step, currentStep, prevStep, nextStep } = useFunnel({ lastStep: "4" });
+  const { Funnel, Step, currentStep, prevStep, nextStep, stepData, updateStepData } = useFunnel({
+    lastStep: "4",
+  });
   const router = useRouter();
 
   // step1일 때는 홈으로, 그 외에는 이전 스텝으로
@@ -41,7 +43,11 @@ const Page = () => {
         <div className="px-5 pt-10">
           <Funnel>
             <Step name="1">
-              <LocationStep onNext={nextStep} />
+              <LocationStep
+                onNext={nextStep}
+                selectedValue={stepData.location || ""}
+                onSelectedValueChange={(place) => updateStepData("location", place)}
+              />
             </Step>
             <Step name="2">
               <OptionSelectStep
@@ -49,10 +55,18 @@ const Page = () => {
                 title="매매 형태"
                 options={TRANSACTION_OPTIONS}
                 multiSelect={false}
+                selectedOptions={stepData.transactionType || []}
+                onOptionsChange={(options) => updateStepData("transactionType", options)}
               />
             </Step>
             <Step name="3">
-              <OptionSelectStep onNext={nextStep} title="주거 형태" options={HOUSING_OPTIONS} />
+              <OptionSelectStep
+                onNext={nextStep}
+                title="주거 형태"
+                options={HOUSING_OPTIONS}
+                selectedOptions={stepData.housingType || []}
+                onOptionsChange={(options) => updateStepData("housingType", options)}
+              />
             </Step>
             <Step name="4">
               <BudgeStep onNext={nextStep} />
