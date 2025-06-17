@@ -19,14 +19,23 @@ const Page = () => {
   const { Funnel, Step, currentStep, prevStep, nextStep } = useFunnel({ lastStep: "4" });
   const router = useRouter();
 
+  // step1일 때는 홈으로, 그 외에는 이전 스텝으로
+  const handlePrevClick = () => {
+    if (currentStep === "1") {
+      router.push("/");
+    } else {
+      prevStep();
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Header>
-        <Header.Prev onPrevClick={prevStep} />
+        <Header.Prev onPrevClick={handlePrevClick} />
         <Header.Title>필터 설정하기</Header.Title>
         <Header.Close onCloseClick={() => router.push("/")} />
       </Header>
-      <main className="relative min-h-screen pt-16 bg-white">
+      <main className="relative min-h-screen bg-white pt-16">
         <ProgressBar currentStep={currentStep} />
 
         <div className="px-5 pt-10">
