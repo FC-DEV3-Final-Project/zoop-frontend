@@ -77,3 +77,5 @@ export const PostItem = ({
     </div>
   );
 };
+
+export default PostItem;
