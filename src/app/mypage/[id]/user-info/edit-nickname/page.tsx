@@ -9,7 +9,7 @@ import { useState } from "react";
 const EditNickname = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
-  const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [isValid, setIsValid] = useState(false);
 
   return (
     <>
