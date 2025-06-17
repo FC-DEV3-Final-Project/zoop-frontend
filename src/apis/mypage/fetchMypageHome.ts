@@ -1,4 +1,5 @@
 import { PropertyCardProps } from "@/components/common/PropertyCard";
+import axiosInstance from "../utils/axiosInstance";
 
 type MyPageHomeResponse = {
   data: {
@@ -28,11 +29,13 @@ type MyPageHomeResponse = {
 };
 
 const fetchMypageHome = async (): Promise<MyPageHomeResponse> => {
-  const response = await fetch("/mypage/home");
-  if (!response.ok) {
-    throw new Error("마이페이지 데이터를 가져오는데 실패했습니다");
+  try {
+    const response = await axiosInstance.get("/mypage/home");
+    return response.data;
+  } catch (error) {
+    console.error("fetchMypageHome 에러:", error);
+    throw error;
   }
-  return response.json();
 };
 
 export default fetchMypageHome;

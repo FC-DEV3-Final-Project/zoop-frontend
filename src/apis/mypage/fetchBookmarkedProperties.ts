@@ -1,4 +1,5 @@
 import { PropertyCardProps } from "@/components/common/PropertyCard";
+import axiosInstance from "../utils/axiosInstance";
 
 type BookmarkedPropertiesResponse = {
   content: PropertyCardProps[];
@@ -8,11 +9,13 @@ type BookmarkedPropertiesResponse = {
 const fetchBookmarkedProperties = async (
   page: number,
 ): Promise<BookmarkedPropertiesResponse> => {
-  const response = await fetch(`/mypage/histories/bookmarked-properties?page=${page}`);
-  if (!response.ok) {
-    throw new Error("찜한 매물 목록을 가져오는데 실패했습니다");
+  try {
+    const response = await axiosInstance.get(`/mypage/histories/bookmarked-properties?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.error("fetchBookmarkedProperties 에러:", error);
+    throw error;
   }
-  return response.json();
 };
 
 export default fetchBookmarkedProperties;

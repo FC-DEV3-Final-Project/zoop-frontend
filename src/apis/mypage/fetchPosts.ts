@@ -1,4 +1,5 @@
 import { PostItemType } from "@/types/post";
+import axiosInstance from "@/apis/utils/axiosInstance";
 
 type PostData = {
   reviews: PostItemType[];
@@ -6,25 +7,19 @@ type PostData = {
 };
 
 const fetchPosts = async (): Promise<PostData> => {
-  const [reviewsResponse, commentsResponse] = await Promise.all([
-    fetch("/mypage/reviews"),
-    fetch("/mypage/comments"),
-  ]);
-
-  if (!reviewsResponse.ok || !commentsResponse.ok) {
+  try {
+    const [reviewsRes, commentsRes] = await Promise.all([
+      axiosInstance.get("/mypage/reviews"),
+      axiosInstance.get("/mypage/comments"),
+    ]);
+    return {
+      reviews: reviewsRes.data.reviews,
+      comments: commentsRes.data.comments,
+    };
+  } catch (error) {
+    console.error("fetchPosts 에러:", error);
     throw new Error("게시물을 불러오는데 실패했습니다");
   }
-
-  const [reviewsData, commentsData] = await Promise.all([
-    reviewsResponse.json(),
-    commentsResponse.json(),
-  ]);
-
-  return {
-    reviews: reviewsData.reviews,
-    comments: commentsData.comments,
-  };
-
 };
 
 export default fetchPosts;

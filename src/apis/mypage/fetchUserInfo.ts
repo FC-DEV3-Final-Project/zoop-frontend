@@ -1,3 +1,5 @@
+import axiosInstance from "../utils/axiosInstance";
+
 type UserProfile = {
   email: string;
   nickname: string;
@@ -5,11 +7,13 @@ type UserProfile = {
 };
 
 const fetchUserInfo = async (): Promise<UserProfile> => {
-  const response = await fetch("/mypage/account");
-  if (!response.ok) {
-    throw new Error("사용자 정보를 불러오지 못했습니다");
+  try {
+    const response = await axiosInstance.get("/mypage/account");
+    return response.data;
+  } catch (error) {
+    console.error("createUserNickname 에러:", error);
+    throw error;
   }
-  return response.json().then((data) => data.account);
 };
 
 export default fetchUserInfo;
