@@ -66,7 +66,7 @@ export default function Test() {
           placeholder="메시지를 입력하세요"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onSend={() => console.log("메시지 전송")}
+          onSend={() => alert("메시지 전송")}
         />
       </div>
 

@@ -8,7 +8,7 @@ interface AutoResizeTextareaProps extends React.TextareaHTMLAttributes<HTMLTextA
   onSend: () => void;
 }
 
-export default function Ttextarea({
+export default function AutoResizeTextarea({
   placeholder,
   className,
   value,
