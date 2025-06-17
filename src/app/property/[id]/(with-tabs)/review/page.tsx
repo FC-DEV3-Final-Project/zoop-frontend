@@ -9,6 +9,7 @@ import { Header } from "@/layout/Header";
 
 const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
+  const propertyId = Number(id);
   const router = useRouter();
 
   return (
@@ -86,7 +87,7 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
 
-        <ReviewList complexId={id} />
+        <ReviewList propertyId={propertyId} />
       </div>
 
       {/* 하단 버튼 */}

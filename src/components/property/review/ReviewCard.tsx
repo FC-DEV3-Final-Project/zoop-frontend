@@ -49,7 +49,6 @@ const ReviewCard = ({
               </span>
             </div>
           </div>
-          {/* 당장은 span으로 처리했지만 버튼 컴포넌트 제작되면 수 */}
           <span className="text-gray-400">···</span>
         </div>
 
