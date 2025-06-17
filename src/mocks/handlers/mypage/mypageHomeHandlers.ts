@@ -1,26 +1,7 @@
 import { http, HttpResponse } from "msw";
 
 export const mypageHomeHandlers = [
-  http.get("/api/mypage/:id/user-info", ({ params }) => {
-    // params.id를 활용할 수도 있음
-    return HttpResponse.json(
-      {
-        account: {
-          email: "kakao_user@example.com",
-          nickname: "지윤",
-          profileImage: `https://api.dicebear.com/7.x/miniavs/png?seed=${params.id}`,
-        },
-        message: "요청이 정상적으로 처리되었습니다.",
-      },
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
-  }),
-  // /api/mypage/home mock
+  // 마이페이지 홈 데이터
   http.get("/mypage/home", () => {
     return HttpResponse.json(
       {
@@ -143,7 +124,7 @@ export const mypageHomeHandlers = [
     );
   }),
 
-  // /api/mypage/home mock
+  // 북마크 목록 조회 (무한스크롤)
   http.get("/mypage/bookmarked-properties", ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 0;
@@ -188,4 +169,5 @@ export const mypageHomeHandlers = [
       hasNext: false,
     });
   }),
+
 ];
