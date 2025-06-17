@@ -58,7 +58,8 @@ const Dropdown = ({ items, className }: DropdownProps) => {
             return (
               <button
                 key={item.type}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   item.onClick();
                   setOpen(false);
                 }}
