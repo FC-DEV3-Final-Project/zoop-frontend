@@ -25,7 +25,7 @@ type PostItemProps = PostItem & {
   type: "review" | "comment";
 };
 
-export const MyPostItem = ({
+export const PostItem = ({
   type,
   reviewId,
   commentId,

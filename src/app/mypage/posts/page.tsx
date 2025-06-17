@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
-import { MyPostItem, PostItem } from "@/components/mypage/myposts/MyPostItem";
+import { PostItem } from "@/components/mypage/posts/PostItem";
 
 const tabOptions = [
   { label: "리뷰", value: "reviews" },
@@ -16,7 +16,7 @@ type PostData = {
   comments: PostItem[] | null;
 };
 
-const MyPostsPage = () => {
+const PostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("reviews");
   const [posts, setPosts] = useState<PostData>({
     reviews: null,
@@ -77,7 +77,7 @@ const MyPostsPage = () => {
         <div>
           <div className="mb-8 flex flex-col gap-1">
             {posts[selectedTab as keyof PostData]?.map((post, idx) => (
-              <MyPostItem
+              <PostItem
                 key={idx}
                 type={selectedTab === "reviews" ? "review" : "comment"}
                 {...post}
@@ -98,4 +98,4 @@ const MyPostsPage = () => {
   );
 };
 
-export default MyPostsPage;
+export default PostsPage;

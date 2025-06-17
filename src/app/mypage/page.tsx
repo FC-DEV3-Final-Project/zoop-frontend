@@ -91,7 +91,7 @@ const MyPage = () => {
     router.push(`/mypage/user-info`);
   };
   const handleMorePosts = () => {
-    router.push(`/mypage/myposts`);
+    router.push(`/mypage/posts`);
   };
 
   return (
