@@ -1,20 +1,13 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
 
-// 임시 데이터
-// const userData = {
-//   profileImage: "/imgs/default-profile.jpg",
-//   nickname: "지윤",
-//   email: "00000@kakao.com",
-// };
 const UserInfoPage = () => {
   const router = useRouter();
-  const { id } = useParams();
 
   const [account, setAccount] = useState<{
     email: string;
@@ -26,7 +19,7 @@ const UserInfoPage = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await fetch(`/api/mypage/${id}/user-info`);
+        const res = await fetch(`/mypage/account`);
         const data = await res.json();
         setAccount(data.account);
       } catch (e) {
@@ -34,10 +27,10 @@ const UserInfoPage = () => {
       }
     };
     fetchUserInfo();
-  }, [id]);
+  }, []);
 
   const handleEditNickname = () => {
-    router.push(`/mypage/${id}/user-info/edit-nickname`);
+    router.push(`/mypage/user-info/edit-nickname`);
   };
 
   const handleEditProfileImage = () => {
@@ -69,10 +62,7 @@ const UserInfoPage = () => {
           <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">
             <BottomSheet
               trigger={
-                <button
-                  // onClick={handleEditProfileImage}
-                  className="relative h-16 w-16 rounded-full bg-gray-100"
-                >
+                <button className="relative h-16 w-16 rounded-full bg-gray-100">
                   <Image
                     src={account.profileImage}
                     alt="프로필"

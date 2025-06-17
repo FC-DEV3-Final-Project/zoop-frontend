@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
@@ -10,7 +10,6 @@ import { PropertyCardProps } from "@/components/common/PropertyCard";
 
 const MyPage = () => {
   const router = useRouter();
-  const { id } = useParams();
 
   // home api 데이터 상태
   const [homeData, setHomeData] = useState<any>(null);
@@ -89,10 +88,10 @@ const MyPage = () => {
   ];
 
   const handleEdit = () => {
-    router.push(`/mypage/${id}/user-info`);
+    router.push(`/mypage/user-info`);
   };
   const handleMorePosts = () => {
-    router.push(`/mypage/${id}/myposts`);
+    router.push(`/mypage/myposts`);
   };
 
   return (
