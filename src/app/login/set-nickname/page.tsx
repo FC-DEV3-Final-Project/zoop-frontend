@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
-import { insertUserNickname } from "@/apis/login/user";
+import { createUserNickname } from "@/apis/login/user";
 import { useRouter } from "next/navigation";
 import useAuthFromHash from "@/hooks/common/useAuthFromHash";
 
@@ -34,7 +34,7 @@ const Page = () => {
     }
 
     try {
-      await insertUserNickname(nickname);
+      await createUserNickname(nickname);
       alert("통신 성공");
       router.push("/");
     } catch (err) {
