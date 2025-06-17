@@ -7,7 +7,12 @@ interface GrayButtonProps {
   isExpanded?: boolean;
 }
 
-const GrayButton = ({ label, onClick, isToggle = false, isExpanded = false }: GrayButtonProps) => {
+const DetailActionButton = ({
+  label,
+  onClick,
+  isToggle = false,
+  isExpanded = false,
+}: GrayButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -18,4 +23,4 @@ const GrayButton = ({ label, onClick, isToggle = false, isExpanded = false }: Gr
   );
 };
 
-export default GrayButton;
+export default DetailActionButton;
