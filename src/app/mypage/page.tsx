@@ -7,12 +7,12 @@ import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
+import { fetchMypageHome, MyPageHomeResponse } from "@/apis/mypage/fetchMypageHome";
 
 const MyPage = () => {
   const router = useRouter();
 
-  // home api 데이터 상태
-  const [homeData, setHomeData] = useState<any>(null);
+  const [homeData, setHomeData] = useState<MyPageHomeResponse["data"] | null>(null);
   const [homeLoading, setHomeLoading] = useState(true);
 
   const PAGE_SIZE = 2;
@@ -21,29 +21,17 @@ const MyPage = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const homeResponse = await fetch("/mypage/home");
-        const homeData = await homeResponse.json();
-
-        // data 구조분해할당
-        const {
-          profile,
-          myReviews = [],
-          activity: { bookmarkedCount = 0, recentViewedCount = 0 } = {},
-          bookmarkedProperties = [],
-          recentViewedProperties = [],
-        } = homeData.data || {};
-
+        const homeData = await fetchMypageHome();
         setHomeData({
-          profile,
-          myReviews,
+          profile: homeData.data.profile,
+          myReviews: homeData.data.myReviews,
           activity: {
-            bookmarkedCount,
-            recentViewedCount,
+            bookmarkedPropertyCount: homeData.data.activity.bookmarkedPropertyCount,
+            recentViewedPropertyCount: homeData.data.activity.recentViewedPropertyCount,
           },
-          initialBookmarkedProperties: bookmarkedProperties,
-          initialRecentViewedProperties: recentViewedProperties,
+          bookmarkedProperties: homeData.data.bookmarkedProperties,
+          recentViewedProperties: homeData.data.recentViewedProperties,
         });
-
         setHomeLoading(false);
       } catch (error) {
         console.error("초기 데이터 로드 실패:", error);
@@ -56,7 +44,7 @@ const MyPage = () => {
 
   // 2. 추가 데이터 (bookmark API)
   const fetchBookmarkedItems = async (page: number) => {
-    if (!homeData?.activity?.bookmarkedCount || homeData.activity.bookmarkedCount < PAGE_SIZE) {
+    if (!homeData?.activity?.bookmarkedPropertyCount || homeData.activity.bookmarkedPropertyCount < PAGE_SIZE) {
       return { content: [], hasNext: false };
     }
 
@@ -76,11 +64,11 @@ const MyPage = () => {
     hasMore,
     loading: bookmarkedLoading,
   } = useInfiniteScroll<PropertyCardProps>(fetchBookmarkedItems, [
-    homeData?.initialBookmarkedProperties,
+    homeData?.bookmarkedProperties,
   ]);
 
   // 최종 리스트 (초기 데이터 + 추가 데이터)
-  const bookmarkedItems = [...(homeData?.initialBookmarkedProperties || []), ...additionalItems];
+  const bookmarkedItems = [...(homeData?.bookmarkedProperties || []), ...additionalItems];
 
   const tabOptions = [
     { label: "찜한 매물", value: "bookmarked" },
@@ -109,9 +97,9 @@ const MyPage = () => {
             {/* 상단: 프로필/포스트 */}
             <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
               {/* 유저 정보 */}
-              {homeData.profile && <UserProfile profile={homeData.profile} onEdit={handleEdit} />}
+              {homeData?.profile && <UserProfile profile={homeData.profile} onEdit={handleEdit} />}
               {/* 포스트 박스 */}
-              <PostPreviewBox posts={homeData.myReviews} onMorePosts={handleMorePosts} />
+              <PostPreviewBox posts={homeData?.myReviews || []} onMorePosts={handleMorePosts} />
             </section>
 
             {/* 하단: 탭바 + 리스트 */}
@@ -119,13 +107,13 @@ const MyPage = () => {
               tabOptions={tabOptions}
               isNumberVisible={false}
               propertyCount={{
-                bookmarked: homeData.activity.bookmarkedCount,
-                recentViewed: homeData.activity.recentViewedCount,
+                bookmarked: homeData?.activity.bookmarkedPropertyCount || 0,
+                recentViewed: homeData?.activity.recentViewedPropertyCount || 0,
               }}
               propertyMap={{
                 bookmarked: bookmarkedItems as PropertyCardProps[],
                 recentViewed:
-                  (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
+                  (homeData?.recentViewedProperties as PropertyCardProps[]) || [],
               }}
               loaders={{
                 bookmarked: loader,

@@ -11,8 +11,8 @@ export const mypageHomeHandlers = [
             profileImageUrl: "/imgs/default-profile.jpg",
           },
           activity: {
-            bookmarkedCount: 6,
-            recentViewedCount: 2,
+            bookmarkedPropertyCount: 6,
+            recentViewedPropertyCount: 2,
           },
           myReviews: [
             {
