@@ -1,6 +1,6 @@
 import Dropdown from "@/components/common/Dropdown";
 
-export type PostItem = {
+type PostItem = {
   reviewId?: number;
   commentId?: number;
   content: string;
@@ -25,7 +25,7 @@ type PostItemProps = PostItem & {
   type: "review" | "comment";
 };
 
-export const MyPostItem = ({
+const MyPostItem = ({
   type,
   reviewId,
   commentId,
@@ -89,3 +89,7 @@ export const MyPostItem = ({
     </div>
   );
 };
+
+export default MyPostItem;
+
+export type { PostItem };
