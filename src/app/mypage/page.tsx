@@ -7,8 +7,8 @@ import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
-import { fetchMypageHome, MyPageHomeResponse } from "@/apis/mypage/fetchMypageHome";
-import { fetchBookmarkedProperties } from "@/apis/mypage/fetchBookmarkedProperties";
+import fetchMypageHome, { MyPageHomeResponse } from "@/apis/mypage/fetchMypageHome";
+import fetchBookmarkedProperties from "@/apis/mypage/fetchBookmarkedProperties";
 
 const MyPage = () => {
   const router = useRouter();

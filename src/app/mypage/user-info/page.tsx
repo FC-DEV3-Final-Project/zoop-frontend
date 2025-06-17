@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
-import { fetchUserInfo, UserProfile } from "@/apis/mypage/fetchUserInfo";
+import fetchUserInfo, { UserProfile } from "@/apis/mypage/fetchUserInfo";
 
 const UserInfoPage = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { PropertyCardProps } from "@/components/common/PropertyCard";
 
-export type BookmarkedPropertiesResponse = {
+type BookmarkedPropertiesResponse = {
   content: PropertyCardProps[];
   hasNext: boolean;
 };
 
-export const fetchBookmarkedProperties = async (
+const fetchBookmarkedProperties = async (
   page: number,
 ): Promise<BookmarkedPropertiesResponse> => {
   const response = await fetch(`/mypage/bookmarked-properties?page=${page}`);
@@ -14,3 +14,5 @@ export const fetchBookmarkedProperties = async (
   }
   return response.json();
 };
+
+export default fetchBookmarkedProperties;
