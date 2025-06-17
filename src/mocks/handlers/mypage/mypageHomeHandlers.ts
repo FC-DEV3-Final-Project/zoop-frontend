@@ -125,7 +125,7 @@ export const mypageHomeHandlers = [
   }),
 
   // 북마크 목록 조회 (무한스크롤)
-  http.get("/mypage/bookmarked-properties", ({ request }) => {
+  http.get("/mypage/histories/bookmarked-properties", ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 0;
     const size = Number(url.searchParams.get("size")) || 2;
