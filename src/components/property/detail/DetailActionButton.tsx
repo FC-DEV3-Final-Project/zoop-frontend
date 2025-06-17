@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface GrayButtonProps {
+interface DetailActionButtonProps {
   label: ReactNode;
   onClick?: () => void;
   isToggle?: boolean;
@@ -12,7 +12,7 @@ const DetailActionButton = ({
   onClick,
   isToggle = false,
   isExpanded = false,
-}: GrayButtonProps) => {
+}: DetailActionButtonProps) => {
   return (
     <button
       onClick={onClick}
