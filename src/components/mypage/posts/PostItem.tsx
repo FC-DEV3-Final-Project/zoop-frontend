@@ -15,19 +15,17 @@ export const PostItem = ({
 }: PostItemProps) => {
   const router = useRouter();
 
-  const handleClick = () => {
-    const targetReviewId = type === "review" ? reviewId : review?.reviewId;
-    const complexId = type === "review" ? item?.complexId : review?.item.complexId;
-    const propertyId = type === "review" ? item?.propertyId : review?.item.propertyId;
-
-    if (targetReviewId && (complexId || propertyId)) {
-      const propertyOrComplexId = complexId || propertyId;
-      router.push(`/property/${propertyOrComplexId}/review/${targetReviewId}`);
-    }
-  };
+  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
+  const propertyOrComplexId =
+    type === "review"
+      ? item?.complexId || item?.propertyId
+      : review?.item.complexId || review?.item.propertyId;
 
   return (
-    <div className="flex cursor-pointer flex-col gap-1 bg-white p-5" onClick={handleClick}>
+    <div
+      className="flex cursor-pointer flex-col gap-1 bg-white p-5"
+      onClick={() => router.push(`/property/${propertyOrComplexId}/review/${targetReviewId}`)}
+    >
       {/* 건물명, 더보기 버튼 */}
       <div className="flex items-center">
         <div className="flex-1 text-caption2 text-blue-700">
