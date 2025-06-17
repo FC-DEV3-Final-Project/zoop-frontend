@@ -1,6 +1,7 @@
 // import { HttpResponse, http } from "msw";
 import { commonHandlers } from "./commonHandlers";
 import { mypageHandlers } from "./mypage/mypageHandlers";
+import { detailHandlers } from "./property/detailHandler";
 
 export const handlers = [
   //테스트
@@ -22,5 +23,6 @@ export const handlers = [
   // }),
   ...commonHandlers,
   ...mypageHandlers,
+  ...detailHandlers,
   // ...다른 핸들러
 ];

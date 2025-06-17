@@ -41,7 +41,7 @@ const CommentList = ({ reviewId }: CommentListProps) => {
               <img src="/icons/thumbsup-outline.svg" alt="like" width={16} height={16} />
               {comment.likes > 0 ? `공감 ${comment.likes}` : "공감하기"}
             </button>
-            <span className="text-footnote text-gray-700-info">{comment.date}</span>
+            <span className="text-body3 text-gray-700-info">{comment.date}</span>
           </div>
         </div>
       ))}

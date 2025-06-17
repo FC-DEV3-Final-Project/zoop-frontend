@@ -5,23 +5,32 @@ import { useRouter } from "next/navigation";
 import InfoBox from "@/components/property/detail/InfoBox";
 import ScrollableSection from "@/components/property/detail/ScrollableSection";
 import { Header } from "@/layout/Header";
+import { useBasicInfoQuery } from "@/queries/property/useBasicInfoQuery";
 
-const PropertyDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
+function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const propertyId = Number(id);
   const router = useRouter();
+
+  const { data: basicInfo, isLoading, error } = useBasicInfoQuery(propertyId);
+
+  if (isLoading || error || !basicInfo) return null;
+
+  const { articleName } = basicInfo;
 
   return (
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>방배</Header.Title>
+        <Header.Title>{articleName}</Header.Title>
       </Header>
+
       <div className="flex flex-col gap-2">
-        <InfoBox itemId={Number(id)} />
-        <ScrollableSection />
+        <InfoBox propertyInfo={basicInfo} />
+        <ScrollableSection propertyId={propertyId} />
       </div>
     </>
   );
-};
+}
 
 export default PropertyDetailPage;
