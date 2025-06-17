@@ -5,33 +5,19 @@ import Image from "next/image";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
+import { fetchUserInfo, UserProfile } from "@/apis/mypage/fetchUserInfo";
 
 const UserInfoPage = () => {
   const router = useRouter();
 
-  const [account, setAccount] = useState<{
-    email: string;
-    nickname: string;
-    profileImage: string;
-  } | null>(null);
+  const [account, setAccount] = useState<UserProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const res = await fetch(`/mypage/account`);
-        const data = await res.json();
-        setAccount(data.account);
-      } catch (e) {
-        setError("유저 정보를 불러오지 못했습니다.");
-      }
-    };
-    fetchUserInfo();
+    fetchUserInfo()
+      .then(setAccount)
+      .catch(() => setError("유저 정보를 불러오지 못했습니다."));
   }, []);
-
-  const handleEditNickname = () => {
-    router.push(`/mypage/user-info/edit-nickname`);
-  };
 
   const handleEditProfileImage = () => {
     alert("프로필 이미지 변경");
@@ -64,7 +50,7 @@ const UserInfoPage = () => {
               trigger={
                 <button className="relative h-16 w-16 rounded-full bg-gray-100">
                   <Image
-                    src={account.profileImage}
+                    src={account.profileImageUrl}
                     alt="프로필"
                     width={64}
                     height={64}
@@ -108,7 +94,10 @@ const UserInfoPage = () => {
             <div className="flex flex-col">
               <div className="flex justify-between p-4">
                 <span className="text-subtitle2">닉네임</span>
-                <button className="flex gap-2" onClick={handleEditNickname}>
+                <button
+                  className="flex gap-2"
+                  onClick={() => router.push(`/mypage/user-info/edit-nickname`)}
+                >
                   <span className="text-body1">{account.nickname}</span>
                   <img src="/icons/arrow-right.svg" alt="수정" className="h-6 w-6" />
                 </button>

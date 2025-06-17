@@ -8,7 +8,7 @@ export const userInfoHandlers = [
         account: {
           email: "kakao_user@example.com",
           nickname: "지윤",
-          profileImage: `https://api.dicebear.com/7.x/miniavs/png?seed=1`,
+          profileImageUrl: `https://api.dicebear.com/7.x/miniavs/png?seed=1`,
         },
         message: "요청이 정상적으로 처리되었습니다.",
       },
