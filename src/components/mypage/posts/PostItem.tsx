@@ -1,27 +1,8 @@
 import Dropdown from "@/components/common/Dropdown";
+import { PostItem as PostItemType } from "@/types/post";
+import { useRouter } from "next/navigation";
 
-export type PostItem = {
-  reviewId?: number;
-  commentId?: number;
-  content: string;
-  createdAt: string;
-  likeCount: number;
-  commentCount?: number;
-  item?: {
-    complexId?: number;
-    articleName: string;
-  };
-  review?: {
-    reviewId: number;
-    content: string;
-    item: {
-      complexId?: number;
-      articleName: string;
-    };
-  };
-};
-
-type PostItemProps = PostItem & {
+type PostItemProps = PostItemType & {
   type: "review" | "comment";
 };
 
@@ -36,10 +17,23 @@ export const PostItem = ({
   item,
   review,
 }: PostItemProps) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    const targetReviewId = type === "review" ? reviewId : review?.reviewId;
+    const complexId = type === "review" ? item?.complexId : review?.item.complexId;
+    const propertyId = type === "review" ? item?.propertyId : review?.item.propertyId;
+
+    if (targetReviewId && (complexId || propertyId)) {
+      const propertyOrComplexId = complexId || propertyId;
+      router.push(`/property/${propertyOrComplexId}/review/${targetReviewId}`);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-1 bg-white p-5">
+    <div className="flex cursor-pointer flex-col gap-1 bg-white p-5" onClick={handleClick}>
       {/* 건물명, 더보기 버튼 */}
-      <div className="flex items-center">
+      <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
         <div className="flex-1 text-caption2 text-blue-700">
           {item?.articleName || review?.item.articleName}
         </div>
