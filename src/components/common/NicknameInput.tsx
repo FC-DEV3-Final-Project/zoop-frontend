@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import fetchCheckUserNickname from "@/apis/mypage/fetchCheckUserNickname";
 
 interface NicknameInputProps {
   nickname: string;
@@ -26,8 +26,7 @@ const NicknameInput = ({
 
     try {
       // 중복검사
-      const response = await axios.get(`/mypage/check-user-nickname?nickname=${nickname}`);
-      const { isDuplicated } = response.data;
+      const { isDuplicated } = await fetchCheckUserNickname(nickname);
 
       if (isDuplicated) {
         setStatus("duplicate");
