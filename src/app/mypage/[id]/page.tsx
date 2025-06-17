@@ -1,291 +1,88 @@
 "use client";
-import PostPreview from "@/components/mypage/PostPreview";
-import PropertyListSection from "@/components/common/PropertyListSection";
 import { useRouter, useParams } from "next/navigation";
-import Image from "next/image";
 import { Header } from "@/layout/Header";
+import { useEffect, useState } from "react";
+import UserProfile from "@/components/mypage/UserProfile";
+import PostPreviewBox from "@/components/mypage/PostPreviewBox";
+import PropertyListSection from "@/components/common/PropertyListSection";
+import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
+import { PropertyCardProps } from "@/components/common/PropertyCard";
 
-const MyPage = ({ params }: { params: { id: string } }) => {
+const MyPage = () => {
   const router = useRouter();
   const { id } = useParams();
 
-  // 임시 데이터
-  const userData = {
-    profile: {
-      nickname: "지윤",
-      profileImageUrl: "/imgs/default-profile.jpg",
-    },
-    activity: {
-      likedPropertyCount: 12,
-      recentViewedCount: 5,
-    },
+  // home api 데이터 상태
+  const [homeData, setHomeData] = useState<any>(null);
+  const [homeLoading, setHomeLoading] = useState(true);
 
-    myReviews: [
-      {
-        reviweId: 1,
-        content: "교통이 너무 편함 단, 퇴근러시 사람 많음...",
-        likeCount: 5,
-        commentCount: 3,
-      },
-      {
-        reviweId: 2,
-        content: "아이들 학교가 가까워서 좋아요, 교통도 좋아요.",
-        likeCount: 3,
-        commentCount: 3,
-      },
-    ],
-    myComments: null,
+  const PAGE_SIZE = 2;
 
-    bookmarkedProperties: [
-      {
-        propertyId: 1,
-        order: 1,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 13000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "1억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: true,
-        isActive: false,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 2,
-        order: 2,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: true,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 3,
-        order: 3,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 53000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "5억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 4,
-        order: 4,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 5,
-        order: 5,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 53000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "5억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 6,
-        order: 6,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-    ],
+  // 1. 초기 데이터 (home API)
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const homeResponse = await fetch("/mypage/home");
+        const homeData = await homeResponse.json();
 
-    recentViewedProperties: [
-      {
-        propertyId: 1,
-        order: 1,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 53000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "5억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 2,
-        order: 2,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 3,
-        order: 3,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 53000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "5억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 4,
-        order: 4,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 5,
-        order: 5,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 53000,
-        dealPrice: 0,
-        dealOrWarrantPrc: "5억 3,000",
-        summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "1동 703호",
-        area2: "34.5",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-      {
-        propertyId: 6,
-        order: 6,
-        tradeTypeName: "전세",
-        rentPrice: undefined,
-        warrantPrice: 27500,
-        dealPrice: 0,
-        dealOrWarrantPrc: "2억 7,500",
-        summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-        realestateTypeName: "주상복합",
-        aptName: "방배마에스트로",
-        articleName: "방배마에스트로",
-        buildingName: "201동 1103호",
-        area2: "38.67",
-        isBookmarked: false,
-        isActive: true,
-        imageUrl: "/imgs/propertyExample.png",
-        latitude: 37.471515,
-        longitude: 126.972487,
-      },
-    ],
+        // data 구조분해할당
+        const {
+          profile,
+          myReviews = [],
+          activity: { bookmarkedCount = 0, recentViewedCount = 0 } = {},
+          bookmarkedProperties = [],
+          recentViewedProperties = [],
+        } = homeData.data || {};
+
+        setHomeData({
+          profile,
+          myReviews,
+          activity: {
+            bookmarkedCount,
+            recentViewedCount,
+          },
+          initialBookmarkedProperties: bookmarkedProperties,
+          initialRecentViewedProperties: recentViewedProperties,
+        });
+
+        setHomeLoading(false);
+      } catch (error) {
+        console.error("초기 데이터 로드 실패:", error);
+        return null;
+      }
+    };
+
+    fetchInitialData();
+  }, []);
+
+  // 2. 추가 데이터 (bookmark API)
+  const fetchBookmarkedItems = async (page: number) => {
+    if (!homeData?.activity?.bookmarkedCount || homeData.activity.bookmarkedCount < PAGE_SIZE) {
+      return { content: [], hasNext: false };
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // 2초 대기
+    const res = await fetch(`/mypage/bookmarked-properties?page=${page}`);
+    const result = await res.json();
+    return {
+      content: result.content as PropertyCardProps[],
+      hasNext: result.hasNext,
+    };
   };
 
-  const bookmarkedProperties = userData.bookmarkedProperties;
-  const recentViewedProperties = userData.recentViewedProperties;
-  const posts = userData.myReviews.length > 0 ? userData.myReviews : userData.myComments;
+  // 무한 스크롤 훅 사용
+  const {
+    items: additionalItems,
+    loader,
+    hasMore,
+    loading: bookmarkedLoading,
+  } = useInfiniteScroll<PropertyCardProps>(fetchBookmarkedItems, [
+    homeData?.initialBookmarkedProperties,
+  ]);
+
+  // 최종 리스트 (초기 데이터 + 추가 데이터)
+  const bookmarkedItems = [...(homeData?.initialBookmarkedProperties || []), ...additionalItems];
+
   const tabOptions = [
     { label: "찜한 매물", value: "bookmarked" },
     { label: "최근 본 매물", value: "recentViewed" },
@@ -298,10 +95,6 @@ const MyPage = ({ params }: { params: { id: string } }) => {
     router.push(`/mypage/${id}/myposts`);
   };
 
-  const handleMapView = () => {
-    alert("지도에서 보기 클릭!");
-  };
-
   return (
     <>
       <Header>
@@ -310,57 +103,43 @@ const MyPage = ({ params }: { params: { id: string } }) => {
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
       <div className="flex h-screen flex-col bg-white pt-16">
-        {/* 상단: 프로필/포스트 */}
-        <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
-          {/* 유저 정보 */}
-          <div className="flex inline-flex w-full items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
-                <Image
-                  src={userData.profile.profileImageUrl}
-                  alt="프로필"
-                  width={40}
-                  height={40}
-                  className="h-full w-full object-cover"
-                  priority
-                />
-              </div>
-              <span className="text-subtitle2">{userData.profile.nickname}</span>
-            </div>
-            <button onClick={handleEdit} className="rounded bg-neutral-100 px-3 py-1 text-body2">
-              내 정보 수정
-            </button>
-          </div>
+        {homeLoading ? (
+          <div>로딩중...</div>
+        ) : (
+          <>
+            {/* 상단: 프로필/포스트 */}
+            <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
+              {/* 유저 정보 */}
+              {homeData.profile && <UserProfile profile={homeData.profile} onEdit={handleEdit} />}
+              {/* 포스트 박스 */}
+              <PostPreviewBox posts={homeData.myReviews} onMorePosts={handleMorePosts} />
+            </section>
 
-          {/* 포스트 박스 */}
-          <div className="shadow3 flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 outline outline-1 outline-offset-[-1px] outline-neutral-200">
-            <div className="inline-flex items-center justify-between self-stretch bg-white">
-              <div className="text-title4">내가 쓴 글</div>
-              <button onClick={handleMorePosts} className="flex items-center gap-1">
-                <div className="text-body2 text-neutral-600">더보기</div>
-                <img src="/icons/arrow-right.svg" alt="더보기" className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="flex flex-col items-start self-stretch">
-              {posts && posts.length > 0 ? (
-                posts.map((post, idx) => <PostPreview key={idx} {...post} />)
-              ) : (
-                <div className="h-5 justify-center self-stretch text-body2 leading-tight">
-                  내가 작성한 글이 없어요
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-        {/* 하단: 탭바 + 리스트 */}
-        <PropertyListSection
-          tabOptions={tabOptions}
-          propertyMap={{
-            bookmarked: bookmarkedProperties,
-            recentViewed: recentViewedProperties,
-          }}
-          isNumberVisible={false}
-        />
+            {/* 하단: 탭바 + 리스트 */}
+            <PropertyListSection
+              tabOptions={tabOptions}
+              isNumberVisible={false}
+              propertyCount={{
+                bookmarked: homeData.activity.bookmarkedCount,
+                recentViewed: homeData.activity.recentViewedCount,
+              }}
+              propertyMap={{
+                bookmarked: bookmarkedItems as PropertyCardProps[],
+                recentViewed:
+                  (homeData?.initialRecentViewedProperties as PropertyCardProps[]) || [],
+              }}
+              loaders={{
+                bookmarked: loader,
+              }}
+              hasMore={{
+                bookmarked: hasMore,
+              }}
+              loading={{
+                bookmarked: bookmarkedLoading,
+              }}
+            />
+          </>
+        )}
       </div>
     </>
   );

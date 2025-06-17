@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
-import { MyPostItem, PostItem } from "@/components/mypage/myposts/MyPostItem";
+import MyPostItem, { PostItem } from "@/components/mypage/myposts/MyPostItem";
 
 const tabOptions = [
   { label: "리뷰", value: "reviews" },
