@@ -10,7 +10,7 @@ const ReviewTextarea = () => {
   return (
     <div className="mb-[18px] flex flex-col">
       <div className="flex justify-between">
-        <div className="text-title4 text-black">내용을 작성해주세요</div>
+        <div className="text-title3 text-black">내용을 작성해주세요</div>
         <div className="text-caption2 text-gray-600-hint">{value.length}/500</div>
       </div>
       <textarea
@@ -18,7 +18,7 @@ const ReviewTextarea = () => {
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholderText}
         maxLength={500}
-        className={`mt-2 h-[160px] w-full resize-none rounded-[8px] bg-gray-100 px-[20px] py-[16px] text-body3 placeholder:text-body3 placeholder:text-gray-800 focus:outline-none ${value ? "text-black" : ""} `}
+        className={`mt-2 h-[160px] w-full resize-none rounded-[8px] bg-gray-100 px-[20px] py-[16px] text-subtitle3 placeholder:text-body3 placeholder:text-gray-800 focus:outline-none ${value ? "text-black" : ""} `}
       />
     </div>
   );

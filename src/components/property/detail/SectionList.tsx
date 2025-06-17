@@ -10,17 +10,18 @@ type SectionKey = "deal" | "info" | "facility" | "location" | "description" | "a
 
 interface SectionListProps {
   sectionRefs: Record<SectionKey, RefObject<HTMLElement | null>>;
+  propertyId: number;
 }
 
-const SectionList = ({ sectionRefs }: SectionListProps) => {
+const SectionList = ({ sectionRefs, propertyId }: SectionListProps) => {
   return (
     <div className="flex flex-col bg-gray-100">
-      <DealSection ref={sectionRefs["deal"]} />
-      <InfoSection ref={sectionRefs["info"]} />
-      <FacilitySection ref={sectionRefs["facility"]} />
-      <LocationSection ref={sectionRefs["location"]} />
-      <DescriptionSection ref={sectionRefs["description"]} />
-      <AgentSection ref={sectionRefs["agent"]} />
+      <DealSection ref={sectionRefs["deal"]} propertyId={propertyId} />
+      <InfoSection ref={sectionRefs["info"]} propertyId={propertyId} />
+      <FacilitySection ref={sectionRefs["facility"]} propertyId={propertyId} />
+      <LocationSection ref={sectionRefs["location"]} propertyId={propertyId} />
+      <DescriptionSection ref={sectionRefs["description"]} propertyId={propertyId} />
+      <AgentSection ref={sectionRefs["agent"]} propertyId={propertyId} />
     </div>
   );
 };

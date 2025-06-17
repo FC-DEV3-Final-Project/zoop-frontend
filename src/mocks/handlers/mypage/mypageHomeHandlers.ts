@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 
-export const mypageHandlers = [
+export const mypageHomeHandlers = [
   http.get("/api/mypage/:id/user-info", ({ params }) => {
     // params.id를 활용할 수도 있음
     return HttpResponse.json(

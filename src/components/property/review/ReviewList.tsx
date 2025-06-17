@@ -49,7 +49,7 @@ const ReviewList = ({ complexId }: { complexId: string }) => {
     <>
       {/* 상단: 리뷰 건수 + 정렬 버튼 */}
       <div className="flex justify-between px-5 py-3">
-        <div className="text-body1 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+        <div className="text-subtitle2 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
         <ReviewSortButtons sortType={sortType} onChange={setSortType} />
       </div>
 
