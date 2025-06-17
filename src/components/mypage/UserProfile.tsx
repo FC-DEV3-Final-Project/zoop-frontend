@@ -8,7 +8,7 @@ type UserProfileProps = {
   onEdit: () => void;
 };
 
-export default function UserProfile({ profile, onEdit }: UserProfileProps) {
+const UserProfile = ({ profile, onEdit }: UserProfileProps) => {
   
   return (
     <div className="flex inline-flex w-full items-center justify-between">
@@ -30,4 +30,6 @@ export default function UserProfile({ profile, onEdit }: UserProfileProps) {
       </button>
     </div>
   );
-} 
+};
+
+export default UserProfile;

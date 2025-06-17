@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
-import PostPreview from "@/components/mypage/PostPreview";
+import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
@@ -111,7 +111,7 @@ const MyPage = () => {
               {/* 유저 정보 */}
               {homeData.profile && <UserProfile profile={homeData.profile} onEdit={handleEdit} />}
               {/* 포스트 박스 */}
-              <PostPreview posts={homeData.myReviews} onMorePosts={handleMorePosts} />
+              <PostPreviewBox posts={homeData.myReviews} onMorePosts={handleMorePosts} />
             </section>
 
             {/* 하단: 탭바 + 리스트 */}

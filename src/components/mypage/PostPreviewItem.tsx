@@ -4,7 +4,7 @@ type PostPreviewItemProps = {
   comments: number;
 };
 
-export default function PostPreviewItem({ content, likes, comments }: PostPreviewItemProps) {
+const PostPreviewItem = ({ content, likes, comments }: PostPreviewItemProps) => {
   return (
     <div className="flex h-8 w-full items-center gap-6 py-[5px] pr-[3px]">
       <div className="flex-1 truncate">{content}</div>
@@ -23,3 +23,5 @@ export default function PostPreviewItem({ content, likes, comments }: PostPrevie
     </div>
   );
 }
+
+export default PostPreviewItem;

@@ -49,7 +49,7 @@ const PropertyListSection = ({
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         <div className="flex items-center justify-between rounded bg-white px-5 py-4">
           <div className="justify-center">
-            <span className="text-subtitle4">{propertyCount?.[selectedTab]}건</span>
+            <span className="text-subtitle4">{propertyCount?.[selectedTab]}개</span>
             <span className="text-caption2">의 매물</span>
           </div>
           {showMapViewButton && (

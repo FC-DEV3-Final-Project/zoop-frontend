@@ -1,6 +1,6 @@
 import PostPreviewItem from "./PostPreviewItem";
 
-type PostPreviewProps = {
+type PostPreviewBoxProps = {
   posts: Array<{
     reviweId?: string | number;
     content: string;
@@ -10,7 +10,7 @@ type PostPreviewProps = {
   onMorePosts: () => void;
 };
 
-export default function PostPreview({ posts, onMorePosts }: PostPreviewProps) {
+const PostPreviewBox = ({ posts, onMorePosts }: PostPreviewBoxProps) => {
   return (
     <div className="shadow3 flex flex-col items-start justify-center gap-3.5 self-stretch rounded-lg bg-white px-5 py-4 outline outline-1 outline-offset-[-1px] outline-neutral-200">
       <div className="inline-flex items-center justify-between self-stretch bg-white">
@@ -38,4 +38,6 @@ export default function PostPreview({ posts, onMorePosts }: PostPreviewProps) {
       </div>
     </div>
   );
-}
+};
+
+export default PostPreviewBox;
