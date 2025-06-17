@@ -33,7 +33,7 @@ export const PostItem = ({
   return (
     <div className="flex cursor-pointer flex-col gap-1 bg-white p-5" onClick={handleClick}>
       {/* 건물명, 더보기 버튼 */}
-      <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-center">
         <div className="flex-1 text-caption2 text-blue-700">
           {item?.articleName || review?.item.articleName}
         </div>

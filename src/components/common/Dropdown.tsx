@@ -34,7 +34,13 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
 
   return (
     <div ref={dropdownRef} className={cn("relative w-fit", className)}>
-      <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((prev) => !prev);
+        }}
+        className="flex cursor-pointer"
+      >
         <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
 
