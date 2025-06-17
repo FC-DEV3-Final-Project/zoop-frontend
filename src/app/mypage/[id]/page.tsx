@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
 import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import { useInfiniteScroll } from "@/hooks/common/useInfiniteScroll";
+import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
 
 const MyPage = () => {

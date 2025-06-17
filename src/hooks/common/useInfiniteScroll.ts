@@ -5,10 +5,10 @@ interface InfiniteScrollResponse<T> {
   hasNext: boolean;
 }
 
-export function useInfiniteScroll<T>(
+const useInfiniteScroll = <T>(
   fetchMore: (page: number) => Promise<InfiniteScrollResponse<T>>,
   deps: any[] = [],
-) {
+) => {
   const [items, setItems] = useState<T[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -49,4 +49,6 @@ export function useInfiniteScroll<T>(
   }, [hasMore, loading]);
 
   return { items, loader, hasMore, loading };
-}
+};
+
+export default useInfiniteScroll;
