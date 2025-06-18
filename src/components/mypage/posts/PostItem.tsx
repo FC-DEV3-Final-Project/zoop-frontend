@@ -1,31 +1,8 @@
 import Dropdown from "@/components/common/Dropdown";
+import { PostItemProps } from "@/types/post";
+import { useRouter } from "next/navigation";
 
-export type PostItem = {
-  reviewId?: number;
-  commentId?: number;
-  content: string;
-  createdAt: string;
-  likeCount: number;
-  commentCount?: number;
-  item?: {
-    complexId?: number;
-    articleName: string;
-  };
-  review?: {
-    reviewId: number;
-    content: string;
-    item: {
-      complexId?: number;
-      articleName: string;
-    };
-  };
-};
-
-type PostItemProps = PostItem & {
-  type: "review" | "comment";
-};
-
-export const MyPostItem = ({
+export const PostItem = ({
   type,
   reviewId,
   commentId,
@@ -36,8 +13,19 @@ export const MyPostItem = ({
   item,
   review,
 }: PostItemProps) => {
+  const router = useRouter();
+
+  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
+  const propertyOrComplexId =
+    type === "review"
+      ? item?.complexId || item?.propertyId
+      : review?.item.complexId || review?.item.propertyId;
+
   return (
-    <div className="flex flex-col gap-1 bg-white p-5">
+    <div
+      className="flex cursor-pointer flex-col gap-1 bg-white p-5"
+      onClick={() => router.push(`/property/${propertyOrComplexId}/review/${targetReviewId}`)}
+    >
       {/* 건물명, 더보기 버튼 */}
       <div className="flex items-center">
         <div className="flex-1 text-caption2 text-blue-700">
@@ -61,9 +49,7 @@ export const MyPostItem = ({
       </div>
       {type === "comment" && (
         <div className="flex items-center gap-1">
-          {/* <div className="py-[5px]"> */}
           <img src="/icons/reply-arrow.svg" alt="reply" className="h-[6px] w-[6px]" />
-          {/* </div> */}
           <div className="text-sm font-medium text-black">{content}</div>
         </div>
       )}
@@ -89,3 +75,5 @@ export const MyPostItem = ({
     </div>
   );
 };
+
+export default PostItem;

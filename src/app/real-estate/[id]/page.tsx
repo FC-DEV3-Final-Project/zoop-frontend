@@ -154,7 +154,7 @@ const properties = [
   },
 ];
 
-export default function RealEstatePage({ params }: { params: { id: string } }) {
+const RealEstatePage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   return (
     <>
@@ -178,3 +178,5 @@ export default function RealEstatePage({ params }: { params: { id: string } }) {
     </>
   );
 }
+
+export default RealEstatePage;
