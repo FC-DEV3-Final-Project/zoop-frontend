@@ -6,37 +6,28 @@ import { createUserNickname } from "@/apis/login/createUserNickname";
 import { useRouter } from "next/navigation";
 import useAuthFromHash from "@/hooks/common/useAuthFromHash";
 import NicknameInput from "@/components/common/NicknameInput";
+import { getUserInfo } from "@/apis/login/getUserInfo";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 const Page = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
 
+  const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
+
   useAuthFromHash();
 
-  const validateNickname = (value: string): string | null => {
-    const trimmed = value.trim();
-
-    if (!trimmed) return "닉네임을 입력해주세요.";
-    if (value[0] === " ") return "닉네임은 공백으로 시작할 수 없습니다.";
-    if (trimmed.length < 2 || trimmed.length > 10)
-      return "닉네임은 2자 이상 10자 이하로 입력해주세요.";
-    if (!/^[가-힣a-zA-Z0-9]+$/.test(trimmed))
-      return "닉네임은 한글, 영문, 숫자만 사용할 수 있어요.";
-
-    return null; // 유효함
-  };
-
   const handleSubmit = async () => {
-    const error = validateNickname(nickname);
-    if (error) {
-      alert(error);
-      return;
-    }
-
     try {
       await createUserNickname(nickname);
       alert("통신 성공");
+
+      const userData = await getUserInfo();
+      console.log("유저정보 확인::: ", userData);
+
+      setUser(userData); // Zustand에 유저 정보 저장
+
       router.push("/");
     } catch (err) {
       alert("닉네임 등록 중 오류가 발생했습니다.");
