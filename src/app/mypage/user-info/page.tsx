@@ -21,7 +21,13 @@ const UserInfoPage = () => {
   const updateProfileImageMutation = useUpdateProfileImageMutation();
   const resetProfileImageMutation = useResetProfileImageMutation();
   const logoutMutation = useLogoutMutation();
-  const withdrawMutation = useWithdrawMutation();
+  const withdrawMutation = useWithdrawMutation({
+    onSuccess: () => {
+      clearAuthTokens();
+      router.push("/login");
+    },
+    onError: () => console.log("회원탈퇴 실패"),
+  });
 
   // 프로필 이미지 업로드
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +53,6 @@ const UserInfoPage = () => {
   // 회원탈퇴
   const handleWithdraw = () => {
     withdrawMutation.mutate();
-    clearAuthTokens();
-    router.push("/login");
   };
 
   if (error) {
