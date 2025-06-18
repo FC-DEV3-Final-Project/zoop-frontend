@@ -1,5 +1,5 @@
 import { useState } from "react";
-import fetchCheckUserNickname from "@/apis/mypage/fetchCheckUserNickname";
+import fetchCheckUserNickname from "@/apis/common/fetchCheckUserNickname";
 
 interface NicknameInputProps {
   nickname: string;

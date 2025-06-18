@@ -6,11 +6,15 @@ type CheckUserNicknameResponse = {
 
 const fetchCheckUserNickname = async (nickname: string): Promise<CheckUserNicknameResponse> => {
   try {
+    // 실제 api 호출
     const response = await axiosInstance.get("/mypage/check-user-nickname", {
       params: { nickname },
     });
-    console.log(response.data);
     return response.data;
+
+    // mock api 호출
+    // const response = await fetch(`/mypage/check-user-nickname?nickname=${nickname}`);
+    // return response.json();
   } catch (error) {
     console.error("fetchCheckUserNickname 에러:", error);
     throw error;

@@ -8,13 +8,19 @@ type PostData = {
 
 const fetchPosts = async (): Promise<PostData> => {
   try {
-    const [reviewsRes, commentsRes] = await Promise.all([
-      axiosInstance.get("/mypage/reviews"),
-      axiosInstance.get("/mypage/comments"),
-    ]);
+    // 실제 api 호출
+    // const [reviews, comments] = await Promise.all([
+    //   axiosInstance.get("/mypage/reviews").then((res) => res.data.reviews),
+    //   axiosInstance.get("/mypage/comments").then((res) => res.data.comments),
+    // ]);
+
+    // mock api 호출
+    const reviews = await fetch("/mypage/reviews").then((res) => res.json().then((data) => data.reviews));
+    const comments = await fetch("/mypage/comments").then((res) => res.json().then((data) => data.comments));
+
     return {
-      reviews: reviewsRes.data.reviews,
-      comments: commentsRes.data.comments,
+      reviews,
+      comments,
     };
   } catch (error) {
     console.error("fetchPosts 에러:", error);

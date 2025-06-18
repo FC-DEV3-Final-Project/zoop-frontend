@@ -30,8 +30,13 @@ type MyPageHomeResponse = {
 
 const fetchMypageHome = async (): Promise<MyPageHomeResponse> => {
   try {
-    const response = await axiosInstance.get("/mypage/home");
-    return response.data;
+    // 실제 api 호출
+    // const response = await axiosInstance.get("/mypage/home");
+    // return response.data;
+
+    // mock api 호출
+    const response = await fetch("/mypage/home");
+    return response.json();
   } catch (error) {
     console.error("fetchMypageHome 에러:", error);
     throw error;
