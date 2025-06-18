@@ -14,59 +14,40 @@ import { useWithdrawMutation } from "@/queries/mypage/useWithdrawMutation";
 
 const UserInfoPage = () => {
   const router = useRouter();
-
-  const { data: account, error, refetch } = useUserInfoQuery();
-
-  const updateProfileImageMutation = useUpdateProfileImageMutation({
-    onSuccess: () => refetch(),
-    onError: () => console.log("프로필 이미지 업로드 실패"),
-  });
-
-  const resetProfileImageMutation = useResetProfileImageMutation({
-    onSuccess: () => refetch(),
-    onError: () => console.log("프로필 이미지 초기화 실패"),
-  });
-  
-  const logoutMutation = useLogoutMutation({
-    onSuccess: (result) => {
-      if (result) {
-        clearAuthTokens();
-      }
-    },
-    onError: () => console.log("로그아웃 실패"),
-  });
-
-  const withdrawMutation = useWithdrawMutation({
-    onSuccess: (result) => {
-      if (result) {
-        clearAuthTokens();
-      }
-    },
-    onError: () => console.log("회원탈퇴 실패"),
-  });
-
   // 파일 input ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // 파일 선택 시 업로드 (input의 onChange에서 직접 사용)
+  const { data: account, error, refetch } = useUserInfoQuery();
+  const updateProfileImageMutation = useUpdateProfileImageMutation();
+  const resetProfileImageMutation = useResetProfileImageMutation();
+  const logoutMutation = useLogoutMutation();
+  const withdrawMutation = useWithdrawMutation();
+
+  // 프로필 이미지 업로드
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     updateProfileImageMutation.mutate(file);
+    refetch();
   };
 
   // 프로필 이미지 삭제(기본이미지로 변경)
   const handleDeleteProfileImage = () => {
     resetProfileImageMutation.mutate();
+    refetch();
   };
 
+  // 로그아웃
   const handleLogout = () => {
     logoutMutation.mutate();
+    clearAuthTokens();
     router.push("/login");
   };
 
+  // 회원탈퇴
   const handleWithdraw = () => {
     withdrawMutation.mutate();
+    clearAuthTokens();
     router.push("/login");
   };
 

@@ -17,7 +17,7 @@ const NicknameInput = ({
   const [status, setStatus] = useState<string>("");
   const { data: isDuplicated, refetch } = useCheckUserNicknameQuery(nickname, false);
 
-  const handleNicknameValidation = async () => {
+  const handleNicknameValidation = () => {
     // 유효성검사
     const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
     if (!nicknameRegex.test(nickname)) {

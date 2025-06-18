@@ -12,17 +12,12 @@ const EditNickname = () => {
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  const updateNicknameMutation = useUpdateNicknameMutation({
-    onSuccess: () => {
-      alert("닉네임 변경 완료.");
-      router.back();
-    },
-    onError: () => alert("닉네임 변경 실패"),
-  });
+  const updateNicknameMutation = useUpdateNicknameMutation();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // 닉네임 변경
+  const handleSubmit = () => {
     updateNicknameMutation.mutate(nickname);
+    router.push("/mypage/user-info");
   };
 
   return (
