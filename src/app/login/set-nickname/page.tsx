@@ -51,19 +51,13 @@ const Page = () => {
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
       <div className="flex h-screen w-full flex-col items-center justify-center bg-white px-5 pt-16">
-        <span className="text-center text-title5">닉네임을 설정해주세요</span>
-
-        <div
-          className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] outline-gray-500-alternative`}
-        >
-          <NicknameInput
-            nickname={nickname}
-            setNickname={setNickname}
-            isValid={isValid}
-            setIsValid={setIsValid}
-          />
-        </div>
-        {/* 버튼 */}
+        <span className="mb-5 text-center text-title5">닉네임을 설정해주세요</span>
+        <NicknameInput
+          nickname={nickname}
+          setNickname={setNickname}
+          isValid={isValid}
+          setIsValid={setIsValid}
+        />
         <Button
           variant={"default"}
           className="mt-32 w-full"
