@@ -43,7 +43,7 @@ const NicknameInput = ({
   return (
     <>
       <div
-        className={`flex items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${status === "invalid" || status === "duplicate" ? "outline-[#FF0000]" : status === "available" ? "outline-blue-800-primary" : "outline-gray-200"}`}
+        className={`flex h-[53px] items-center justify-between self-stretch rounded-small px-4 py-3 outline outline-1 outline-offset-[-1px] ${status === "invalid" || status === "duplicate" ? "outline-[#FF0000]" : status === "available" ? "outline-blue-800-primary" : "outline-gray-200"}`}
       >
         <input
           type="text"
@@ -68,8 +68,8 @@ const NicknameInput = ({
           <p className="justify-start whitespace-nowrap text-caption1">중복확인</p>
         </button>
       </div>
-      <p
-        className={`text-body3 ${status === "available" ? "text-blue-800-primary" : status === "invalid" || status === "duplicate" ? "text-[#FF0000]" : "text-gray-700-info"}`}
+      <div
+        className={`h-[17px] text-body3 ${status === "available" ? "text-blue-800-primary" : status === "invalid" || status === "duplicate" ? "text-[#FF0000]" : "text-gray-700-info"}`}
       >
         {nickname
           ? status === "available"
@@ -78,7 +78,7 @@ const NicknameInput = ({
               ? "이미 사용중인 닉네임입니다"
               : "2~10자, 한글·영문·숫자만 가능 (공백·특수문자 제외)"
           : ""}
-      </p>
+      </div>
     </>
   );
 };
