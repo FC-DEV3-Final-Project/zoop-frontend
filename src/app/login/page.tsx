@@ -21,7 +21,7 @@ export default function LoginPage() {
           <div className="flex items-center gap-[15px]">
             <img src="/icons/jupjup_logo.svg" alt="로고" className="h-8 w-8" />
             <span
-              className="text-[28px] font-bold leading-[1.4]"
+              className="text-logo"
               style={{
                 background: "linear-gradient(180deg, #3C79F3 0%, #204AE5 100%)",
                 WebkitBackgroundClip: "text",
