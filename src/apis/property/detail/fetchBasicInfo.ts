@@ -2,6 +2,7 @@ import axiosInstance from "@/apis/utils/axiosInstance";
 
 export type BasicInfo = {
   propertyId: number;
+  complexId: number;
   tradeTypeName: string;
   articleName: string;
   dealPrice: number;
