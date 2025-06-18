@@ -6,23 +6,43 @@ import { Header } from "@/layout/Header";
 import { useRef } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
 import { clearAuthTokens } from "@/utils/auth";
-import fetchLogout from "@/apis/mypage/fetchLogout";
-import fetchWithdraw from "@/apis/mypage/fetchWithdraw";
 import { useUserInfoQuery } from "@/queries/mypage/useUserInfoQuery";
 import { useUpdateProfileImageMutation } from "@/queries/mypage/useUpdateProfileImageMutation";
 import { useResetProfileImageMutation } from "@/queries/mypage/useResetProfileImageMutation";
+import { useLogoutMutation } from "@/queries/mypage/useLogoutMutation";
+import { useWithdrawMutation } from "@/queries/mypage/useWithdrawMutation";
 
 const UserInfoPage = () => {
   const router = useRouter();
 
   const { data: account, error, refetch } = useUserInfoQuery();
+
   const updateProfileImageMutation = useUpdateProfileImageMutation({
     onSuccess: () => refetch(),
-    onError: () => alert("프로필 이미지 업로드 실패"),
+    onError: () => console.log("프로필 이미지 업로드 실패"),
   });
+
   const resetProfileImageMutation = useResetProfileImageMutation({
     onSuccess: () => refetch(),
-    onError: () => alert("프로필 이미지 초기화 실패"),
+    onError: () => console.log("프로필 이미지 초기화 실패"),
+  });
+  
+  const logoutMutation = useLogoutMutation({
+    onSuccess: (result) => {
+      if (result) {
+        clearAuthTokens();
+      }
+    },
+    onError: () => console.log("로그아웃 실패"),
+  });
+
+  const withdrawMutation = useWithdrawMutation({
+    onSuccess: (result) => {
+      if (result) {
+        clearAuthTokens();
+      }
+    },
+    onError: () => console.log("회원탈퇴 실패"),
   });
 
   // 파일 input ref
@@ -40,20 +60,14 @@ const UserInfoPage = () => {
     resetProfileImageMutation.mutate();
   };
 
-  const handleLogout = async () => {
-    const result = await fetchLogout();
-    if (result) {
-      clearAuthTokens();
-      router.push("/login");
-    }
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    router.push("/login");
   };
 
-  const handleWithdraw = async () => {
-    const result = await fetchWithdraw("");
-    if (result) {
-      clearAuthTokens();
-      router.push("/login");
-    }
+  const handleWithdraw = () => {
+    withdrawMutation.mutate();
+    router.push("/login");
   };
 
   if (error) {
