@@ -2,23 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAgent } from "@/apis/property/detail/fetchAgent";
-import { fetchBrokerFee } from "@/apis/property/detail/fetchBrokerFee";
+import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
+import { useBrokerFeeQuery } from "@/queries/property/detail/useBrokerFeeQuery";
 import GrayButton from "@/components/property/detail/GrayButton";
 
 const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
   const router = useRouter();
 
-  const { data: agent, isLoading: loadingAgent } = useQuery({
-    queryKey: ["agent", propertyId],
-    queryFn: () => fetchAgent(propertyId),
-  });
-
-  const { data: fee, isLoading: loadingFee } = useQuery({
-    queryKey: ["brokerFee", propertyId],
-    queryFn: () => fetchBrokerFee(propertyId),
-  });
+  const { data: agent, isLoading: loadingAgent } = useAgentQuery(propertyId);
+  const { data: fee, isLoading: loadingFee } = useBrokerFeeQuery(propertyId);
 
   if (loadingAgent || loadingFee || !agent || !fee) return null;
 

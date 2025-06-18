@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchDescription } from "@/apis/property/detail/fetchDescription";
+import { useDescriptionQuery } from "@/queries/property/detail/useDescriptionQuery";
 import GrayButton from "@/components/property/detail/GrayButton";
 
 const DescriptionSection = forwardRef<HTMLElement, { propertyId: number }>(
   ({ propertyId }, ref) => {
-    const { data, isLoading, error } = useQuery({
-      queryKey: ["description", propertyId],
-      queryFn: () => fetchDescription(propertyId),
-    });
+    const { data, isLoading, error } = useDescriptionQuery(propertyId);
 
     const textRef = useRef<HTMLDivElement>(null);
     const [isExpanded, setIsExpanded] = useState(false);
