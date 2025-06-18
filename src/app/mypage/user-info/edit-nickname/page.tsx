@@ -5,11 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import updateNickname from "@/apis/mypage/fetchUpdateNickname";
 
 const EditNickname = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const ok = await updateNickname(nickname);
+    if (ok) {
+      alert("닉네임 변경 완료.");
+      router.back();
+    }
+  };
 
   return (
     <>
@@ -29,7 +39,7 @@ const EditNickname = () => {
           />
         </div>
         <div className="absolute bottom-4 left-1/2 w-full -translate-x-1/2 px-4">
-          <Button variant={"default"} disabled={!isValid}>
+          <Button variant={"default"} disabled={!isValid} onClick={handleSubmit}>
             확인
           </Button>
         </div>
