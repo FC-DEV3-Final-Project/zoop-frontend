@@ -1,15 +1,16 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type UserProfileProps = {
   profile: {
     profileImageUrl: string;
     nickname: string;
   };
-  onEdit: () => void;
 };
 
-const UserProfile = ({ profile, onEdit }: UserProfileProps) => {
-  
+const UserProfile = ({ profile }: UserProfileProps) => {
+  const router = useRouter();
+
   return (
     <div className="flex inline-flex w-full items-center justify-between">
       <div className="flex items-center gap-4">
@@ -25,7 +26,10 @@ const UserProfile = ({ profile, onEdit }: UserProfileProps) => {
         </div>
         <span className="text-subtitle2">{profile.nickname}</span>
       </div>
-      <button onClick={onEdit} className="rounded bg-neutral-100 px-3 py-1 text-body2">
+      <button
+        onClick={() => router.push(`/mypage/user-info`)}
+        className="rounded bg-neutral-100 px-3 py-1 text-body2"
+      >
         내 정보 수정
       </button>
     </div>
