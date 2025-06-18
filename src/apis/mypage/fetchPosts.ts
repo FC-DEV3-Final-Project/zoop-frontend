@@ -1,23 +1,12 @@
-import { PostItemType } from "@/types/post";
 import axiosInstance from "@/apis/utils/axiosInstance";
-
-type PostData = {
-  reviews: PostItemType[];
-  comments: PostItemType[];
-};
+import { PostData } from "@/types/post";
 
 const fetchPosts = async (): Promise<PostData> => {
   try {
-    // 실제 api 호출
-    // const [reviews, comments] = await Promise.all([
-    //   axiosInstance.get("/mypage/reviews").then((res) => res.data.reviews),
-    //   axiosInstance.get("/mypage/comments").then((res) => res.data.comments),
-    // ]);
-
-    // mock api 호출
-    const reviews = await fetch("/mypage/reviews").then((res) => res.json().then((data) => data.reviews));
-    const comments = await fetch("/mypage/comments").then((res) => res.json().then((data) => data.comments));
-
+    const [reviews, comments] = await Promise.all([
+      axiosInstance.get("/mypage/reviews").then((res) => res.data.reviews),
+      axiosInstance.get("/mypage/comments").then((res) => res.data.comments),
+    ]);
     return {
       reviews,
       comments,
@@ -29,4 +18,3 @@ const fetchPosts = async (): Promise<PostData> => {
 };
 
 export default fetchPosts;
-export type { PostData };

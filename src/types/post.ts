@@ -1,4 +1,7 @@
-export type PostType = "review" | "comment";
+export type PostData = {
+  reviews: PostItemType[];
+  comments: PostItemType[];
+};
 
 export type PostItemType = {
   reviewId?: number;
@@ -22,6 +25,8 @@ export type PostItemType = {
     };
   };
 };
+
+export type PostType = "review" | "comment";
 
 export type PostItemProps = PostItemType & {
   type: PostType;
