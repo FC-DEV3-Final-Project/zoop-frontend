@@ -14,11 +14,10 @@ interface DropdownProps {
     label: string;
     onClick: () => void;
   }[];
-  position?: "right";
   className?: string;
 }
 
-const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
+const Dropdown = ({ items, className }: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +33,13 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
 
   return (
     <div ref={dropdownRef} className={cn("relative w-fit", className)}>
-      <button onClick={() => setOpen((prev) => !prev)} className="flex cursor-pointer">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((prev) => !prev);
+        }}
+        className="flex cursor-pointer"
+      >
         <img src="/icons/more.svg" alt="드롭다운 버튼" className="h-[18px] w-[18px]" />
       </button>
 
@@ -53,7 +58,8 @@ const Dropdown = ({ items, position = "right", className }: DropdownProps) => {
             return (
               <button
                 key={item.type}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   item.onClick();
                   setOpen(false);
                 }}

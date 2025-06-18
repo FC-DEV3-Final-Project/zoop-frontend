@@ -6,7 +6,7 @@ export const postsHandlers = [
     return HttpResponse.json({
       reviews: [
         {
-          reviewId: 1,
+          reviewId: 1001,
           content: "좋은 매물이네요.",
           createdAt: "2025-05-28",
           likeCount: 12,
@@ -17,7 +17,7 @@ export const postsHandlers = [
           },
         },
         {
-          reviewId: 2,
+          reviewId: 1001,
           content: "좋은 매물이네요.",
           createdAt: "2025-05-28",
           likeCount: 12,
@@ -41,7 +41,7 @@ export const postsHandlers = [
           createdAt: "2025-06-08",
           likeCount: 7,
           review: {
-            reviewId: 1,
+            reviewId: 1001,
             content: "좋은 매물이네요.",
             item: {
               complexId: 2,
@@ -55,7 +55,7 @@ export const postsHandlers = [
           createdAt: "2025-06-08",
           likeCount: 7,
           review: {
-            reviewId: 1,
+            reviewId: 1001,
             content: "좋은 매물이네요.",
             item: {
               propertyId: 2,
