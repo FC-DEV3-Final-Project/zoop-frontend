@@ -35,7 +35,7 @@ const phonNumber = [
   { label: "010-1234-1234", value: 1012341234 },
 ];
 
-export default function Test() {
+export default function Guide() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
   const [message, setMessage] = useState(""); // textarea
@@ -104,7 +104,6 @@ export default function Test() {
               },
             },
           ]}
-          position="left" // 왼쪽 정렬
         />
       </div>
 
@@ -428,57 +427,88 @@ export default function Test() {
         <h2 className="text-title2">Property Card</h2>
         <p>기본 카드</p>
         <PropertyCard
-          id={1}
+          propertyId={1}
           order={1}
-          imageUrl="/imgs/propertyExample.png"
-          transactionType="전세"
-          price="5억 3,000"
-          address="방배마에스트로{주상복합}"
-          detailAddress="101동 703호"
-          buildingType="아파트"
-          area="34.5㎡"
-          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          tradeTypeName={"전세"}
+          rentPrice={undefined}
+          warrantPrice={53000}
+          dealPrice={0}
+          dealOrWarrantPrc={"5억 3,000"}
+          summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
+          realestateTypeName={"주상복합"}
+          aptName={"방배마에스트로"}
+          articleName={"방배마에스트로"}
+          buildingName={"1동 703호"}
+          area2={"34.5"}
+          isBookmarked={false}
+          isActive={true}
+          imageUrl={"/imgs/propertyExample.png"}
+          latitude={37.471515}
+          longitude={126.972487}
         />
         <p>{"isNumberVisible={false}"}</p>
         <PropertyCard
-          id={1}
-          order={1}
-          imageUrl="/imgs/propertyExample.png"
-          transactionType="전세"
-          price="5억 3,000"
-          address="방배마에스트로{주상복합}"
-          detailAddress="101동 703호"
-          buildingType="아파트"
-          area="34.5㎡"
-          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          propertyId={2}
+          order={2}
+          tradeTypeName={"전세"}
+          rentPrice={undefined}
+          warrantPrice={53000}
+          dealPrice={0}
+          dealOrWarrantPrc={"5억 3,000"}
+          summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
+          realestateTypeName={"주상복합"}
+          aptName={"방배마에스트로"}
+          articleName={"방배마에스트로"}
+          buildingName={"1동 703호"}
+          area2={"34.5"}
+          isBookmarked={false}
+          isActive={true}
+          imageUrl={"/imgs/propertyExample.png"}
+          latitude={37.471515}
+          longitude={126.972487}
           isNumberVisible={false}
         />
         <p>{"isActive={false}"}</p>
         <PropertyCard
-          id={2}
-          order={2}
-          imageUrl="/imgs/propertyExample.png"
-          transactionType="전세"
-          price="5억 3,000"
-          address="방배마에스트로{주상복합}"
-          detailAddress="101동 703호"
-          buildingType="아파트"
-          area="34.5㎡"
-          tags={["풀옵션", "xx역 도보 n분", "대학교 인접", "주차공간 있음", "반려동물 가능"]}
+          propertyId={3}
+          order={3}
+          tradeTypeName={"전세"}
+          rentPrice={undefined}
+          warrantPrice={53000}
+          dealPrice={0}
+          dealOrWarrantPrc={"5억 3,000"}
+          summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
+          realestateTypeName={"주상복합"}
+          aptName={"방배마에스트로"}
+          articleName={"방배마에스트로"}
+          buildingName={"1동 703호"}
+          area2={"34.5"}
+          isBookmarked={false}
           isActive={false}
+          imageUrl={"/imgs/propertyExample.png"}
+          latitude={37.471515}
+          longitude={126.972487}
         />
         <p>{"size='sm'"}</p>
         <PropertyCard
-          id={3}
-          order={3}
-          imageUrl="/imgs/propertyExample.png"
-          transactionType="전세"
-          price="5억 3,000"
-          address="방배마에스트로{주상복합}"
-          detailAddress="101동 703호"
-          buildingType="아파트"
-          area="34.5㎡"
-          tags={["xx역 도보 n분", "대학교 인접", "풀옵션"]}
+          propertyId={4}
+          order={4}
+          tradeTypeName={"전세"}
+          rentPrice={undefined}
+          warrantPrice={53000}
+          dealPrice={0}
+          dealOrWarrantPrc={"5억 3,000"}
+          summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
+          realestateTypeName={"주상복합"}
+          aptName={"방배마에스트로"}
+          articleName={"방배마에스트로"}
+          buildingName={"1동 703호"}
+          area2={"34.5"}
+          isBookmarked={false}
+          isActive={true}
+          imageUrl={"/imgs/propertyExample.png"}
+          latitude={37.471515}
+          longitude={126.972487}
           size="sm"
         />
       </div>
