@@ -5,20 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import updateNickname from "@/apis/mypage/fetchUpdateNickname";
+import { useUpdateNicknameMutation } from "@/queries/mypage/useUpdateNicknameMutation";
 
 const EditNickname = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const ok = await updateNickname(nickname);
-    if (ok) {
+  const updateNicknameMutation = useUpdateNicknameMutation({
+    onSuccess: () => {
       alert("닉네임 변경 완료.");
       router.back();
-    }
+    },
+    onError: () => alert("닉네임 변경 실패"),
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateNicknameMutation.mutate(nickname);
   };
 
   return (
