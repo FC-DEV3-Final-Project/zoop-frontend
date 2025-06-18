@@ -1,10 +1,15 @@
 import axios from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+// [추가] mock 서버 사용 여부 체크
+const isMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
+
+// [변경] baseURL 설정 방식 변경
+// mock을 사용할 경우 baseURL은 빈 문자열로 설정 → 상대경로 요청을 위한 설정
+const baseURL = isMock ? "" : process.env.NEXT_PUBLIC_BASE_URL;
 
 // 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL,
 });
 
 axiosInstance.interceptors.request.use(
