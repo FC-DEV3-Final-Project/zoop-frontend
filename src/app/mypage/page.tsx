@@ -75,17 +75,9 @@ const MyPage = () => {
             {/* 상단: 프로필/포스트 */}
             <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
               {/* 유저 정보 */}
-              {homeData?.profile && (
-                <UserProfile
-                  profile={homeData.profile}
-                  onEdit={() => router.push(`/mypage/user-info`)}
-                />
-              )}
+              {homeData?.profile && <UserProfile profile={homeData.profile} />}
               {/* 포스트 박스 */}
-              <PostPreviewBox
-                posts={homeData?.myReviews || []}
-                onMorePosts={() => router.push(`/mypage/posts`)}
-              />
+              <PostPreviewBox posts={homeData?.myReviews || []} />
             </section>
 
             {/* 하단: 탭바 + 리스트 */}
