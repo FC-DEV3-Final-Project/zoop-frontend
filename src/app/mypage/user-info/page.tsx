@@ -3,58 +3,41 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
-import fetchUserInfo, { UserProfile } from "@/apis/mypage/fetchUserInfo";
 import { clearAuthTokens } from "@/utils/auth";
 import fetchLogout from "@/apis/mypage/fetchLogout";
 import fetchWithdraw from "@/apis/mypage/fetchWithdraw";
-import fetchUpdateProfileImage from "@/apis/mypage/fetchUpdateProfileImage";
-import fetchResetProfileImage from "@/apis/mypage/fetchResetProfileImage";
+import { useUserInfoQuery } from "@/queries/mypage/useUserInfoQuery";
+import { useUpdateProfileImageMutation } from "@/queries/mypage/useUpdateProfileImageMutation";
+import { useResetProfileImageMutation } from "@/queries/mypage/useResetProfileImageMutation";
 
 const UserInfoPage = () => {
   const router = useRouter();
 
-  const [account, setAccount] = useState<UserProfile | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const { data: account, error, refetch } = useUserInfoQuery();
+  const updateProfileImageMutation = useUpdateProfileImageMutation({
+    onSuccess: () => refetch(),
+    onError: () => alert("프로필 이미지 업로드 실패"),
+  });
+  const resetProfileImageMutation = useResetProfileImageMutation({
+    onSuccess: () => refetch(),
+    onError: () => alert("프로필 이미지 초기화 실패"),
+  });
 
   // 파일 input ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    fetchUserInfo()
-      .then(setAccount)
-      .catch(() => setError("유저 정보를 불러오지 못했습니다."));
-  }, []);
-
   // 파일 선택 시 업로드 (input의 onChange에서 직접 사용)
-  const handleProfileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setIsUploading(true);
-    try {
-      const url = await fetchUpdateProfileImage(file);
-      setAccount((prev) => (prev ? { ...prev, profileImageUrl: url } : prev));
-    } catch (err) {
-      alert("프로필 이미지 업로드 실패");
-    } finally {
-      setIsUploading(false);
-    }
+    updateProfileImageMutation.mutate(file);
   };
 
   // 프로필 이미지 삭제(기본이미지로 변경)
-  const handleDeleteProfileImage = async () => {
-    setIsUploading(true);
-    try {
-      const url = await fetchResetProfileImage();
-      // const url = "/imgs/default-profile.jpg"; // 임시 이미지
-      setAccount((prev) => (prev ? { ...prev, profileImageUrl: url } : prev));
-    } catch (err) {
-      alert("프로필 이미지 초기화 실패");
-    } finally {
-      setIsUploading(false);
-    }
+  const handleDeleteProfileImage = () => {
+    resetProfileImageMutation.mutate();
   };
 
   const handleLogout = async () => {
@@ -74,7 +57,7 @@ const UserInfoPage = () => {
   };
 
   if (error) {
-    return <div className="p-4 text-red-500">{error}</div>;
+    return <div className="p-4 text-red-500">유저 정보를 불러오지 못했습니다.</div>;
   }
 
   if (!account) {
