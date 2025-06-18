@@ -1,6 +1,6 @@
 // import { HttpResponse, http } from "msw";
 import { commonHandlers } from "./commonHandlers";
-import { mypageHandlers } from "./mypage/mypageHandlers";
+import { mypageHandlers } from "./mypage/mypageIndex";
 import { detailHandlers } from "./property/detailHandler";
 import { reviewHandlers } from "./property/reviewHandlers";
 

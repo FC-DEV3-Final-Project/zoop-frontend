@@ -6,9 +6,11 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideBar from "@/components/chat/SideBar";
 import { Header } from "@/layout/Header";
 import { useState } from "react";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 export default function Home() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
+  const { user } = useUserInfoStore();
 
   return (
     <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen}>
@@ -24,8 +26,8 @@ export default function Home() {
         <main className="mt-16 p-5">
           <ChatBubble className="flex flex-col gap-2">
             <p>
-              OO님 반가워요. <br /> OO님께 딱 맞는 매물을 추천해드릴게요. <br /> 지역, 매매 형태,
-              주거 형태, 예산을 선택해 주세요.
+              {user?.nickname}님 반가워요. <br /> {user?.nickname}님께 딱 맞는 매물을
+              추천해드릴게요. <br /> 지역, 매매 형태, 주거 형태, 예산을 선택해 주세요.
             </p>
             <Link
               href={"/chat/filter"}

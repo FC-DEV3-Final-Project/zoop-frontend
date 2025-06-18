@@ -4,57 +4,31 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
-import MyPostItem, { PostItem } from "@/components/mypage/myposts/MyPostItem";
+import { PostItem } from "@/components/mypage/posts/PostItem";
+import fetchPosts, { PostData } from "@/apis/mypage/fetchPosts";
 
 const tabOptions = [
   { label: "리뷰", value: "reviews" },
   { label: "댓글", value: "comments" },
 ];
 
-type PostData = {
-  reviews: PostItem[] | null;
-  comments: PostItem[] | null;
-};
-
-const MyPostsPage = () => {
+const PostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("reviews");
   const [posts, setPosts] = useState<PostData>({
-    reviews: null,
-    comments: null,
+    reviews: [],
+    comments: [],
   });
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [reviewsResponse, commentsResponse] = await Promise.all([
-          fetch("/mypage/reviews"),
-          fetch("/mypage/comments"),
-        ]);
-
-        const [reviewsData, commentsData] = await Promise.all([
-          reviewsResponse.json(),
-          commentsResponse.json(),
-        ]);
-
-        setPosts({
-          reviews: reviewsData.reviews,
-          comments: commentsData.comments,
-        });
-      } catch (error) {
+    fetchPosts()
+      .then(setPosts)
+      .catch((error) => {
         console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+      })
+      .finally(() => setIsLoading(false));
   }, []);
-
-  const handlePostClick = (title: string) => {
-    router.push(`/review/${title}`);
-  };
 
   if (isLoading) {
     return (
@@ -77,7 +51,7 @@ const MyPostsPage = () => {
         <div>
           <div className="mb-8 flex flex-col gap-1">
             {posts[selectedTab as keyof PostData]?.map((post, idx) => (
-              <MyPostItem
+              <PostItem
                 key={idx}
                 type={selectedTab === "reviews" ? "review" : "comment"}
                 {...post}
@@ -98,4 +72,4 @@ const MyPostsPage = () => {
   );
 };
 
-export default MyPostsPage;
+export default PostsPage;
