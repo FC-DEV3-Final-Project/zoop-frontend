@@ -6,6 +6,9 @@ import { Header } from "@/layout/Header";
 import { useEffect, useState } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
 import fetchUserInfo, { UserProfile } from "@/apis/mypage/fetchUserInfo";
+import { clearAuthTokens } from "@/utils/auth";
+import fetchLogout from "@/apis/mypage/fetchLogout";
+import fetchWithdraw from "@/apis/mypage/fetchWithdraw";
 
 const UserInfoPage = () => {
   const router = useRouter();
@@ -25,6 +28,22 @@ const UserInfoPage = () => {
 
   const handleDeleteProfileImage = () => {
     alert("프로필 사진 삭제");
+  };
+
+  const handleLogout = async () => {
+    const result = await fetchLogout();
+    if (result) {
+      clearAuthTokens();
+      router.push("/login");
+    }
+  };
+
+  const handleWithdraw = async () => {
+    const result = await fetchWithdraw("");
+    if (result) {
+      clearAuthTokens();
+      router.push("/login");
+    }
   };
 
   if (error) {
@@ -111,10 +130,18 @@ const UserInfoPage = () => {
             </div>
             {/* 버튼 영역 */}
             <div className="flex flex-col items-center gap-2 px-8">
-              <button className="h-[50px] w-full rounded-small border border-gray-400 text-subtitle1 text-gray-950-dark">
+              <button
+                className="h-[50px] w-full rounded-small border border-gray-400 text-subtitle1 text-gray-950-dark"
+                onClick={handleLogout}
+              >
                 로그아웃
               </button>
-              <button className="h-[28px] text-[13px] text-gray-500-alternative">회원탈퇴</button>
+              <button
+                className="h-[28px] text-[13px] text-gray-500-alternative"
+                onClick={handleWithdraw}
+              >
+                회원탈퇴
+              </button>
             </div>
           </div>
         </div>
