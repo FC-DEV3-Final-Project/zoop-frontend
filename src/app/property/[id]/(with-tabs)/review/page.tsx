@@ -18,8 +18,8 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Prev onPrevClick={() => router.back()} />
         <Header.Title>방배</Header.Title>
       </Header>
-
-      <div className="flex-1 overflow-y-auto">
+      {/* 본문 영역: overflow 스크롤 */}
+      <div className="min-h-screen flex-1 overflow-y-auto">
         <div className="flex flex-col gap-6 p-5">
           <div className="text-title3 text-black">방배마에스트로(주상복합) 아파트</div>
 

@@ -1,13 +1,18 @@
 import { ReactNode } from "react";
 
-interface GrayButtonProps {
+interface DetailActionButtonProps {
   label: ReactNode;
   onClick?: () => void;
   isToggle?: boolean;
   isExpanded?: boolean;
 }
 
-const GrayButton = ({ label, onClick, isToggle = false, isExpanded = false }: GrayButtonProps) => {
+const DetailActionButton = ({
+  label,
+  onClick,
+  isToggle = false,
+  isExpanded = false,
+}: DetailActionButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -18,4 +23,4 @@ const GrayButton = ({ label, onClick, isToggle = false, isExpanded = false }: Gr
   );
 };
 
-export default GrayButton;
+export default DetailActionButton;

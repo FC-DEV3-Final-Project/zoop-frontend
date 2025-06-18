@@ -8,7 +8,7 @@ import StarRating from "@/components/property/review/new/StarRating";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 import { usePostReviewMutation } from "@/queries/property/review/usePostReviewMutation";
-import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery"; // ✅ 추가
+import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 
 const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id: propertyIdString } = use(params);
@@ -62,9 +62,7 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
       </Header>
 
       <div className="flex-1 overflow-y-auto px-5 pb-[100px] pt-24">
-        <div className="mb-[30px] text-title2 text-blue-800-primary">
-          {basicInfo?.articleName} {/* ✅ 매물 이름 표시 */}
-        </div>
+        <div className="mb-[30px] text-title2 text-blue-800-primary">{basicInfo?.articleName}</div>
 
         <div className="mb-[18px] flex flex-col gap-2">
           <div className="text-title3 text-black">추천 점수 남기기</div>
