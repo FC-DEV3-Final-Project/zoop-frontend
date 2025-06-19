@@ -7,7 +7,7 @@ interface OptionSelectStepProps {
   title: string;
   options: string[];
   multiSelect?: boolean;
-  selectedOptions: string[];
+  savedOptions: string[];
   onOptionsChange: (options: string[]) => void;
 }
 
@@ -16,10 +16,10 @@ const OptionSelectStep = ({
   title,
   options,
   multiSelect = true,
-  selectedOptions,
+  savedOptions,
   onOptionsChange,
 }: OptionSelectStepProps) => {
-  const [selectedOption, setSelectedOption] = useState<string[]>(selectedOptions || []);
+  const [selectedOption, setSelectedOption] = useState<string[]>(savedOptions || []);
 
   const handleSelect = (option: string) => {
     if (multiSelect) {

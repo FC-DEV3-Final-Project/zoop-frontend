@@ -5,8 +5,8 @@ import Image from "next/image";
 
 interface LocationStepProps {
   onNext: () => void;
-  selectedValue?: string;
-  onSelectedValueChange: (value: string) => void;
+  savedSearchKeyword?: string;
+  onSearchKeywordChange: (value: string) => void;
 }
 
 // 임시
@@ -23,8 +23,8 @@ const dummyData = [
   { id: "10", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
 ];
 
-const LocationStep = ({ onNext, selectedValue, onSelectedValueChange }: LocationStepProps) => {
-  const [input, setInput] = useState(selectedValue || "");
+const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: LocationStepProps) => {
+  const [input, setInput] = useState(savedSearchKeyword || "");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
@@ -122,7 +122,7 @@ const LocationStep = ({ onNext, selectedValue, onSelectedValueChange }: Location
       <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
         <Button
           onClick={() => {
-            onSelectedValueChange(searchKeyword);
+            onSearchKeywordChange(searchKeyword);
             onNext();
           }}
           disabled={selectedLocation === ""}

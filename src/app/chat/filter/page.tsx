@@ -45,8 +45,8 @@ const Page = () => {
             <Step name="1">
               <LocationStep
                 onNext={nextStep}
-                selectedValue={stepData.location || ""}
-                onSelectedValueChange={(place) => updateStepData("location", place)}
+                savedSearchKeyword={stepData.location || ""}
+                onSearchKeywordChange={(place) => updateStepData("location", place)}
               />
             </Step>
             <Step name="2">
@@ -55,7 +55,7 @@ const Page = () => {
                 title="매매 형태"
                 options={TRANSACTION_OPTIONS}
                 multiSelect={false}
-                selectedOptions={stepData.transactionType || []}
+                savedOptions={stepData.transactionType || []}
                 onOptionsChange={(options) => updateStepData("transactionType", options)}
               />
             </Step>
@@ -64,12 +64,15 @@ const Page = () => {
                 onNext={nextStep}
                 title="주거 형태"
                 options={HOUSING_OPTIONS}
-                selectedOptions={stepData.housingType || []}
+                savedOptions={stepData.housingType || []}
                 onOptionsChange={(options) => updateStepData("housingType", options)}
               />
             </Step>
             <Step name="4">
-              <BudgetStep onNext={nextStep} />
+              <BudgetStep
+                onNext={nextStep}
+                transactionType={(stepData.transactionType?.[0] as "월세" | "매매" | "전세") || ""}
+              />
             </Step>
           </Funnel>
         </div>
