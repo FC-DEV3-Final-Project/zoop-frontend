@@ -67,7 +67,6 @@ const PropertyListSection = ({
         ))}
         {hasMoreItems && (
           <div ref={currentLoader} className="h-16 w-full">
-            {/* {isLoading && <div className="text-center">로딩 중...</div>} */}
             {isLoading && (
               <div className="flex items-center justify-center py-4">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-800-primary border-t-transparent"></div>

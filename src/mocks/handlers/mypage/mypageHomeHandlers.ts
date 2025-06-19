@@ -31,7 +31,7 @@ export const mypageHomeHandlers = [
           myComments: null,
           bookmarkedProperties: [
             {
-              propertyId: 1,
+              propertyId: 100,
               order: 1,
               tradeTypeName: "전세",
               rentPrice: undefined,
@@ -51,7 +51,7 @@ export const mypageHomeHandlers = [
               longitude: 126.972487,
             },
             {
-              propertyId: 2,
+              propertyId: 200,
               order: 2,
               tradeTypeName: "전세",
               rentPrice: undefined,
@@ -73,7 +73,7 @@ export const mypageHomeHandlers = [
           ],
           recentViewedProperties: [
             {
-              propertyId: 3,
+              propertyId: 300,
               order: 3,
               tradeTypeName: "전세",
               rentPrice: undefined,
@@ -93,7 +93,7 @@ export const mypageHomeHandlers = [
               longitude: 126.972487,
             },
             {
-              propertyId: 4,
+              propertyId: 400,
               order: 4,
               tradeTypeName: "전세",
               rentPrice: undefined,
@@ -133,8 +133,8 @@ export const mypageHomeHandlers = [
     if (page === 0) {
       return HttpResponse.json({
         content: [
-          { id: 1, realestateTypeName: "1번매물" },
-          { id: 2, realestateTypeName: "2번매물" },
+          { propertyId: 1, realestateTypeName: "1번매물" },
+          { propertyId: 2, realestateTypeName: "2번매물" },
         ],
         page: 0,
         size: 2,
@@ -143,8 +143,8 @@ export const mypageHomeHandlers = [
     } else if (page === 1) {
       return HttpResponse.json({
         content: [
-          { propertyId: 5, realestateTypeName: "3번매물" },
-          { propertyId: 6, realestateTypeName: "4번매물" },
+          { propertyId: 3, realestateTypeName: "3번매물" },
+          { propertyId: 4, realestateTypeName: "4번매물" },
         ],
         page: 1,
         size: 2,
@@ -153,8 +153,8 @@ export const mypageHomeHandlers = [
     } else if (page === 2) {
       return HttpResponse.json({
         content: [
-          { propertyId: 7, realestateTypeName: "5번매물" },
-          { propertyId: 8, realestateTypeName: "6번매물" },
+          { propertyId: 5, realestateTypeName: "5번매물" },
+          { propertyId: 6, realestateTypeName: "6번매물" },
         ],
         page: 2,
         size: 2,
@@ -169,5 +169,4 @@ export const mypageHomeHandlers = [
       hasNext: false,
     });
   }),
-
 ];

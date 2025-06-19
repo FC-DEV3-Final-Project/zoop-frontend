@@ -1,22 +1,22 @@
 import { useState } from "react";
-import fetchCheckUserNickname from "@/apis/common/fetchCheckUserNickname";
+import { useCheckUserNicknameQuery } from "@/queries/common/useCheckUserNicknameQuery";
 
 interface NicknameInputProps {
   nickname: string;
   setNickname: (nickname: string) => void;
-  isValid: boolean;
+  // isValid: boolean;
   setIsValid: (isValid: boolean) => void;
 }
 
 const NicknameInput = ({
   nickname,
   setNickname,
-  isValid = false,
   setIsValid,
 }: NicknameInputProps) => {
   const [status, setStatus] = useState<string>("");
+  const { data: isDuplicated, refetch } = useCheckUserNicknameQuery(nickname, false);
 
-  const handleNicknameValidation = async () => {
+  const handleNicknameValidation = () => {
     // 유효성검사
     const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,10}$/;
     if (!nicknameRegex.test(nickname)) {
@@ -24,20 +24,19 @@ const NicknameInput = ({
       return;
     }
 
-    try {
-      // 중복검사
-      const { isDuplicated } = await fetchCheckUserNickname(nickname);
-
+    // React Query의 refetch 사용
+    refetch().then((result) => {
+      if (result.isError) {
+        setStatus("");
+        return;
+      }
       if (isDuplicated) {
         setStatus("duplicate");
       } else {
         setStatus("available");
         setIsValid(true);
       }
-    } catch (error) {
-      console.error("닉네임 중복 검사 중 오류가 발생했습니다:", error);
-      setStatus("");
-    }
+    });
   };
 
   return (
