@@ -5,7 +5,8 @@ import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 import { useRealEstateInfoQuery } from "@/queries/real-estate/useRealEstateInfoQuery";
-import { use } from "react";
+import { useRealEstatePropertiesQuery } from "@/queries/real-estate/useRealEstatePropertiesQuery";
+import { use, useState, useRef } from "react";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -18,141 +19,40 @@ const phoneNumbers = [
   { label: "cellPhoneNo", value: "010-1234-5678" },
 ];
 
-const properties = [
-  {
-    propertyId: 1,
-    order: 1,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 53000,
-    dealPrice: 0,
-    dealOrWarrantPrc: "5억 3,000",
-    summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "1동 703호",
-    area2: "34.5",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-  {
-    propertyId: 2,
-    order: 2,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 27500,
-    dealPrice: 0,
-    dealOrWarrantPrc: "2억 7,500",
-    summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "201동 1103호",
-    area2: "38.67",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-  {
-    propertyId: 3,
-    order: 3,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 53000,
-    dealPrice: 0,
-    dealOrWarrantPrc: "5억 3,000",
-    summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "1동 703호",
-    area2: "34.5",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-  {
-    propertyId: 4,
-    order: 4,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 27500,
-    dealPrice: 0,
-    dealOrWarrantPrc: "2억 7,500",
-    summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "201동 1103호",
-    area2: "38.67",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-  {
-    propertyId: 5,
-    order: 5,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 53000,
-    dealPrice: 0,
-    dealOrWarrantPrc: "5억 3,000",
-    summary: ["풀옵션", "xx역 도보 n분", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "1동 703호",
-    area2: "34.5",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-  {
-    propertyId: 6,
-    order: 6,
-    tradeTypeName: "전세",
-    rentPrice: undefined,
-    warrantPrice: 27500,
-    dealPrice: 0,
-    dealOrWarrantPrc: "2억 7,500",
-    summary: ["헬스장 근처", "카페많음", "대학교 인접"],
-    realestateTypeName: "주상복합",
-    aptName: "방배마에스트로",
-    articleName: "방배마에스트로",
-    buildingName: "201동 1103호",
-    area2: "38.67",
-    isBookmarked: false,
-    isActive: true,
-    imageUrl: "/imgs/propertyExample.png",
-    latitude: 37.471515,
-    longitude: 126.972487,
-  },
-];
+// 탭 값과 tradeType 매핑
+const tabToTradeType = {
+  rent: "월세",
+  lease: "전세",
+  deal: "매매",
+};
 
 const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
   const { id } = use(params);
   const realtyId = parseInt(id);
+  const [selectedTab, setSelectedTab] = useState("rent"); // 기본값은 월세
+  const emptyRef = useRef<HTMLDivElement>(null);
 
+  // 부동산 정보
   const {
     data: realEstateInfoResponse,
-    isLoading,
-    error,
+    isLoading: isInfoLoading,
+    error: infoError,
   } = useRealEstateInfoQuery(realtyId, { realtyId }, !!realtyId);
 
-  if (isLoading) {
+  // 선택된 탭에 따른 매물 조회
+  const {
+    items: propertiesData,
+    loader: propertiesLoader,
+    hasMore: propertiesHasMore,
+    loading: isPropertiesLoading,
+  } = useRealEstatePropertiesQuery(
+    realtyId,
+    tabToTradeType[selectedTab as keyof typeof tabToTradeType],
+    20,
+  );
+
+  if (isInfoLoading) {
     return (
       <>
         <Header>
@@ -166,7 +66,7 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
     );
   }
 
-  if (error || !realEstateInfoResponse || !realEstateInfoResponse.data) {
+  if (infoError || !realEstateInfoResponse || !realEstateInfoResponse.data) {
     return (
       <>
         <Header>
@@ -185,6 +85,12 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
     statsItems,
   };
 
+  // 매물 데이터 추출
+  const properties =
+    propertiesData?.map((property) => ({
+      ...property,
+    })) || [];
+
   return (
     <>
       <Header>
@@ -196,15 +102,32 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
         <PropertyListSection
           showMapViewButton={false}
           tabOptions={statsItems}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
           propertyCount={{
             rent: realEstateData.rentCount,
             lease: realEstateData.leaseCount,
             deal: realEstateData.dealCount,
           }}
           propertyMap={{
-            rent: properties,
-            lease: properties,
-            deal: properties,
+            rent: selectedTab === "rent" ? properties : [],
+            lease: selectedTab === "lease" ? properties : [],
+            deal: selectedTab === "deal" ? properties : [],
+          }}
+          loaders={{
+            rent: selectedTab === "rent" ? propertiesLoader : emptyRef,
+            lease: selectedTab === "lease" ? propertiesLoader : emptyRef,
+            deal: selectedTab === "deal" ? propertiesLoader : emptyRef,
+          }}
+          hasMore={{
+            rent: selectedTab === "rent" ? propertiesHasMore : false,
+            lease: selectedTab === "lease" ? propertiesHasMore : false,
+            deal: selectedTab === "deal" ? propertiesHasMore : false,
+          }}
+          loading={{
+            rent: selectedTab === "rent" ? isPropertiesLoading : false,
+            lease: selectedTab === "lease" ? isPropertiesLoading : false,
+            deal: selectedTab === "deal" ? isPropertiesLoading : false,
           }}
         />
       </div>

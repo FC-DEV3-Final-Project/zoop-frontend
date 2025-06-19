@@ -3,7 +3,7 @@ import { commonHandlers } from "./commonHandlers";
 import { mypageHandlers } from "./mypage/mypageIndex";
 import { detailHandlers } from "./property/detailHandler";
 import { reviewHandlers } from "./property/reviewHandlers";
-import realEstateInfoHandlers from "./real-estate/realEstateInfoHandlers";
+import { realEstateHandlers } from "./realEstateHandlers";
 
 export const handlers = [
   //테스트
@@ -27,6 +27,6 @@ export const handlers = [
   ...mypageHandlers,
   ...detailHandlers,
   ...reviewHandlers,
-  ...realEstateInfoHandlers,
+  ...realEstateHandlers,
   // ...다른 핸들러
 ];

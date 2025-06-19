@@ -12,7 +12,7 @@ interface PropertyCardProps {
   dealPrice: number; // ex.135000 매매인 경우만 존재, fe 사용X
   dealOrWarrantPrc: string; // ex."3억"
   summary: string[]; // ex. ["신축", "풀옵션", "역세권"],
-  realestateTypeName: string; // ex.  "아파트","오피스텔", "빌라", "단독", "다가구"
+  realEstateTypeName: string; // ex.  "아파트","오피스텔", "빌라", "단독", "다가구"
   aptName: string; // ex. "남현한일유앤아이" 등 건물명 (아파트/오피스텔인 경우만 사용)
   articleName: string; // ex. "빌라","단독" 또는 "다인힐","메트하임" 등 건물명 (아파트/오피스텔이 아닌 경우만 사용)
   buildingName: string; // ex. "101동"  빌라인 경우  "빌라" 또는 "다인힐"등 건물명
@@ -35,7 +35,7 @@ const PropertyCard = ({
   dealPrice,
   dealOrWarrantPrc,
   summary,
-  realestateTypeName,
+  realEstateTypeName,
   aptName,
   articleName: originalArticleName,
   buildingName,
@@ -51,7 +51,7 @@ const PropertyCard = ({
   const router = useRouter();
 
   const articleName =
-    realestateTypeName === "아파트" || realestateTypeName === "오피스텔"
+    realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔"
       ? aptName
       : originalArticleName;
 
@@ -107,7 +107,7 @@ const PropertyCard = ({
               <p className="min-w-fit text-body2">{buildingName}</p>
             </div>
             <div className="h-5 self-stretch text-body2">
-              {realestateTypeName}, {area2}㎡
+              {realEstateTypeName}, {area2}㎡
             </div>
           </div>
         </div>

@@ -8,6 +8,8 @@ interface TabOption {
 }
 
 interface PropertyListSectionProps {
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
   tabOptions: TabOption[];
   propertyMap: { [tabValue: string]: PropertyCardProps[] };
   showMapViewButton?: boolean;
@@ -20,6 +22,8 @@ interface PropertyListSectionProps {
 }
 
 const PropertyListSection = ({
+  selectedTab,
+  setSelectedTab,
   tabOptions,
   propertyMap,
   showMapViewButton = true,
@@ -30,7 +34,7 @@ const PropertyListSection = ({
   hasMore,
   errors,
 }: PropertyListSectionProps) => {
-  const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
+  // const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
 
   const handleMapView = () => {
     alert("지도에서 보기 클릭!");
