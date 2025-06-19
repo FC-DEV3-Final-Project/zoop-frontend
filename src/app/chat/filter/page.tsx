@@ -9,7 +9,7 @@ import { Header } from "@/layout/Header";
 
 import LocationStep from "@/components/setup/LocationStep";
 import OptionSelectStep from "@/components/setup/OptionSelectStep";
-import BudgeStep from "@/components/setup/BudgeStep";
+import BudgetStep from "@/components/setup/BudgetStep";
 import ProgressBar from "@/components/setup/ProgressBar";
 
 const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
@@ -69,7 +69,7 @@ const Page = () => {
               />
             </Step>
             <Step name="4">
-              <BudgeStep onNext={nextStep} />
+              <BudgetStep onNext={nextStep} />
             </Step>
           </Funnel>
         </div>

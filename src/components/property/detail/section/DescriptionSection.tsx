@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState, forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchDescription } from "@/apis/property/detail/fetchDescription";
-import GrayButton from "@/components/property/detail/GrayButton";
+import { useDescriptionQuery } from "@/queries/property/detail/useDescriptionQuery";
+import DetailActionButton from "@/components/property/detail/DetailActionButton";
 
 const DescriptionSection = forwardRef<HTMLElement, { propertyId: number }>(
   ({ propertyId }, ref) => {
-    const { data, isLoading, error } = useQuery({
-      queryKey: ["description", propertyId],
-      queryFn: () => fetchDescription(propertyId),
-    });
+    const { data, isLoading, error } = useDescriptionQuery(propertyId);
 
     const textRef = useRef<HTMLDivElement>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -51,15 +47,15 @@ const DescriptionSection = forwardRef<HTMLElement, { propertyId: number }>(
 
         {isOverflowing && (
           <div className="mt-8">
-            <GrayButton
+            <DetailActionButton
               label={
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center">
                   <span>{isExpanded ? "접기" : "전체 설명 보기"}</span>
                   <img
                     src={isExpanded ? "/icons/arrow-up.svg" : "/icons/arrow-down.svg"}
                     alt="arrow"
-                    width={14}
-                    height={14}
+                    width={18}
+                    height={18}
                   />
                 </div>
               }

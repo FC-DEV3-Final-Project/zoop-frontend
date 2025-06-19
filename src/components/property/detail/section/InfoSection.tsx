@@ -2,18 +2,13 @@
 
 import Image from "next/image";
 import React, { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPropertyInfo } from "@/apis/property/detail/fetchPropertyInfo";
+import { usePropertyInfoQuery } from "@/queries/property/detail/usePropertyInfoQuery";
 
 const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["propertyInfo", propertyId],
-    queryFn: () => fetchPropertyInfo(propertyId),
-  });
+  const { data, isLoading, error } = usePropertyInfoQuery(propertyId);
 
   if (isLoading || error || !data) return null;
 
-  // 아파트는 principalUse, 빌라는 realestateTypeName 사용
   const 건축물용도 = data.principalUse || data.realestateTypeName || "-";
 
   const infoList = [
@@ -23,7 +18,7 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
     ["동", data.buildingName],
     ["해당층/전체층", data.floorInfo],
     ["방/욕실 수", `${data.roomCount}개/${data.bathroomCount}개`],
-    ["방거실형태", "분리형"], // 하드코딩 그대로 유지
+    ["방거실형태", "분리형"],
     ["주실기준/방향", `${data.directionBaseTypeName}/${data.direction}`],
     ["현관유형", data.entranceTypeName],
     ["총세대수", `${data.householdCount}세대`],

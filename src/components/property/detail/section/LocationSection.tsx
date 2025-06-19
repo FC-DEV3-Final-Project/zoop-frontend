@@ -1,14 +1,35 @@
 "use client";
 
-import { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchLocation } from "@/apis/property/detail/fetchLocation";
+import { forwardRef, useEffect } from "react";
+import { useLocationQuery } from "@/queries/property/detail/useLocationQuery";
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 const LocationSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["location", propertyId],
-    queryFn: () => fetchLocation(propertyId),
-  });
+  const { data, isLoading, error } = useLocationQuery(propertyId);
+
+  useEffect(() => {
+    if (!data || !window.kakao?.maps?.load) return;
+
+    window.kakao.maps.load(() => {
+      const container = document.getElementById("staticMap");
+      if (!container) return;
+
+      const position = new window.kakao.maps.LatLng(data.latitude, data.longitude);
+      const marker = { position };
+      const staticMapOption = {
+        center: position,
+        level: 3,
+        marker,
+      };
+
+      new window.kakao.maps.StaticMap(container, staticMapOption);
+    });
+  }, [data]);
 
   if (isLoading || error || !data) return null;
 
@@ -20,8 +41,7 @@ const LocationSection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
     >
       <div className="mb-5 text-title2 text-black">위치정보</div>
       <div className="mb-4 text-body2 text-black">{data.exposureAddress}</div>
-      {/* TODO: Kakao static map으로 대체 */}
-      <div className="h-[210px] w-full rounded-small bg-gray-500"></div>
+      <div id="staticMap" className="h-[210px] w-full rounded-small" />
     </section>
   );
 });
