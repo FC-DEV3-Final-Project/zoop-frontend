@@ -3,7 +3,7 @@ import React from "react";
 import Dropdown from "../common/Dropdown";
 
 interface SideBarItemProps {
-  chatRoomId?: string; // 제목 편집 또는 삭제할 채팅 ID. 임시 optional 처리
+  chatRoomId?: number; // 제목 편집 또는 삭제할 채팅 ID. 임시 optional 처리
   title: string;
   isSelected?: boolean;
   onClick?: () => void;
@@ -39,9 +39,7 @@ const SideBarItem = ({ chatRoomId, title, isSelected = false, onClick }: SideBar
       onClick={onClick}
     >
       <span className="text-body2">{title}</span>
-      <div onClick={(e) => e.stopPropagation()}>
-        <Dropdown items={[...dropdownItems]} />
-      </div>
+      <Dropdown items={[...dropdownItems]} />
     </div>
   );
 };
