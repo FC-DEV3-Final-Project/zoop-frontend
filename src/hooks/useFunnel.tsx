@@ -15,19 +15,11 @@ interface StepData {
   location?: string;
   transactionType?: string[];
   housingType?: string[];
-  budget: {
-    deposit: string;
-    rent?: string;
-  };
 }
 
 const useFunnel = ({ lastStep }: { lastStep: string }) => {
   const [step, setStep] = useState("1");
-  const [stepData, setStepData] = useState<StepData>({
-    budget: {
-      deposit: "0",
-    },
-  });
+  const [stepData, setStepData] = useState<StepData>({});
 
   const Step = (props: StepProps): React.ReactElement => {
     return <>{props.children}</>;
