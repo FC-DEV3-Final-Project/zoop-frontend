@@ -131,7 +131,7 @@ const locationHandler = http.get("/properties/:propertyId/location", ({ params }
 
   const data = {
     propertyId: Number(propertyId),
-    exposureAddress: "서울시 강남구 개포동 1179-7",
+    exposureAddress: "서울시 서울 관악구 봉천동",
     latitude: 37.471515,
     longitude: 126.972487,
   };

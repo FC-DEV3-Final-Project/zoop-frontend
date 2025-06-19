@@ -8,6 +8,7 @@ import BottomSheet from "@/components/common/BottomSheet";
 import Dropdown from "@/components/common/Dropdown";
 import PropertyCard from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import AutoResizeTextarea from "@/components/ui/textarea";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -37,6 +38,7 @@ const phonNumber = [
 export default function Guide() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
+  const [message, setMessage] = useState(""); // textarea
 
   // BottomSheet 관련로직
   const handleSelect = (item: { label: string; value: string }) => {
@@ -56,6 +58,17 @@ export default function Guide() {
         <Header.Title>Guide</Header.Title>
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
+
+      {/* textarea Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h1 className="text-title1">textarea</h1>
+        <AutoResizeTextarea
+          placeholder="메시지를 입력하세요"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onSend={() => alert("메시지 전송")}
+        />
+      </div>
 
       {/* DropDown Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
