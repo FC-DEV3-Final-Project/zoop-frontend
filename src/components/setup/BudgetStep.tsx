@@ -11,15 +11,17 @@ import {
 
 interface BudgetStepProps {
   onNext: () => void;
+  savedBudget?: { deposit: string; rent?: string };
+  onBudgetChange: (budget: { deposit: string; rent?: string }) => void;
 }
 
 const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "1백만"]; // 월세용 보증금
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ onNext }: BudgetStepProps) => {
-  const [firstAmount, setFirstAmount] = useState("0"); // 보증금, 전세가, 매매가
-  const [secondAmount, setSecontAmount] = useState("0"); // 월세
+const BudgetStep = ({ onNext, savedBudget, onBudgetChange }: BudgetStepProps) => {
+  const [firstAmount, setFirstAmount] = useState(savedBudget?.deposit || "0"); // 보증금, 전세가, 매매가
+  const [secondAmount, setSecondAmount] = useState(savedBudget?.rent || "0"); // 월세
 
   const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">("매매"); // 임시
 
@@ -31,19 +33,43 @@ const BudgetStep = ({ onNext }: BudgetStepProps) => {
 
     if (focusedField === "firstAmount") {
       const current = parseInt(firstAmount.replace(/,/g, ""), 10) || 0;
-      setFirstAmount(formatNumberWithComma(String(current + amount)));
+      const updated = formatNumberWithComma(String(current + amount));
+      setFirstAmount(updated);
+
+      onBudgetChange({
+        deposit: updated,
+        rent: secondAmount, // 기존 값 유지
+      });
     } else if (focusedField === "secondAmount") {
       const current = parseInt(secondAmount.replace(/,/g, ""), 10) || 0;
-      setSecontAmount(formatNumberWithComma(String(current + amount)));
+      const updated = formatNumberWithComma(String(current + amount));
+      setSecondAmount(updated);
+
+      onBudgetChange({
+        deposit: firstAmount, // 기존 값 유지
+        rent: updated,
+      });
     }
   };
 
   // 입력값 직접 입력 시 콤마 자동 적용
   const handleInputWithComma = (
     e: React.ChangeEvent<HTMLInputElement>,
+    key: "deposit" | "rent",
+    currentBudget: { deposit: string; rent?: string },
+    onBudgetChange: (budget: { deposit: string; rent?: string }) => void,
     setter: React.Dispatch<React.SetStateAction<string>>,
   ) => {
+    const formattedValue = formatNumberWithComma(e.target.value);
+
+    const updatedBudget = {
+      ...currentBudget,
+      [key]: formattedValue,
+    };
+
     setter(formatNumberWithComma(e.target.value));
+
+    onBudgetChange(updatedBudget);
   };
 
   return (
@@ -68,7 +94,15 @@ const BudgetStep = ({ onNext }: BudgetStepProps) => {
                   : "border-gray-500-alternative",
               )}
               value={firstAmount}
-              onChange={(e) => handleInputWithComma(e, setFirstAmount)}
+              onChange={(e) =>
+                handleInputWithComma(
+                  e,
+                  "deposit",
+                  { deposit: firstAmount, rent: secondAmount },
+                  onBudgetChange,
+                  setFirstAmount,
+                )
+              }
               onFocus={() => setFocusedField("firstAmount")}
             />
             <div className="absolute right-0 top-8 text-title7">만원</div>
@@ -104,7 +138,15 @@ const BudgetStep = ({ onNext }: BudgetStepProps) => {
                     : "border-gray-500-alternative",
                 )}
                 value={secondAmount}
-                onChange={(e) => handleInputWithComma(e, setSecontAmount)}
+                onChange={(e) =>
+                  handleInputWithComma(
+                    e,
+                    "rent",
+                    { deposit: firstAmount, rent: secondAmount },
+                    onBudgetChange,
+                    setSecondAmount,
+                  )
+                }
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>
