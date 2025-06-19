@@ -47,6 +47,8 @@ const Page = () => {
                 onNext={nextStep}
                 savedSearchKeyword={stepData.location || ""}
                 onSearchKeywordChange={(place) => updateStepData("location", place)}
+                savedSearchKeyword={stepData.location || ""}
+                onSearchKeywordChange={(place) => updateStepData("location", place)}
               />
             </Step>
             <Step name="2">
@@ -56,6 +58,7 @@ const Page = () => {
                 options={TRANSACTION_OPTIONS}
                 multiSelect={false}
                 savedOptions={stepData.transactionType || []}
+                savedOptions={stepData.transactionType || []}
                 onOptionsChange={(options) => updateStepData("transactionType", options)}
               />
             </Step>
@@ -64,6 +67,7 @@ const Page = () => {
                 onNext={nextStep}
                 title="주거 형태"
                 options={HOUSING_OPTIONS}
+                savedOptions={stepData.housingType || []}
                 savedOptions={stepData.housingType || []}
                 onOptionsChange={(options) => updateStepData("housingType", options)}
               />
