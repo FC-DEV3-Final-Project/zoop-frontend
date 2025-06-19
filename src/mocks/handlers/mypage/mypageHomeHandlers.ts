@@ -133,8 +133,8 @@ export const mypageHomeHandlers = [
     if (page === 0) {
       return HttpResponse.json({
         content: [
-          { propertyId: 1, realestateTypeName: "1번매물" },
-          { propertyId: 2, realestateTypeName: "2번매물" },
+          { propertyId: 1, realEstateTypeName: "1번매물" },
+          { propertyId: 2, realEstateTypeName: "2번매물" },
         ],
         page: 0,
         size: 2,
@@ -143,8 +143,8 @@ export const mypageHomeHandlers = [
     } else if (page === 1) {
       return HttpResponse.json({
         content: [
-          { propertyId: 3, realestateTypeName: "3번매물" },
-          { propertyId: 4, realestateTypeName: "4번매물" },
+          { propertyId: 3, realEstateTypeName: "3번매물" },
+          { propertyId: 4, realEstateTypeName: "4번매물" },
         ],
         page: 1,
         size: 2,
@@ -153,8 +153,8 @@ export const mypageHomeHandlers = [
     } else if (page === 2) {
       return HttpResponse.json({
         content: [
-          { propertyId: 5, realestateTypeName: "5번매물" },
-          { propertyId: 6, realestateTypeName: "6번매물" },
+          { propertyId: 5, realEstateTypeName: "5번매물" },
+          { propertyId: 6, realEstateTypeName: "6번매물" },
         ],
         page: 2,
         size: 2,

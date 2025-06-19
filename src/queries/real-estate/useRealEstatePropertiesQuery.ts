@@ -12,6 +12,7 @@ export const useRealEstatePropertiesQuery = (
     loader,
     hasMore,
     loading,
+    error,
   } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
       return fetchRealEstateProperties(page, size, realtyId, tradeType as "매매" | "월세" | "전세");
@@ -19,11 +20,11 @@ export const useRealEstatePropertiesQuery = (
     [realtyId, tradeType],
   );
 
-  // 최종 리스트 (초기 데이터 + 추가 데이터)
   return {
     items,
     loader,
     hasMore,
     loading,
+    error,
   };
 };

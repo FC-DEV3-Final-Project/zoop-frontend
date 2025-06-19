@@ -13,6 +13,7 @@ const useInfiniteScroll = <T>(
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const loader = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,9 @@ const useInfiniteScroll = <T>(
       .then((response) => {
         setItems((prev) => [...prev, ...response.content]);
         setHasMore(response.hasNext);
+      })
+      .catch((error) => {
+        setError(error.message);
       })
       .finally(() => setLoading(false));
   }, [page, ...deps]);
@@ -48,7 +52,7 @@ const useInfiniteScroll = <T>(
     };
   }, [hasMore, loading]);
 
-  return { items, loader, hasMore, loading };
+  return { items, loader, hasMore, loading, error };
 };
 
 export default useInfiniteScroll;

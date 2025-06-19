@@ -5,7 +5,7 @@ import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 import { useRealEstateInfoQuery } from "@/queries/real-estate/useRealEstateInfoQuery";
-import { use, useState } from "react";
+import { use } from "react";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -22,7 +22,6 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
   const { id } = use(params);
   const realtyId = parseInt(id);
-  const [selectedTab, setSelectedTab] = useState("rent"); // 기본값은 월세
 
   // 부동산 정보
   const {
@@ -75,15 +74,12 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
         <PropertyListSection
           showMapViewButton={false}
           tabOptions={statsItems}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
           propertyCount={{
             rent: realEstateData.rentCount,
             lease: realEstateData.leaseCount,
             deal: realEstateData.dealCount,
           }}
           realtyId={realtyId}
-          isRealEstatePage={true}
         />
       </div>
       <RealEstateCallButton phoneNumber={phoneNumbers} />
