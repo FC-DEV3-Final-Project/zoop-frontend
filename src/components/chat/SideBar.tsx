@@ -10,15 +10,72 @@ import LogoIcon from "../../../public/icons/logo.svg";
 
 import SideBarItem from "./SideBarItem";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
+import groupChatsByDate from "@/utils/chat/groupChatsByDate";
 
 interface SideBarProps {
   onClose?: () => void;
 }
 
+// 임시
+const dummyData = [
+  {
+    chatRoomId: 1,
+    title: "강남역 / 월세 / 오피스텔 / 1억",
+    lastMessageAt: "2025-06-19T10:15:23.000Z",
+  },
+  {
+    chatRoomId: 2,
+    title: "신촌 / 전세 / 아파트 / 5억",
+    lastMessageAt: "2025-06-18T17:42:10.000Z",
+  },
+  {
+    chatRoomId: 3,
+    title: "건대입구 / 매매 / 빌라 / 4억",
+    lastMessageAt: "2025-06-17T09:00:00.000Z",
+  },
+  {
+    chatRoomId: 4,
+    title: "이수역 / 전세 / 아파트 / 6억",
+    lastMessageAt: "2025-06-15T22:33:46.864Z",
+  },
+  {
+    chatRoomId: 5,
+    title: "홍대 / 월세 / 원룸 / 7천만",
+    lastMessageAt: "2025-06-16T13:12:54.000Z",
+  },
+  {
+    chatRoomId: 6,
+    title: "잠실 / 매매 / 아파트 / 10억",
+    lastMessageAt: "2025-06-14T19:45:00.000Z",
+  },
+  {
+    chatRoomId: 7,
+    title: "역삼 / 전세 / 오피스텔 / 3억",
+    lastMessageAt: "2025-06-18T08:25:12.000Z",
+  },
+  {
+    chatRoomId: 8,
+    title: "합정 / 월세 / 투룸 / 1억 5천",
+    lastMessageAt: "2025-06-13T11:05:30.000Z",
+  },
+  {
+    chatRoomId: 9,
+    title: "노원 / 매매 / 아파트 / 6억 2천",
+    lastMessageAt: "2025-06-12T20:50:00.000Z",
+  },
+  {
+    chatRoomId: 10,
+    title: "신림 / 전세 / 빌라 / 2억 5천",
+    lastMessageAt: "2025-06-11T15:40:00.000Z",
+  },
+];
+
 const SideBar = ({ onClose }: SideBarProps) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [selectedChatId, setSelectedChatId] = useState("chat-1");
+  const [selectedChatId, setSelectedChatId] = useState(1);
+
+  const grouped = groupChatsByDate(dummyData);
 
   const { user } = useUserInfoStore();
 
@@ -28,7 +85,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
     // TODO : 채팅방 생성 API
   };
 
-  const handleItemClick = (chatId: string) => {
+  const handleItemClick = (chatId: number) => {
     setSelectedChatId(chatId);
     onClose?.(); // 아이템 클릭 시 사이드바 닫기
 
@@ -36,7 +93,12 @@ const SideBar = ({ onClose }: SideBarProps) => {
   };
 
   return (
-    <SheetContent side="left" isFullWidth={isFocused} onOpenAutoFocus={(e) => e.preventDefault()}>
+    <SheetContent
+      side="left"
+      isFullWidth={isFocused}
+      onOpenAutoFocus={(e) => e.preventDefault()}
+      className="gap-0"
+    >
       <SheetHeader className="flex w-full flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
         <SheetTitle className="w-full">
           <div className="flex w-full justify-between gap-2">
@@ -74,71 +136,23 @@ const SideBar = ({ onClose }: SideBarProps) => {
         </button>
       </SheetHeader>
 
-      {/** 테스트를 위한 임시 데이터 */}
       <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
-        <li>
-          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">오늘</h1>
-          <SideBarItem
-            chatRoomId="chat-1"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-1"}
-            onClick={() => handleItemClick("chat-1")}
-          />
-          <SideBarItem
-            chatRoomId="chat-2"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-2"}
-            onClick={() => handleItemClick("chat-2")}
-          />
-          <SideBarItem
-            chatRoomId="chat-3"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-3"}
-            onClick={() => handleItemClick("chat-3")}
-          />
-        </li>
-        <li>
-          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">어제</h1>
-          <SideBarItem
-            chatRoomId="chat-4"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-4"}
-            onClick={() => handleItemClick("chat-4")}
-          />
-          <SideBarItem
-            chatRoomId="chat-5"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-5"}
-            onClick={() => handleItemClick("chat-5")}
-          />
-          <SideBarItem
-            chatRoomId="chat-6"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-6"}
-            onClick={() => handleItemClick("chat-6")}
-          />
-        </li>
-        <li>
-          <h1 className="px-5 py-[14px] text-caption1 text-gray-800">저번주</h1>
-          <SideBarItem
-            chatRoomId="chat-7"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-7"}
-            onClick={() => handleItemClick("chat-7")}
-          />
-          <SideBarItem
-            chatRoomId="chat-8"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-8"}
-            onClick={() => handleItemClick("chat-8")}
-          />
-          <SideBarItem
-            chatRoomId="chat-9"
-            title={"이수역 / 전세 / 아파트 / 6억"}
-            isSelected={selectedChatId === "chat-9"}
-            onClick={() => handleItemClick("chat-9")}
-          />
-        </li>
+        {Object.entries(grouped).map(([section, items]) => (
+          <li key={section}>
+            <h2 className="px-5 py-[14px] text-caption1 text-gray-800">{section}</h2>
+            <ul>
+              {items.map((chat) => (
+                <SideBarItem
+                  key={chat.chatRoomId}
+                  chatRoomId={chat.chatRoomId}
+                  title={chat.title}
+                  isSelected={selectedChatId === chat.chatRoomId}
+                  onClick={() => handleItemClick(chat.chatRoomId)}
+                />
+              ))}
+            </ul>
+          </li>
+        ))}
       </ul>
 
       <SheetFooter
