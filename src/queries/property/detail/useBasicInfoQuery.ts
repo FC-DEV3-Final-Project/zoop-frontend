@@ -5,5 +5,6 @@ export const useBasicInfoQuery = (propertyId: number) => {
   return useQuery({
     queryKey: ["basicInfo", propertyId],
     queryFn: () => fetchBasicInfo(propertyId),
+    enabled: !!propertyId,
   });
 };

@@ -5,11 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useUpdateNicknameMutation } from "@/queries/mypage/useUpdateNicknameMutation";
 
 const EditNickname = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
+
+  const updateNicknameMutation = useUpdateNicknameMutation();
+
+  // 닉네임 변경
+  const handleSubmit = () => {
+    updateNicknameMutation.mutate(nickname);
+    router.push("/mypage/user-info");
+  };
 
   return (
     <>
@@ -24,12 +33,11 @@ const EditNickname = () => {
           <NicknameInput
             nickname={nickname}
             setNickname={setNickname}
-            isValid={isValid}
             setIsValid={setIsValid}
           />
         </div>
         <div className="absolute bottom-4 left-1/2 w-full -translate-x-1/2 px-4">
-          <Button variant={"default"} disabled={!isValid}>
+          <Button variant={"default"} disabled={!isValid} onClick={handleSubmit}>
             확인
           </Button>
         </div>

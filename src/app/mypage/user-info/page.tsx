@@ -3,32 +3,60 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
-import fetchUserInfo, { UserProfile } from "@/apis/mypage/fetchUserInfo";
+import { clearAuthTokens } from "@/utils/auth";
+import { useUserInfoQuery } from "@/queries/mypage/useUserInfoQuery";
+import { useUpdateProfileImageMutation } from "@/queries/mypage/useUpdateProfileImageMutation";
+import { useResetProfileImageMutation } from "@/queries/mypage/useResetProfileImageMutation";
+import { useLogoutMutation } from "@/queries/mypage/useLogoutMutation";
+import { useWithdrawMutation } from "@/queries/mypage/useWithdrawMutation";
 
 const UserInfoPage = () => {
   const router = useRouter();
+  // 파일 input ref
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [account, setAccount] = useState<UserProfile | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { data: account, error, refetch } = useUserInfoQuery();
+  const updateProfileImageMutation = useUpdateProfileImageMutation();
+  const resetProfileImageMutation = useResetProfileImageMutation();
+  const logoutMutation = useLogoutMutation();
+  const withdrawMutation = useWithdrawMutation({
+    onSuccess: () => {
+      clearAuthTokens();
+      router.push("/login");
+    },
+    onError: () => console.log("회원탈퇴 실패"),
+  });
 
-  useEffect(() => {
-    fetchUserInfo()
-      .then(setAccount)
-      .catch(() => setError("유저 정보를 불러오지 못했습니다."));
-  }, []);
-
-  const handleEditProfileImage = () => {
-    alert("프로필 이미지 변경");
+  // 프로필 이미지 업로드
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    updateProfileImageMutation.mutate(file);
+    refetch();
   };
 
+  // 프로필 이미지 삭제(기본이미지로 변경)
   const handleDeleteProfileImage = () => {
-    alert("프로필 사진 삭제");
+    resetProfileImageMutation.mutate();
+    refetch();
+  };
+
+  // 로그아웃
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    clearAuthTokens();
+    router.push("/login");
+  };
+
+  // 회원탈퇴
+  const handleWithdraw = () => {
+    withdrawMutation.mutate();
   };
 
   if (error) {
-    return <div className="p-4 text-red-500">{error}</div>;
+    return <div className="p-4 text-red-500">유저 정보를 불러오지 못했습니다.</div>;
   }
 
   if (!account) {
@@ -60,6 +88,13 @@ const UserInfoPage = () => {
                   <div className="absolute bottom-0 right-0">
                     <img src="/icons/image-upload.svg" alt="이미지 업로드" />
                   </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleProfileImageChange}
+                  />
                 </button>
               }
               title="프로필 변경"
@@ -69,7 +104,7 @@ const UserInfoPage = () => {
                   <button
                     className="flex h-[48px] w-full cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200"
                     onClick={() => {
-                      handleEditProfileImage();
+                      fileInputRef.current?.click();
                       close();
                     }}
                   >
@@ -111,10 +146,18 @@ const UserInfoPage = () => {
             </div>
             {/* 버튼 영역 */}
             <div className="flex flex-col items-center gap-2 px-8">
-              <button className="h-[50px] w-full rounded-small border border-gray-400 text-subtitle1 text-gray-950-dark">
+              <button
+                className="h-[50px] w-full rounded-small border border-gray-400 text-subtitle1 text-gray-950-dark"
+                onClick={handleLogout}
+              >
                 로그아웃
               </button>
-              <button className="h-[28px] text-[13px] text-gray-500-alternative">회원탈퇴</button>
+              <button
+                className="h-[28px] text-[13px] text-gray-500-alternative"
+                onClick={handleWithdraw}
+              >
+                회원탈퇴
+              </button>
             </div>
           </div>
         </div>

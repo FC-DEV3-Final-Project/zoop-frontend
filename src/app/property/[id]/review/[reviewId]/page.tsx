@@ -1,9 +1,8 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { fetchReviewList } from "@/apis/property/review/fetchReviewList";
-import { fetchComments } from "@/apis/property/review/fetchComments";
+import { useCommentListQuery } from "@/queries/property/review/useCommentListQuery";
+import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
 import ReviewCard from "@/components/property/review/ReviewCard";
 import CommentList from "@/components/property/review/CommentList";
 import { Header } from "@/layout/Header";
@@ -16,22 +15,25 @@ const ReviewDetailPage = () => {
   const propertyId = Number(id);
   const targetReviewId = Number(reviewId);
 
-  // 전체 리뷰 리스트 fetch
-  const { data: reviewListData, isLoading: isReviewLoading } = useQuery({
-    queryKey: ["reviewList", propertyId],
-    queryFn: () => fetchReviewList(propertyId),
-  });
+  const { data: reviewListData, isLoading: isReviewLoading } = useReviewListQuery(propertyId);
 
-  // 댓글 리스트 fetch
-  const { data: commentData, isLoading: isCommentLoading } = useQuery({
-    queryKey: ["comments", targetReviewId],
-    queryFn: () => fetchComments(targetReviewId),
-  });
+  const { data: commentData, isLoading: isCommentLoading } = useCommentListQuery(targetReviewId);
 
   if (isReviewLoading || isCommentLoading || !reviewListData || !commentData) return null;
 
   const review = reviewListData.find((r) => r.reviewId === targetReviewId);
   if (!review) return <div>리뷰를 찾을 수 없습니다.</div>;
+
+  const residenceMap = {
+    NON_RESIDENT: "거주 안함",
+    CURRENT_RESIDENT: "현재 거주",
+    PAST_RESIDENT: "이전 거주",
+  } as const;
+
+  const hasChildMap = {
+    NON_CHILDREN: "자녀 없음",
+    HAS_CHILDREN: "자녀 있음",
+  } as const;
 
   return (
     <>
@@ -49,8 +51,9 @@ const ReviewDetailPage = () => {
           likes={review.likeCount}
           comments={review.commentCount}
           profileImageUrl={review.profileImage || ""}
-          residenceStatus={review.isResident ? "현재 거주" : "이전 거주"}
-          hasChildStatus={review.hasChildren ? "자녀 있음" : "자녀 없음"}
+          residenceStatus={residenceMap[review.isResident as keyof typeof residenceMap]}
+          hasChildStatus={hasChildMap[review.hasChildren as keyof typeof hasChildMap]}
+          isMine={review.isMine}
         />
         <CommentList comments={commentData} />
       </div>

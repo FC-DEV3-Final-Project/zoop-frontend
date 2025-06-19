@@ -13,11 +13,11 @@ const pretendard = localFont({
 });
 
 // window.kakao를 타입스크립트에서 인식(맴에서 사용)
-// declare global {
-//   interface Window {
-//     kakao: any;
-//   }
-// }
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export const metadata: Metadata = {
   title: "zoop",
@@ -37,16 +37,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
-
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
         <div className="mx-auto min-h-screen w-full max-w-[600px] bg-[#f8f8f8]">
-          {/* 지도에 필요함 삭제 하지 말아주세요
-            <Script
-              type="text/javascript"
-              src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=90f95062fa9920c9477e27166f0a2ff3&autoload=false&libraries=services`}
-          /> */}
+          <Script
+            type="text/javascript"
+            src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_JS_KEY}&autoload=false`}
+            strategy="beforeInteractive"
+          />
           <Providers>{useMock ? <MSWComponent>{children}</MSWComponent> : children}</Providers>
         </div>
       </body>

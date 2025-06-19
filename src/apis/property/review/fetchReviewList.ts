@@ -1,11 +1,16 @@
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+export type HasChildrenStatus = "NON_CHILDREN" | "HAS_CHILDREN";
+export type ResidentStatus = "NON_RESIDENT" | "CURRENT_RESIDENT" | "PAST_RESIDENT";
+
 export type Review = {
   reviewId: number;
   nickname: string;
   profileImage: string | null;
   rating: number;
   content: string;
-  hasChildren: boolean;
-  isResident: boolean;
+  hasChildren: HasChildrenStatus;
+  isResident: ResidentStatus;
   createdAt: string;
   likeCount: number;
   commentCount: number;
@@ -23,10 +28,12 @@ type ReviewListResponse = {
   };
 };
 
-export const fetchReviewList = async (propertyId: number): Promise<Review[]> => {
-  const res = await fetch(`/reviews/${propertyId}`);
-  if (!res.ok) throw new Error("리뷰 리스트 조회 실패");
-
-  const json: ReviewListResponse = await res.json();
-  return json.data.reviews;
+export const fetchReviewList = async (
+  propertyId: number,
+  params?: { sort?: "like" | "latest" },
+): Promise<Review[]> => {
+  const res = await axiosInstance.get<ReviewListResponse>(`/reviews/${propertyId}`, {
+    params,
+  });
+  return res.data.data.reviews;
 };

@@ -25,15 +25,16 @@ const ScrollableSection = ({ propertyId }: ScrollableSectionProps) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isScrollingByClick.current) return; // 탭 클릭 후 스크롤 중엔 무시
+
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
         if (visible?.target.id) {
           setActiveSection(visible.target.id as SectionKey);
         }
       },
       {
-        root: null,
         threshold: 0.3,
         rootMargin: "-120px 0px -40% 0px",
       },
@@ -46,8 +47,20 @@ const ScrollableSection = ({ propertyId }: ScrollableSectionProps) => {
     return () => observer.disconnect();
   }, []);
 
+  const isScrollingByClick = useRef(false);
+
   const handleTabClick = (section: SectionKey) => {
+    isScrollingByClick.current = true;
     sectionRefs[section]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    setTimeout(() => {
+      setActiveSection(section);
+    }, 300); // scroll 완료 이후 반영
+
+    // 💡 스크롤 중 observer 작동 중단 → 800ms 후 다시 감지 시작
+    setTimeout(() => {
+      isScrollingByClick.current = false;
+    }, 800);
   };
 
   return (

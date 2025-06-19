@@ -1,3 +1,5 @@
+import axiosInstance from "@/apis/utils/axiosInstance";
+
 export type Comment = {
   commentId: number;
   userId: number;
@@ -12,8 +14,6 @@ export type Comment = {
 };
 
 export const fetchComments = async (reviewId: number): Promise<Comment[]> => {
-  const res = await fetch(`/reviews/${reviewId}/comments`);
-  if (!res.ok) throw new Error("댓글 불러오기 실패");
-  const json = await res.json();
-  return json.data.comments;
+  const res = await axiosInstance.get(`/reviews/${reviewId}/comments`);
+  return res.data.data.comments;
 };

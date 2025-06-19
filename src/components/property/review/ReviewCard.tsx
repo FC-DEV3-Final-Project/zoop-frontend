@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Dropdown from "@/components/common/Dropdown";
 
 interface ReviewCardProps {
   nickname: string;
@@ -10,6 +11,7 @@ interface ReviewCardProps {
   profileImageUrl: string;
   residenceStatus: string;
   hasChildStatus: string;
+  isMine: boolean;
   onClick?: () => void;
 }
 
@@ -23,8 +25,19 @@ const ReviewCard = ({
   profileImageUrl,
   residenceStatus,
   hasChildStatus,
+  isMine,
   onClick,
-}: ReviewCardProps) => {
+}: ReviewCardProps & { isMine?: boolean }) => {
+  const handleEdit = () => {
+    console.log("수정하기 눌림");
+    // 수정 페이지 이동 등 작업
+  };
+
+  const handleDelete = () => {
+    console.log("삭제하기 눌림");
+    // 삭제 확인 모달 등 작업
+  };
+
   return (
     <div onClick={onClick} className="cursor-pointer">
       <div className="flex flex-col gap-4 border-b border-t border-gray-300 bg-white px-5 py-4">
@@ -49,7 +62,14 @@ const ReviewCard = ({
               </span>
             </div>
           </div>
-          <span className="text-gray-400">···</span>
+          {isMine && (
+            <Dropdown
+              items={[
+                { type: "edit", label: "수정하기", onClick: handleEdit },
+                { type: "delete", label: "삭제하기", onClick: handleDelete },
+              ]}
+            />
+          )}
         </div>
 
         {/* 별점 */}

@@ -1,3 +1,5 @@
+import axiosInstance from "@/apis/utils/axiosInstance";
+
 export type AgentInfo = {
   propertyId: number;
   realtorName: string;
@@ -9,8 +11,6 @@ export type AgentInfo = {
 };
 
 export const fetchAgent = async (propertyId: number): Promise<AgentInfo> => {
-  const res = await fetch(`/properties/${propertyId}/agent`);
-  if (!res.ok) throw new Error("중개사 정보 조회 실패");
-  const json = await res.json();
-  return json.data;
+  const res = await axiosInstance.get(`/properties/${propertyId}/agent`);
+  return res.data.data;
 };

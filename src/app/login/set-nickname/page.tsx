@@ -46,7 +46,6 @@ const Page = () => {
         <NicknameInput
           nickname={nickname}
           setNickname={setNickname}
-          isValid={isValid}
           setIsValid={setIsValid}
         />
         <Button

@@ -1,3 +1,5 @@
+import axiosInstance from "@/apis/utils/axiosInstance";
+
 export type PropertyInfoResponse = {
   propertyId: number;
   area1: string;
@@ -26,8 +28,6 @@ export type PropertyInfoResponse = {
 };
 
 export const fetchPropertyInfo = async (propertyId: number): Promise<PropertyInfoResponse> => {
-  const res = await fetch(`/properties/${propertyId}/property_info`);
-  if (!res.ok) throw new Error("매물 정보 조회 실패");
-  const json = await res.json();
-  return json.data;
+  const res = await axiosInstance.get(`/properties/${propertyId}/property_info`);
+  return res.data.data;
 };

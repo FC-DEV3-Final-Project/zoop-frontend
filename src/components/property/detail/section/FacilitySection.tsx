@@ -1,14 +1,10 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchFacilities } from "@/apis/property/detail/fetchFacilities";
+import { useFacilitiesQuery } from "@/queries/property/detail/useFacilitiesQuery";
 
 const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["facilities", propertyId],
-    queryFn: () => fetchFacilities(propertyId),
-  });
+  const { data, isLoading, error } = useFacilitiesQuery(propertyId);
 
   if (isLoading)
     return (

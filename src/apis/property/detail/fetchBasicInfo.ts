@@ -1,5 +1,8 @@
+import axiosInstance from "@/apis/utils/axiosInstance";
+
 export type BasicInfo = {
   propertyId: number;
+  complexId: number;
   tradeTypeName: string;
   articleName: string;
   dealPrice: number;
@@ -21,8 +24,6 @@ export type BasicInfo = {
 };
 
 export const fetchBasicInfo = async (propertyId: number): Promise<BasicInfo> => {
-  const res = await fetch(`/properties/${propertyId}/basic_info`);
-  if (!res.ok) throw new Error("기본 정보 조회 실패");
-  const json = await res.json();
-  return json.data;
+  const res = await axiosInstance.get(`/properties/${propertyId}/basic_info`);
+  return res.data.data;
 };

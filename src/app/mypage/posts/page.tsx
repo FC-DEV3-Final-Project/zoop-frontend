@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import { Header } from "@/layout/Header";
 import { PostItem } from "@/components/mypage/posts/PostItem";
-import fetchPosts, { PostData } from "@/apis/mypage/fetchPosts";
+import { usePostsQuery } from "@/queries/mypage/usePostsQuery";
+import { PostData } from "@/types/post";
 
 const tabOptions = [
   { label: "리뷰", value: "reviews" },
@@ -14,21 +15,9 @@ const tabOptions = [
 
 const PostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("reviews");
-  const [posts, setPosts] = useState<PostData>({
-    reviews: [],
-    comments: [],
-  });
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    fetchPosts()
-      .then(setPosts)
-      .catch((error) => {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
+  const { data: posts, isLoading } = usePostsQuery();
 
   if (isLoading) {
     return (
@@ -50,7 +39,7 @@ const PostsPage = () => {
         </div>
         <div>
           <div className="mb-8 flex flex-col gap-1">
-            {posts[selectedTab as keyof PostData]?.map((post, idx) => (
+            {posts?.[selectedTab as keyof PostData]?.map((post, idx: number) => (
               <PostItem
                 key={idx}
                 type={selectedTab === "reviews" ? "review" : "comment"}
@@ -60,7 +49,7 @@ const PostsPage = () => {
           </div>
 
           <div
-            className={`${posts[selectedTab as keyof PostData]?.length === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
+            className={`${(posts?.[selectedTab as keyof PostData]?.length ?? 0) === 0 ? "fixed inset-0 flex items-center justify-center" : ""}`}
           >
             <div className={"flex h-[60px] items-center justify-center"}>
               <div className="text-body2 text-gray-700-info">더 이상 표시할 콘텐츠가 없어요.</div>

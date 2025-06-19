@@ -2,23 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAgent } from "@/apis/property/detail/fetchAgent";
-import { fetchBrokerFee } from "@/apis/property/detail/fetchBrokerFee";
-import GrayButton from "@/components/property/detail/GrayButton";
+import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
+import { useBrokerFeeQuery } from "@/queries/property/detail/useBrokerFeeQuery";
+import DetailActionButton from "@/components/property/detail/DetailActionButton";
 
 const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
   const router = useRouter();
 
-  const { data: agent, isLoading: loadingAgent } = useQuery({
-    queryKey: ["agent", propertyId],
-    queryFn: () => fetchAgent(propertyId),
-  });
-
-  const { data: fee, isLoading: loadingFee } = useQuery({
-    queryKey: ["brokerFee", propertyId],
-    queryFn: () => fetchBrokerFee(propertyId),
-  });
+  const { data: agent, isLoading: loadingAgent } = useAgentQuery(propertyId);
+  const { data: fee, isLoading: loadingFee } = useBrokerFeeQuery(propertyId);
 
   if (loadingAgent || loadingFee || !agent || !fee) return null;
 
@@ -98,11 +90,11 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
         중개보수 및 세금 정보는 실제 적용되는 금액과 다를 수 있습니다.
       </p>
       <div className="mt-4">
-        <GrayButton
+        <DetailActionButton
           label={
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center">
               <span>해당 부동산의 다른 매물 보러가기</span>
-              <img src="/icons/arrow-right.svg" alt="arrow" width={14} height={14} />
+              <img src="/icons/arrow-right.svg" alt="arrow" width={18} height={18} />
             </div>
           }
           onClick={() => router.push(`/real-estate/${propertyId}`)}
