@@ -1,35 +1,22 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Header } from "@/layout/Header";
-import { useEffect, useState } from "react";
 import UserProfile from "@/components/mypage/UserProfile";
 import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
-import fetchMypageHome, { MyPageHomeResponse } from "@/apis/mypage/fetchMypageHome";
 import fetchBookmarkedProperties from "@/apis/mypage/fetchBookmarkedProperties";
+import { useMypageHomeQuery } from "@/queries/mypage/useMypageHomeQuery";
 
 const MyPage = () => {
   const router = useRouter();
 
-  const [homeData, setHomeData] = useState<MyPageHomeResponse["data"] | null>(null);
-  const [homeLoading, setHomeLoading] = useState(true);
+  const { data: homeResponse, isLoading: homeLoading } = useMypageHomeQuery();
+  const homeData = homeResponse?.data;
 
   // 무한스크롤 테스트용 페이지 사이즈
   const PAGE_SIZE = 2;
-
-  // 1. 초기 데이터 (home API)
-  useEffect(() => {
-    fetchMypageHome()
-      .then((homeData) => {
-        setHomeData(homeData.data);
-        setHomeLoading(false);
-      })
-      .catch((error) => {
-        console.error("초기 데이터 로드 실패:", error);
-      });
-  }, []);
 
   // 2. 추가 데이터 (bookmark API)
   const {
