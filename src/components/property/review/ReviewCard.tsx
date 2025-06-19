@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Dropdown from "@/components/common/Dropdown";
 
 interface ReviewCardProps {
   nickname: string;
@@ -10,6 +11,7 @@ interface ReviewCardProps {
   profileImageUrl: string;
   residenceStatus: string;
   hasChildStatus: string;
+  isMine: boolean;
   onClick?: () => void;
 }
 
@@ -23,8 +25,19 @@ const ReviewCard = ({
   profileImageUrl,
   residenceStatus,
   hasChildStatus,
+  isMine,
   onClick,
-}: ReviewCardProps) => {
+}: ReviewCardProps & { isMine?: boolean }) => {
+  const handleEdit = () => {
+    console.log("수정하기 눌림");
+    // 수정 페이지 이동 등 작업
+  };
+
+  const handleDelete = () => {
+    console.log("삭제하기 눌림");
+    // 삭제 확인 모달 등 작업
+  };
+
   return (
     <div onClick={onClick} className="cursor-pointer">
       <div className="flex flex-col gap-4 border-b border-t border-gray-300 bg-white px-5 py-4">
@@ -44,17 +57,23 @@ const ReviewCard = ({
             )}
             <div className="flex flex-col">
               <span className="text-body2 text-black">{nickname}</span>
-              <span className="text-body3 text-gray-800">
+              <span className="text-footnote text-gray-800">
                 {residenceStatus} / {hasChildStatus}
               </span>
             </div>
           </div>
-          {/* 당장은 span으로 처리했지만 버튼 컴포넌트 제작되면 수 */}
-          <span className="text-gray-400">···</span>
+          {isMine && (
+            <Dropdown
+              items={[
+                { type: "edit", label: "수정하기", onClick: handleEdit },
+                { type: "delete", label: "삭제하기", onClick: handleDelete },
+              ]}
+            />
+          )}
         </div>
 
         {/* 별점 */}
-        <div className="flex items-center text-caption1 text-blue-800-primary">
+        <div className="flex h-[20px] items-center text-caption1 text-blue-800-primary">
           {[0, 1, 2, 3, 4].map((i) => (
             <img
               key={i}
@@ -62,9 +81,12 @@ const ReviewCard = ({
               alt="star"
               width={16}
               height={16}
+              className="block" // 중요!
             />
           ))}
-          <span className="ml-[5px] text-body2 text-black">{rating.toFixed(1)}</span>
+          <span className="ml-[5px] text-caption1 leading-none text-black">
+            {rating.toFixed(1)}
+          </span>
         </div>
 
         {/* 본문 */}

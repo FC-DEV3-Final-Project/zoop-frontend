@@ -1,5 +1,8 @@
 // import { HttpResponse, http } from "msw";
-import { mypageHandlers } from "./mypageHandlers";
+import { commonHandlers } from "./commonHandlers";
+import { mypageHandlers } from "./mypage/mypageIndex";
+import { detailHandlers } from "./property/detailHandler";
+import { reviewHandlers } from "./property/reviewHandlers";
 
 export const handlers = [
   //테스트
@@ -19,6 +22,9 @@ export const handlers = [
   //     },
   //   );
   // }),
+  ...commonHandlers,
   ...mypageHandlers,
+  ...detailHandlers,
+  ...reviewHandlers,
   // ...다른 핸들러
-]
+];

@@ -1,12 +1,24 @@
 "use client";
 
-import { useStarRating } from "@/hooks/property/useStarRating";
+interface StarRatingProps {
+  rating: number;
+  onChange: (value: number) => void;
+}
 
-const StarRating = () => {
-  const { rating, handleClick, renderStarIcon } = useStarRating();
+const StarRating = ({ rating, onChange }: StarRatingProps) => {
+  const handleClick = (index: number, isHalf: boolean) => {
+    const newRating = isHalf ? index + 0.5 : index + 1;
+    onChange(newRating);
+  };
+
+  const renderStarIcon = (index: number) => {
+    if (rating >= index + 1) return "/icons/star-filled.svg";
+    if (rating >= index + 0.5) return "/icons/star-half.svg";
+    return "/icons/star-unfilled.svg";
+  };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex h-[50px] items-center justify-between">
       <div className="flex gap-[4px]">
         {[0, 1, 2, 3, 4].map((i) => (
           <div key={i} className="relative h-8 w-8">

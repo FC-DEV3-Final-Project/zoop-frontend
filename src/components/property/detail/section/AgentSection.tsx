@@ -2,28 +2,39 @@
 
 import { useRouter } from "next/navigation";
 import { forwardRef } from "react";
-import GrayButton from "@/components/property/detail/GrayButton";
+import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
+import { useBrokerFeeQuery } from "@/queries/property/detail/useBrokerFeeQuery";
+import DetailActionButton from "@/components/property/detail/DetailActionButton";
 
-const AgentSection = forwardRef<HTMLElement>((_, ref) => {
+const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
   const router = useRouter();
+
+  const { data: agent, isLoading: loadingAgent } = useAgentQuery(propertyId);
+  const { data: fee, isLoading: loadingFee } = useBrokerFeeQuery(propertyId);
+
+  if (loadingAgent || loadingFee || !agent || !fee) return null;
+
   const agentInfo = [
-    { label: "", value: "경기도 수원시 장안구 경수대로 1083 1층" }, // 주소
-    { label: "대표", value: "김정순" },
-    { label: "등록번호", value: "44862989" },
+    { label: "", value: agent.address },
+    { label: "대표", value: agent.representativeName },
+    { label: "등록번호", value: agent.establishRegistrationNo },
     {
       label: "전화",
-      value: ["031-271-5309", "010-8711-6151"],
+      value: [agent.representativeTelNo, agent.cellPhoneNo],
     },
   ];
 
   const feeInfo = [
     {
       label: "중개보수",
-      values: ["최대 240만원", "상한요율 0.4%"],
+      values: [`최대 ${fee.brokerFee.toLocaleString()}원`, `상한요율 ${fee.maxBrokerFee}%`],
     },
     {
       label: "취득세",
-      values: ["취득세 510만원", "지방교육세 51만원"],
+      values: [
+        `취득세 ${fee.acquisitionTax.toLocaleString()}원`,
+        `지방교육세 ${fee.specialTax.toLocaleString()}원`,
+      ],
     },
   ];
 
@@ -34,11 +45,10 @@ const AgentSection = forwardRef<HTMLElement>((_, ref) => {
       className="mb-[75px] min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
     >
       <div className="mb-5 text-title2 text-black">중개정보</div>
-      <div className="mb-5 text-title3 text-black">일등 부동산 공인중개사사무소</div>
+      <div className="mb-5 text-title3 text-black">{agent.realtorName}</div>
       <div className="flex flex-col gap-1 text-caption1 text-black">
         {agentInfo.map((item, idx) => (
           <div key={idx}>
-            {/* label 존재 mapping */}
             {item.label && (
               <>
                 {item.label}{" "}
@@ -52,11 +62,8 @@ const AgentSection = forwardRef<HTMLElement>((_, ref) => {
                 ) : (
                   <span className="text-body2">{item.value}</span>
                 )}
-                {item.label === "대표"}
               </>
             )}
-
-            {/* label 제외하는 주소 */}
             {!item.label && <div className="text-body2">{item.value}</div>}
           </div>
         ))}
@@ -68,10 +75,10 @@ const AgentSection = forwardRef<HTMLElement>((_, ref) => {
       {feeInfo.map((item, idx) => (
         <div
           key={idx}
-          className={`${idx !== 0 ? "mt-4" : ""} grid grid-cols-[70px_1fr] gap-x-[18px] text-body2 text-black`}
+          className={`${idx !== 0 ? "mt-4" : ""} grid grid-cols-[70px_1fr] gap-x-[18px] text-black`}
         >
-          <div>{item.label}</div>
-          <div className="flex flex-col gap-2">
+          <div className="text-caption2">{item.label}</div>
+          <div className="flex flex-col gap-2 text-body2">
             {item.values.map((text, i) => (
               <div key={i}>{text}</div>
             ))}
@@ -83,15 +90,15 @@ const AgentSection = forwardRef<HTMLElement>((_, ref) => {
         중개보수 및 세금 정보는 실제 적용되는 금액과 다를 수 있습니다.
       </p>
       <div className="mt-4">
-        <GrayButton
+        <DetailActionButton
           label={
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center">
               <span>해당 부동산의 다른 매물 보러가기</span>
-              <img src="/icons/arrow-right.svg" alt="arrow" width={14} height={14} />
+              <img src="/icons/arrow-right.svg" alt="arrow" width={18} height={18} />
             </div>
           }
-          onClick={() => router.push("/real-estate/{propertyId}")}
-        />{" "}
+          onClick={() => router.push(`/real-estate/${propertyId}`)}
+        />
       </div>
     </section>
   );

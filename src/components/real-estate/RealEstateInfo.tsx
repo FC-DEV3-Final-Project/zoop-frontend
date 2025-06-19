@@ -1,14 +1,15 @@
 import React from "react";
 
 interface RealEstateInfoProps {
-  name: string;
+  realtorName: string;
+  establishRegistrationNo: string;
   representative: string;
-  registrationNumber: string;
-  phone: string;
+  representativeTelNo?: string;
+  cellPhoneNo?: string;
   address: string;
-  sale: number;
-  lease: number;
-  rent: number;
+  dealCount: number;
+  leaseCount: number;
+  rentCount: number;
   statsItems: Array<{
     label: string;
     value: string;
@@ -16,20 +17,21 @@ interface RealEstateInfoProps {
 }
 
 export default function RealEstateInfo({
-  name,
+  realtorName,
+  establishRegistrationNo,
   representative,
-  registrationNumber,
-  phone,
+  representativeTelNo,
+  cellPhoneNo,
   address,
-  sale,
-  lease,
-  rent,
+  dealCount,
+  leaseCount,
+  rentCount,
   statsItems,
 }: RealEstateInfoProps) {
   return (
-    <div className="flex flex-col gap-3 bg-white p-5">
+    <div className="flex flex-col gap-3 bg-white p-5 pt-[84px]">
       <div className="flex flex-col gap-[3px]">
-        <div className="text-caption3">{name}</div>
+        <div className="text-caption3">{realtorName}</div>
         <div className="flex gap-[3px]">
           <span className="text-caption3">대표</span>
           <span className="text-body3">{representative}</span>
@@ -37,12 +39,14 @@ export default function RealEstateInfo({
         <div className="flex items-center gap-1">
           <span className="text-caption3">등록번호</span>
           <div className="rounded-small bg-gray-200 px-2 py-0.5 text-body3">
-            {registrationNumber}
+            {establishRegistrationNo}
           </div>
         </div>
         <div className="flex gap-[3px]">
           <span className="text-caption3">전화</span>
-          <span className="text-body3">{phone}</span>
+          <span className="text-body3">
+            {[representativeTelNo, cellPhoneNo].filter(Boolean).join(", ")}
+          </span>
         </div>
         <div className="flex gap-[3px]">
           <span className="whitespace-nowrap text-caption3">주소</span>
@@ -54,7 +58,7 @@ export default function RealEstateInfo({
           <div key={value} className="flex gap-0.5">
             <span className="text-caption2">{label}</span>
             <span className="text-caption1 text-blue-800-primary">
-              {value === "sale" ? sale : value === "lease" ? lease : rent}
+              {value === "deal" ? dealCount : value === "lease" ? leaseCount : rentCount}
             </span>
           </div>
         ))}

@@ -37,6 +37,7 @@ export default {
       },
       fontSize: {
         largeTitle: ["30px", { fontWeight: "600", lineHeight: "1.4" }],
+        logo: ["28px", { fontWeight: "700", lineHeight: "1.4" }],
         title1: ["24px", { fontWeight: "700", lineHeight: "1.4" }],
         title2: ["20px", { fontWeight: "700", lineHeight: "1.4" }],
         title3: ["18px", { fontWeight: "700", lineHeight: "1.4" }],

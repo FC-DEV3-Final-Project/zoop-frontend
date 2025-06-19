@@ -1,18 +1,76 @@
-import * as React from "react"
+import React, { useRef, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
-  return (
-    <textarea
-      data-slot="textarea"
-      className={cn(
-        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className
-      )}
-      {...props}
-    />
-  )
+interface AutoResizeTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSend: () => void;
 }
 
-export { Textarea }
+export default function AutoResizeTextarea({
+  placeholder,
+  className,
+  value,
+  onChange,
+  onSend,
+}: AutoResizeTextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const baseStyle = cn(
+    "w-full resize-none bg-transparent",
+    "text-subtitle3 placeholder-gray-800",
+    "focus-visible:outline-none focus-visible:ring-0",
+    className,
+  );
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      onSend?.();
+    }
+  };
+
+  const handleInput = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      const newHeight = Math.min(textarea.scrollHeight, 160);
+      textarea.style.height = `${newHeight}px`;
+      textarea.style.overflowY = textarea.scrollHeight > 160 ? "auto" : "hidden";
+    }
+  };
+
+  useEffect(() => {
+    handleInput(); // 초기에도 높이 맞춰줌
+  }, [value]);
+
+  return (
+    <div className="flex w-full items-start gap-2 rounded-lg bg-gray-200 p-3">
+      <textarea
+        ref={textareaRef}
+        className={baseStyle}
+        style={{ height: "auto", maxHeight: "160px", overflowY: "auto" }}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => {
+          onChange(e);
+          handleInput();
+        }}
+        onKeyDown={handleKeyDown}
+        onInput={handleInput}
+        rows={1}
+      />
+      <button
+        className="flex-shrink-0"
+        onClick={value.length === 0 ? () => alert("음성 입력 버튼") : undefined}
+      >
+        <img
+          src="/icons/unmute.svg"
+          className={cn("mt-1 h-5 w-5", value.length > 0 && "invisible")}
+          alt="음성 입력 아이콘"
+        />
+      </button>
+    </div>
+  );
+}
