@@ -7,10 +7,10 @@ import useFunnel from "@/hooks/useFunnel";
 
 import { Header } from "@/layout/Header";
 
-import LocationStep from "@/components/setup/LocationStep";
-import OptionSelectStep from "@/components/setup/OptionSelectStep";
-import BudgetStep from "@/components/setup/BudgetStep";
-import ProgressBar from "@/components/setup/ProgressBar";
+import LocationStep from "@/components/filter/LocationStep";
+import OptionSelectStep from "@/components/filter/OptionSelectStep";
+import BudgetStep from "@/components/filter/BudgetStep";
+import ProgressBar from "@/components/filter/ProgressBar";
 
 const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
 const HOUSING_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
