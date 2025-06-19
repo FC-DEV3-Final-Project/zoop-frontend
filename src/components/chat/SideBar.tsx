@@ -9,6 +9,7 @@ import NewChatIcon from "../../../public/icons/new-chat.svg";
 import LogoIcon from "../../../public/icons/logo.svg";
 
 import SideBarItem from "./SideBarItem";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 interface SideBarProps {
   onClose?: () => void;
@@ -18,6 +19,8 @@ const SideBar = ({ onClose }: SideBarProps) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState("chat-1");
+
+  const { user } = useUserInfoStore();
 
   const handelNewChat = () => {
     alert("새로운 대화 시작하기");
@@ -146,10 +149,18 @@ const SideBar = ({ onClose }: SideBarProps) => {
         }}
       >
         <div className="flex flex-row items-center justify-between py-[10px]">
-          <span>
-            {/** 프로필 이미지 자리 */}
-            <span className="text-title3">OOO님</span>
-          </span>
+          <div className="flex items-center gap-2">
+            {user?.profileImage ? (
+              <img
+                src={user.profileImage}
+                alt="프로필 이미지"
+                className="h-8 w-8 rounded-full object-cover"
+              />
+            ) : (
+              <img src="/icons/base-user-img.svg" alt="프로필 이미지" />
+            )}
+            <span className="text-title3">{user?.nickname}님</span>
+          </div>
           <Link
             href={"/mypage"}
             className="w-[76px] rounded-lg border-[1px] border-blue-100 bg-blue-50 py-1 text-center text-caption1 text-blue-800-primary"
