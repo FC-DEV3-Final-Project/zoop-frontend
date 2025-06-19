@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "../ui/button";
 import AmountQuickSelect from "./AmountQuickSelect";
@@ -13,19 +13,27 @@ interface BudgetStepProps {
   onNext: () => void;
   savedBudget?: { deposit: string; rent?: string };
   onBudgetChange: (budget: { deposit: string; rent?: string }) => void;
+  transactionType: "월세" | "매매" | "전세";
 }
 
 const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "1백만"]; // 월세용 보증금
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ onNext, savedBudget, onBudgetChange }: BudgetStepProps) => {
+const BudgetStep = ({ onNext, savedBudget, onBudgetChange, transactionType }: BudgetStepProps) => {
   const [firstAmount, setFirstAmount] = useState(savedBudget?.deposit || "0"); // 보증금, 전세가, 매매가
   const [secondAmount, setSecondAmount] = useState(savedBudget?.rent || "0"); // 월세
 
-  const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">("매매"); // 임시
+  const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">(
+    transactionType,
+  );
 
-  // 임시
+  useEffect(() => {
+    const savedTransactionType = transactionType;
+
+    setSelectedTradeType(savedTransactionType);
+  }, [transactionType]);
+
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
 
   const handleAmountQuickSelectClick = (money: string) => {

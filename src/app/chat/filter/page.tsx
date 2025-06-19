@@ -73,6 +73,7 @@ const Page = () => {
                 onNext={nextStep}
                 savedBudget={stepData.budget || { deposit: "0" }}
                 onBudgetChange={(budget) => updateStepData("budget", budget)}
+                transactionType={(stepData.transactionType?.[0] as "월세" | "매매" | "전세") || ""}
               />
             </Step>
           </Funnel>
