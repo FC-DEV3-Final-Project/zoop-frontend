@@ -25,7 +25,7 @@ const dummyData = [
   },
   {
     chatRoomId: 2,
-    title: "신촌 / 전세 / 아파트 / 5억",
+    title: "노원 / 전세 / 아파트 / 5억",
     lastMessageAt: "2025-06-18T17:42:10.000Z",
   },
   {
@@ -75,7 +75,12 @@ const SideBar = ({ onClose }: SideBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState(1);
 
-  const grouped = groupChatsByDate(dummyData);
+  // 검색어 기준 필터링
+  const filteredChats = dummyData.filter((chat) =>
+    chat.title.toLowerCase().includes(searchKeyword.toLowerCase()),
+  );
+
+  const grouped = groupChatsByDate(filteredChats);
 
   const { user } = useUserInfoStore();
 
