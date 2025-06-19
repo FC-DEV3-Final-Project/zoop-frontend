@@ -4,43 +4,20 @@ import { Header } from "@/layout/Header";
 import UserProfile from "@/components/mypage/UserProfile";
 import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
-import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
-import fetchBookmarkedProperties from "@/apis/mypage/fetchBookmarkedProperties";
 import { useMypageHomeQuery } from "@/queries/mypage/useMypageHomeQuery";
+import { useBookmarkedPropertiesQuery } from "@/queries/mypage/useBookmarkedPropertiesQuery";
 
 const MyPage = () => {
   const router = useRouter();
 
+  // 홈 데이터 조회
   const { data: homeResponse, isLoading: homeLoading } = useMypageHomeQuery();
   const homeData = homeResponse?.data;
 
-  // 무한스크롤 테스트용 페이지 사이즈
-  const PAGE_SIZE = 2;
-
-  // 2. 추가 데이터 (bookmark API)
-  const {
-    items: additionalItems,
-    loader,
-    hasMore,
-    loading: bookmarkedLoading,
-  } = useInfiniteScroll<PropertyCardProps>(
-    async (page) => {
-      if (
-        !homeData?.activity?.bookmarkedPropertyCount ||
-        homeData.activity.bookmarkedPropertyCount < PAGE_SIZE
-      ) {
-        return { content: [], hasNext: false };
-      }
-      // 무한스크롤 테스트용 2초 대기
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return fetchBookmarkedProperties(page);
-    },
-    [homeData?.bookmarkedProperties],
-  );
-
-  // 최종 리스트 (초기 데이터 + 추가 데이터)
-  const bookmarkedItems = [...(homeData?.bookmarkedProperties || []), ...additionalItems];
+  // 무한스크롤 찜한 매물 조회
+  const { bookmarkedItems, loader, hasMore, bookmarkedLoading } =
+    useBookmarkedPropertiesQuery(homeData);
 
   const tabOptions = [
     { label: "찜한 매물", value: "bookmarked" },
