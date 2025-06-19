@@ -199,12 +199,12 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
           propertyCount={{
             rent: realEstateData.rentCount,
             lease: realEstateData.leaseCount,
-            sale: realEstateData.dealCount,
+            deal: realEstateData.dealCount,
           }}
           propertyMap={{
             rent: properties,
             lease: properties,
-            sale: properties,
+            deal: properties,
           }}
         />
       </div>
