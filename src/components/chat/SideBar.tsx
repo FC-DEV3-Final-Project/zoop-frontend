@@ -75,7 +75,9 @@ const SideBar = ({ onClose }: SideBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState(1);
 
-  // 검색어 기준 필터링
+  // TODO: 채팅 목록 조회 API
+
+  // (임시) 검색어 기준 필터링
   const filteredChats = dummyData.filter((chat) =>
     chat.title.toLowerCase().includes(searchKeyword.toLowerCase()),
   );
@@ -95,6 +97,10 @@ const SideBar = ({ onClose }: SideBarProps) => {
     onClose?.(); // 아이템 클릭 시 사이드바 닫기
 
     // TODO: 채팅 불러오기 API
+  };
+
+  const handleSearch = () => {
+    // TODO: 채팅 검색 API
   };
 
   return (
@@ -141,24 +147,33 @@ const SideBar = ({ onClose }: SideBarProps) => {
         </button>
       </SheetHeader>
 
-      <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
-        {Object.entries(grouped).map(([section, items]) => (
-          <li key={section}>
-            <h2 className="px-5 py-[14px] text-caption1 text-gray-800">{section}</h2>
-            <ul>
-              {items.map((chat) => (
-                <SideBarItem
-                  key={chat.chatRoomId}
-                  chatRoomId={chat.chatRoomId}
-                  title={chat.title}
-                  isSelected={selectedChatId === chat.chatRoomId}
-                  onClick={() => handleItemClick(chat.chatRoomId)}
-                />
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      {Object.entries(grouped).length > 0 ? (
+        <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
+          {Object.entries(grouped).map(([section, items]) => (
+            <li key={section}>
+              <h2 className="px-5 py-[14px] text-caption1 text-gray-800">{section}</h2>
+              <ul>
+                {items.map((chat) => (
+                  <SideBarItem
+                    key={chat.chatRoomId}
+                    chatRoomId={chat.chatRoomId}
+                    title={chat.title}
+                    isSelected={selectedChatId === chat.chatRoomId}
+                    onClick={() => handleItemClick(chat.chatRoomId)}
+                  />
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+          <p className="text-subtitle1">검색 결과가 없습니다.</p>
+          <p className="text-body2 text-gray-700-info">
+            {searchKeyword}이/가 포함된 조건을 설정해보세요!
+          </p>
+        </div>
+      )}
 
       <SheetFooter
         className="absolute -bottom-1 left-0 right-0 px-5 py-6"
