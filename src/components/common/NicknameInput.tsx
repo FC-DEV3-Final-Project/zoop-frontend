@@ -4,14 +4,13 @@ import { useCheckUserNicknameQuery } from "@/queries/common/useCheckUserNickname
 interface NicknameInputProps {
   nickname: string;
   setNickname: (nickname: string) => void;
-  isValid: boolean;
+  // isValid: boolean;
   setIsValid: (isValid: boolean) => void;
 }
 
 const NicknameInput = ({
   nickname,
   setNickname,
-  isValid = false,
   setIsValid,
 }: NicknameInputProps) => {
   const [status, setStatus] = useState<string>("");

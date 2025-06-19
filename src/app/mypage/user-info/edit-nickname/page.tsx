@@ -33,7 +33,6 @@ const EditNickname = () => {
           <NicknameInput
             nickname={nickname}
             setNickname={setNickname}
-            isValid={isValid}
             setIsValid={setIsValid}
           />
         </div>
