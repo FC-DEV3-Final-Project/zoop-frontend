@@ -21,10 +21,7 @@ const Page = () => {
   const handleSubmit = async () => {
     try {
       await createUserNickname(nickname);
-      alert("통신 성공");
-
       const userData = await getUserInfo();
-      console.log("유저정보 확인::: ", userData);
 
       setUser(userData); // Zustand에 유저 정보 저장
 
@@ -43,11 +40,7 @@ const Page = () => {
       </Header>
       <div className="flex h-screen w-full flex-col items-center justify-center bg-white px-5 pt-16">
         <span className="mb-5 text-center text-title5">닉네임을 설정해주세요</span>
-        <NicknameInput
-          nickname={nickname}
-          setNickname={setNickname}
-          setIsValid={setIsValid}
-        />
+        <NicknameInput nickname={nickname} setNickname={setNickname} setIsValid={setIsValid} />
         <Button
           variant={"default"}
           className="mt-32 w-full"
