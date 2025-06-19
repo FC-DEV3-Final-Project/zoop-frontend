@@ -5,6 +5,7 @@ const basicInfoHAndler = http.get("/properties/:propertyId/basic_info", ({ param
 
   const data = {
     propertyId: Number(propertyId),
+    complexId: 123,
     tradeTypeName: "매매",
     articleName: "남현한일유앤아이201동",
     dealPrice: 530000,

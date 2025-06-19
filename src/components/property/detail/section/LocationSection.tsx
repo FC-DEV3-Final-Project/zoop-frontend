@@ -1,8 +1,7 @@
 "use client";
 
 import { forwardRef, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchLocation } from "@/apis/property/detail/fetchLocation";
+import { useLocationQuery } from "@/queries/property/detail/useLocationQuery";
 
 declare global {
   interface Window {
@@ -11,10 +10,7 @@ declare global {
 }
 
 const LocationSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["location", propertyId],
-    queryFn: () => fetchLocation(propertyId),
-  });
+  const { data, isLoading, error } = useLocationQuery(propertyId);
 
   useEffect(() => {
     if (!data || !window.kakao?.maps?.load) return;

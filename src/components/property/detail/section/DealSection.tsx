@@ -1,18 +1,12 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransaction } from "@/apis/property/detail/fetchTransaction";
+import { useTransactionQuery } from "@/queries/property/detail/useTransactionQuery";
 
 const DealSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["transaction", propertyId],
-    queryFn: () => fetchTransaction(propertyId),
-  });
+  const { data: deal, isLoading, error } = useTransactionQuery(propertyId);
 
-  if (isLoading || error || !data) return null;
-
-  const deal = data;
+  if (isLoading || error || !deal) return null;
 
   const dealInfo = [
     {
