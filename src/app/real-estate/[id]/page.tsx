@@ -4,6 +4,8 @@ import RealEstateInfo from "@/components/real-estate/RealEstateInfo";
 import { Header } from "@/layout/Header";
 import { useRouter } from "next/navigation";
 import RealEstateCallButton from "@/components/common/RealEstateCallButton";
+import { useRealEstateInfoQuery } from "@/queries/real-estate/useRealEstateInfoQuery";
+import { use } from "react";
 
 const statsItems = [
   { label: "월세", value: "rent" },
@@ -11,24 +13,9 @@ const statsItems = [
   { label: "매매", value: "deal" },
 ];
 
-const realEstateData = {
-  realtyId: 1,
-  realtorName: "일등 부동산 공인중개사사무소",
-  establishRegistrationNo: "44862989",
-  representative: "김정순",
-  representativeTelNo: "02-123-1234",
-  cellPhoneNo: "010-1111-1111",
-  address:
-    "경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층 경기도 수원시 장안구 경수대로 1083 1층",
-  dealCount: 19,
-  leaseCount: 4,
-  rentCount: 30,
-  statsItems,
-};
-
 const phoneNumbers = [
-  { label: "registrationNumber", value: realEstateData.representativeTelNo },
-  { label: "cellPhoneNo", value: realEstateData.cellPhoneNo },
+  { label: "registrationNumber", value: "010-1234-5678" },
+  { label: "cellPhoneNo", value: "010-1234-5678" },
 ];
 
 const properties = [
@@ -154,8 +141,50 @@ const properties = [
   },
 ];
 
-const RealEstatePage = ({ params }: { params: { id: string } }) => {
+const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
+  const { id } = use(params);
+  const realtyId = parseInt(id);
+
+  const {
+    data: realEstateInfoResponse,
+    isLoading,
+    error,
+  } = useRealEstateInfoQuery(realtyId, { realtyId }, !!realtyId);
+
+  if (isLoading) {
+    return (
+      <>
+        <Header>
+          <Header.Prev onPrevClick={() => router.back()} />
+          <Header.Title>로딩 중...</Header.Title>
+        </Header>
+        <div className="flex h-64 items-center justify-center">
+          <div>부동산 정보를 불러오는 중...</div>
+        </div>
+      </>
+    );
+  }
+
+  if (error || !realEstateInfoResponse || !realEstateInfoResponse.data) {
+    return (
+      <>
+        <Header>
+          <Header.Prev onPrevClick={() => router.back()} />
+          <Header.Title>오류</Header.Title>
+        </Header>
+        <div className="flex h-64 items-center justify-center">
+          <div>부동산 정보를 불러올 수 없습니다.</div>
+        </div>
+      </>
+    );
+  }
+
+  const realEstateData = {
+    ...realEstateInfoResponse.data,
+    statsItems,
+  };
+
   return (
     <>
       <Header>
@@ -167,6 +196,11 @@ const RealEstatePage = ({ params }: { params: { id: string } }) => {
         <PropertyListSection
           showMapViewButton={false}
           tabOptions={statsItems}
+          propertyCount={{
+            rent: realEstateData.rentCount,
+            lease: realEstateData.leaseCount,
+            sale: realEstateData.dealCount,
+          }}
           propertyMap={{
             rent: properties,
             lease: properties,
@@ -174,9 +208,9 @@ const RealEstatePage = ({ params }: { params: { id: string } }) => {
           }}
         />
       </div>
-      <RealEstateCallButton phonNumber={phoneNumbers} />
+      <RealEstateCallButton phoneNumber={phoneNumbers} />
     </>
   );
-}
+};
 
 export default RealEstatePage;

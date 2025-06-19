@@ -2,10 +2,10 @@ import { Button } from "../ui/button";
 import BottomSheet from "./BottomSheet";
 
 interface RealEstateCallButtonProps {
-  phonNumber: { label: string; value: string }[];
+  phoneNumber: { label: string; value: string }[];
 }
 
-const RealEstateCallButton = ({ phonNumber }: RealEstateCallButtonProps) => {
+const RealEstateCallButton = ({ phoneNumber }: RealEstateCallButtonProps) => {
   const handleCall = (value: string) => {
     window.location.href = `tel:${value}`;
     close();
@@ -21,7 +21,7 @@ const RealEstateCallButton = ({ phonNumber }: RealEstateCallButtonProps) => {
       title="공인중개사에게 전화 걸기"
     >
       {(close) =>
-        phonNumber.map((item, idx) => {
+        phoneNumber.map((item, idx) => {
           return (
             <button
               key={idx}
