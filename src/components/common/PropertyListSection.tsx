@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropertyCard, { PropertyCardProps } from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import { useRealEstatePropertiesQuery } from "@/queries/real-estate/useRealEstatePropertiesQuery";
 
 interface TabOption {
   label: string;
@@ -11,7 +12,7 @@ interface PropertyListSectionProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
   tabOptions: TabOption[];
-  propertyMap: { [tabValue: string]: PropertyCardProps[] };
+  propertyMap?: { [tabValue: string]: PropertyCardProps[] };
   showMapViewButton?: boolean;
   isNumberVisible?: boolean;
   propertyCount?: { [tabValue: string]: number };
@@ -19,7 +20,17 @@ interface PropertyListSectionProps {
   loading?: { [tabValue: string]: boolean };
   hasMore?: { [tabValue: string]: boolean };
   errors?: { [tabValue: string]: string | null };
+  // 부동산 페이지용 props
+  realtyId?: number;
+  isRealEstatePage?: boolean;
 }
+
+// 탭 값과 tradeType 매핑
+const tabToTradeType = {
+  rent: "월세",
+  lease: "전세",
+  deal: "매매",
+};
 
 const PropertyListSection = ({
   selectedTab,
@@ -33,17 +44,35 @@ const PropertyListSection = ({
   loading,
   hasMore,
   errors,
+  realtyId,
+  isRealEstatePage = false,
 }: PropertyListSectionProps) => {
-  // const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
+  // 부동산 페이지인 경우 쿼리 사용
+  const {
+    items: propertiesData,
+    loader: propertiesLoader,
+    hasMore: propertiesHasMore,
+    loading: isPropertiesLoading,
+  } = useRealEstatePropertiesQuery(
+    realtyId!,
+    tabToTradeType[selectedTab as keyof typeof tabToTradeType],
+    20,
+  );
 
   const handleMapView = () => {
     alert("지도에서 보기 클릭!");
   };
 
-  const currentProperties = propertyMap[selectedTab] || [];
-  const currentLoader = loaders?.[selectedTab];
-  const isLoading = loading?.[selectedTab];
-  const hasMoreItems = hasMore?.[selectedTab];
+  // 부동산 페이지인 경우 쿼리 데이터 사용, 아니면 props 데이터 사용
+  const currentProperties = isRealEstatePage
+    ? propertiesData?.map((property) => ({
+        ...property,
+      })) || []
+    : propertyMap?.[selectedTab] || [];
+
+  const currentLoader = isRealEstatePage ? propertiesLoader : loaders?.[selectedTab];
+  const isLoading = isRealEstatePage ? isPropertiesLoading : loading?.[selectedTab];
+  const hasMoreItems = isRealEstatePage ? propertiesHasMore : hasMore?.[selectedTab];
   const currentError = errors?.[selectedTab];
 
   return (
