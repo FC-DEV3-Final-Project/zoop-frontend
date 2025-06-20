@@ -11,6 +11,7 @@ import LocationStep from "@/components/filter/LocationStep";
 import OptionSelectStep from "@/components/filter/OptionSelectStep";
 import BudgetStep from "@/components/filter/BudgetStep";
 import ProgressBar from "@/components/filter/ProgressBar";
+import { LocationStepData } from "@/types/filter";
 
 const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
 const HOUSING_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
@@ -30,6 +31,11 @@ const Page = () => {
     }
   };
 
+  const handleLocationDataChange = (data: Partial<LocationStepData>) => {
+    const currentLocationData = stepData.location || {};
+    updateStepData("location", { ...currentLocationData, ...data });
+  };
+
   return (
     <div className="min-h-screen">
       <Header>
@@ -45,8 +51,8 @@ const Page = () => {
             <Step name="1">
               <LocationStep
                 onNext={nextStep}
-                savedSearchKeyword={stepData.location || ""}
-                onSearchKeywordChange={(place) => updateStepData("location", place)}
+                savedLocationData={typeof stepData.location === "object" ? stepData.location : {}}
+                onLocationDataChange={handleLocationDataChange}
               />
             </Step>
             <Step name="2">
