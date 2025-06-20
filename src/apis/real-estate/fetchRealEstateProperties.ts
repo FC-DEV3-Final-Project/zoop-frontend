@@ -1,19 +1,21 @@
 import { PropertyCardProps } from "@/components/common/PropertyCard";
 import axiosInstance from "../utils/axiosInstance";
 
-type BookmarkedPropertiesResponse = {
+type RealEstatePropertiesResponse = {
   content: PropertyCardProps[];
   hasNext: boolean;
 };
 
-const fetchBookmarkedProperties = async (
+const fetchRealEstateProperties = async (
   page: number,
   size: number = 2,
-): Promise<BookmarkedPropertiesResponse> => {
+  realtyId: number,
+  tradeType: "월세" | "전세" | "매매",
+): Promise<RealEstatePropertiesResponse> => {
   try {
     // 무한스크롤 테스트용 2초 대기
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    const response = await axiosInstance.get(`/mypage/histories/bookmarked-properties?page=${page}&size=${size}`);
+    const response = await axiosInstance.get(`/realties/${realtyId}/properties?page=${page}&size=${size}&tradeType=${tradeType}`);
     return response.data;
   } catch (error) {
     console.error("fetchBookmarkedProperties 에러:", error);
@@ -21,4 +23,4 @@ const fetchBookmarkedProperties = async (
   }
 };
 
-export default fetchBookmarkedProperties;
+export default fetchRealEstateProperties;

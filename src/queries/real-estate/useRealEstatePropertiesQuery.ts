@@ -1,8 +1,10 @@
 import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
-import fetchBookmarkedProperties from "@/apis/mypage/fetchBookmarkedProperties";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
+import fetchRealEstateProperties from "@/apis/real-estate/fetchRealEstateProperties";
 
-export const useBookmarkedPropertiesQuery = (
+export const useRealEstatePropertiesQuery = (
+  realtyId: number,
+  tradeType: string,
   size: number = 2,
 ) => {
   const {
@@ -13,9 +15,9 @@ export const useBookmarkedPropertiesQuery = (
     error,
   } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchBookmarkedProperties(page, size);
+      return fetchRealEstateProperties(page, size, realtyId, tradeType as "매매" | "월세" | "전세");
     },
-    [],
+    [realtyId, tradeType],
   );
 
   return {
