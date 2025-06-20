@@ -5,6 +5,8 @@ import Image from "next/image";
 
 interface LocationStepProps {
   onNext: () => void;
+  savedSearchKeyword?: string;
+  onSearchKeywordChange: (value: string) => void;
 }
 
 // 임시
@@ -21,8 +23,8 @@ const dummyData = [
   { id: "10", title: "이수역 7호선", detail: "서울 동작구 동작대로 105-1" },
 ];
 
-const LocationStep = ({ onNext }: LocationStepProps) => {
-  const [input, setInput] = useState("");
+const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: LocationStepProps) => {
+  const [input, setInput] = useState(savedSearchKeyword || "");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
@@ -47,17 +49,18 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
   // 임시
   const filteredData = dummyData.filter((item) => item.title.includes(searchKeyword));
 
-  const highlightText = (text: string, keyword: string) => {
-    if (!keyword) return text;
-
-    const index = text.indexOf(keyword);
-    if (index === -1) return text;
+  // 전체 장소명에서 검색어만 하이라이트하여 반환하는 함수
+  const highlightText = (place_name: string, searchKeyword: string) => {
+    const index = place_name.indexOf(searchKeyword);
+    if (index === -1) return place_name;
 
     return (
       <>
-        {text.slice(0, index)}
-        <span className="text-blue-800">{text.slice(index, index + keyword.length)}</span>
-        {text.slice(index + keyword.length)}
+        {place_name.slice(0, index)}
+        <span className="text-blue-800">
+          {place_name.slice(index, index + searchKeyword.length)}
+        </span>
+        {place_name.slice(index + searchKeyword.length)}
       </>
     );
   };
@@ -76,7 +79,7 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
         <Image
           src={SearchIcon}
           alt="검색"
-          className="absolute right-0 top-2"
+          className="absolute right-0 top-2 cursor-pointer"
           onClick={handleSearch}
         />
       </div>
@@ -117,7 +120,13 @@ const LocationStep = ({ onNext }: LocationStepProps) => {
       )}
 
       <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
-        <Button onClick={onNext} disabled={selectedLocation === ""}>
+        <Button
+          onClick={() => {
+            onSearchKeywordChange(searchKeyword);
+            onNext();
+          }}
+          disabled={selectedLocation === ""}
+        >
           다음
         </Button>
       </div>
