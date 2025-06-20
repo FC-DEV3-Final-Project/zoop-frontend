@@ -3,7 +3,7 @@ import React from "react";
 interface RealEstateInfoProps {
   realtorName: string;
   establishRegistrationNo: string;
-  representative: string;
+  representativeName: string;
   representativeTelNo?: string;
   cellPhoneNo?: string;
   address: string;
@@ -19,7 +19,7 @@ interface RealEstateInfoProps {
 export default function RealEstateInfo({
   realtorName,
   establishRegistrationNo,
-  representative,
+  representativeName,
   representativeTelNo,
   cellPhoneNo,
   address,
@@ -34,7 +34,7 @@ export default function RealEstateInfo({
         <div className="text-caption3">{realtorName}</div>
         <div className="flex gap-[3px]">
           <span className="text-caption3">대표</span>
-          <span className="text-body3">{representative}</span>
+          <span className="text-body3">{representativeName}</span>
         </div>
         <div className="flex items-center gap-1">
           <span className="text-caption3">등록번호</span>

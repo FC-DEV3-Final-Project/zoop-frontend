@@ -41,7 +41,7 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
       </div>
 
       {!agentLoading && phoneNumberOptions.length > 0 && (
-        <RealEstateCallButton phonNumber={phoneNumberOptions} />
+        <RealEstateCallButton phoneNumber={phoneNumberOptions} />
       )}
     </>
   );

@@ -6,7 +6,6 @@ import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
 import { useMypageHomeQuery } from "@/queries/mypage/useMypageHomeQuery";
-import { useBookmarkedPropertiesQuery } from "@/queries/mypage/useBookmarkedPropertiesQuery";
 
 const MyPage = () => {
   const router = useRouter();
@@ -14,10 +13,6 @@ const MyPage = () => {
   // 홈 데이터 조회
   const { data: homeResponse, isLoading: homeLoading } = useMypageHomeQuery();
   const homeData = homeResponse?.data;
-
-  // 무한스크롤 찜한 매물 조회
-  const { bookmarkedItems, loader, hasMore, bookmarkedLoading } =
-    useBookmarkedPropertiesQuery(homeData);
 
   const tabOptions = [
     { label: "찜한 매물", value: "bookmarked" },
@@ -53,17 +48,7 @@ const MyPage = () => {
                 recentViewed: homeData?.activity.recentViewedPropertyCount || 0,
               }}
               propertyMap={{
-                bookmarked: bookmarkedItems as PropertyCardProps[],
                 recentViewed: (homeData?.recentViewedProperties as PropertyCardProps[]) || [],
-              }}
-              loaders={{
-                bookmarked: loader,
-              }}
-              hasMore={{
-                bookmarked: hasMore,
-              }}
-              loading={{
-                bookmarked: bookmarkedLoading,
               }}
             />
           </>
