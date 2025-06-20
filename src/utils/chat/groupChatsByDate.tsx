@@ -1,27 +1,20 @@
+import { ChatPreviewItem } from "@/types/chat";
 import { format, isToday, isYesterday, differenceInCalendarDays } from "date-fns";
 
-// 백엔드 Response
-type ChatItem = {
-  order?: number;
-  chatRoomId: number;
-  title: string;
-  lastMessageAt: string;
-};
-
 type GroupedChats = {
-  [key: string]: ChatItem[];
+  [key: string]: ChatPreviewItem[];
 };
 
-const groupChatsByDate = (chats: ChatItem[]): GroupedChats => {
+const groupChatsByDate = (chats: ChatPreviewItem[]): GroupedChats => {
   const groups: GroupedChats = {};
 
   // 마지막으로 채팅 보낸 시간을 기준으로 최신순 정렬
   const sortedChats = [...chats].sort((a, b) => {
-    return new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime();
+    return new Date(b.lastMessageAt ?? 0).getTime() - new Date(a.lastMessageAt ?? 0).getTime();
   });
 
   sortedChats.forEach((chat) => {
-    const date = new Date(chat.lastMessageAt);
+    const date = new Date(chat.lastMessageAt ?? 0);
 
     let groupName = "";
     if (isToday(date)) {

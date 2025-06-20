@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
-import Image from "next/image";
+import { highlightSearchKeyword } from "@/utils/chat/highlightSearchKeyword";
 
 interface LocationStepProps {
   onNext: () => void;
@@ -49,22 +51,6 @@ const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: Loc
   // 임시
   const filteredData = dummyData.filter((item) => item.title.includes(searchKeyword));
 
-  // 전체 장소명에서 검색어만 하이라이트하여 반환하는 함수
-  const highlightText = (place_name: string, searchKeyword: string) => {
-    const index = place_name.indexOf(searchKeyword);
-    if (index === -1) return place_name;
-
-    return (
-      <>
-        {place_name.slice(0, index)}
-        <span className="text-blue-800">
-          {place_name.slice(index, index + searchKeyword.length)}
-        </span>
-        {place_name.slice(index + searchKeyword.length)}
-      </>
-    );
-  };
-
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-title5">원하는 지역을 알려주세요</h1>
@@ -100,7 +86,9 @@ const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: Loc
                         isSelected ? "bg-gray-100" : "bg-white"
                       }`}
                     >
-                      <div className="text-body1">{highlightText(item.title, searchKeyword)}</div>
+                      <div className="text-body1">
+                        {highlightSearchKeyword(item.title, searchKeyword)}
+                      </div>
                       <div className="text-body2">{item.detail}</div>
                     </li>
                   );

@@ -21,51 +21,75 @@ const dummyData = [
   {
     chatRoomId: 1,
     title: "강남역 / 월세 / 오피스텔 / 1억",
+    lastMatchingMessage: null,
     lastMessageAt: "2025-06-19T10:15:23.000Z",
   },
   {
     chatRoomId: 2,
     title: "노원 / 전세 / 아파트 / 5억",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
     lastMessageAt: "2025-06-18T17:42:10.000Z",
   },
   {
     chatRoomId: 3,
     title: "건대입구 / 매매 / 빌라 / 4억",
+    lastMatchingMessage: null,
     lastMessageAt: "2025-06-17T09:00:00.000Z",
   },
   {
     chatRoomId: 4,
     title: "이수역 / 전세 / 아파트 / 6억",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-15T22:33:46.864Z",
   },
   {
     chatRoomId: 5,
     title: "홍대 / 월세 / 원룸 / 7천만",
+    lastMatchingMessage: "관공서가 가까운 곳을 추천해줘",
+
     lastMessageAt: "2025-06-16T13:12:54.000Z",
   },
   {
     chatRoomId: 6,
     title: "잠실 / 매매 / 아파트 / 10억",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-14T19:45:00.000Z",
   },
   {
     chatRoomId: 7,
     title: "역삼 / 전세 / 오피스텔 / 3억",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-18T08:25:12.000Z",
   },
   {
     chatRoomId: 8,
     title: "합정 / 월세 / 투룸 / 1억 5천",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-13T11:05:30.000Z",
   },
   {
     chatRoomId: 9,
     title: "노원 / 매매 / 아파트 / 6억 2천",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-12T20:50:00.000Z",
   },
   {
     chatRoomId: 10,
     title: "신림 / 전세 / 빌라 / 2억 5천",
+    lastMatchingMessage:
+      "이수 지역, 가격대, 매물 유형 등을 설정하려면 '필터 설정하기' 버튼을 이용해주세요.",
+
     lastMessageAt: "2025-06-11T15:40:00.000Z",
   },
 ];
@@ -74,6 +98,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState(1);
+  const [searchResults, setSearchResults] = useState([]); // API 응답 값 저장할 상태
 
   // TODO: 채팅 목록 조회 API
 
@@ -82,7 +107,12 @@ const SideBar = ({ onClose }: SideBarProps) => {
     chat.title.toLowerCase().includes(searchKeyword.toLowerCase()),
   );
 
-  const grouped = groupChatsByDate(filteredChats);
+  const grouped = groupChatsByDate(
+    filteredChats.map((chat) => ({
+      ...chat,
+      lastMatchingMessage: chat.lastMatchingMessage ?? "",
+    })),
+  );
 
   const { user } = useUserInfoStore();
 
@@ -99,7 +129,9 @@ const SideBar = ({ onClose }: SideBarProps) => {
     // TODO: 채팅 불러오기 API
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+
     // TODO: 채팅 검색 API
   };
 
@@ -119,7 +151,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
                 className="flex-1"
                 placeholder="검색"
                 value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
+                onChange={handleSearch}
                 onFocus={() => setIsFocused(true)}
                 onSend={() => {
                   alert("검색");
@@ -158,6 +190,8 @@ const SideBar = ({ onClose }: SideBarProps) => {
                     key={chat.chatRoomId}
                     chatRoomId={chat.chatRoomId}
                     title={chat.title}
+                    content={searchKeyword && (chat.lastMatchingMessage || chat.title)}
+                    searchKeyword={searchKeyword}
                     isSelected={selectedChatId === chat.chatRoomId}
                     onClick={() => handleItemClick(chat.chatRoomId)}
                   />
