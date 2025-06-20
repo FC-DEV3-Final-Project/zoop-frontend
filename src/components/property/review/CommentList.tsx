@@ -1,14 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import Dropdown from "@/components/common/Dropdown";
 import { Comment } from "@/apis/property/review/fetchComments";
 import { formatDate } from "@/utils/property/formatDate";
+import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
+import ThumbsButton from "./ThumbsButton";
 
 interface CommentListProps {
+  reviewId: number;
   comments: Comment[];
+  onEdit: (id: number, content: string) => void;
 }
 
-const CommentList = ({ comments }: CommentListProps) => {
+const CommentList = ({ reviewId, comments, onEdit }: CommentListProps) => {
+  const { mutate: deleteComment } = useDeleteCommentMutation(reviewId);
+
+  const handleDelete = (commentId: number) => {
+    if (confirm("댓글을 삭제하시겠습니까?")) {
+      deleteComment(commentId);
+    }
+  };
+
   return (
     <div className="flex flex-col bg-gray-100">
       {comments.map((comment) => (
@@ -31,16 +44,34 @@ const CommentList = ({ comments }: CommentListProps) => {
               )}
               <span className="text-body2 text-black">{comment.nickname}</span>
             </div>
-            <span className="text-gray-400">···</span>
+            {comment.isMine && (
+              <Dropdown
+                items={[
+                  {
+                    type: "edit",
+                    label: "수정하기",
+                    onClick: () => onEdit(comment.commentId, comment.content),
+                  },
+                  {
+                    type: "delete",
+                    label: "삭제하기",
+                    onClick: () => handleDelete(comment.commentId),
+                  },
+                ]}
+              />
+            )}
           </div>
 
           <p className="text-subtitle3 text-black">{comment.content}</p>
 
           <div className="flex items-center justify-between">
-            <button className="flex items-center gap-1 text-caption3 text-gray-900">
-              <img src="/icons/thumbsup-outline.svg" alt="like" width={16} height={16} />
-              {comment.likeCount > 0 ? `공감 ${comment.likeCount}` : "공감하기"}
-            </button>
+            <ThumbsButton
+              itemId={comment.commentId}
+              likeCount={comment.likeCount}
+              initialLiked={comment.isLikedByMe}
+              type="comment"
+              reviewId={reviewId}
+            />
             <span className="text-footnote text-gray-700-info">
               {formatDate(comment.createdAt)}
             </span>
