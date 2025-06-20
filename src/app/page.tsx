@@ -7,11 +7,20 @@ import SideBar from "@/components/chat/SideBar";
 import { Header } from "@/layout/Header";
 import { useState } from "react";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
+import AutoResizeTextarea from "@/components/ui/textarea";
 
 export default function Home() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const { user } = useUserInfoStore();
+  console.log(localStorage.getItem("access_token"));
+  const [message, setMessage] = useState("");
 
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      console.log("전송된 메시지:", message);
+      setMessage(""); // 입력창 비우기
+    }
+  };
   return (
     <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen}>
       <Header bgColorClassName="bg-gray-100">
@@ -37,6 +46,14 @@ export default function Home() {
             </Link>
           </ChatBubble>
         </main>
+        <div className="fixed bottom-0 left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-2">
+          <AutoResizeTextarea
+            placeholder="메시지를 입력하세요"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onSend={handleSendMessage}
+          />
+        </div>
       </div>
       <SideBar onClose={() => setSideBarOpen(false)} />
     </Sheet>
