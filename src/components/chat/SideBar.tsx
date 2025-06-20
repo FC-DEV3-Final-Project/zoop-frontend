@@ -124,6 +124,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
 
   const handleItemClick = (chatId: number) => {
     setSelectedChatId(chatId);
+    setSearchKeyword(""); // 검색어 초기화
     onClose?.(); // 아이템 클릭 시 사이드바 닫기
 
     // TODO: 채팅 불러오기 API

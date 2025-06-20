@@ -20,12 +20,12 @@ const SideBarItem = ({
 }: SideBarItemProps) => {
   const handleEditTilte = () => {
     // TODO: 제목 편집하기 API
-    alert("편집 버튼 클릭");
+    alert(`${chatRoomId} 채팅방의 제목 ${title}을 수정합니다.`);
   };
 
   const handleDeleteChat = () => {
     // TODO: 채팅 삭제하기 API
-    alert("삭제 버튼 클릭");
+    alert(`${chatRoomId} 채팅방을 삭제합니다.`);
   };
 
   const dropdownItems = [
