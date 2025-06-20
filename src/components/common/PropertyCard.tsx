@@ -60,6 +60,8 @@ const PropertyCard = ({
     realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔"
       ? aptName
       : originalArticleName;
+  // const buildingName =
+  //   originalBuildingName !== "빌라" ? originalBuildingName : ""; 
 
   const handleCardClick = () => {
     router.push(`/property/${propertyId}`);
@@ -109,7 +111,9 @@ const PropertyCard = ({
           {/* 주소와 건물 정보 */}
           <div className="flex flex-col items-start gap-0.5 self-stretch">
             <div className="inline-flex items-center gap-1 self-stretch">
-              <p className="text-grey-100 max-w-fit truncate text-body2">{articleName}</p>
+              {realEstateTypeName !== articleName && (
+                <p className="text-grey-100 max-w-fit truncate text-body2">{articleName}</p>
+               )}
               <p className="min-w-fit text-body2">{buildingName}</p>
             </div>
             <div className="h-5 self-stretch text-body2">
