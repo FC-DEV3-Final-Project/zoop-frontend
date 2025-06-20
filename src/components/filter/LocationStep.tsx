@@ -4,11 +4,12 @@ import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
 
 import { getRegionInfo, getSearchPlaces } from "@/apis/filter/kakao/location";
+import { LocationStepData, SelectedPlaceInfo } from "@/types/filter";
 
 interface LocationStepProps {
   onNext: () => void;
-  savedSearchKeyword?: string;
-  onSearchKeywordChange: (value: string) => void;
+  savedLocationData: Partial<LocationStepData>;
+  onLocationDataChange: (data: Partial<LocationStepData>) => void;
 }
 
 // 카카오 API 응답 타입
@@ -21,27 +22,24 @@ interface KakaoPlace {
   y: string; // 위도
 }
 
-// 백엔드 전송용 장소 정보 타입
-interface SelectedPlaceInfo {
-  x: string; // 경도
-  y: string; // 위도
-  bCode: string; // 법정 코드
-  hCode: string; // 행정 코드
-  placeName: string; // 장소명
-}
-
-const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: LocationStepProps) => {
-  const [input, setInput] = useState(savedSearchKeyword || "");
-  const [searchKeyword, setSearchKeyword] = useState(savedSearchKeyword || "");
-  const [selectedPlaceInfo, setSelectedPlaceInfo] = useState<SelectedPlaceInfo | null>(null);
-
-  useEffect(() => {
-    setSelectedPlaceInfo(null); // 검색어가 바뀌면 선택된 값 초기화
-  }, [searchKeyword]);
-
-  const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
+const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: LocationStepProps) => {
+  const [input, setInput] = useState(savedLocationData.searchKeyword || "");
+  const [searchKeyword, setSearchKeyword] = useState(savedLocationData.searchKeyword || "");
+  const [selectedPlaceInfo, setSelectedPlaceInfo] = useState<SelectedPlaceInfo | null>(
+    savedLocationData.selectedPlace || null,
+  );
+  const [searchResults, setSearchResults] = useState<KakaoPlace[]>(
+    savedLocationData.searchResults || [],
+  );
   const [isLoading, setIsLoading] = useState(false); // 임시
   const [error, setError] = useState<string | null>(null); // 임시
+
+  useEffect(() => {
+    // 현재 검색어와 저장된 검색어가 다를 때만 초기화
+    if (searchKeyword !== savedLocationData.searchKeyword) {
+      setSelectedPlaceInfo(null);
+    }
+  }, [savedLocationData.searchKeyword, searchKeyword]);
 
   // Enter 또는 검색 아이콘 클릭 시 실행되는 함수
   const handleSearch = async () => {
@@ -199,6 +197,7 @@ const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: Loc
                     selectedPlaceInfo?.placeName === place.place_name &&
                     selectedPlaceInfo?.x === place.x &&
                     selectedPlaceInfo?.y === place.y;
+
                   return (
                     <li
                       key={place.id}
@@ -232,7 +231,11 @@ const LocationStep = ({ onNext, savedSearchKeyword, onSearchKeywordChange }: Loc
         <Button
           onClick={() => {
             onNext();
-            onSearchKeywordChange(searchKeyword);
+            onLocationDataChange({
+              searchKeyword,
+              searchResults,
+              selectedPlace: selectedPlaceInfo,
+            });
           }}
           disabled={selectedPlaceInfo === null}
         >
