@@ -60,8 +60,6 @@ const PropertyCard = ({
     realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔"
       ? aptName
       : originalArticleName;
-  // const buildingName =
-  //   originalBuildingName !== "빌라" ? originalBuildingName : ""; 
 
   const handleCardClick = () => {
     router.push(`/property/${propertyId}`);
@@ -113,7 +111,7 @@ const PropertyCard = ({
             <div className="inline-flex items-center gap-1 self-stretch">
               {realEstateTypeName !== articleName && (
                 <p className="text-grey-100 max-w-fit truncate text-body2">{articleName}</p>
-               )}
+              )}
               <p className="min-w-fit text-body2">{buildingName}</p>
             </div>
             <div className="h-5 self-stretch text-body2">
@@ -127,7 +125,7 @@ const PropertyCard = ({
           {summary?.map((tag, index) => (
             <div
               key={index}
-              className={`h-full flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] px-2 py-0.5 text-center text-footnote ${isActive ? "bg-[#E8EAEE]" : "bg-gray-200 text-gray-700-info"}`}
+              className={`flex h-full flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] px-2 py-0.5 text-center text-footnote ${isActive ? "bg-[#E8EAEE]" : "bg-gray-200 text-gray-700-info"}`}
             >
               {tag}
             </div>
