@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "../ui/button";
 import AmountQuickSelect from "./AmountQuickSelect";
@@ -11,19 +11,25 @@ import {
 
 interface BudgetStepProps {
   onNext: () => void;
+  transactionType: "월세" | "매매" | "전세";
 }
 
 const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "1백만"]; // 월세용 보증금
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ onNext }: BudgetStepProps) => {
+const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
   const [firstAmount, setFirstAmount] = useState("0"); // 보증금, 전세가, 매매가
-  const [secondAmount, setSecontAmount] = useState("0"); // 월세
+  const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
-  const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">("매매"); // 임시
+  const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">(
+    transactionType,
+  );
 
-  // 임시
+  useEffect(() => {
+    setSelectedTradeType(transactionType);
+  }, [transactionType]);
+
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
 
   const handleAmountQuickSelectClick = (money: string) => {
@@ -34,7 +40,7 @@ const BudgetStep = ({ onNext }: BudgetStepProps) => {
       setFirstAmount(formatNumberWithComma(String(current + amount)));
     } else if (focusedField === "secondAmount") {
       const current = parseInt(secondAmount.replace(/,/g, ""), 10) || 0;
-      setSecontAmount(formatNumberWithComma(String(current + amount)));
+      setSecondAmount(formatNumberWithComma(String(current + amount)));
     }
   };
 
@@ -104,7 +110,7 @@ const BudgetStep = ({ onNext }: BudgetStepProps) => {
                     : "border-gray-500-alternative",
                 )}
                 value={secondAmount}
-                onChange={(e) => handleInputWithComma(e, setSecontAmount)}
+                onChange={(e) => handleInputWithComma(e, setSecondAmount)}
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>

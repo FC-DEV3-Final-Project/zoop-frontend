@@ -11,8 +11,15 @@ interface FunnelProps {
   children: Array<React.ReactElement<StepProps>>;
 }
 
+interface StepData {
+  location?: string;
+  transactionType?: string[];
+  housingType?: string[];
+}
+
 const useFunnel = ({ lastStep }: { lastStep: string }) => {
   const [step, setStep] = useState("1");
+  const [stepData, setStepData] = useState<StepData>({});
 
   const Step = (props: StepProps): React.ReactElement => {
     return <>{props.children}</>;
@@ -36,7 +43,11 @@ const useFunnel = ({ lastStep }: { lastStep: string }) => {
     }
   };
 
-  return { Funnel, Step, setStep, currentStep: step, prevStep, nextStep };
+  const updateStepData = (key: keyof StepData, value: any) => {
+    setStepData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  return { Funnel, Step, setStep, currentStep: step, prevStep, nextStep, stepData, updateStepData };
 };
 
 export default useFunnel;
