@@ -45,6 +45,8 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
         ) : (
           reviews.map((review) => (
             <ReviewCard
+              propertyId={propertyId}
+              reviewId={review.reviewId}
               key={review.reviewId}
               nickname={review.nickname}
               date={formatDate(review.createdAt)}
@@ -56,6 +58,7 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
               residenceStatus={residenceMap[review.isResident as keyof typeof residenceMap]}
               hasChildStatus={hasChildMap[review.hasChildren as keyof typeof hasChildMap]}
               onClick={() => router.push(`/property/${propertyId}/review/${review.reviewId}`)}
+              isLikedByMe={review.isLikedByMe}
               isMine={review.isMine}
             />
           ))
