@@ -6,7 +6,6 @@ const fetchRealEstateInfo = async (
   requestData: RealEstateInfoRequest,
 ): Promise<RealEstateInfoResponse> => {
   try {
-    // 실제 api 호출
     const response = await axiosInstance.post(`/properties/${propertyId}/realty`, requestData);
     return response.data;
   } catch (error) {
