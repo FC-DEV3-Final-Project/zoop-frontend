@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { highlightSearchKeyword } from "@/utils/chat/highlightSearchKeyword";
+import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
 
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";

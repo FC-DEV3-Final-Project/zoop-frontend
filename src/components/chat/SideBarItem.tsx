@@ -1,7 +1,7 @@
 import React from "react";
 
 import Dropdown from "../common/Dropdown";
-import { highlightSearchKeyword } from "@/utils/chat/highlightSearchKeyword";
+import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
 import { ChatPreviewItem } from "@/types/chat";
 
 interface SideBarItemProps extends ChatPreviewItem {
