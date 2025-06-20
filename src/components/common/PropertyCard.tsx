@@ -4,24 +4,30 @@ import { useRouter } from "next/navigation";
 import HeartButton from "./HeartButton";
 
 interface PropertyCardProps {
+  // BE 전달 데이터
+  // 필수데이터
   propertyId: number;
   order: number;
   tradeTypeName: string; // ex."월세", "전세", "매매"
-  rentPrice?: number; // ex.150 월세인 경우만 존재
-  warrantPrice: number; // ex.65000 월세/전세인 경우만 존재, fe 사용X
-  dealPrice: number; // ex.135000 매매인 경우만 존재, fe 사용X
+  summary: string[]; // ex. ["신축", "풀옵션", "역세권"],없으면 []
+  realEstateTypeName: string; //  ex."아파트","오피스텔", "빌라", "단독", "다가구"
   dealOrWarrantPrc: string; // ex."3억"
-  summary: string[]; // ex. ["신축", "풀옵션", "역세권"],
-  realEstateTypeName: string; // ex.  "아파트","오피스텔", "빌라", "단독", "다가구"
-  aptName: string; // ex. "남현한일유앤아이" 등 건물명 (아파트/오피스텔인 경우만 사용)
-  articleName: string; // ex. "빌라","단독" 또는 "다인힐","메트하임" 등 건물명 (아파트/오피스텔이 아닌 경우만 사용)
   buildingName: string; // ex. "101동"  빌라인 경우  "빌라" 또는 "다인힐"등 건물명
-  area2: string; // ex. "34.5",
+  area2: string; // ex."34.5",
   isBookmarked: boolean; // ex. true,
-  isActive: boolean; // ex.true,
-  imageUrl: string; // ex. "https://cdn.example.com/images/123.jpg"
-  latitude: number; // ex. 37.471515
-  longitude: number; // ex. 126.972487
+  imageUrl: string; // ex. "https://cdn.example.com/images/123.jpg", 없으면 ""
+  // latitude: number; // ex. 37.471515
+  // longitude: number; // ex. 126.972487
+
+  // 선택데이터
+  rentPrice?: number; // ex.150 월세인 경우만 존재
+  // warrantPrice?: number; // ex.65000 월세/전세인 경우만 존재, fe 사용X
+  // dealPrice?: number; // ex.135000 매매인 경우만 존재, fe 사용X
+  aptName?: string; // ex."남현한일유앤아이" 등 건물명 (아파트/오피스텔인 경우만 사용)
+  articleName?: string; // ex. "빌라","단독" 또는 "다인힐","메트하임" 등 건물명 (아파트/오피스텔이 아닌 경우만 사용)
+  isActive?: boolean; // ex.true,
+
+  // FE 추가 속성
   size?: "sm" | "md";
   isNumberVisible?: boolean;
 }
@@ -30,21 +36,21 @@ const PropertyCard = ({
   propertyId,
   order,
   tradeTypeName,
-  rentPrice,
-  warrantPrice,
-  dealPrice,
-  dealOrWarrantPrc,
   summary,
   realEstateTypeName,
-  aptName,
-  articleName: originalArticleName,
+  dealOrWarrantPrc,
   buildingName,
   area2,
   isBookmarked,
-  isActive = true,
   imageUrl,
-  latitude,
-  longitude,
+  // latitude,
+  // longitude,
+  rentPrice,
+  // warrantPrice,
+  // dealPrice,
+  aptName,
+  articleName: originalArticleName,
+  isActive = true,
   size = "md",
   isNumberVisible = true,
 }: PropertyCardProps) => {
@@ -67,7 +73,7 @@ const PropertyCard = ({
       {/* 이미지 섹션 */}
       <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-small">
         <img
-          src={imageUrl}
+          src={imageUrl || "/imgs/default-property-image.svg"}
           alt={`${tradeTypeName} ${dealOrWarrantPrc}`}
           className="cur h-full w-full object-cover"
         />
