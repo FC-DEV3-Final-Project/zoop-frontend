@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
+import { useRouter } from "next/navigation";
+import { useDeleteReviewMutation } from "@/queries/property/review/useDeleteReviewMutation";
+import ThumbsButton from "./ThumbsButton";
 
 interface ReviewCardProps {
+  propertyId: number;
+  reviewId: number;
   nickname: string;
   date: string;
   content: string;
@@ -12,10 +17,13 @@ interface ReviewCardProps {
   residenceStatus: string;
   hasChildStatus: string;
   isMine: boolean;
+  isLikedByMe: boolean;
   onClick?: () => void;
 }
 
 const ReviewCard = ({
+  propertyId,
+  reviewId,
   nickname,
   date,
   content,
@@ -26,17 +34,11 @@ const ReviewCard = ({
   residenceStatus,
   hasChildStatus,
   isMine,
+  isLikedByMe,
   onClick,
 }: ReviewCardProps & { isMine?: boolean }) => {
-  const handleEdit = () => {
-    console.log("수정하기 눌림");
-    // 수정 페이지 이동 등 작업
-  };
-
-  const handleDelete = () => {
-    console.log("삭제하기 눌림");
-    // 삭제 확인 모달 등 작업
-  };
+  const router = useRouter();
+  const { mutate: deleteReview } = useDeleteReviewMutation(propertyId);
 
   return (
     <div onClick={onClick} className="cursor-pointer">
@@ -65,8 +67,22 @@ const ReviewCard = ({
           {isMine && (
             <Dropdown
               items={[
-                { type: "edit", label: "수정하기", onClick: handleEdit },
-                { type: "delete", label: "삭제하기", onClick: handleDelete },
+                {
+                  type: "edit",
+                  label: "수정하기",
+                  onClick: () => router.push(`/property/${propertyId}/review/edit/${reviewId}`),
+                },
+                {
+                  type: "delete",
+                  label: "삭제하기",
+                  onClick: () =>
+                    deleteReview(reviewId, {
+                      onSuccess: () => {
+                        console.log("리뷰 삭제 성공");
+                        router.push(`/property/${propertyId}/review`);
+                      },
+                    }),
+                },
               ]}
             />
           )}
@@ -99,10 +115,12 @@ const ReviewCard = ({
       {/* 하단 버튼 */}
       <div className="bg-white px-5 py-3">
         <div className="flex gap-4 text-caption1 text-gray-700">
-          <button className="flex items-center gap-1 text-caption2 text-gray-900">
-            <img src="/icons/thumbsup-outline.svg" width={20} height={20} alt="like" />
-            공감 {likes}
-          </button>
+          <ThumbsButton
+            itemId={reviewId}
+            likeCount={likes}
+            initialLiked={isLikedByMe}
+            type="review"
+          />
           <button className="flex items-center gap-1 text-caption2 text-gray-900">
             <img src="/icons/chat-text.svg" width={20} height={20} alt="comment" />
             댓글 {comments}
