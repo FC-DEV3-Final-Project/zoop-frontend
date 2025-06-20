@@ -24,7 +24,7 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
   const residenceMap = {
     NON_RESIDENT: "거주 안함",
     CURRENT_RESIDENT: "현재 거주",
-    PAST_RESIDENT: "이전 거주",
+    PAST_RESIDENT: "과거 거주",
   } as const;
 
   const hasChildMap = {
