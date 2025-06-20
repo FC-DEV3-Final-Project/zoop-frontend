@@ -4,17 +4,12 @@ import { useCheckUserNicknameQuery } from "@/queries/common/useCheckUserNickname
 interface NicknameInputProps {
   nickname: string;
   setNickname: (nickname: string) => void;
-  // isValid: boolean;
   setIsValid: (isValid: boolean) => void;
 }
 
-const NicknameInput = ({
-  nickname,
-  setNickname,
-  setIsValid,
-}: NicknameInputProps) => {
+const NicknameInput = ({ nickname, setNickname, setIsValid }: NicknameInputProps) => {
   const [status, setStatus] = useState<string>("");
-  const { data: isDuplicated, refetch } = useCheckUserNicknameQuery(nickname, false);
+  const { refetch } = useCheckUserNicknameQuery(nickname, false);
 
   const handleNicknameValidation = () => {
     // 유효성검사
@@ -28,11 +23,15 @@ const NicknameInput = ({
     refetch().then((result) => {
       if (result.isError) {
         setStatus("");
+        setIsValid(false);
         return;
       }
-      if (isDuplicated) {
+      if (result.data?.isDuplicated) {
+        // 중복
         setStatus("duplicate");
+        setIsValid(false);
       } else {
+        // 사용가능
         setStatus("available");
         setIsValid(true);
       }
