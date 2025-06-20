@@ -19,13 +19,21 @@ const SideBarItem = ({
   onClick,
 }: SideBarItemProps) => {
   const handleEditTilte = () => {
-    // TODO: 제목 편집하기 API
-    alert(`${chatRoomId} 채팅방의 제목 ${title}을 수정합니다.`);
+    const isConfirmed = window.prompt("제목 편집하기", title);
+
+    if (isConfirmed) {
+      // TODO: 제목 수정하기 API
+      alert(`${chatRoomId} 제목을 수정합니다.`);
+    }
   };
 
   const handleDeleteChat = () => {
-    // TODO: 채팅 삭제하기 API
-    alert(`${chatRoomId} 채팅방을 삭제합니다.`);
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+
+    if (isConfirmed) {
+      // TODO: 채팅 삭제하기 API
+      alert(`${chatRoomId} 채팅방을 삭제합니다.`);
+    }
   };
 
   const dropdownItems = [
