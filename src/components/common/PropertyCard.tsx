@@ -123,7 +123,7 @@ const PropertyCard = ({
           {summary?.map((tag, index) => (
             <div
               key={index}
-              className={`flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] px-2 py-0.5 text-center text-footnote ${isActive ? "bg-[#E8EAEE]" : "bg-gray-200 text-gray-700-info"}`}
+              className={`h-full flex flex-shrink-0 items-center justify-center gap-2.5 rounded-[50px] px-2 py-0.5 text-center text-footnote ${isActive ? "bg-[#E8EAEE]" : "bg-gray-200 text-gray-700-info"}`}
             >
               {tag}
             </div>
