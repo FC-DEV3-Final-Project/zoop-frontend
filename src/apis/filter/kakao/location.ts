@@ -1,12 +1,4 @@
-// 카카오 API 응답 타입
-interface KakaoPlace {
-  id: string; // 장소 ID
-  place_name: string; // 장소명, 업체명
-  address_name: string; // 전체 지번 주소
-  road_address_name: string; // 전체 도로명 주소
-  x: string; // 경도
-  y: string; // 위도
-}
+import { KakaoPlace } from "@/types/filter";
 
 interface KakaoSearchResponse {
   meta: {
