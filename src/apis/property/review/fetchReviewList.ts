@@ -12,6 +12,7 @@ export type Review = {
   hasChildren: HasChildrenStatus;
   isResident: ResidentStatus;
   createdAt: string;
+  updatedAt: string | null;
   likeCount: number;
   commentCount: number;
   isLikedByMe: boolean;
@@ -23,7 +24,6 @@ type ReviewListResponse = {
   message: string;
   data: {
     propertyId: number;
-    complexId: number | null;
     reviews: Review[];
   };
 };

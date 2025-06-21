@@ -24,6 +24,7 @@ const nextConfig: NextConfig = {
       "cdn.example.com",
       "43.201.121.201",
       "landthumb-phinf.pstatic.net",
+      "img1.kakaocdn.net",
     ],
   },
 };
