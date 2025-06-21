@@ -7,17 +7,12 @@ type MyPageHomeResponse = {
       nickname: string;
       profileImageUrl: string;
     };
-    myReviews?: Array<{
-      reviweId?: string | number;
-      content: string;
-      likeCount: number;
-      commentCount: number;
-    }>;
-    myComments?: Array<{
+    reviewOrComments?: Array<{
+      reviewId?: string | number;
       commentId?: string | number;
       content: string;
       likeCount: number;
-      commentCount: number;
+      commentCount?: number;
     }>;
     activity: {
       bookmarkedPropertyCount: number;

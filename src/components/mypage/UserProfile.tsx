@@ -16,7 +16,7 @@ const UserProfile = ({ profile }: UserProfileProps) => {
       <div className="flex items-center gap-4">
         <div className="h-10 w-10 overflow-hidden rounded-full border border-neutral-200 bg-neutral-100">
           <Image
-            src={profile.profileImageUrl}
+            src={profile.profileImageUrl || "/imgs/default-profile.svg"}
             alt="프로필"
             width={40}
             height={40}
