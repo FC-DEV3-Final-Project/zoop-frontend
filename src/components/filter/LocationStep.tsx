@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+
+import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
+
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
 
@@ -99,22 +102,6 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
     }
   };
 
-  // 전체 장소명에서 검색어만 하이라이트하여 반환하는 함수
-  const highlightText = (place_name: string, searchKeyword: string) => {
-    const index = place_name.indexOf(searchKeyword);
-    if (index === -1) return place_name;
-
-    return (
-      <>
-        {place_name.slice(0, index)}
-        <span className="text-blue-800">
-          {place_name.slice(index, index + searchKeyword.length)}
-        </span>
-        {place_name.slice(index + searchKeyword.length)}
-      </>
-    );
-  };
-
   // 주소를 ~동까지만 잘라서 반환하는 함수
   const getSimpleAddress = (place: KakaoPlace) => {
     const address = place.address_name; // 지번 주소 사용
@@ -207,9 +194,9 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                       }`}
                     >
                       <div className="text-body1">
-                        {highlightText(place.place_name, searchKeyword)}
+                        {highlightSearchKeyword(place.place_name, searchKeyword)}
                       </div>
-                      <div className="text-body2"> {getSimpleAddress(place)}</div>
+                      <div className="text-body2">{getSimpleAddress(place)}</div>
                     </li>
                   );
                 })}

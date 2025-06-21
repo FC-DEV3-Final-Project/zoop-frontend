@@ -7,7 +7,7 @@ import {
   parseKoreanMoneyToNumber,
   formatNumberWithComma,
   formatMoneyToKoreanUnit,
-} from "@/utils/budget";
+} from "@/utils/filter/budget";
 
 interface BudgetStepProps {
   onNext: () => void;
