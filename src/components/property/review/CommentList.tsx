@@ -18,7 +18,14 @@ const CommentList = ({ reviewId, comments, onEdit }: CommentListProps) => {
 
   const handleDelete = (commentId: number) => {
     if (confirm("댓글을 삭제하시겠습니까?")) {
-      deleteComment(commentId);
+      deleteComment(commentId, {
+        onSuccess: () => {
+          console.log("댓글 삭제 성공");
+        },
+        onError: () => {
+          alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+        },
+      });
     }
   };
 
