@@ -3,7 +3,7 @@ import { PropertyCardProps } from "@/components/common/PropertyCard";
 
 export const getMapRecentPropertyList = async (): Promise<PropertyCardProps> => {
   try {
-    const response = await axiosInstance.get("/mypage/histories/recent-properties");
+    const response = await axiosInstance.get("/mypage/histories/recent-properties/map");
     console.log("넘어오는 데이터 확인 ::::: ", response.data);
     return response.data;
   } catch (error) {
