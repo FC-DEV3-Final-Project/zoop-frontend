@@ -1,5 +1,7 @@
+"use client";
+
 import { Header } from "@/layout/Header";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -22,6 +24,9 @@ const dummyDate = {
     {
       order: 1,
       propertyId: 1001,
+      latitude: 37.5744,
+      longitude: 127.04,
+      articleName: "센트럴아파트 101동",
       tradeTypeName: "전세",
       rentPrice: null,
       warrantPrice: 30000,
@@ -32,10 +37,7 @@ const dummyDate = {
       buildingName: "101동",
       realEstateTypeName: "아파트",
       area2: "84.9",
-      latitude: 37.123456,
-      longitude: 127.123456,
       isBookmarked: true,
-      articleName: "센트럴아파트 101동",
       imageUrl: "/imgs/propertyExample.png",
       direction: "남향",
       floorInfo: "10/15",
@@ -55,6 +57,9 @@ const dummyDate = {
     {
       order: 2,
       propertyId: 1002,
+      latitude: 37.4962,
+      longitude: 126.9536,
+      articleName: "해피빌 B동 103호",
       tradeTypeName: "월세",
       rentPrice: 50,
       warrantPrice: 1000,
@@ -65,10 +70,7 @@ const dummyDate = {
       buildingName: "B동",
       realEstateTypeName: "오피스텔",
       area2: "32.5",
-      latitude: 37.234567,
-      longitude: 127.234567,
       isBookmarked: false,
-      articleName: "해피빌 B동 103호",
       imageUrl: "",
       direction: "동향",
       floorInfo: "1/5",
@@ -88,6 +90,9 @@ const dummyDate = {
     {
       order: 3,
       propertyId: 1003,
+      latitude: 37.5299,
+      longitude: 126.9644,
+      articleName: "래미안하이클래스 202동",
       tradeTypeName: "매매",
       rentPrice: null,
       warrantPrice: null,
@@ -98,10 +103,7 @@ const dummyDate = {
       buildingName: "202동",
       realEstateTypeName: "아파트",
       area2: "112.3",
-      latitude: 37.345678,
-      longitude: 127.345678,
       isBookmarked: false,
-      articleName: "래미안하이클래스 202동",
       imageUrl: "",
       direction: "서향",
       floorInfo: "8/20",
@@ -121,6 +123,9 @@ const dummyDate = {
     {
       order: 4,
       propertyId: 1004,
+      latitude: 37.6545,
+      longitude: 127.0568,
+      articleName: "서초자이 A동",
       tradeTypeName: "전세",
       rentPrice: null,
       warrantPrice: 20000,
@@ -131,10 +136,7 @@ const dummyDate = {
       buildingName: "A동",
       realEstateTypeName: "아파트",
       area2: "74.5",
-      latitude: 37.456789,
-      longitude: 127.456789,
       isBookmarked: true,
-      articleName: "서초자이 A동",
       imageUrl: "",
       direction: "남서향",
       floorInfo: "3/12",
@@ -154,6 +156,9 @@ const dummyDate = {
     {
       order: 5,
       propertyId: 1005,
+      latitude: 37.5509,
+      longitude: 126.8495,
+      articleName: "하이빌라 2층",
       tradeTypeName: "월세",
       rentPrice: 60,
       warrantPrice: 500,
@@ -164,10 +169,7 @@ const dummyDate = {
       buildingName: "하이빌라",
       realEstateTypeName: "빌라",
       area2: "45.3",
-      latitude: 37.56789,
-      longitude: 127.56789,
       isBookmarked: false,
-      articleName: "하이빌라 2층",
       imageUrl: "",
       direction: "북향",
       floorInfo: "2/3",
@@ -187,6 +189,9 @@ const dummyDate = {
     {
       order: 6,
       propertyId: 1006,
+      latitude: 37.6176,
+      longitude: 126.9227,
+      articleName: "더테라스하우스 C동",
       tradeTypeName: "전세",
       rentPrice: null,
       warrantPrice: 27000,
@@ -197,10 +202,7 @@ const dummyDate = {
       buildingName: "C동",
       realEstateTypeName: "아파트",
       area2: "78.2",
-      latitude: 37.123789,
-      longitude: 127.123789,
       isBookmarked: true,
-      articleName: "더테라스하우스 C동",
       imageUrl: "",
       direction: "남동향",
       floorInfo: "5/15",
@@ -220,6 +222,9 @@ const dummyDate = {
     {
       order: 7,
       propertyId: 1007,
+      latitude: 37.4836,
+      longitude: 127.0325,
+      articleName: "코지하우스 201호",
       tradeTypeName: "월세",
       rentPrice: 55,
       warrantPrice: 500,
@@ -230,10 +235,7 @@ const dummyDate = {
       buildingName: "코지하우스",
       realEstateTypeName: "다가구",
       area2: "40.0",
-      latitude: 37.223456,
-      longitude: 127.223456,
       isBookmarked: false,
-      articleName: "코지하우스 201호",
       imageUrl: "",
       direction: "동향",
       floorInfo: "2/3",
@@ -253,6 +255,9 @@ const dummyDate = {
     {
       order: 8,
       propertyId: 1008,
+      latitude: 37.5063,
+      longitude: 127.1144,
+      articleName: "한강뷰자이 301동",
       tradeTypeName: "매매",
       rentPrice: null,
       warrantPrice: null,
@@ -263,10 +268,7 @@ const dummyDate = {
       buildingName: "301동",
       realEstateTypeName: "아파트",
       area2: "120.5",
-      latitude: 37.54321,
-      longitude: 127.654321,
       isBookmarked: true,
-      articleName: "한강뷰자이 301동",
       imageUrl: "",
       direction: "남향",
       floorInfo: "15/20",
@@ -286,6 +288,9 @@ const dummyDate = {
     {
       order: 9,
       propertyId: 1009,
+      latitude: 37.5498,
+      longitude: 126.9453,
+      articleName: "에코빌아파트 3동",
       tradeTypeName: "전세",
       rentPrice: null,
       warrantPrice: 18000,
@@ -296,10 +301,7 @@ const dummyDate = {
       buildingName: "3동",
       realEstateTypeName: "아파트",
       area2: "60.4",
-      latitude: 37.456123,
-      longitude: 127.456123,
       isBookmarked: false,
-      articleName: "에코빌아파트 3동",
       imageUrl: "",
       direction: "남향",
       floorInfo: "1/5",
@@ -319,6 +321,9 @@ const dummyDate = {
     {
       order: 10,
       propertyId: 1010,
+      latitude: 37.4979,
+      longitude: 127.0276,
+      articleName: "미니빌 1층",
       tradeTypeName: "월세",
       rentPrice: 45,
       warrantPrice: 300,
@@ -329,10 +334,7 @@ const dummyDate = {
       buildingName: "미니빌",
       realEstateTypeName: "원룸",
       area2: "28.0",
-      latitude: 37.345123,
-      longitude: 127.345123,
       isBookmarked: false,
-      articleName: "미니빌 1층",
       imageUrl: "",
       direction: "북동향",
       floorInfo: "1/2",
@@ -365,21 +367,67 @@ const sortOptions = [
 ];
 
 const MapListDialog = ({ open, onOpenChange }: Props) => {
+  // const mapRef = useRef<HTMLDivElement | null>(null);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
+  const positions = dummyDate.properties.map((item) => ({
+    latitude: item.latitude,
+    longitude: item.longitude,
+  }));
+
+  const mapElement = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    if (!window.kakao || !open) return;
+    if (!open) return;
 
-    window.kakao.maps.load(() => {
-      const container = document.getElementById("map");
-      const options = {
-        center: new window.kakao.maps.LatLng(37.5665, 126.978), // 서울 중심 좌표
-        level: 3,
-      };
+    // kakao 객체가 브라우저에서 존재하는지 확인
+    const { kakao } = window;
+    if (!kakao) return;
 
-      new window.kakao.maps.Map(container, options);
-    });
-  }, [open]); // 다이얼로그 열릴 때만 실행
+    // dialog가 완전히 그려진 뒤 실행되도록 지연
+    const timeoutId = setTimeout(() => {
+      kakao.maps.load(() => {
+        if (!mapElement.current) return;
+        // 지도 생성
+        const map = new kakao.maps.Map(mapElement.current!, {
+          center: new kakao.maps.LatLng(37.5665, 126.978), // 지도의 중심좌표
+          level: 9,
+        });
+
+        // positions 배열의 각 좌표마다 숫자 마커 생성
+        positions.forEach((item, i) => {
+          const latlng = new window.kakao.maps.LatLng(item.latitude, item.longitude);
+
+          // 숫자 마커로 사용할 img URL (스프라이트 방식)
+          const markerImg =
+            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
+
+          // 마커 이미지 전체 사이즈
+          const markerImgSize = new window.kakao.maps.Size(36, 37);
+
+          // 스프라이트 이미지에서 몇 번째 숫자를 쓸지 계산
+          const imgOptions = {
+            spriteSize: new window.kakao.maps.Size(36, 691), // 전체 스프라이트 크기
+            spriteOrigin: new window.kakao.maps.Point(0, i * 46 + 10), // 현재 index의 숫자 위치
+            offset: new window.kakao.maps.Point(13, 37), // 마커 위치 보정
+          };
+          // 마커 이미지 객체 생성
+          const markerImage = new window.kakao.maps.MarkerImage(
+            markerImg,
+            markerImgSize,
+            imgOptions,
+          );
+
+          // 마커 생성 및 지도에 표시
+          new window.kakao.maps.Marker({
+            map,
+            position: latlng,
+            image: markerImage,
+          });
+        });
+      });
+    }, 100); // 100ms 후에 실행
+  }, [open]);
 
   const handleSelect = (item: { label: string; value: string }) => {
     if (selectedText?.value === item.value) {
@@ -409,14 +457,14 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
       >
         {/* 헤더 */}
         <Header bgColorClassName="bg-gray-100/0">
-          <Header.Prev onPrevClick={() => alert("뒤로가기 클릭")} />
+          <Header.Prev onPrevClick={() => onOpenChange(false)} />
           <Header.Title>Guide</Header.Title>
         </Header>
 
         {/* 지도 + 리스트 생략 (여기에 구현한 UI 들어감) */}
         <div className="flex h-screen w-full flex-col">
           <div className="flex h-[339px] items-center justify-center bg-gray-050 text-black">
-            <div id="map" className="h-full w-full" />
+            <div ref={mapElement} id="map" className="h-full w-full" />
           </div>
           <div className="rounded-t-[16px]">
             <div className="flex h-[46px] items-center justify-between rounded-t-[16px] bg-blue-050-bg px-[12px] py-[20px]">

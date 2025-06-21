@@ -47,7 +47,7 @@ export default function Guide() {
   // dialog 관련로직
   const handleClick = async () => {
     setOpen(true); // 1. 다이얼로그 열기
-    getMapRecentPropertyList();
+    // getMapRecentPropertyList();
   };
   // BottomSheet 관련로직
   const handleSelect = (item: { label: string; value: string }) => {
