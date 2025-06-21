@@ -8,7 +8,10 @@ import BottomSheet from "@/components/common/BottomSheet";
 import Dropdown from "@/components/common/Dropdown";
 import PropertyCard from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import MapListDialog from "@/components/map/MapListDialog";
 import AutoResizeTextarea from "@/components/ui/textarea";
+import { getMapBookmarkPropertyList } from "@/apis/map/getMapBookmarkPropertyList";
+import { getMapRecentPropertyList } from "@/apis/map/getMapRecentPropertyList";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -38,8 +41,14 @@ const phonNumber = [
 export default function Guide() {
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(""); // textarea
 
+  // dialog 관련로직
+  const handleClick = async () => {
+    setOpen(true); // 1. 다이얼로그 열기
+    getMapRecentPropertyList();
+  };
   // BottomSheet 관련로직
   const handleSelect = (item: { label: string; value: string }) => {
     if (selectedText?.value === item.value) {
@@ -58,6 +67,21 @@ export default function Guide() {
         <Header.Title>Guide</Header.Title>
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
+      {/* Dialog Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h2 className="text-title2">Dialog</h2>
+        <div className="mt-1 flex justify-end">
+          <button
+            onClick={handleClick}
+            className="flex h-[28px] items-center gap-[4px] text-body3 text-gray-800"
+          >
+            자세히보기
+            <img src="/icons/arrow-right.svg" alt="화살표" className="h-[14px] w-[14px]" />
+          </button>
+        </div>
+        {/* Dialog 컴포넌트 */}
+        <MapListDialog open={open} onOpenChange={setOpen} />
+      </div>
 
       {/* textarea Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
