@@ -48,6 +48,9 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         onSuccess: () => {
           router.push(`/property/${propertyId}/review`);
         },
+        onError: () => {
+          alert("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
+        },
       },
     );
   };
