@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -27,7 +29,7 @@ export default function AutoResizeTextarea({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      onSend?.();
+      if (value.length > 0) onSend();
     }
   };
 
@@ -42,7 +44,7 @@ export default function AutoResizeTextarea({
   };
 
   useEffect(() => {
-    handleInput(); // 초기에도 높이 맞춰줌
+    handleInput();
   }, [value]);
 
   return (
@@ -61,14 +63,11 @@ export default function AutoResizeTextarea({
         onInput={handleInput}
         rows={1}
       />
-      <button
-        className="flex-shrink-0"
-        onClick={value.length === 0 ? () => alert("음성 입력 버튼") : undefined}
-      >
+      <button className="flex-shrink-0" disabled={value.length === 0} onClick={onSend}>
         <img
-          src="/icons/unmute.svg"
-          className={cn("mt-1 h-5 w-5", value.length > 0 && "invisible")}
-          alt="음성 입력 아이콘"
+          src="/icons/send.svg"
+          className="mt-1 h-5 w-5 opacity-100 disabled:opacity-40"
+          alt="전송 아이콘"
         />
       </button>
     </div>
