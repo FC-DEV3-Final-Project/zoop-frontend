@@ -9,27 +9,47 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
 
   if (isLoading || error || !data) return null;
 
-  const 건축물용도 = data.principalUse || data.realestateTypeName || "-";
+  const formatDate = (ymd: string | null | undefined) => {
+    if (!ymd || ymd.length !== 8) return "정보 없음";
+    return `${ymd.slice(0, 4)}.${ymd.slice(4, 6)}.${ymd.slice(6, 8)}`;
+  };
 
   const infoList = [
-    ["전용/공급면적", `${data.area1}m²/${data.area2}m²`],
-    ["건축물 용도", 건축물용도],
-    ["아파트 명", data.aptName],
-    ["동", data.buildingName],
-    ["해당층/전체층", data.floorInfo],
-    ["방/욕실 수", `${data.roomCount}개/${data.bathroomCount}개`],
-    ["방거실형태", "분리형"],
-    ["주실기준/방향", `${data.directionBaseTypeName}/${data.direction}`],
-    ["현관유형", data.entranceTypeName],
-    ["총세대수", `${data.householdCount}세대`],
-    ["총주차대수", `${data.parkingCount}대(세대당 ${data.parkingCountPerHousehold}대)`],
-    ["주차", data.parkingPossibleYN === "Y" ? "가능" : "불가능"],
+    ["전용/공급면적", data.area1 && data.area2 ? `${data.area1}m²/${data.area2}m²` : "정보 없음"],
+    ["건축물 용도", data.principalUse || data.realEstateTypeName || "정보 없음"],
+    ["해당층/전체층", data.floorInfo || "정보 없음"],
     [
-      "사용승인일",
-      typeof data.useApproveYmd === "string" && data.useApproveYmd.length === 8
-        ? `${data.useApproveYmd.slice(0, 4)}.${data.useApproveYmd.slice(4, 6)}.${data.useApproveYmd.slice(6, 8)}`
-        : "미정",
+      "방/욕실 수",
+      data.roomCount && data.bathroomCount
+        ? `${data.roomCount}개/${data.bathroomCount}개`
+        : "정보 없음",
     ],
+    [
+      "주실기준/방향",
+      data.directionBaseTypeName && data.direction
+        ? `${data.directionBaseTypeName}/${data.direction}`
+        : "정보 없음",
+    ],
+    ["현관유형", data.entranceTypeName || "정보 없음"],
+    ["총세대수", data.householdCount ? `${data.householdCount}세대` : "정보 없음"],
+    [
+      "총주차대수",
+      data.parkingCount
+        ? `${data.parkingCount}대${data.parkingCountPerHousehold ? ` (세대당 ${data.parkingCountPerHousehold}대)` : ""}`
+        : "정보 없음",
+    ],
+    [
+      "주차",
+      data.parkingPossibleYN === "Y"
+        ? "가능"
+        : data.parkingPossibleYN === "N"
+          ? "불가능"
+          : "정보 없음",
+    ],
+    ["사용승인일", formatDate(data.useApproveYmd)],
+
+    ...(data.aptName ? [["아파트 명", data.aptName]] : []),
+    ...(data.buildingName ? [["동", data.buildingName]] : []),
   ];
 
   return (
@@ -39,13 +59,16 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
       className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
     >
       <div className="mb-5 text-title2 text-black">매물정보</div>
-
-      {data.images?.[0]?.imageUrl ? (
-        <div className="relative mb-5 h-[200px] w-full overflow-hidden rounded-small bg-gray-500">
-          <Image src={data.images[0].imageUrl} alt="매물정보 사진" fill className="object-cover" />
+      {data.images?.[0]?.imageUrl && (
+        <div className="relative mb-5 aspect-[3/2] w-full overflow-hidden rounded-small bg-white">
+          <Image
+            src={data.images[0].imageUrl}
+            alt="매물정보 사진"
+            fill
+            sizes="(max-width: 640px) 100vw, 600px"
+            className="object-contain"
+          />
         </div>
-      ) : (
-        <div className="mb-5 h-[200px] w-full rounded-small bg-gray-500"></div>
       )}
 
       <div className="grid grid-cols-[auto_1fr] gap-x-[45px] gap-y-[20px] text-black">
