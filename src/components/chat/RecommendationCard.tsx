@@ -209,17 +209,16 @@ const RecommendationCard = () => {
             {dummyDate.map((property) => (
               <CarouselItem key={property.propertyId}>
                 <PropertyCard
-                  propertyId={property.propertyId}
                   order={property.order}
+                  propertyId={property.propertyId}
                   tradeTypeName={property.tradeTypeName}
-                  summary={property.tagList}
-                  realEstateTypeName={""}
+                  rentPrice={property.rentPrice}
                   dealOrWarrantPrc={property.dealOrWarrantPrc}
-                  aptName={""}
+                  summary={property.tagList}
                   articleName={property.articleName}
-                  buildingName={""}
+                  realEstateTypeName={property.realEstateTypeName}
+                  buildingName={""} // 필수
                   area2={String(property.netArea)}
-                  isActive={true}
                   isBookmarked={false}
                   imageUrl={property.imageUrl ?? ""}
                   isNumberVisible={false}
