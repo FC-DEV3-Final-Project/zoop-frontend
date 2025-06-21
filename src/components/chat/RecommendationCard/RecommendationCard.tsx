@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
-import PropertyCard from "../common/PropertyCard";
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import ArrowRight from "../../../public/icons/arrow-right-gray.svg";
+import { Carousel, CarouselApi } from "@/components/ui/carousel";
+
+import RecommendationHeader from "./RecommendationHeader";
+import RecommendationList from "./RecommendationList";
+import RecommendationDots from "./RecommendationDots";
 
 const dummyDate = [
   {
@@ -171,8 +172,6 @@ const dummyDate = [
 ];
 
 const RecommendationCard = () => {
-  const router = useRouter();
-
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
@@ -191,54 +190,11 @@ const RecommendationCard = () => {
   return (
     <Carousel setApi={setApi}>
       <div>
-        <div className="flex justify-between rounded-b-none rounded-t-2xl bg-blue-050-bg px-3 py-[10px]">
-          <h1 className="text-subtitle4 text-blue-800-primary">AI 추천 매물</h1>
-          <span className="flex items-center justify-center gap-1">
-            <button
-              onClick={() => router.push("/")}
-              className="flex items-center text-center text-body3 leading-none text-gray-800"
-            >
-              자세히 보기
-            </button>
-            <Image src={ArrowRight} alt="자세히 보기" />
-          </span>
-        </div>
+        <RecommendationHeader />
         <div className="rounded-b-2xl bg-white">
-          <div className="px-3 py-[10px]">지도</div>
-          <CarouselContent>
-            {dummyDate.map((property) => (
-              <CarouselItem key={property.propertyId}>
-                <PropertyCard
-                  order={property.order}
-                  propertyId={property.propertyId}
-                  tradeTypeName={property.tradeTypeName}
-                  rentPrice={property.rentPrice}
-                  dealOrWarrantPrc={property.dealOrWarrantPrc}
-                  summary={property.tagList}
-                  articleName={property.articleName}
-                  realEstateTypeName={property.realEstateTypeName}
-                  buildingName={""} // 필수
-                  area2={String(property.netArea)}
-                  isBookmarked={false}
-                  imageUrl={property.imageUrl ?? ""}
-                  isNumberVisible={false}
-                  size="sm"
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="flex w-full justify-center gap-1 pb-3 pt-1">
-            {Array.from({ length: count }).map((_, idx) => (
-              <div
-                key={idx}
-                className={
-                  idx + 1 === current
-                    ? "h-1 w-2 rounded-full bg-gray-950-dark"
-                    : "h-1 w-1 rounded-full bg-gray-500-alternative"
-                }
-              />
-            ))}
-          </div>
+          <div className="px-3 py-[10px]">지도 자리</div>
+          <RecommendationList properties={dummyDate} />
+          <RecommendationDots count={count} current={current} />
         </div>
       </div>
     </Carousel>
