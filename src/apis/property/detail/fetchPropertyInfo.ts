@@ -5,7 +5,7 @@ export type PropertyInfoResponse = {
   area1: string;
   area2: string;
   principalUse?: string; // 아파트
-  realestateTypeName?: string; // 빌라
+  realEstateTypeName?: string; // 빌라
   aptName: string;
   buildingName: string;
   floorInfo: string;
