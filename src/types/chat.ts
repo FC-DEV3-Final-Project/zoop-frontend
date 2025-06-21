@@ -7,11 +7,17 @@ export interface ChatPreviewItem {
   lastMessageAt?: string;
 }
 
-export interface ChatItem extends ChatPreviewItem {
-  message: {
-    messageId: number;
-    senderType: "CHATBOT" | "USER";
-    content: string;
-    createdAt: string;
-  };
+export interface Property {
+  order: number;
+  propertyId: number;
+  tradeTypeName: string;
+  rentPrice: number;
+  warrantPrice: number;
+  dealPrice: number;
+  dealOrWarrantPrc: string;
+  tagList: string[];
+  articleName: string;
+  realEstateTypeName: string;
+  netArea: number;
+  imageUrl: string | null;
 }
