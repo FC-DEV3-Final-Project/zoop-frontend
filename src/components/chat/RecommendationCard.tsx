@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import PropertyCard from "../common/PropertyCard";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import ArrowRight from "../../../public/icons/arrow-right.svg";
+import ArrowRight from "../../../public/icons/arrow-right-gray.svg";
 
 const dummyDate = [
   {
@@ -200,7 +200,7 @@ const RecommendationCard = () => {
             >
               자세히 보기
             </button>
-            <Image src={ArrowRight} alt="자세히 보기" width={14} height={14} />
+            <Image src={ArrowRight} alt="자세히 보기" />
           </span>
         </div>
         <div className="rounded-b-2xl bg-white">
