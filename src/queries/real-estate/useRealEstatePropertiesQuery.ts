@@ -4,7 +4,7 @@ import fetchRealEstateProperties from "@/apis/real-estate/fetchRealEstatePropert
 
 export const useRealEstatePropertiesQuery = (
   realtyId: number,
-  tradeType: string,
+  tradeTypeName: string,
   size: number = 2,
 ) => {
   const {
@@ -15,9 +15,9 @@ export const useRealEstatePropertiesQuery = (
     error,
   } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchRealEstateProperties(page, size, realtyId, tradeType as "매매" | "월세" | "전세");
+      return fetchRealEstateProperties(page, size, realtyId, tradeTypeName as "매매" | "월세" | "전세");
     },
-    [realtyId, tradeType],
+    [realtyId, tradeTypeName],
   );
 
   return {
