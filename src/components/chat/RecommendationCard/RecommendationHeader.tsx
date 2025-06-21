@@ -12,6 +12,7 @@ const RecommendationHeader = () => {
     <div className="flex justify-between rounded-b-none rounded-t-2xl bg-blue-050-bg px-3 py-[10px]">
       <h1 className="text-subtitle4 text-blue-800-primary">AI 추천 매물</h1>
       <span className="flex items-center justify-center gap-1">
+        {/** TODO: 자세히 보기 경로 수정 필요 */}
         <button
           onClick={() => router.push("/")}
           className="flex items-center text-center text-body3 leading-none text-gray-800"
