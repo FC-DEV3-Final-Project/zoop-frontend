@@ -52,6 +52,8 @@ const UserInfoPage = () => {
 
   // 회원탈퇴
   const handleWithdraw = () => {
+    const confirmed = confirm("정말로 탈퇴하시겠습니까?");
+    if (!confirmed) return;
     withdrawMutation.mutate();
   };
 
@@ -78,7 +80,7 @@ const UserInfoPage = () => {
               trigger={
                 <button className="relative h-16 w-16 rounded-full bg-gray-100">
                   <Image
-                    src={account.profileImageUrl}
+                    src={account.profileImageUrl || "/imgs/default-profile.svg"}
                     alt="프로필"
                     width={64}
                     height={64}
