@@ -17,7 +17,7 @@ const UserInfoPage = () => {
   // 파일 input ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const { data: account, error, refetch } = useUserInfoQuery();
+  const { data: account, error } = useUserInfoQuery();
   const updateProfileImageMutation = useUpdateProfileImageMutation();
   const resetProfileImageMutation = useResetProfileImageMutation();
   const logoutMutation = useLogoutMutation();
@@ -34,13 +34,11 @@ const UserInfoPage = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     updateProfileImageMutation.mutate(file);
-    refetch();
   };
 
   // 프로필 이미지 삭제(기본이미지로 변경)
   const handleDeleteProfileImage = () => {
     resetProfileImageMutation.mutate();
-    refetch();
   };
 
   // 로그아웃
@@ -85,7 +83,6 @@ const UserInfoPage = () => {
                     width={64}
                     height={64}
                     className="h-full w-full overflow-hidden rounded-full object-cover"
-                    priority
                   />
                   <div className="absolute bottom-0 right-0">
                     <img src="/icons/image-upload.svg" alt="이미지 업로드" />
