@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
 import { useRouter } from "next/navigation";
@@ -36,9 +38,28 @@ const ReviewCard = ({
   isMine,
   isLikedByMe,
   onClick,
-}: ReviewCardProps & { isMine?: boolean }) => {
+}: ReviewCardProps) => {
   const router = useRouter();
   const { mutate: deleteReview } = useDeleteReviewMutation(propertyId);
+
+  const handleEdit = () => {
+    router.push(`/property/${propertyId}/review/edit/${reviewId}`);
+  };
+
+  const handleDelete = () => {
+    const confirmed = confirm("리뷰를 삭제하시겠습니까?");
+    if (!confirmed) return;
+
+    deleteReview(reviewId, {
+      onSuccess: () => {
+        console.log("리뷰 삭제 성공");
+        router.push(`/property/${propertyId}/review`);
+      },
+      onError: () => {
+        alert("리뷰 삭제에 실패했습니다. 다시 시도해주세요.");
+      },
+    });
+  };
 
   return (
     <div onClick={onClick} className="cursor-pointer">
@@ -67,22 +88,8 @@ const ReviewCard = ({
           {isMine && (
             <Dropdown
               items={[
-                {
-                  type: "edit",
-                  label: "수정하기",
-                  onClick: () => router.push(`/property/${propertyId}/review/edit/${reviewId}`),
-                },
-                {
-                  type: "delete",
-                  label: "삭제하기",
-                  onClick: () =>
-                    deleteReview(reviewId, {
-                      onSuccess: () => {
-                        console.log("리뷰 삭제 성공");
-                        router.push(`/property/${propertyId}/review`);
-                      },
-                    }),
-                },
+                { type: "edit", label: "수정하기", onClick: handleEdit },
+                { type: "delete", label: "삭제하기", onClick: handleDelete },
               ]}
             />
           )}
@@ -97,7 +104,7 @@ const ReviewCard = ({
               alt="star"
               width={16}
               height={16}
-              className="block" // 중요!
+              className="block"
             />
           ))}
           <span className="ml-[5px] text-caption1 leading-none text-black">
