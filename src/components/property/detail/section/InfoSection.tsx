@@ -65,7 +65,7 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
             src={data.images[0].imageUrl}
             alt="매물정보 사진"
             fill
-            sizes="(max-width: 640px) 100vw, 600px"
+            sizes="(max-width: 600px) 100vw, 600px"
             className="object-contain"
           />
         </div>
