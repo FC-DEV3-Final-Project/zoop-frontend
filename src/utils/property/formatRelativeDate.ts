@@ -1,4 +1,6 @@
-export const formatRelativeDate = (ymd: string): string => {
+export const formatRelativeDate = (ymd: string | null | undefined): string => {
+  if (!ymd || ymd.length !== 8) return "정보 없음";
+
   const now = new Date();
   const exposeDate = new Date(
     Number(ymd.slice(0, 4)),
