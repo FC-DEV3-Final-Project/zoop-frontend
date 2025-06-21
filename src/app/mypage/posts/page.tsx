@@ -17,7 +17,7 @@ const PostsPage = () => {
   const [selectedTab, setSelectedTab] = useState("reviews");
   const router = useRouter();
 
-  const { data: posts, isLoading } = usePostsQuery();
+  const { data: posts, isLoading, refetch } = usePostsQuery();
 
   if (isLoading) {
     return (
@@ -44,6 +44,7 @@ const PostsPage = () => {
                 key={idx}
                 type={selectedTab === "reviews" ? "review" : "comment"}
                 {...post}
+                refetch={refetch}
               />
             ))}
           </div>

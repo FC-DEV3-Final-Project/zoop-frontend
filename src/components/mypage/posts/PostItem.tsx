@@ -1,4 +1,6 @@
 import Dropdown from "@/components/common/Dropdown";
+import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
+import { useDeleteReviewMutation } from "@/queries/property/review/useDeleteReviewMutation";
 import { PostItemProps } from "@/types/post";
 import { useRouter } from "next/navigation";
 
@@ -12,14 +14,52 @@ export const PostItem = ({
   commentCount,
   item,
   review,
-}: PostItemProps) => {
+  refetch,
+}: PostItemProps & { refetch?: () => void }) => {
   const router = useRouter();
 
-  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
   const propertyOrComplexId =
     type === "review"
       ? item?.complexId || item?.propertyId
       : review?.item.complexId || review?.item.propertyId;
+
+  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
+
+  const { mutate: deleteReview } = useDeleteReviewMutation(propertyOrComplexId || 0);
+  const { mutate: deleteComment } = useDeleteCommentMutation(targetReviewId || 0);
+
+  const handleDelete = () => {
+    const confirmed = confirm(
+      type === "review" ? "리뷰를 삭제하시겠습니까?" : "댓글을 삭제하시겠습니까?",
+    );
+    if (!confirmed) return;
+
+    if (type === "review") {
+      // 리뷰 삭제
+      if (!reviewId) return;
+      deleteReview(reviewId, {
+        onSuccess: () => {
+          console.log("리뷰 삭제 성공");
+          refetch?.();
+        },
+        onError: () => {
+          alert("리뷰 삭제에 실패했습니다. 다시 시도해주세요.");
+        },
+      });
+    } else {
+      // 댓글 삭제
+      if (!commentId) return;
+      deleteComment(commentId, {
+        onSuccess: () => {
+          console.log("댓글 삭제 성공");
+          refetch?.();
+        },
+        onError: () => {
+          alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+        },
+      });
+    }
+  };
 
   return (
     <div
@@ -37,7 +77,7 @@ export const PostItem = ({
               type: "delete",
               label: "삭제하기",
               onClick: () => {
-                alert("삭제 버튼 클릭됨");
+                handleDelete();
               },
             },
           ]}
