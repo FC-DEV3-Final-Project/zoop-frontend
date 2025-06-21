@@ -73,8 +73,10 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
       },
       {
         onSuccess: () => {
-          //   router.push(`/property/${propertyId}/review`);
           router.replace(`/property/${propertyId}/review/`);
+        },
+        onError: () => {
+          alert("리뷰 수정에 실패했어요. 잠시 후 다시 시도해주세요.");
         },
       },
     );
