@@ -118,8 +118,9 @@ const SideBar = ({ onClose }: SideBarProps) => {
 
   const handelNewChat = () => {
     alert("새로운 대화 시작하기");
+    onClose?.();
 
-    // TODO : 채팅방 생성 API
+    // TODO : 채팅 초기화
   };
 
   const handleItemClick = (chatId: number) => {
@@ -127,7 +128,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
     setSearchKeyword(""); // 검색어 초기화
     onClose?.(); // 아이템 클릭 시 사이드바 닫기
 
-    // TODO: 채팅 불러오기 API
+    // TODO: 특정 채팅 불러오기 API
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -176,7 +177,7 @@ const SideBar = ({ onClose }: SideBarProps) => {
           className="flex items-center justify-start gap-1 text-title4 text-blue-800-primary"
         >
           새로운 대화 시작하기
-          <Image src={NewChatIcon} alt={"새로운 채팅"} width={24} height={24} />
+          <Image src={NewChatIcon} alt={"새로운 채팅 시작하기"} width={24} height={24} />
         </button>
       </SheetHeader>
 
