@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useToggleReviewLike } from "@/queries/property/review/useToggleReviewLike";
-import { useToggleCommentLike } from "@/queries/property/review/useToggleCommentLike";
+import { usePutReviewLikeMutation } from "@/queries/property/review/usePutReviewLikeMutation";
+import { usePutCommentLikeMutation } from "@/queries/property/review/usePutCommentLikeMutation";
 
 interface ThumbsButtonProps {
   itemId: number;
@@ -13,8 +13,8 @@ interface ThumbsButtonProps {
 }
 
 const ThumbsButton = ({ itemId, likeCount, initialLiked, type, reviewId }: ThumbsButtonProps) => {
-  const { mutateAsync: toggleReviewLike } = useToggleReviewLike();
-  const { mutateAsync: toggleCommentLike } = useToggleCommentLike(reviewId!);
+  const { mutateAsync: toggleReviewLike } = usePutReviewLikeMutation();
+  const { mutateAsync: toggleCommentLike } = usePutCommentLikeMutation(reviewId!);
 
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [count, setCount] = useState(likeCount);

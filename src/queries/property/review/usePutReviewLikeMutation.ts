@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleReviewLike } from "@/apis/property/review/putReviewLike";
 
-export const useToggleReviewLike = () => {
+export const usePutReviewLikeMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
