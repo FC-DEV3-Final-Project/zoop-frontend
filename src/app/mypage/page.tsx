@@ -36,7 +36,7 @@ const MyPage = () => {
               {/* 유저 정보 */}
               {homeData?.profile && <UserProfile profile={homeData.profile} />}
               {/* 포스트 박스 */}
-              <PostPreviewBox posts={homeData?.myReviews || []} />
+              <PostPreviewBox postPreviewItems={homeData?.reviewOrComments || []} />
             </section>
 
             {/* 하단: 탭바 + 리스트 */}

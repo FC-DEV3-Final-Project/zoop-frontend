@@ -8,27 +8,25 @@ export const mypageHomeHandlers = [
         data: {
           profile: {
             nickname: "mock",
-            profileImageUrl: "/imgs/default-profile.jpg",
+            profileImageUrl: "/imgs/default-profile.svg",
           },
           activity: {
             bookmarkedPropertyCount: 6,
             recentViewedPropertyCount: 2,
           },
-          myReviews: [
+          reviewOrComments: [
             {
-              reviweId: 1,
-              content: "mock 교통이 너무 편함 단, 퇴근러시 사람 많음...",
+              reviewId: 1,
+              content: "review 예시 교통이 너무 편함 단, 퇴근러시 사람 많음...",
               likeCount: 5,
               commentCount: 3,
             },
             {
-              reviweId: 2,
-              content: "mock 아이들 학교가 가까워서 좋아요, 교통도 좋아요.",
+              commentId: 2,
+              content: "comment 예시 아이들 학교가 가까워서 좋아요, 교통도 좋아요.",
               likeCount: 3,
-              commentCount: 3,
             },
           ],
-          myComments: null,
           bookmarkedProperties: [
             {
               propertyId: 100,
