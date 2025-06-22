@@ -1,10 +1,10 @@
 import Dropdown from "@/components/common/Dropdown";
-import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
-import { useDeleteReviewMutation } from "@/queries/property/review/useDeleteReviewMutation";
+import { useDeletePostReviewMutation } from "@/queries/mypage/useDeletePostReviewMutation";
+import { useDeletePostCommentMutation } from "@/queries/mypage/useDeletePostCommentMutation";
 import { PostItemProps } from "@/types/post";
 import { useRouter } from "next/navigation";
 
-export const PostItem = ({
+const PostItem = ({
   type,
   reviewId,
   commentId,
@@ -14,8 +14,7 @@ export const PostItem = ({
   commentCount,
   item,
   review,
-  refetch,
-}: PostItemProps & { refetch?: () => void }) => {
+}: PostItemProps) => {
   const router = useRouter();
 
   const propertyOrComplexId =
@@ -25,8 +24,8 @@ export const PostItem = ({
 
   const targetReviewId = type === "review" ? reviewId : review?.reviewId;
 
-  const { mutate: deleteReview } = useDeleteReviewMutation(propertyOrComplexId || 0);
-  const { mutate: deleteComment } = useDeleteCommentMutation(targetReviewId || 0);
+  const { mutate: deletePostReview } = useDeletePostReviewMutation();
+  const { mutate: deletePostComment } = useDeletePostCommentMutation();
 
   const handleDelete = () => {
     const confirmed = confirm(
@@ -37,10 +36,9 @@ export const PostItem = ({
     if (type === "review") {
       // 리뷰 삭제
       if (!reviewId) return;
-      deleteReview(reviewId, {
+      deletePostReview(reviewId, {
         onSuccess: () => {
           console.log("리뷰 삭제 성공");
-          refetch?.();
         },
         onError: () => {
           alert("리뷰 삭제에 실패했습니다. 다시 시도해주세요.");
@@ -49,10 +47,9 @@ export const PostItem = ({
     } else {
       // 댓글 삭제
       if (!commentId) return;
-      deleteComment(commentId, {
+      deletePostComment(commentId, {
         onSuccess: () => {
           console.log("댓글 삭제 성공");
-          refetch?.();
         },
         onError: () => {
           alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
