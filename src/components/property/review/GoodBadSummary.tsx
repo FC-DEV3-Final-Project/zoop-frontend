@@ -1,0 +1,30 @@
+"use client";
+
+interface GoodBadSummaryProps {
+  good: string[];
+  bad: string[];
+}
+
+const GoodBadSummary = ({ good, bad }: GoodBadSummaryProps) => {
+  const renderBlock = (label: "GOOD" | "BAD", items: string[]) => (
+    <div className="flex min-w-[45%] flex-1 flex-col gap-3 px-2 py-3">
+      <div className="rounded-lg border border-blue-800-primary px-3 py-1 text-center text-caption1 text-blue-800-primary">
+        {label}
+      </div>
+      <ul className="list-decimal pl-5 text-body2 text-black">
+        {items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-row justify-between gap-[15px] overflow-x-auto">
+      {renderBlock("GOOD", good)}
+      {renderBlock("BAD", bad)}
+    </div>
+  );
+};
+
+export default GoodBadSummary;
