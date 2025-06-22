@@ -29,7 +29,7 @@ const dummyDate = {
       articleName: "센트럴아파트 101동",
       tradeTypeName: "전세",
       rentPrice: null,
-      warrantPrice: 30000,
+      warrantPrice: 3000,
       dealPrice: null,
       dealOrWarrantPrc: "3억",
       summary: ["신축", "역세권"],
@@ -95,7 +95,7 @@ const dummyDate = {
       articleName: "래미안하이클래스 202동",
       tradeTypeName: "매매",
       rentPrice: null,
-      warrantPrice: null,
+      warrantPrice: 2400,
       dealPrice: 75000,
       dealOrWarrantPrc: "7억 5천",
       summary: ["공원 인접", "조용한 동네"],
@@ -260,7 +260,7 @@ const dummyDate = {
       articleName: "한강뷰자이 301동",
       tradeTypeName: "매매",
       rentPrice: null,
-      warrantPrice: null,
+      warrantPrice: 1440,
       dealPrice: 82000,
       dealOrWarrantPrc: "8억 2천",
       summary: ["신축", "강 조망"],
@@ -326,7 +326,7 @@ const dummyDate = {
       articleName: "미니빌 1층",
       tradeTypeName: "월세",
       rentPrice: 45,
-      warrantPrice: 300,
+      warrantPrice: 400000,
       dealPrice: null,
       dealOrWarrantPrc: "보증금 300 / 월세 45",
       summary: ["1인가구 추천", "역 근처"],
@@ -339,7 +339,7 @@ const dummyDate = {
       direction: "북동향",
       floorInfo: "1/2",
       exposureAddress: "서울시 동대문구 이문동",
-      etcFeeAmount: 40000,
+      etcFeeAmount: 400000,
       moveInPossibleYmd: "2025-09-05",
       articleFeatureDesc: "혼자 살기 좋은 컴팩트 원룸",
       detailDescription: "원룸, 욕실 1, 작은 부엌",
@@ -362,8 +362,8 @@ interface Props {
 const sortOptions = [
   { label: "가격 높은 순", value: "high" },
   { label: "가격 낮은 순", value: "low" },
-  { label: "면적 넓은 순", value: "wide " },
-  { label: "면적 좁은 순", value: "narrow " },
+  { label: "면적 넓은 순", value: "wide" },
+  { label: "면적 좁은 순", value: "narrow" },
 ];
 
 const MapListDialog = ({ open, onOpenChange }: Props) => {
@@ -435,13 +435,53 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
 
     switch (sortValue) {
       case "high":
-        return sorted.sort((a, b) => b.warrantPrice - a.warrantPrice); // 가격 높은 순
+        sorted.sort((a, b) => b.warrantPrice - a.warrantPrice);
+        console.log(
+          "매물 아이디: ",
+          sorted.map((v) => v.propertyId),
+          "💰 가격 높은 순:",
+          sorted.map((v) => v.warrantPrice),
+        );
+        return sorted;
+
       case "low":
-        return sorted.sort((a, b) => a.warrantPrice - b.warrantPrice); // 가격 낮은 순
+        sorted.sort((a, b) => a.warrantPrice - b.warrantPrice);
+        console.log(
+          "매물 아이디: ",
+          sorted.map((v) => v.propertyId),
+          "💰 가격 낮은 순:",
+          sorted.map((v) => v.warrantPrice),
+        );
+        return sorted;
+
       case "wide":
-        return sorted.sort((a, b) => b.area2 - a.area2); // 면적 넓은 순
+        sorted.sort((a, b) => {
+          const areaA = Math.floor(parseFloat(a.area2));
+          const areaB = Math.floor(parseFloat(b.area2));
+          return areaB - areaA;
+        });
+        console.log(
+          "매물 아이디: ",
+          sorted.map((v) => v.propertyId),
+          "📏 면적 넓은 순:",
+          sorted.map((v) => v.area2),
+        );
+        return sorted;
+
       case "narrow":
-        return sorted.sort((a, b) => a.area2 - b.area2); // 면적 좁은 순
+        sorted.sort((a, b) => {
+          const areaA = Math.floor(parseFloat(a.area2));
+          const areaB = Math.floor(parseFloat(b.area2));
+          return areaA - areaB; // 좁은 순
+        });
+        console.log(
+          "매물 아이디: ",
+          sorted.map((v) => v.propertyId),
+          "📏 면적 좁은 순:",
+          sorted.map((v) => Math.floor(parseFloat(v.area2))),
+        );
+        return sorted;
+
       default:
         return list;
     }
