@@ -11,6 +11,7 @@ interface InfoBoxProps {
     realEstateTypeName: string;
     correspondingFloorCount: string;
     area2: string;
+    isBookmarked: boolean;
     parkingPossibleYN: "Y" | "N";
     exposeStartYMD: string;
   };
@@ -26,6 +27,7 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
     realEstateTypeName,
     correspondingFloorCount,
     area2,
+    isBookmarked,
     parkingPossibleYN,
   } = propertyInfo;
 
@@ -45,7 +47,7 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
       <div className="flex justify-between">
         <div className="text-subtitle2">{articleName}</div>
         <div className="flex gap-[13px]">
-          <HeartButton itemId={propertyId} />
+          <HeartButton itemId={propertyId} initialBookmarked={propertyInfo.isBookmarked} />
           <button>
             <img src="/icons/share.svg" alt="share" width={24} height={24} />
           </button>
