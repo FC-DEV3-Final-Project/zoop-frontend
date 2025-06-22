@@ -1,35 +1,42 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useReviewSummaryQuery } from "@/queries/property/review/useReviewSummaryQuery";
 
-const tabs = [
-  {
-    name: "교통 환경",
-    value: "transport",
-    content: [
-      "대중교통 접근성이 뛰어나며, 도보 5분 거리에 지하철역이 있어 출퇴근이 편리합니다.",
-      "버스 노선도 다양해 강남, 시청 등 주요 지역으로 이동이 용이합니다.",
-      "단점이라면 출퇴근 시간대에는 도로 정체가 자주 발생하는 편입니다.",
-    ],
-  },
-  {
-    name: "주거 환경",
-    value: "residence",
-    content: ["주거 환경 관련 설명입니다."],
-  },
-  {
-    name: "학군",
-    value: "school",
-    content: ["학군 정보입니다."],
-  },
-  {
-    name: "주변 시설",
-    value: "facility",
-    content: ["주변 시설 정보입니다."],
-  },
-];
+const EnvironmentTabs = ({ propertyId }: { propertyId: number }) => {
+  const { data, isLoading } = useReviewSummaryQuery(propertyId);
+  // loading 및 데이터 없는 경우 디자인은 수정 예정 (임시)
+  if (isLoading || !data) {
+    return (
+      <div className="px-5 py-4 text-body2 text-gray-600">
+        리뷰 요약 정보를 불러오는 중입니다...
+      </div>
+    );
+  }
 
-const EnvironmentTabs = () => {
+  const tabs = [
+    {
+      name: "교통 환경",
+      value: "transport",
+      content: data.tra,
+    },
+    {
+      name: "학군",
+      value: "school",
+      content: data.edu,
+    },
+    {
+      name: "주변 시설",
+      value: "facility",
+      content: data.loc,
+    },
+    {
+      name: "의료 시설",
+      value: "hospital",
+      content: data.hel,
+    },
+  ];
+
   return (
     <Tabs defaultValue="transport" className="w-full">
       <TabsList className="z-5 relative flex w-full justify-start gap-0 bg-white p-0">
