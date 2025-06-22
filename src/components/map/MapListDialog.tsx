@@ -12,11 +12,13 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { ArrowLeft } from "lucide-react";
 import PropertyCard, { PropertyCardProps } from "../common/PropertyCard";
 import BottomSheet from "../common/BottomSheet";
 import { cn } from "@/lib/utils";
 import ToggleCompare from "./ToggleCompare";
+import MapViewer from "./MapViewer";
+import SortFilter from "./SortFilter";
+import PropertyListComponent from "./PropertyList";
 
 const dummyDate = {
   count: 10,
@@ -28,9 +30,9 @@ const dummyDate = {
       longitude: 127.04,
       articleName: "센트럴아파트 101동",
       tradeTypeName: "전세",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 3000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "3억",
       summary: ["신축", "역세권"],
       aptName: "센트럴아파트",
@@ -63,7 +65,7 @@ const dummyDate = {
       tradeTypeName: "월세",
       rentPrice: 50,
       warrantPrice: 1000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "보증금 1000 / 월세 50",
       summary: ["풀옵션", "역세권"],
       aptName: "해피빌",
@@ -94,7 +96,7 @@ const dummyDate = {
       longitude: 126.9644,
       articleName: "래미안하이클래스 202동",
       tradeTypeName: "매매",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 2400,
       dealPrice: 75000,
       dealOrWarrantPrc: "7억 5천",
@@ -127,9 +129,9 @@ const dummyDate = {
       longitude: 127.0568,
       articleName: "서초자이 A동",
       tradeTypeName: "전세",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 20000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "2억",
       summary: ["신축", "엘리베이터"],
       aptName: "서초자이",
@@ -162,7 +164,7 @@ const dummyDate = {
       tradeTypeName: "월세",
       rentPrice: 60,
       warrantPrice: 500,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "보증금 500 / 월세 60",
       summary: ["역세권", "반려동물 가능"],
       aptName: "",
@@ -193,9 +195,9 @@ const dummyDate = {
       longitude: 126.9227,
       articleName: "더테라스하우스 C동",
       tradeTypeName: "전세",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 27000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "2억 7천",
       summary: ["신축", "테라스"],
       aptName: "더테라스하우스",
@@ -228,7 +230,7 @@ const dummyDate = {
       tradeTypeName: "월세",
       rentPrice: 55,
       warrantPrice: 500,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "보증금 500 / 월세 55",
       summary: ["역세권", "즉시입주"],
       aptName: "",
@@ -259,7 +261,7 @@ const dummyDate = {
       longitude: 127.1144,
       articleName: "한강뷰자이 301동",
       tradeTypeName: "매매",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 1440,
       dealPrice: 82000,
       dealOrWarrantPrc: "8억 2천",
@@ -292,9 +294,9 @@ const dummyDate = {
       longitude: 126.9453,
       articleName: "에코빌아파트 3동",
       tradeTypeName: "전세",
-      rentPrice: null,
+      rentPrice: 0,
       warrantPrice: 18000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "1억 8천",
       summary: ["저층", "주차가능"],
       aptName: "에코빌아파트",
@@ -327,7 +329,7 @@ const dummyDate = {
       tradeTypeName: "월세",
       rentPrice: 45,
       warrantPrice: 400000,
-      dealPrice: null,
+      dealPrice: 0,
       dealOrWarrantPrc: "보증금 300 / 월세 45",
       summary: ["1인가구 추천", "역 근처"],
       aptName: "",
@@ -367,125 +369,14 @@ const sortOptions = [
 ];
 
 const MapListDialog = ({ open, onOpenChange }: Props) => {
-  const [originalList] = useState<any[]>(dummyDate.properties); // 정렬할 대상
-  const [propertyList, setPropertyList] = useState<any[]>(dummyDate.properties);
+  const [originalList] = useState<PropertyCardProps[]>(dummyDate.properties); // 정렬할 대상
+  const [propertyList, setPropertyList] = useState<PropertyCardProps[]>(dummyDate.properties);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
   const positions = dummyDate.properties.map((item) => ({
     latitude: item.latitude,
     longitude: item.longitude,
   }));
-
-  const mapElement = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    // kakao 객체가 브라우저에서 존재하는지 확인
-    const { kakao } = window;
-    if (!kakao) return;
-
-    // dialog가 완전히 그려진 뒤 실행되도록 지연
-    const timeoutId = setTimeout(() => {
-      kakao.maps.load(() => {
-        if (!mapElement.current) return;
-        // 지도 생성
-        const map = new kakao.maps.Map(mapElement.current!, {
-          center: new kakao.maps.LatLng(37.5665, 126.978), // 지도의 중심좌표
-          level: 9,
-        });
-
-        // positions 배열의 각 좌표마다 숫자 마커 생성
-        positions.forEach((item, i) => {
-          const latlng = new window.kakao.maps.LatLng(item.latitude, item.longitude);
-
-          // 숫자 마커로 사용할 img URL (스프라이트 방식)
-          const markerImg =
-            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
-
-          // 마커 이미지 전체 사이즈
-          const markerImgSize = new window.kakao.maps.Size(36, 37);
-
-          // 스프라이트 이미지에서 몇 번째 숫자를 쓸지 계산
-          const imgOptions = {
-            spriteSize: new window.kakao.maps.Size(36, 691), // 전체 스프라이트 크기
-            spriteOrigin: new window.kakao.maps.Point(0, i * 46 + 10), // 현재 index의 숫자 위치
-            offset: new window.kakao.maps.Point(13, 37), // 마커 위치 보정
-          };
-          // 마커 이미지 객체 생성
-          const markerImage = new window.kakao.maps.MarkerImage(
-            markerImg,
-            markerImgSize,
-            imgOptions,
-          );
-
-          // 마커 생성 및 지도에 표시
-          new window.kakao.maps.Marker({
-            map,
-            position: latlng,
-            image: markerImage,
-          });
-        });
-      });
-    }, 100); // 100ms 후에 실행
-  }, [open]);
-
-  const sortPropertyList = (list: any[], sortValue: string) => {
-    const sorted = [...list];
-
-    switch (sortValue) {
-      case "high":
-        sorted.sort((a, b) => b.warrantPrice - a.warrantPrice);
-        console.log(
-          "매물 아이디: ",
-          sorted.map((v) => v.propertyId),
-          "💰 가격 높은 순:",
-          sorted.map((v) => v.warrantPrice),
-        );
-        return sorted;
-
-      case "low":
-        sorted.sort((a, b) => a.warrantPrice - b.warrantPrice);
-        console.log(
-          "매물 아이디: ",
-          sorted.map((v) => v.propertyId),
-          "💰 가격 낮은 순:",
-          sorted.map((v) => v.warrantPrice),
-        );
-        return sorted;
-
-      case "wide":
-        sorted.sort((a, b) => {
-          const areaA = Math.floor(parseFloat(a.area2));
-          const areaB = Math.floor(parseFloat(b.area2));
-          return areaB - areaA;
-        });
-        console.log(
-          "매물 아이디: ",
-          sorted.map((v) => v.propertyId),
-          "📏 면적 넓은 순:",
-          sorted.map((v) => v.area2),
-        );
-        return sorted;
-
-      case "narrow":
-        sorted.sort((a, b) => {
-          const areaA = Math.floor(parseFloat(a.area2));
-          const areaB = Math.floor(parseFloat(b.area2));
-          return areaA - areaB; // 좁은 순
-        });
-        console.log(
-          "매물 아이디: ",
-          sorted.map((v) => v.propertyId),
-          "📏 면적 좁은 순:",
-          sorted.map((v) => Math.floor(parseFloat(v.area2))),
-        );
-        return sorted;
-
-      default:
-        return list;
-    }
-  };
 
   const handleSelect = (item: { label: string; value: string }) => {
     if (selectedText?.value === item.value) {
@@ -525,7 +416,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
         {/* 지도 + 리스트 생략 (여기에 구현한 UI 들어감) */}
         <div className="flex h-screen w-full flex-col">
           <div className="flex h-[339px] items-center justify-center bg-gray-050 text-black">
-            <div ref={mapElement} id="map" className="h-full w-full" />
+            <MapViewer markerPoint={positions} />
           </div>
           <div className="rounded-t-[16px]">
             <div className="flex h-[46px] items-center justify-between rounded-t-[16px] bg-blue-050-bg px-[12px] py-[20px]">
@@ -537,73 +428,27 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
             </div>
 
             <div className="flex h-[52px] items-center justify-between border-b border-gray-300 px-[12px] py-[20px]">
-              <BottomSheet
-                trigger={
-                  <button className="flex h-7 w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1 text-body2">
-                    {selectedText?.label ?? "AI추천 순"}
-                    <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
-                  </button>
-                }
-                title="정렬 방식"
-              >
-                {(close) =>
-                  sortOptions.map((item) => {
-                    const isSelected = item.value === selectedText?.value;
-                    return (
-                      <button
-                        key={item.value}
-                        className={`flex h-[48px] cursor-pointer items-center justify-start px-[20px] text-left text-body1 hover:bg-gray-200 ${
-                          isSelected ? "bg-gray-200 text-subtitle2" : ""
-                        }`}
-                        onClick={() => {
-                          console.log("선택된 항목:", item);
-                          setSelectedText(item); // 필요시 선택 항목 반영
-                          handleSelect(item);
-                          close();
-                        }}
-                      >
-                        {item.label}
-                      </button>
-                    );
-                  })
-                }
-              </BottomSheet>
+              <SortFilter
+                sortOptions={sortOptions}
+                selectedText={selectedText}
+                onSelect={handleSelect}
+              />
               <div className="flex items-center gap-2">
                 <div className="flex gap-1">
                   <span>비교하기</span>
                   <ToggleCompare />
                 </div>
                 <button>
-                  <img src="/icons/excel.svg" alt="엑셀 다운" className="h-6 w-6" />
+                  <img
+                    src="/icons/excel.svg"
+                    alt="엑셀 다운"
+                    className="h-6 w-6"
+                    onClick={() => console.log("엑셀다운 버튼 클릭")}
+                  />
                 </button>
               </div>
             </div>
-            <div
-              className="flex flex-col overflow-y-auto"
-              style={{ maxHeight: "calc(100vh - 339px - 46px - 52px)" }}
-            >
-              {/* 리스트 영역 */}
-              {propertyList.map((property) => (
-                <div key={property.propertyId}>
-                  <PropertyCard
-                    key={property.propertyId}
-                    propertyId={property.propertyId}
-                    order={property.order}
-                    tradeTypeName={property.tradeTypeName}
-                    summary={property.summary || []}
-                    realEstateTypeName={property.realEstateTypeName}
-                    dealOrWarrantPrc={property.dealOrWarrantPrc}
-                    buildingName={property.buildingName}
-                    area2={property.area2}
-                    isBookmarked={true}
-                    imageUrl={property.imageUrl}
-                    rentPrice={property.rentPrice || undefined}
-                    aptName={property.aptName}
-                    articleName={property.articleName}
-                  />
-                </div>
-              ))}
-            </div>
+            <PropertyListComponent properties={propertyList} />
           </div>
         </div>
       </DialogContent>
@@ -612,3 +457,28 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
 };
 
 export default MapListDialog;
+
+const sortPropertyList = (list: any[], sortValue: string) => {
+  const sorted = [...list];
+
+  switch (sortValue) {
+    case "high":
+      sorted.sort((a, b) => b.warrantPrice - a.warrantPrice);
+      return sorted;
+
+    case "low":
+      sorted.sort((a, b) => a.warrantPrice - b.warrantPrice);
+      return sorted;
+
+    case "wide":
+      return sorted.sort(
+        (a, b) => Math.floor(parseFloat(b.area2)) - Math.floor(parseFloat(a.area2)),
+      );
+    case "narrow":
+      return sorted.sort(
+        (a, b) => Math.floor(parseFloat(a.area2)) - Math.floor(parseFloat(b.area2)),
+      );
+    default:
+      return list;
+  }
+};
