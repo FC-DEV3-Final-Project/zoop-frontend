@@ -15,5 +15,5 @@ export type Comment = {
 
 export const fetchComments = async (reviewId: number): Promise<Comment[]> => {
   const res = await axiosInstance.get(`/reviews/${reviewId}/comments`);
-  return res.data.data.comments;
+  return res.data?.data ?? [];
 };
