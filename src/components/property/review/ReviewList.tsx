@@ -7,7 +7,7 @@ import ReviewSortButtons from "./ReviewSortButtons";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
 import { formatDate } from "@/utils/property/formatDate";
 
-type SortType = "recommended" | "latest";
+type SortType = "like" | "latest";
 
 interface ReviewListProps {
   propertyId: number;
@@ -15,10 +15,10 @@ interface ReviewListProps {
 
 const ReviewList = ({ propertyId }: ReviewListProps) => {
   const router = useRouter();
-  const [sortType, setSortType] = useState<SortType>("recommended");
+  const [sortType, setSortType] = useState<SortType>("like");
 
   const { data, isLoading } = useReviewListQuery(propertyId, {
-    sort: sortType === "recommended" ? "like" : "latest",
+    sort: sortType === "like" ? "like" : "latest",
   });
 
   const reviews = data?.reviews ?? [];
