@@ -19,21 +19,33 @@ export type Review = {
   isMine: boolean;
 };
 
-type ReviewListResponse = {
+export type ReviewListData = {
+  propertyId: number;
+  complexId: number | null;
+  avgRating: number;
+  reviews: Review[];
+};
+
+export type ReviewListResponse = {
   status: number;
   message: string;
-  data: {
-    propertyId: number;
-    reviews: Review[];
-  };
+  data: ReviewListData;
 };
 
 export const fetchReviewList = async (
   propertyId: number,
   params?: { sort?: "like" | "latest" },
-): Promise<Review[]> => {
-  const res = await axiosInstance.get<ReviewListResponse>(`/reviews/${propertyId}`, {
-    params,
-  });
-  return res.data.data.reviews;
+): Promise<ReviewListData> => {
+  const res = await axiosInstance.get<ReviewListResponse>(`/reviews/${propertyId}`);
+  const data = res.data.data;
+
+  if (params?.sort === "like") {
+    data.reviews.sort((a, b) => b.likeCount - a.likeCount); // 공감 수 많은 순
+  } else {
+    data.reviews.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(), // 최신순
+    );
+  }
+
+  return data;
 };
