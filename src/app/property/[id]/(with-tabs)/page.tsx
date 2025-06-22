@@ -8,6 +8,7 @@ import { Header } from "@/layout/Header";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
+import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 
 function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -17,7 +18,8 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { data: basicInfo, isLoading, error } = useBasicInfoQuery(propertyId);
   const { data: agent, isLoading: agentLoading } = useAgentQuery(propertyId);
 
-  if (isLoading || error || !basicInfo) return null;
+  if (isLoading) return null;
+  if (error || !basicInfo) return <NotFoundProperty />;
 
   const { articleName } = basicInfo;
 

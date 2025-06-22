@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
 import { fetchBasicInfo, BasicInfo } from "@/apis/property/detail/fetchBasicInfo";
+import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 
 const TAB_OPTIONS = [
   { label: "상세 정보", value: "detail" },
@@ -52,7 +53,7 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
     }
   }, [pathname]);
 
-  if (!propertyInfo) return null;
+  if (!propertyInfo) return <NotFoundProperty />;
 
   return (
     <div className="pt-16">
