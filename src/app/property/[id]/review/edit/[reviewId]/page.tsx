@@ -20,7 +20,7 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
   const { data: reviewListData, isLoading: isReviewLoading } = useReviewListQuery(propertyId);
   const { mutate } = usePatchReviewMutation(reviewId);
 
-  const review = reviewListData?.find((r) => r.reviewId === reviewId);
+  const review = reviewListData?.reviews.find((r) => r.reviewId === reviewId);
 
   const [rating, setRating] = useState(review?.rating ?? 0);
   const [content, setContent] = useState(review?.content ?? "");
