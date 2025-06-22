@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface InfiniteScrollResponse<T> {
   content: T[];
@@ -8,6 +8,7 @@ interface InfiniteScrollResponse<T> {
 const useInfiniteScroll = <T>(
   fetchMore: (page: number) => Promise<InfiniteScrollResponse<T>>,
   deps: any[] = [],
+  enabled: boolean = true,
 ) => {
   const [items, setItems] = useState<T[]>([]);
   const [page, setPage] = useState(0);
@@ -16,14 +17,21 @@ const useInfiniteScroll = <T>(
   const [error, setError] = useState<string | null>(null);
   const loader = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const reset = useCallback(() => {
     setItems([]);
     setPage(0);
     setHasMore(true);
+    setError(null);
+  }, []);
+
+  useEffect(() => {
+    if (enabled) {
+      reset();
+    }
   }, deps);
 
   useEffect(() => {
-    if (!hasMore) return;
+    if (!hasMore || !enabled) return;
     setLoading(true);
     fetchMore(page)
       .then((response) => {
@@ -34,10 +42,10 @@ const useInfiniteScroll = <T>(
         setError(error.message);
       })
       .finally(() => setLoading(false));
-  }, [page, ...deps]);
+  }, [page, enabled, ...deps]);
 
   useEffect(() => {
-    if (!hasMore || loading) return;
+    if (!hasMore || loading || !enabled) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading) {
@@ -50,9 +58,9 @@ const useInfiniteScroll = <T>(
     return () => {
       if (loader.current) observer.unobserve(loader.current);
     };
-  }, [hasMore, loading]);
+  }, [hasMore, loading, enabled]);
 
-  return { items, loader, hasMore, loading, error };
+  return { items, loader, hasMore, loading, error, reset };
 };
 
 export default useInfiniteScroll;

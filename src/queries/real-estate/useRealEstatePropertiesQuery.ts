@@ -6,18 +6,19 @@ export const useRealEstatePropertiesQuery = (
   realtyId: number,
   tradeTypeName: string,
   size: number = 2,
+  enabled: boolean = true,
 ) => {
-  const {
-    items,
-    loader,
-    hasMore,
-    loading,
-    error,
-  } = useInfiniteScroll<PropertyCardProps>(
+  const { items, loader, hasMore, loading, error, reset } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchRealEstateProperties(page, size, realtyId, tradeTypeName as "매매" | "월세" | "전세");
+      return fetchRealEstateProperties(
+        page,
+        size,
+        realtyId,
+        tradeTypeName as "매매" | "월세" | "전세",
+      );
     },
     [realtyId, tradeTypeName],
+    enabled,
   );
 
   return {
@@ -26,5 +27,6 @@ export const useRealEstatePropertiesQuery = (
     hasMore,
     loading,
     error,
+    reset,
   };
 };

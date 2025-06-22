@@ -19,21 +19,13 @@ interface PropertyListSectionProps {
   realtyId?: number;
 }
 
-// 탭 값과 tradeType 매핑
-const tabToTradeType = {
-  rent: "월세",
-  lease: "전세",
-  deal: "매매",
-};
-
-// 부동산 탭인지 확인하는 함수
-const isRealEstateTab = (selectedTab: string): boolean => {
-  return selectedTab === "rent" || selectedTab === "lease" || selectedTab === "deal";
-};
-
-// 북마크 탭인지 확인하는 함수
-const isBookmarkedTab = (selectedTab: string): boolean => {
-  return selectedTab === "bookmarked";
+type CurrentQueryType = {
+  items: PropertyCardProps[];
+  loader: React.RefObject<HTMLDivElement | null>;
+  hasMore: boolean;
+  loading: boolean;
+  error: string | null;
+  reset: () => void;
 };
 
 const PropertyListSection = ({
@@ -46,35 +38,41 @@ const PropertyListSection = ({
 }: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
 
-  // 부동산 쿼리
-  const realEstateQuery = useRealEstatePropertiesQuery(
-    realtyId!,
-    tabToTradeType[selectedTab as keyof typeof tabToTradeType],
-    20,
-  );
+  // 부동산 쿼리들 - enabled 옵션으로 조건부 호출
+  const rentQuery = useRealEstatePropertiesQuery(realtyId!, "월세", 20, selectedTab === "rent");
+  const leaseQuery = useRealEstatePropertiesQuery(realtyId!, "전세", 20, selectedTab === "lease");
+  const dealQuery = useRealEstatePropertiesQuery(realtyId!, "매매", 20, selectedTab === "deal");
 
-  // 북마크 쿼리
-  const bookmarkedQuery = useBookmarkedPropertiesQuery(20);
+  // 북마크 쿼리 - enabled 옵션으로 조건부 호출
+  const bookmarkedQuery = useBookmarkedPropertiesQuery(20, selectedTab === "bookmarked");
 
   const handleMapView = () => {
     alert("지도에서 보기 클릭!");
   };
 
+  // 현재 선택된 탭의 쿼리 가져오기
+  const getCurrentQuery = (): CurrentQueryType | null => {
+    if (selectedTab === "rent") return rentQuery;
+    if (selectedTab === "lease") return leaseQuery;
+    if (selectedTab === "deal") return dealQuery;
+    if (selectedTab === "bookmarked") return bookmarkedQuery;
+    return null;
+  };
+
+  const currentQuery = getCurrentQuery();
+
   // 탭에 따른 데이터와 로더 선택
-  const { currentProperties, currentLoader, isLoading, hasMoreItems, currentError } =
-    (isRealEstateTab(selectedTab) || isBookmarkedTab(selectedTab)) &&
-    (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)
-      ? {
-          currentProperties:
-            (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)!.items || [],
-          currentLoader: (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)!.loader,
-          isLoading: (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)!.loading,
-          hasMoreItems: (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)!.hasMore,
-          currentError: (isRealEstateTab(selectedTab) ? realEstateQuery : bookmarkedQuery)!.error,
-        }
-      : {
-          currentProperties: propertyMap?.[selectedTab] || [],
-        };
+  const { currentProperties, currentLoader, isLoading, hasMoreItems, currentError } = currentQuery
+    ? {
+        currentProperties: currentQuery.items || [],
+        currentLoader: currentQuery.loader,
+        isLoading: currentQuery.loading,
+        hasMoreItems: currentQuery.hasMore,
+        currentError: currentQuery.error,
+      }
+    : {
+        currentProperties: propertyMap?.[selectedTab] || [],
+      };
 
   return (
     <section className="flex flex-col">
