@@ -34,7 +34,7 @@ const MyPage = () => {
             {/* 상단: 프로필/포스트 */}
             <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
               {/* 유저 정보 */}
-              {homeData?.profile && <UserProfile profile={homeData.profile} />}
+              {homeData?.userInfo && <UserProfile profile={homeData.userInfo} />}
               {/* 포스트 박스 */}
               <PostPreviewBox postPreviewItems={homeData?.reviewOrComments || []} />
             </section>

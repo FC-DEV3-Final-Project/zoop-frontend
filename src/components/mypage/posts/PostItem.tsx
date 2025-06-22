@@ -47,11 +47,13 @@ const PostItem = ({
     } else {
       // 댓글 삭제
       if (!commentId) return;
+      console.log("댓글 삭제 시작", commentId);
       deletePostComment(commentId, {
         onSuccess: () => {
           console.log("댓글 삭제 성공");
         },
-        onError: () => {
+        onError: (error) => {
+          console.error("댓글 삭제 에러", error);
           alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
         },
       });

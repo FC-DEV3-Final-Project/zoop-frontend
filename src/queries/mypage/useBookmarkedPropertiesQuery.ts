@@ -5,7 +5,8 @@ import { PropertyCardProps } from "@/components/common/PropertyCard";
 export const useBookmarkedPropertiesQuery = (size: number = 2, enabled: boolean = true) => {
   const { items, loader, hasMore, loading, error, reset } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchBookmarkedProperties(page, size);
+      const { myProperties, hasNext } = await fetchBookmarkedProperties(page, size);
+      return { content: myProperties, hasNext };
     },
     [],
     enabled,

@@ -6,7 +6,7 @@ export const mypageHomeHandlers = [
     return HttpResponse.json(
       {
         data: {
-          profile: {
+          userInfo: {
             nickname: "mock",
             profileImageUrl: "/imgs/default-profile.svg",
           },
@@ -16,15 +16,30 @@ export const mypageHomeHandlers = [
           },
           reviewOrComments: [
             {
-              reviewId: 1,
-              content: "review 예시 교통이 너무 편함 단, 퇴근러시 사람 많음...",
-              likeCount: 5,
-              commentCount: 3,
+              reviewId: 9,
+              content: "review 예시 어쩌구 저쩌구 리뷰입니다.",
+              createdAt: "2025-06-20",
+              likeCount: 1,
+              commentCount: 0,
+              item: {
+                propertyId: null,
+                articleName: "그루",
+              },
             },
             {
-              commentId: 2,
-              content: "comment 예시 아이들 학교가 가까워서 좋아요, 교통도 좋아요.",
-              likeCount: 3,
+              commentId: 3,
+              content: "comment 예시 어쩌구 저쩌구 댓글입니다.",
+              createdAt: "2025-06-20",
+              likeCount: 0,
+              review: {
+                reviewId: 3,
+                content: "Lovely community and staff.",
+                item: {
+                  complexId: 33,
+                  propertyId: null,
+                  articleName: "연립(1184)",
+                },
+              },
             },
           ],
           bookmarkedProperties: [
@@ -79,7 +94,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 30000,
               dealOrWarrantPrc: "3억",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "남현한일유앤아이",
+              aptName: "최근 본 매물 1",
               buildingName: "101동",
               realEstateTypeName: "아파트",
               area2: "34.5",
@@ -95,7 +110,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 65000,
               dealOrWarrantPrc: "6억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "남현한일유앤아이",
+              aptName: "최근 본 매물 2",
               buildingName: "101동",
               realEstateTypeName: "아파트",
               area2: "34.5",
@@ -111,7 +126,7 @@ export const mypageHomeHandlers = [
               dealPrice: 135000,
               dealOrWarrantPrc: "13억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "남현한일유앤아이",
+              aptName: "최근 본 매물 3",
               buildingName: "101동",
               realEstateTypeName: "아파트",
               area2: "34.5",
@@ -129,7 +144,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 50000,
               dealOrWarrantPrc: "5억",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "그루",
+              aptName: "최근 본 매물 4",
               buildingName: "1동",
               realEstateTypeName: "오피스텔",
               area2: "34.5",
@@ -145,7 +160,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 65000,
               dealOrWarrantPrc: "6억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "대청타워",
+              aptName: "최근 본 매물 5",
               buildingName: "1동",
               realEstateTypeName: "오피스텔",
               area2: "34.5",
@@ -161,7 +176,7 @@ export const mypageHomeHandlers = [
               dealPrice: 135000,
               dealOrWarrantPrc: "13억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "메트하임",
+              aptName: "최근 본 매물 6",
               buildingName: "1동",
               realEstateTypeName: "오피스텔",
               area2: "34.5",
@@ -180,7 +195,7 @@ export const mypageHomeHandlers = [
               dealOrWarrantPrc: "2억 5,700",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
               //realEstateTypeName이 원룸/투룸 또는 빌라인 경우 articleName 사용으로 대체
-              articleName: "빌라",
+              articleName: "최근 본 매물 7",
               //데이터가 동 데이터가 아닌 "다인일"같은 데이터나 빌라로 들어감
               buildingName: "다인힐",
 
@@ -198,7 +213,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 65000,
               dealOrWarrantPrc: "6억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              articleName: "다인힐",
+              articleName: "최근 본 매물 8",
               buildingName: "다인힐",
               realEstateTypeName: "빌라",
               area2: "34.5",
@@ -214,8 +229,8 @@ export const mypageHomeHandlers = [
               dealPrice: 135000,
               dealOrWarrantPrc: "13억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              aptName: "메트하임",
-              articleName: "메트하임",
+              aptName: "최근 본 매물 9",
+              articleName: "최근 본 매물 9",
               buildingName: "다인힐",
               realEstateTypeName: "빌라",
               area2: "34.5",
@@ -233,7 +248,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 5000,
               dealOrWarrantPrc: "2억 5,700",
               summary: ["신축", "풀옵션", "역세권"],
-              articleName: "단독",
+              articleName: "최근 본 매물 10",
               buildingName: "A동",
               realEstateTypeName: "단독",
               area2: "34.5",
@@ -249,7 +264,7 @@ export const mypageHomeHandlers = [
               warrantPrice: 65000,
               dealOrWarrantPrc: "6억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              articleName: "다가구",
+              articleName: "최근 본 매물 11",
               buildingName: "1동",
               realEstateTypeName: "다가구",
               area2: "34.5",
@@ -265,7 +280,7 @@ export const mypageHomeHandlers = [
               dealPrice: 135000,
               dealOrWarrantPrc: "13억5,000",
               summary: ["25년이상", "올수리", "역세권", "대단지"],
-              articleName: "null A동",
+              articleName: "최근 본 매물 12",
               buildingName: "1동",
               realEstateTypeName: "단독",
               area2: "34.5",
@@ -294,41 +309,49 @@ export const mypageHomeHandlers = [
 
     if (page === 0) {
       return HttpResponse.json({
-        content: [
-          { propertyId: 1, realEstateTypeName: "1번매물" },
-          { propertyId: 2, realEstateTypeName: "2번매물" },
-        ],
-        page: 0,
-        size: 2,
-        hasNext: true,
+        data: {
+          myProperties: [
+            { propertyId: 1, realEstateTypeName: "1번매물 찜한 매물" },
+            { propertyId: 2, realEstateTypeName: "2번매물 찜한 매물" },
+          ],
+          page: 0,
+          size: 2,
+          hasNext: true,
+        },
       });
     } else if (page === 1) {
       return HttpResponse.json({
-        content: [
-          { propertyId: 3, realEstateTypeName: "3번매물" },
-          { propertyId: 4, realEstateTypeName: "4번매물" },
-        ],
-        page: 1,
-        size: 2,
-        hasNext: true,
+        data: {
+          myProperties: [
+            { propertyId: 3, realEstateTypeName: "3번매물 찜한 매물" },
+            { propertyId: 4, realEstateTypeName: "4번매물 찜한 매물" },
+          ],
+          page: 1,
+          size: 2,
+          hasNext: true,
+        },
       });
     } else if (page === 2) {
       return HttpResponse.json({
-        content: [
-          { propertyId: 5, realEstateTypeName: "5번매물" },
-          { propertyId: 6, realEstateTypeName: "6번매물" },
-        ],
-        page: 2,
-        size: 2,
-        hasNext: false,
+        data: {
+          myProperties: [
+            { propertyId: 5, realEstateTypeName: "5번매물 찜한 매물" },
+            { propertyId: 6, realEstateTypeName: "6번매물 찜한 매물" },
+          ],
+          page: 2,
+          size: 2,
+          hasNext: false,
+        },
       });
     }
 
     return HttpResponse.json({
-      content: [],
-      page,
-      size,
-      hasNext: false,
+      data: {
+        myProperties: [],
+        page,
+        size,
+        hasNext: false,
+      },
     });
   }),
 
