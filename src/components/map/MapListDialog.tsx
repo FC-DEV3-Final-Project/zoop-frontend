@@ -13,7 +13,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { ArrowLeft } from "lucide-react";
-import PropertyCard from "../common/PropertyCard";
+import PropertyCard, { PropertyCardProps } from "../common/PropertyCard";
 import BottomSheet from "../common/BottomSheet";
 import { cn } from "@/lib/utils";
 import ToggleCompare from "./ToggleCompare";
@@ -367,7 +367,8 @@ const sortOptions = [
 ];
 
 const MapListDialog = ({ open, onOpenChange }: Props) => {
-  // const mapRef = useRef<HTMLDivElement | null>(null);
+  const [originalList] = useState<any[]>(dummyDate.properties); // 정렬할 대상
+  const [propertyList, setPropertyList] = useState<any[]>(dummyDate.properties);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
   const positions = dummyDate.properties.map((item) => ({
@@ -429,11 +430,31 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
     }, 100); // 100ms 후에 실행
   }, [open]);
 
+  const sortPropertyList = (list: any[], sortValue: string) => {
+    const sorted = [...list];
+
+    switch (sortValue) {
+      case "high":
+        return sorted.sort((a, b) => b.warrantPrice - a.warrantPrice); // 가격 높은 순
+      case "low":
+        return sorted.sort((a, b) => a.warrantPrice - b.warrantPrice); // 가격 낮은 순
+      case "wide":
+        return sorted.sort((a, b) => b.area2 - a.area2); // 면적 넓은 순
+      case "narrow":
+        return sorted.sort((a, b) => a.area2 - b.area2); // 면적 좁은 순
+      default:
+        return list;
+    }
+  };
+
   const handleSelect = (item: { label: string; value: string }) => {
     if (selectedText?.value === item.value) {
       setSelectedText(null);
+      setPropertyList(originalList);
     } else {
       setSelectedText(item);
+      const sorted = sortPropertyList(propertyList, item.value);
+      setPropertyList(sorted);
     }
   };
 
@@ -522,7 +543,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
               style={{ maxHeight: "calc(100vh - 339px - 46px - 52px)" }}
             >
               {/* 리스트 영역 */}
-              {dummyDate.properties.map((property) => (
+              {propertyList.map((property) => (
                 <div key={property.propertyId}>
                   <PropertyCard
                     key={property.propertyId}
