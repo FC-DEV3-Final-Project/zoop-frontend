@@ -11,7 +11,10 @@ export type ToggleCommentLikeResponse = {
 export const toggleCommentLike = async (
   reviewId: number,
   commentId: number,
+  isLiked: boolean,
 ): Promise<ToggleCommentLikeResponse> => {
-  const response = await axiosInstance.put(`/reviews/${reviewId}/comments/${commentId}/likes`);
+  const response = await axiosInstance.put(`/reviews/${reviewId}/comments/${commentId}/likes`, {
+    isLiked,
+  });
   return response.data.data;
 };

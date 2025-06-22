@@ -6,7 +6,10 @@ export type ToggleReviewLikeResponse = {
   isLiked: boolean;
 };
 
-export const toggleReviewLike = async (reviewId: number): Promise<ToggleReviewLikeResponse> => {
-  const response = await axiosInstance.put(`/reviews/${reviewId}/likes`);
+export const toggleReviewLike = async (
+  reviewId: number,
+  isLiked: boolean,
+): Promise<ToggleReviewLikeResponse> => {
+  const response = await axiosInstance.put(`/reviews/${reviewId}/likes`, { isLiked });
   return response.data.data;
 };
