@@ -4,7 +4,7 @@ import type { Comment } from "@/apis/property/review/fetchComments";
 
 export const useCommentListQuery = (reviewId: number) =>
   useQuery<Comment[]>({
-    queryKey: ["comments", reviewId],
+    queryKey: ["commentList", reviewId],
     queryFn: () => fetchComments(reviewId),
     enabled: !!reviewId,
   });
