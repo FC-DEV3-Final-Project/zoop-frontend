@@ -23,8 +23,14 @@ const Root = ({ children, bgColorClassName = "bg-white", size = "sm" }: HeaderRo
   );
 };
 
-const Prev = ({ onPrevClick }: { onPrevClick?: () => void }) => (
-  <button onClick={onPrevClick} className="flex justify-center">
+const Prev = ({
+  onPrevClick,
+  className = "",
+}: {
+  onPrevClick?: () => void;
+  className?: string;
+}) => (
+  <button onClick={onPrevClick} className={`flex justify-center ${className}`}>
     <Image src={ArrowLeftIcon} alt="뒤로가기" width={24} height={24} />
   </button>
 );
@@ -35,8 +41,8 @@ const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
   </div>
 );
 
-const Title = ({ children }: { children: string }) => (
-  <h1 className="absolute left-1/2 -translate-x-1/2 text-subtitle2">{children}</h1>
+const Title = ({ children, className = "" }: { children: string; className?: string }) => (
+  <h1 className={`absolute left-1/2 -translate-x-1/2 text-subtitle2 ${className}`}>{children}</h1>
 );
 
 const Close = ({ onCloseClick }: { onCloseClick?: () => void }) => (
