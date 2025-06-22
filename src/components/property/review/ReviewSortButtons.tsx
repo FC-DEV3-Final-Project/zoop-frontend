@@ -10,7 +10,7 @@ const ReviewSortButtons = ({ sortType, onChange }: ReviewSortButtonsProps) => {
   return (
     <div className="flex gap-2">
       <button className={getClass("recommended")} onClick={() => onChange("recommended")}>
-        추천순
+        공감순
       </button>
       <button className={getClass("latest")} onClick={() => onChange("latest")}>
         최신순
