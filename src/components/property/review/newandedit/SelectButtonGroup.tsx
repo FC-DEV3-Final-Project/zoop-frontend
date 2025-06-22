@@ -1,17 +1,21 @@
-"use client";
+// SelectButtonGroup.tsx
 
-interface Option {
+interface Option<T extends string> {
   label: string;
-  value: string;
+  value: T;
 }
 
-interface SelectButtonGroupProps {
-  options: Option[];
-  selected: string;
-  onChange: (value: string) => void;
+interface SelectButtonGroupProps<T extends string> {
+  options: Option<T>[];
+  selected: T;
+  onChange: (value: T) => void;
 }
 
-const SelectButtonGroup = ({ options, selected, onChange }: SelectButtonGroupProps) => {
+const SelectButtonGroup = <T extends string>({
+  options,
+  selected,
+  onChange,
+}: SelectButtonGroupProps<T>) => {
   return (
     <div className="flex gap-[10px]">
       {options.map((opt) => {
