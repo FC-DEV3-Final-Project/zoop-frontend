@@ -17,9 +17,11 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
   const router = useRouter();
   const [sortType, setSortType] = useState<SortType>("recommended");
 
-  const { data: reviews = [], isLoading } = useReviewListQuery(propertyId, {
+  const { data, isLoading } = useReviewListQuery(propertyId, {
     sort: sortType === "recommended" ? "like" : "latest",
   });
+
+  const reviews = data?.reviews ?? [];
 
   const residenceMap = {
     NON_RESIDENT: "거주 안함",
@@ -34,14 +36,42 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
 
   return (
     <>
-      <div className="flex justify-between px-5 py-3">
-        <div className="text-subtitle2 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+      <div className="flex items-center justify-between px-5 py-3">
+        <div className="flex items-center gap-[15px]">
+          <div className="text-subtitle2 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+
+          {/* 평균 별점 표시 */}
+          {data?.avgRating !== undefined && (
+            <div className="flex items-center">
+              {Array.from({ length: 5 }, (_, i) => {
+                const filled = i + 1 <= Math.floor(data.avgRating);
+                const isHalf = !filled && i + 0.5 <= data.avgRating;
+
+                const icon = filled
+                  ? "/icons/star-filled.svg"
+                  : isHalf
+                    ? "/icons/star-half.svg"
+                    : "/icons/star-unfilled.svg";
+
+                return (
+                  <img key={i} src={icon} alt="별점" width={20} height={20} className="block" />
+                );
+              })}
+              <span className="ml-1 inline-block translate-y-[1px] text-subtitle2 text-black">
+                {data.avgRating.toFixed(1)}
+              </span>
+            </div>
+          )}
+        </div>
+
         <ReviewSortButtons sortType={sortType} onChange={setSortType} />
       </div>
 
-      <div className="flex flex-col gap-2 bg-gray-100">
+      <div className="flex flex-col gap-2 bg-white">
         {isLoading ? (
           <div className="px-5 py-4 text-body2 text-gray-500">리뷰를 불러오는 중입니다...</div>
+        ) : reviews.length === 0 ? (
+          <div className="px-5 py-4 text-body2 text-gray-500">아직 등록된 리뷰가 없습니다.</div>
         ) : (
           reviews.map((review) => (
             <ReviewCard
@@ -55,8 +85,8 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
               likes={review.likeCount}
               comments={review.commentCount}
               profileImageUrl={review.profileImage || ""}
-              residenceStatus={residenceMap[review.isResident as keyof typeof residenceMap]}
-              hasChildStatus={hasChildMap[review.hasChildren as keyof typeof hasChildMap]}
+              residenceStatus={residenceMap[review.isResident]}
+              hasChildStatus={hasChildMap[review.hasChildren]}
               onClick={() => router.push(`/property/${propertyId}/review/${review.reviewId}`)}
               isLikedByMe={review.isLikedByMe}
               isMine={review.isMine}
