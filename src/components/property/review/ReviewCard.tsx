@@ -97,16 +97,19 @@ const ReviewCard = ({
 
         {/* 별점 */}
         <div className="flex h-[20px] items-center text-caption1 text-blue-800-primary">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <img
-              key={i}
-              src={`/icons/${i < Math.floor(rating) ? "star-filled" : "star-unfilled"}.svg`}
-              alt="star"
-              width={16}
-              height={16}
-              className="block"
-            />
-          ))}
+          {[0, 1, 2, 3, 4].map((i) => {
+            const filled = i + 1 <= Math.floor(rating);
+            const isHalf = !filled && i + 0.5 <= rating;
+
+            const icon = filled
+              ? "/icons/star-filled.svg"
+              : isHalf
+                ? "/icons/star-half.svg"
+                : "/icons/star-unfilled.svg";
+
+            return <img key={i} src={icon} alt="star" width={16} height={16} className="block" />;
+          })}
+
           <span className="ml-[5px] text-caption1 leading-none text-black">
             {rating.toFixed(1)}
           </span>
