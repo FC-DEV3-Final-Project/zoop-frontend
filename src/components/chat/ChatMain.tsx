@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import RecommendationCard from "@/components/chat/RecommendationCard/RecommendationCard";
@@ -223,6 +223,11 @@ const ChatMain = () => {
   const { user } = useUserInfoStore();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>(dummyMessageData); // 임시
+  const lastMessageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   // 메세지 생성 최신 순으로 정렬
   const sortedMessages = useMemo(() => {
@@ -266,6 +271,7 @@ const ChatMain = () => {
           </Link>
         </ChatBubble>
       )}
+
       {sortedMessages.map((message) => {
         return message.properties ? (
           // 매물 추천이 있을 경우
@@ -282,6 +288,9 @@ const ChatMain = () => {
           </div>
         );
       })}
+
+      <div ref={lastMessageRef} />
+
       {/** Input */}
       <div className="fixed -bottom-[1px] left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 rounded-t-2xl bg-white px-5 py-2 shadow-[0px_-4px_8px_rgba(0,0,0,0.04)]">
         <AutoResizeTextarea
