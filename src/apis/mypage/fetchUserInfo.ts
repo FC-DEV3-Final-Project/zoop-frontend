@@ -7,13 +7,8 @@ type UserProfile = {
 };
 
 const fetchUserInfo = async (): Promise<UserProfile> => {
-  try {
-    const response = await axiosInstance.get("/mypage/account");
-    return response.data.data;
-  } catch (error) {
-    console.error("fetchUserInfo 에러:", error);
-    throw error;
-  }
+  const response = await axiosInstance.get("/mypage/account");
+  return response.data.data;
 };
 
 export default fetchUserInfo;

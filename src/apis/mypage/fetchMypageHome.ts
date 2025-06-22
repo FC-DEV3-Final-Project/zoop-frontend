@@ -24,14 +24,8 @@ type MyPageHomeResponse = {
 };
 
 const fetchMypageHome = async (): Promise<MyPageHomeResponse> => {
-  try {
     const response = await axiosInstance.get("/mypage/home");
-    console.log("response.data", response.data);
     return response.data;
-  } catch (error) {
-    console.error("fetchMypageHome 에러:", error);
-    throw error;
-  }
 };
 
 export default fetchMypageHome;
