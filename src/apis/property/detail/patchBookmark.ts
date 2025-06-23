@@ -1,7 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
-import type { BookmarkResponse } from "./postBookmark"; // 타입 재사용
+import { BookmarkProps } from "@/types/propertyDetail";
 
-export const patchBookmark = async (propertyId: number): Promise<BookmarkResponse> => {
+export const patchBookmark = async (propertyId: number): Promise<BookmarkProps> => {
   const res = await axiosInstance.patch(`/properties/${propertyId}/likes`);
   return res.data.data;
 };

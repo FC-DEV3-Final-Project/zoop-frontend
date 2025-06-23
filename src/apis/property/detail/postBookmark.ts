@@ -1,11 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { BookmarkProps } from "@/types/propertyDetail";
 
-export interface BookmarkResponse {
-  propertyId: number;
-  isBookmarked: boolean;
-}
-
-export const postBookmark = async (propertyId: number): Promise<BookmarkResponse> => {
+export const postBookmark = async (propertyId: number): Promise<BookmarkProps> => {
   const res = await axiosInstance.post(`/properties/${propertyId}/likes`);
   return res.data.data;
 };
