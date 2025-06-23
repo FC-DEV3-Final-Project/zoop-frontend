@@ -95,7 +95,7 @@ const ReviewDetailPage = () => {
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>리뷰 줍줍</Header.Title>
+        <Header.Title>리뷰</Header.Title>
       </Header>
 
       <div className="flex h-full min-h-screen flex-col bg-white pb-[100px] pt-16">
