@@ -20,6 +20,7 @@ export default function AutoResizeTextarea({
   disabled,
 }: AutoResizeTextareaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isSending = useRef(false);
 
   const baseStyle = cn(
     "w-full resize-none bg-transparent",
@@ -28,14 +29,27 @@ export default function AutoResizeTextarea({
     className,
   );
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      setTimeout(() => {
-        if (value.trim().length > 0) {
-          onSend();
-        }
-      }, 0);
+
+      if (isSending.current) return;
+
+      const trimmed = value.trim();
+      if (trimmed.length > 0) {
+        isSending.current = true;
+        onSend();
+      }
+    }
+  };
+
+  const handleClickSend = () => {
+    if (isSending.current) return;
+
+    const trimmed = value.trim();
+    if (trimmed.length > 0) {
+      isSending.current = true;
+      onSend();
     }
   };
 
@@ -53,6 +67,12 @@ export default function AutoResizeTextarea({
     handleInput();
   }, [value]);
 
+  useEffect(() => {
+    if (value.trim() === "") {
+      isSending.current = false;
+    }
+  }, [value]);
+
   const isSendable = value.trim().length > 0;
 
   return (
@@ -67,14 +87,15 @@ export default function AutoResizeTextarea({
           onChange(e);
           handleInput();
         }}
-        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp} // onKeyUp으로 수정
         onInput={handleInput}
         rows={1}
+        disabled={disabled}
       />
       <button
         className="flex-shrink-0"
         disabled={!isSendable}
-        onClick={onSend}
+        onClick={handleClickSend}
         aria-label="댓글 전송"
       >
         <img
