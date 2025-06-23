@@ -3,6 +3,8 @@ import React from "react";
 import Dropdown from "../common/Dropdown";
 import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
 import { ChatPreviewItem } from "@/types/chat";
+import { useDeleteChatMutation } from "@/queries/chat/useDeleteChatMutation";
+import { useUpdateChatTitle } from "@/queries/chat/useUpdateChatTitleMutation";
 
 interface SideBarItemProps extends ChatPreviewItem {
   searchKeyword: string;
@@ -13,17 +15,19 @@ interface SideBarItemProps extends ChatPreviewItem {
 const SideBarItem = ({
   chatRoomId,
   title,
-  content,
+  lastMatchingMessage,
   searchKeyword,
   isSelected = false,
   onClick,
 }: SideBarItemProps) => {
-  const handleEditTilte = () => {
-    const isConfirmed = window.prompt("제목 편집하기", title);
+  const { mutate: deleteChatRoom } = useDeleteChatMutation();
+  const { mutate: updateTitle } = useUpdateChatTitle();
 
-    if (isConfirmed) {
-      // TODO: 제목 수정하기 API
-      alert(`${chatRoomId} 제목을 수정합니다.`);
+  const handleEditTilte = () => {
+    const newTitle = window.prompt("제목 편집하기", title);
+
+    if (newTitle && newTitle.trim() !== "" && newTitle !== title) {
+      updateTitle({ chatRoomId, newTitle });
     }
   };
 
@@ -31,8 +35,7 @@ const SideBarItem = ({
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
 
     if (isConfirmed) {
-      // TODO: 채팅 삭제하기 API
-      alert(`${chatRoomId} 채팅방을 삭제합니다.`);
+      deleteChatRoom({ chatRoomId });
     }
   };
 
@@ -57,7 +60,7 @@ const SideBarItem = ({
       <div className="flex min-w-0 flex-col">
         <span className="text-body2">{highlightSearchKeyword(title, searchKeyword)}</span>
         <span className="w-3/4 overflow-hidden text-ellipsis whitespace-nowrap text-body3 text-gray-800">
-          {highlightSearchKeyword(content ?? "", searchKeyword)}
+          {lastMatchingMessage && highlightSearchKeyword(lastMatchingMessage, searchKeyword)}
         </span>
       </div>
       <Dropdown items={[...dropdownItems]} />
