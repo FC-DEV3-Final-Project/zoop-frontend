@@ -394,6 +394,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       {/* <DialogContent className="flex h-screen w-full max-w-none flex-col overflow-hidden rounded-none p-0"> */}
       <DialogContent
+        onInteractOutside={(e) => e.preventDefault()} // ✅ 외부 클릭 무시
         className={cn(
           "fixed left-1/2 top-1/2 z-50 w-full max-w-[600px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-none bg-white p-0",
         )}
@@ -430,10 +431,10 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
                 onSelect={handleSelect}
               />
               <div className="flex items-center gap-2">
-                <div className="flex gap-1">
+                {/* <div className="flex gap-1">
                   <span>비교하기</span>
                   <ToggleCompare />
-                </div>
+                </div> */}
                 <DownloadExcel data={dummyDate.properties} />
               </div>
             </div>
