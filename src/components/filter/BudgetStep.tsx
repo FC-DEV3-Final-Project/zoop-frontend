@@ -11,30 +11,44 @@ import {
 } from "@/utils/filter/budget";
 import PropertySearchLoading from "./PropertySearchLoading";
 
+import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
+
 interface BudgetStepProps {
-  onNext: () => void;
-  transactionType: "월세" | "매매" | "전세";
+  stepData: {
+    place: {
+      selectedPlace: {
+        x: string;
+        y: string;
+        bCode: string;
+        hCode: string;
+        placeName: string;
+      };
+      tradeTypeCode: TradeTypeCode;
+      realEstateTypeCode: RealEstateTypeCode[];
+    };
+    tradeType: TradeType[];
+    realEstateType: RealEstateType[];
+  };
 }
 
 const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "1백만"]; // 월세용 보증금
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ transactionType }: BudgetStepProps) => {
+const BudgetStep = ({ stepData }: BudgetStepProps) => {
   const router = useRouter();
+  const tradeType = stepData.tradeType?.[0];
 
   const [firstAmount, setFirstAmount] = useState("0"); // 보증금, 전세가, 매매가
   const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
-  const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">(
-    transactionType,
-  );
+  const [selectedTradeType, setSelectedTradeType] = useState<TradeType>(tradeType);
 
-  const [isLoading, setIsLoading] = useState(false); // 임시
+  const [isLoading, setIsLoading] = useState(false); // 임시 (결과 확인하기 로딩 상태)
 
   useEffect(() => {
-    setSelectedTradeType(transactionType);
-  }, [transactionType]);
+    setSelectedTradeType(tradeType);
+  }, [tradeType]);
 
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
 
@@ -67,13 +81,13 @@ const BudgetStep = ({ transactionType }: BudgetStepProps) => {
   if (isLoading) return <PropertySearchLoading />;
 
   return (
-    <div className="flex flex-col h-full gap-5">
+    <div className="flex h-full flex-col gap-5">
       <h1 className="text-title5">생각해 둔 예산을 알려주세요</h1>
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-3">
           <div className="relative">
-            <label className="text-gray-800 text-subtitle2">
+            <label className="text-subtitle2 text-gray-800">
               {selectedTradeType === "월세"
                 ? "보증금"
                 : selectedTradeType === "전세"
@@ -92,7 +106,7 @@ const BudgetStep = ({ transactionType }: BudgetStepProps) => {
               onFocus={() => setFocusedField("firstAmount")}
             />
             <div className="absolute right-0 top-8 text-title7">만원</div>
-            <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
+            <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
               {formatMoneyToKoreanUnit(firstAmount)}원
             </div>
           </div>
@@ -115,7 +129,7 @@ const BudgetStep = ({ transactionType }: BudgetStepProps) => {
         {selectedTradeType === "월세" && (
           <div className="flex flex-col gap-3">
             <div className="relative">
-              <label className="text-gray-800 text-subtitle2">{selectedTradeType}</label>
+              <label className="text-subtitle2 text-gray-800">{selectedTradeType}</label>
               <input
                 className={cn(
                   "w-full appearance-none border-b-[2px] bg-transparent py-2 text-title7 outline-none",
@@ -128,7 +142,7 @@ const BudgetStep = ({ transactionType }: BudgetStepProps) => {
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>
-              <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
+              <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
                 {formatMoneyToKoreanUnit(secondAmount)}원
               </div>
             </div>

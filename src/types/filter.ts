@@ -40,3 +40,8 @@ export interface FilterPayload {
     rentPrice: number;
   };
 }
+
+export type TradeType = "월세" | "전세" | "매매";
+export type TradeTypeCode = "A1" | "B1" | "B2";
+export type RealEstateType = "원룸 / 투룸" | "아파트" | "오피스텔" | "빌라";
+export type RealEstateTypeCode = "APT" | "OPST" | "VL:YR" | "DDDGG:DSD";
