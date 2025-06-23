@@ -10,12 +10,16 @@ export const useRealEstatePropertiesQuery = (
 ) => {
   const { items, loader, hasMore, loading, error, reset } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchRealEstateProperties(
+      const { properties, hasNext } = await fetchRealEstateProperties(
         page,
         size,
         realtyId,
         tradeTypeName as "매매" | "월세" | "전세",
       );
+      return {
+        content: Array.isArray(properties) ? properties : [],
+        hasNext: hasNext || false,
+      };
     },
     [realtyId, tradeTypeName],
     enabled,

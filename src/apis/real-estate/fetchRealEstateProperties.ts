@@ -2,7 +2,7 @@ import { PropertyCardProps } from "@/components/common/PropertyCard";
 import axiosInstance from "../utils/axiosInstance";
 
 type RealEstatePropertiesResponse = {
-  content: PropertyCardProps[];
+  properties: PropertyCardProps[];
   hasNext: boolean;
 };
 
@@ -17,7 +17,7 @@ const fetchRealEstateProperties = async (
   const response = await axiosInstance.get(
     `/realties/${realtyId}/properties?page=${page}&size=${size}&tradeTypeName=${tradeTypeName}`,
   );
-  return response.data;
+  return response.data.data;
 };
 
 export default fetchRealEstateProperties;

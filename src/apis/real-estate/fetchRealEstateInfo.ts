@@ -5,7 +5,9 @@ const fetchRealEstateInfo = async (
   propertyId: number,
   requestData: RealEstateInfoRequest,
 ): Promise<RealEstateInfoResponse> => {
-  const response = await axiosInstance.post(`/properties/${propertyId}/realty`, requestData);
+  const response = await axiosInstance.get(`/properties/${propertyId}/realty`, {
+    params: requestData,
+  });
   return response.data;
 };
 
