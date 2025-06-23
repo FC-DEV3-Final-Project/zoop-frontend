@@ -10,7 +10,7 @@ export default function LoginPage() {
 
   return (
     <div>
-      <Header bgColorClassName="bg-white/0">
+      <Header bgColorClassName="bg-white/0" size="sm">
         <div className="w-6" />
         <Header.Title>ZOOP</Header.Title>
         <Header.Close onCloseClick={() => alert("알림 클릭")} />
