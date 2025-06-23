@@ -1,14 +1,13 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/layout/Header";
 import ReviewForm from "@/components/property/review/newandedit/ReviewForm";
 import { Button } from "@/components/ui/button";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
-import { usePatchReviewMutation } from "@/queries/property/review/usePatchReviewMutation"; // ✅ 수정된 훅
-import { useState } from "react";
+import { usePatchReviewMutation } from "@/queries/property/review/usePatchReviewMutation";
 
 const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: string }> }) => {
   const { id: propertyIdString, reviewId: reviewIdString } = use(params);
@@ -55,7 +54,14 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
     if (field === "hasChild") setHasChild(value);
   };
 
+  const isValid = rating > 0 && content.trim() !== "" && residence !== "none";
+
   const handleSubmit = () => {
+    if (!isValid) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
     const mappedHasChild = hasChild === "yes" ? "HAS_CHILDREN" : "NON_CHILDREN";
     const mappedResident =
       residence === "current"
@@ -105,7 +111,7 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
       </div>
 
       <div className="sticky bottom-0 left-0 z-10 w-full max-w-[600px] bg-white px-5 py-3">
-        <Button variant="default" className="w-full" onClick={handleSubmit}>
+        <Button variant="default" className="w-full" onClick={handleSubmit} disabled={!isValid}>
           수정 완료
         </Button>
       </div>
