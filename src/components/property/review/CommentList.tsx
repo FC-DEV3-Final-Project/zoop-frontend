@@ -1,17 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
-import { Comment } from "@/apis/property/review/fetchComments";
+import { CommentType } from "@/types/commentType";
 import { formatISODate } from "@/utils/property/dateFormat";
 import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
-import ThumbsButton from "./ThumbsButton";
+import ThumbsButton from "@/components/property/review/ThumbsButton";
+import Alert from "@/components/common/Alert";
+import toast from "react-hot-toast";
+import CustomToast from "@/components/common/CustomToast";
 
 interface CommentListProps {
   reviewId: number;
   propertyId: number;
   currentSort: "like" | "latest";
-  comments: Comment[];
+  comments: CommentType[];
   onEdit: (id: number, content: string) => void;
   onDeleteSuccess?: () => void;
 }
@@ -25,18 +29,49 @@ const CommentList = ({
   onDeleteSuccess,
 }: CommentListProps) => {
   const { mutate: deleteComment } = useDeleteCommentMutation(reviewId, propertyId, currentSort);
-  const handleDelete = (commentId: number) => {
-    if (confirm("댓글을 삭제하시겠습니까?")) {
-      deleteComment(commentId, {
-        onSuccess: () => {
-          console.log("댓글 삭제 성공");
-          onDeleteSuccess?.();
-        },
-        onError: () => {
-          alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
-        },
-      });
-    }
+  const [showAlert, setShowAlert] = useState(false);
+  const [targetCommentId, setTargetCommentId] = useState<number | null>(null);
+
+  const openDeleteAlert = (commentId: number) => {
+    setTargetCommentId(commentId);
+    setShowAlert(true);
+  };
+
+  const confirmDelete = () => {
+    if (targetCommentId === null) return;
+    deleteComment(targetCommentId, {
+      onSuccess: () => {
+        toast.custom(
+          ({ id }) => (
+            <CustomToast
+              message="댓글 삭제에 성공했습니다."
+              type="success"
+              onClickAction={() => toast.dismiss(id)}
+              actionText="닫기"
+            />
+          ),
+          { duration: 4000 },
+        );
+
+        onDeleteSuccess?.();
+        setShowAlert(false);
+        setTargetCommentId(null);
+      },
+      onError: () => {
+        toast.custom(
+          ({ id }) => (
+            <CustomToast
+              message="댓글 삭제에 실패했습니다. 다시 시도해주세요."
+              type="error"
+              onClickAction={() => toast.dismiss(id)}
+            />
+          ),
+          { duration: 2000 },
+        );
+
+        setShowAlert(false);
+      },
+    });
   };
 
   return (
@@ -72,7 +107,7 @@ const CommentList = ({
                   {
                     type: "delete",
                     label: "삭제하기",
-                    onClick: () => handleDelete(comment.commentId),
+                    onClick: () => openDeleteAlert(comment.commentId),
                   },
                 ]}
               />
@@ -95,6 +130,17 @@ const CommentList = ({
           </div>
         </div>
       ))}
+      {showAlert && (
+        <Alert
+          title="댓글 삭제"
+          description="이 작업은 취소할 수 없습니다."
+          onConfirm={confirmDelete}
+          cancelLabel="취소"
+          confirmLabel="삭제"
+          open={showAlert}
+          onOpenChange={setShowAlert}
+        />
+      )}
     </div>
   );
 };
