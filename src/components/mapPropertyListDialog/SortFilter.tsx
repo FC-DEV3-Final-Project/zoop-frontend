@@ -17,7 +17,7 @@ const SortFilter = ({ sortOptions, selectedText, onSelect }: SortFilterProps) =>
     <BottomSheet
       trigger={
         <button className="flex h-7 w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1 text-body2">
-          {selectedText?.label ?? "AI추천 순"}
+          {selectedText?.label ?? "가격/면적순"}
           <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
         </button>
       }

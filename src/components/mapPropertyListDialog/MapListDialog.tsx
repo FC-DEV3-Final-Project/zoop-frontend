@@ -396,16 +396,6 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
       <DialogContent
         className={cn(
           "fixed left-1/2 top-1/2 z-50 w-full max-w-[600px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-none bg-white p-0",
-          "data-[state=open]:animate-in data-[state=closed]:animate-out",
-          "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-          "data-[state=closed]:scale-95 data-[state=open]:scale-100",
-          "ease-in-out",
-
-          // className={cn(
-          //   "fixed left-1/2 top-1/2 z-50 w-full max-w-[600px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-none bg-white p-0",
-          // "data-[state=open]:animate-in data-[state=closed]:animate-out",
-          // "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-          // "data-[state=closed]:scale-95 data-[state=open]:scale-100",
         )}
       >
         {/* 헤더 */}
@@ -426,7 +416,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
           </div>
           <div className="rounded-t-[16px]">
             <div className="flex h-[46px] items-center justify-between rounded-t-[16px] bg-blue-050-bg px-[12px] py-[20px]">
-              <div className="text-title4 text-blue-800">ai 추천매물</div>
+              <div className="text-title4 text-blue-800">AI 추천매물</div>
               <div className="text-gray-900">
                 <span className="text-title4">{dummyDate.count}개</span>
                 <span className="text-body1">의 매물</span>
