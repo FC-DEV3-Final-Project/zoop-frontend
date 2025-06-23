@@ -374,19 +374,16 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
   const [propertyList, setPropertyList] = useState<PropertyCardProps[]>(dummyDate.properties);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
-  const [maxHeight, setMaxHeight] = useState(0);
   const [initialHeight, setInitialHeight] = useState(0);
   const [listHeight, setListHeight] = useState(0);
+  const [maxHeight, setMaxHeight] = useState(0);
 
   useEffect(() => {
     const MAX_HEIGHT = window.innerHeight - 200; // 최대 리스트 높이
     const calculated = window.innerHeight - 437; // 지도높이 - 리스트해더높이 - 정렬버튼div높이
 
-    console.log("최대 높이: ", MAX_HEIGHT);
     setMaxHeight(MAX_HEIGHT);
-    console.log("초기 높이: ", calculated);
     setInitialHeight(calculated);
-    console.log("계산된 높이: ", Math.min(calculated, MAX_HEIGHT));
     setListHeight(Math.min(calculated, MAX_HEIGHT));
   }, []);
 
