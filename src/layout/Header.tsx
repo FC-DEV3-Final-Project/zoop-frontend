@@ -42,7 +42,11 @@ const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
 );
 
 const Title = ({ children, className = "" }: { children: string; className?: string }) => (
-  <h1 className={`absolute left-1/2 -translate-x-1/2 text-subtitle2 ${className}`}>{children}</h1>
+  <h1
+    className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-subtitle2 ${className}`}
+  >
+    {children}
+  </h1>
 );
 
 const Close = ({ onCloseClick }: { onCloseClick?: () => void }) => (
