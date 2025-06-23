@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 
 import RecommendationCard from "@/components/chat/RecommendationCard/RecommendationCard";
 import AutoResizeTextarea from "@/components/ui/textarea";
 
-import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import { Message } from "@/types/chat";
 
 import ChatBubble from "./ChatBubble";
+import InitialFilterPrompt from "./InitialFilterPrompt";
 
 interface ChatMainProps {
   selectedChatId: number | null;
@@ -16,7 +15,6 @@ interface ChatMainProps {
 }
 
 const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
-  const { user } = useUserInfoStore();
   const [input, setInput] = useState("");
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
@@ -53,20 +51,7 @@ const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
   return (
     <div className="mb-[66px] mt-16 flex h-full flex-col gap-5 p-5">
       {/** 초기 필터 설정 메세지 */}
-      {!selectedChatId && (
-        <ChatBubble className="flex flex-col gap-2" type="CHATBOT">
-          <p>
-            {user?.nickname}님 반가워요. <br /> {user?.nickname}님께 딱 맞는 매물을 추천해드릴게요.
-            <br /> 지역, 매매 형태, 주거 형태, 예산을 선택해 주세요.
-          </p>
-          <Link
-            href={"/filter"}
-            className="w-full rounded-[50px] bg-blue-50 py-2 text-center text-caption1"
-          >
-            필터 설정하기
-          </Link>
-        </ChatBubble>
-      )}
+      {!selectedChatId && <InitialFilterPrompt />}
 
       {sortedMessages &&
         sortedMessages.map((message, index) => {
