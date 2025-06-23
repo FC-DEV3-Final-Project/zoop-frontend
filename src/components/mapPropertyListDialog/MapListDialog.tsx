@@ -374,6 +374,28 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
   const [propertyList, setPropertyList] = useState<PropertyCardProps[]>(dummyDate.properties);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
+  const [maxHeight, setMaxHeight] = useState(0);
+  const [initialHeight, setInitialHeight] = useState(0);
+  const [listHeight, setListHeight] = useState(0);
+
+  useEffect(() => {
+    const MAX_HEIGHT = window.innerHeight - 200; // 최대 리스트 높이
+    const calculated = window.innerHeight - 437; // 지도높이 - 리스트해더높이 - 정렬버튼div높이
+
+    console.log("최대 높이: ", MAX_HEIGHT);
+    setMaxHeight(MAX_HEIGHT);
+    console.log("초기 높이: ", calculated);
+    setInitialHeight(calculated);
+    console.log("계산된 높이: ", Math.min(calculated, MAX_HEIGHT));
+    setListHeight(Math.min(calculated, MAX_HEIGHT));
+  }, []);
+
+  const handleContainerScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    const newHeight = Math.min(maxHeight, initialHeight + scrollTop);
+    setListHeight(newHeight);
+  };
+
   const positions = dummyDate.properties.map((item) => ({
     latitude: item.latitude,
     longitude: item.longitude,
@@ -392,30 +414,33 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* <DialogContent className="flex h-screen w-full max-w-none flex-col overflow-hidden rounded-none p-0"> */}
       <DialogContent
-        onInteractOutside={(e) => e.preventDefault()} // ✅ 외부 클릭 무시
+        onInteractOutside={(e) => e.preventDefault()}
         className={cn(
           "fixed left-1/2 top-1/2 z-50 w-full max-w-[600px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-none bg-white p-0",
         )}
       >
         {/* 헤더 */}
-        <Header bgColorClassName="bg-gray-100/0">
+        <Header bgColorClassName="bg-gray-100/0" size="sm">
           <Header.Prev
             onPrevClick={() => onOpenChange(false)}
             className="rounded-[20px] bg-white p-[6px]"
           />
-          <Header.Title className="rounded-[100px] bg-white px-[24px] py-[6px]">
-            이수역 / 전세 / 아파트 / 6억
+          <Header.Title className="h-[36px] rounded-[100px] bg-white px-[24px] py-[6px]">
+            이수역 / 전세 / 아파트 / 36억
           </Header.Title>
+          <div className="w-6" />
         </Header>
 
-        {/* 지도 + 리스트 생략 (여기에 구현한 UI 들어감) */}
         <div className="flex h-screen w-full flex-col">
+          {/* 지도 */}
           <div className="flex h-[339px] items-center justify-center bg-gray-050 text-black">
             <MapViewer markerPoint={positions} />
           </div>
+
+          {/* 리스트  */}
           <div className="rounded-t-[16px]">
+            {/* 리스트 해더 */}
             <div className="flex h-[46px] items-center justify-between rounded-t-[16px] bg-blue-050-bg px-[12px] py-[20px]">
               <div className="text-title4 text-blue-800">AI 추천매물</div>
               <div className="text-gray-900">
@@ -438,7 +463,19 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
                 <DownloadExcel data={dummyDate.properties} />
               </div>
             </div>
-            <PropertyListComponent properties={propertyList} />
+
+            {/* 리스트 */}
+            <div
+              className="overflow-y-auto"
+              style={{
+                height: `${listHeight}px`,
+                minHeight: `${initialHeight}px`,
+                maxHeight: `${maxHeight}px`,
+              }}
+              onScroll={handleContainerScroll}
+            >
+              <PropertyListComponent properties={propertyList} />
+            </div>
           </div>
         </div>
       </DialogContent>
