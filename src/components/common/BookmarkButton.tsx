@@ -4,26 +4,26 @@ import { useEffect, useState } from "react";
 import { usePostBookmark } from "@/queries/property/detail/usePostBookmarkmutation";
 import { usePatchBookmark } from "@/queries/property/detail/usePatchBookmarkmutation";
 
-interface HeartButtonProps {
+interface BookmarkButtonProps {
   itemId: number;
   initialBookmarked: boolean;
 }
 
-const HeartButton = ({ itemId, initialBookmarked }: HeartButtonProps) => {
-  const [isLiked, setIsLiked] = useState(initialBookmarked);
+const BookmarkButton = ({ itemId, initialBookmarked }: BookmarkButtonProps) => {
+  const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const postMutation = usePostBookmark();
   const patchMutation = usePatchBookmark();
 
   useEffect(() => {
-    setIsLiked(initialBookmarked);
+    setIsBookmarked(initialBookmarked);
   }, [initialBookmarked]);
 
   const toggleLike = () => {
-    const mutation = isLiked ? patchMutation : postMutation;
+    const mutation = isBookmarked ? patchMutation : postMutation;
 
     mutation.mutate(itemId, {
       onSuccess: (data) => {
-        setIsLiked(data.isBookmarked);
+        setIsBookmarked(data.isBookmarked);
       },
     });
   };
@@ -37,11 +37,11 @@ const HeartButton = ({ itemId, initialBookmarked }: HeartButtonProps) => {
       className="relative h-6 w-6 cursor-pointer overflow-hidden"
     >
       <img
-        src={isLiked ? "/icons/heart-filled.svg" : "/icons/heart-outline.svg"}
-        alt={isLiked ? "찜하기 완료" : "찜하기"}
+        src={isBookmarked ? "/icons/heart-filled.svg" : "/icons/heart-outline.svg"}
+        alt={isBookmarked ? "북마크 상태" : "북마크 미반영 상태"}
       />
     </button>
   );
 };
 
-export default HeartButton;
+export default BookmarkButton;
