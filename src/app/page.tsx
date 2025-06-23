@@ -7,11 +7,7 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import SideBar from "@/components/chat/SideBar";
 import ChatMain from "@/components/chat/ChatMain";
 
-import { ChatItem, ChatPreviewItem, Message, Property } from "@/types/chat";
-
-interface HomeProps {
-  chatList: ChatPreviewItem[];
-}
+import { Message, Property } from "@/types/chat";
 
 // 임시
 const dummyChatPreviewListData = [
@@ -293,7 +289,7 @@ const dummyMessageData: Message[] = [
   },
 ];
 
-export default function Home({ chatList }: HomeProps) {
+export default function Home() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState<number | null>(1);
 
@@ -316,7 +312,7 @@ export default function Home({ chatList }: HomeProps) {
 
   return (
     <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen}>
-      <Header bgColorClassName="bg-gray-100">
+      <Header bgColorClassName="bg-gray-100" size="md">
         <SheetTrigger>
           <Header.Hamburger />
         </SheetTrigger>
@@ -332,7 +328,6 @@ export default function Home({ chatList }: HomeProps) {
         />
       </main>
       <SideBar
-        chatList={dummyChatPreviewListData}
         selectedChatId={selectedChatId}
         setSelectedChatId={setSelectedChatId}
         onClose={() => setSideBarOpen(false)}
