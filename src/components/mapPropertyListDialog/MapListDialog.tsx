@@ -20,6 +20,7 @@ import SortFilter from "./SortFilter";
 import PropertyListComponent from "./PropertyList";
 import DownloadExcel from "./excel/DownloadExcel";
 import MapViewer from "./MapViewer";
+import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
 
 const dummyDate = {
   count: 10,
@@ -374,24 +375,10 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
   const [propertyList, setPropertyList] = useState<PropertyCardProps[]>(dummyDate.properties);
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
 
-  const [initialHeight, setInitialHeight] = useState(0);
-  const [listHeight, setListHeight] = useState(0);
-  const [maxHeight, setMaxHeight] = useState(0);
-
-  useEffect(() => {
-    const MAX_HEIGHT = window.innerHeight - 200; // 최대 리스트 높이
-    const calculated = window.innerHeight - 437; // 지도높이 - 리스트해더높이 - 정렬버튼div높이
-
-    setMaxHeight(MAX_HEIGHT);
-    setInitialHeight(calculated);
-    setListHeight(Math.min(calculated, MAX_HEIGHT));
-  }, []);
-
-  const handleContainerScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const scrollTop = e.currentTarget.scrollTop;
-    const newHeight = Math.min(maxHeight, initialHeight + scrollTop);
-    setListHeight(newHeight);
-  };
+  const { listHeight, initialHeight, maxHeight, handleScroll } = useResizableScrollHeight({
+    offset: 437,
+    maxOffset: 200,
+  });
 
   const positions = dummyDate.properties.map((item) => ({
     latitude: item.latitude,
@@ -469,7 +456,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
                 minHeight: `${initialHeight}px`,
                 maxHeight: `${maxHeight}px`,
               }}
-              onScroll={handleContainerScroll}
+              onScroll={handleScroll}
             >
               <PropertyListComponent properties={propertyList} />
             </div>
