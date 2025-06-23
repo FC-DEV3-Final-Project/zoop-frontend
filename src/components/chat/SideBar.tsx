@@ -27,7 +27,8 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const { data: chatList } = useChatListQuery(searchKeyword);
 
-  const grouped =
+  // 날짜 별(오늘, 어제, 지난주, ...)로 그룹화
+  const groupedChatList =
     chatList &&
     groupChatsByDate(
       chatList.map((chat) => ({
@@ -36,15 +37,20 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
       })),
     );
 
-  const handelNewChat = () => {
-    router.push("/");
-    onClose?.();
+  const reset = () => {
+    setSearchKeyword(""); // 검색어 초기화
+    onClose?.(); // 사이드바 닫기
   };
 
-  const handleItemClick = (chatRoomId: number) => {
+  // 새로운 대화 시작하기 클릭 시
+  const handelNewChat = () => {
+    router.push("/");
+    reset();
+  };
+
+  const handleChatItemClick = (chatRoomId: number) => {
     router.push(`/chat/${chatRoomId}`);
-    setSearchKeyword(""); // 검색어 초기화
-    onClose?.(); // 아이템 클릭 시 사이드바 닫기
+    reset();
   };
 
   return (
@@ -91,9 +97,9 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
         </button>
       </SheetHeader>
 
-      {grouped && Object.entries(grouped).length > 0 ? (
+      {groupedChatList && Object.entries(groupedChatList).length > 0 ? (
         <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
-          {Object.entries(grouped).map(([section, items]) => (
+          {Object.entries(groupedChatList).map(([section, items]) => (
             <li key={section}>
               <h2 className="px-5 py-[14px] text-caption1 text-gray-800">{section}</h2>
               <ul>
@@ -105,7 +111,7 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
                     lastMatchingMessage={searchKeyword && chat.lastMatchingMessage}
                     searchKeyword={searchKeyword}
                     isSelected={selectedChatId === chat.chatRoomId}
-                    onClick={() => handleItemClick(chat.chatRoomId)}
+                    onClick={() => handleChatItemClick(chat.chatRoomId)}
                   />
                 ))}
               </ul>
