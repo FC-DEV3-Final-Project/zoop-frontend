@@ -6,6 +6,8 @@ import ReviewCard from "./ReviewCard";
 import ReviewSortButtons from "./ReviewSortButtons";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
 import { formatDate } from "@/utils/property/formatDate";
+import { starAvg } from "@/utils/property/starAvg";
+import type { StarType } from "@/utils/property/starAvg";
 
 type SortType = "like" | "latest";
 
@@ -38,23 +40,24 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
     <>
       <div className="flex items-center justify-between px-5 py-3">
         <div className="flex items-center gap-[15px]">
-          <div className="text-subtitle2 text-black">{`정보 줍줍 ${reviews.length}건`}</div>
+          <div className="text-subtitle2 text-black">{`리뷰 ${reviews.length}건`}</div>
 
           {/* 평균 별점 표시 */}
           {data?.avgRating !== undefined && (
             <div className="flex items-center">
               {Array.from({ length: 5 }, (_, i) => {
-                const filled = i + 1 <= Math.floor(data.avgRating);
-                const isHalf = !filled && i + 0.5 <= data.avgRating;
-
-                const icon = filled
-                  ? "/icons/star-filled.svg"
-                  : isHalf
-                    ? "/icons/star-half.svg"
-                    : "/icons/star-unfilled.svg";
+                const type: StarType = starAvg(data.avgRating, i);
+                const icon = `/icons/star-${type}.svg`;
 
                 return (
-                  <img key={i} src={icon} alt="별점" width={20} height={20} className="block" />
+                  <img
+                    key={i}
+                    src={icon}
+                    alt={`별 ${i + 1}`}
+                    width={20}
+                    height={20}
+                    className="block"
+                  />
                 );
               })}
               <span className="ml-1 inline-block translate-y-[1px] text-subtitle2 text-black">
