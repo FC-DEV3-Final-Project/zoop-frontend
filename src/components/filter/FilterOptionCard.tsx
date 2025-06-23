@@ -17,7 +17,7 @@ const FilterOptionCard = ({ option, selectedCards, onSelect }: FilterOptionCardP
       onClick={() => onSelect(option)}
       className={clsx(
         "relative flex h-16 items-center justify-start rounded-[8px] pl-5 pr-4 text-subtitle1 shadow-selectCard",
-        isSelected ? "bg-blue-100" : "bg-white",
+        isSelected ? "bg-blue-50" : "bg-white",
       )}
     >
       {option}
