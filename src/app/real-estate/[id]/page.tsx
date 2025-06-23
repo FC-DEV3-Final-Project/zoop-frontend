@@ -13,10 +13,10 @@ const statsItems = [
   { label: "매매", value: "deal" },
 ];
 
-const phoneNumbers = [
-  { label: "registrationNumber", value: "010-1234-5678" },
-  { label: "cellPhoneNo", value: "010-1234-5678" },
-];
+// const phoneNumbers = [
+//   { label: "registrationNumber", value: "010-1234-5678" },
+//   { label: "cellPhoneNo", value: "010-1234-5678" },
+// ];
 
 const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
@@ -29,6 +29,20 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
     isLoading: isInfoLoading,
     error: infoError,
   } = useRealEstateInfoQuery(realtyId, { realtyId }, !!realtyId);
+
+  const phoneNumbers = [
+    ...(realEstateInfoResponse?.data?.representativeTelNo
+      ? [
+          {
+            label: "representativeTelNo",
+            value: realEstateInfoResponse.data.representativeTelNo,
+          },
+        ]
+      : []),
+    ...(realEstateInfoResponse?.data?.cellPhoneNo
+      ? [{ label: "cellPhoneNo", value: realEstateInfoResponse.data.cellPhoneNo }]
+      : []),
+  ];
 
   if (isInfoLoading) {
     return (
