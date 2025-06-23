@@ -126,12 +126,14 @@ const SideBar = ({ chatList, selectedChatId, setSelectedChatId, onClose }: SideB
           ))}
         </ul>
       ) : (
-        <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-          <p className="text-subtitle1">검색 결과가 없습니다.</p>
-          <p className="text-body2 text-gray-700-info">
-            {searchKeyword}이/가 포함된 조건을 설정해보세요!
-          </p>
-        </div>
+        searchKeyword && (
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+            <p className="text-subtitle1">검색 결과가 없습니다.</p>
+            <p className="text-body2 text-gray-700-info">
+              {searchKeyword}이/가 포함된 조건을 설정해보세요!
+            </p>
+          </div>
+        )
       )}
 
       <SheetFooter
