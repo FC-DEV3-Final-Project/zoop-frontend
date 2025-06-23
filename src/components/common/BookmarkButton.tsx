@@ -7,9 +7,10 @@ import { usePatchBookmark } from "@/queries/property/detail/usePatchBookmarkmuta
 interface BookmarkButtonProps {
   itemId: number;
   initialBookmarked: boolean;
+  onSuccess?: (added: boolean) => void; // boolean 인자를 받는 함수 타입으로 수정
 }
 
-const BookmarkButton = ({ itemId, initialBookmarked }: BookmarkButtonProps) => {
+const BookmarkButton = ({ itemId, initialBookmarked, onSuccess }: BookmarkButtonProps) => {
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const postMutation = usePostBookmark();
   const patchMutation = usePatchBookmark();
@@ -24,6 +25,9 @@ const BookmarkButton = ({ itemId, initialBookmarked }: BookmarkButtonProps) => {
     mutation.mutate(itemId, {
       onSuccess: (data) => {
         setIsBookmarked(data.isBookmarked);
+        if (onSuccess) {
+          onSuccess(data.isBookmarked); // 찜 추가(true) 또는 취소(false) 상태 전달
+        }
       },
     });
   };
