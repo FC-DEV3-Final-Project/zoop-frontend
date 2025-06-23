@@ -22,15 +22,6 @@ const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 메세지 생성 최신 순으로 정렬
-  const sortedMessages = useMemo(() => {
-    if (!messages) return;
-
-    return [...messages].sort(
-      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-    );
-  }, [messages]);
-
   const handleSendMessage = () => {
     const trimmed = input.trim();
     if (!trimmed) return;
@@ -53,9 +44,9 @@ const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
       {/** 초기 필터 설정 메세지 */}
       {!selectedChatId && <InitialFilterPrompt />}
 
-      {sortedMessages &&
-        sortedMessages.map((message, index) => {
-          const isLast = index === sortedMessages.length - 1;
+      {messages &&
+        messages.map((message, index) => {
+          const isLast = index === messages.length - 1;
           const messageContent = message.properties ? (
             <RecommendationCard key={message.messageId} properties={message.properties} />
           ) : (
