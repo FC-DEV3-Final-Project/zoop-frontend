@@ -1,22 +1,22 @@
 "use client";
 
 import { use } from "react";
-import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
-import ReviewList from "@/components/property/review/ReviewList";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
+import ReviewList from "@/components/property/review/ReviewList";
+import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
 import GoodBadSummary from "@/components/property/review/GoodBadSummary";
-import { useReviewSummaryQuery } from "@/queries/property/review/useReviewSummaryQuery";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
+import { useReviewSummaryQuery } from "@/queries/property/review/useReviewSummaryQuery";
 
 const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id: propertyIdString } = use(params);
   const propertyId = Number(propertyIdString);
   const router = useRouter();
 
-  const { data: summaryData, isLoading: isSummaryLoading } = useReviewSummaryQuery(propertyId);
   const { data: basicInfo, isLoading: isBasicLoading } = useBasicInfoQuery(propertyId);
+  const { data: summaryData, isLoading: isSummaryLoading } = useReviewSummaryQuery(propertyId);
 
   if (isBasicLoading || !basicInfo) {
     return (
@@ -26,6 +26,20 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const { articleName } = basicInfo;
 
+  const environmentTabsData =
+    summaryData &&
+    (summaryData.tra.length ||
+      summaryData.edu.length ||
+      summaryData.loc.length ||
+      summaryData.hel.length)
+      ? [
+          { name: "교통 환경", value: "transport", content: summaryData.tra },
+          { name: "학군", value: "school", content: summaryData.edu },
+          { name: "주변 시설", value: "facility", content: summaryData.loc },
+          { name: "의료 시설", value: "hospital", content: summaryData.hel },
+        ]
+      : [];
+
   return (
     <div className="flex h-full flex-col bg-white">
       <Header>
@@ -33,7 +47,6 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Title>{articleName}</Header.Title>
       </Header>
 
-      {/* 본문 영역: overflow 스크롤 */}
       <div className="min-h-screen flex-1 overflow-y-auto">
         <div className="flex flex-col gap-6 p-5">
           <div className="text-title3 text-black">{articleName}</div>
@@ -41,13 +54,16 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="flex flex-col gap-4">
             <div className="text-subtitle2 text-black">AI 리뷰 분석</div>
 
-            {isSummaryLoading || !summaryData ? (
-              <div className="text-body2 text-gray-500">요약 데이터를 불러오는 중입니다...</div>
+            {isSummaryLoading ? (
+              <div className="space-y-2">
+                <div className="h-5 w-3/4 animate-pulse rounded bg-gray-200" />
+                <div className="h-5 w-1/2 animate-pulse rounded bg-gray-200" />
+              </div>
             ) : (
-              <GoodBadSummary good={summaryData.good} bad={summaryData.bad} />
+              <GoodBadSummary good={summaryData?.good ?? []} bad={summaryData?.bad ?? []} />
             )}
 
-            <EnvironmentTabs propertyId={Number(propertyId)} />
+            <EnvironmentTabs tabs={environmentTabsData} isLoading={isSummaryLoading} />
           </div>
         </div>
 
