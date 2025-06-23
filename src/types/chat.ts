@@ -33,3 +33,13 @@ export interface Message {
   createdAt: string;
   properties?: Property[];
 }
+
+// AI 응답 타입
+export interface AIResponse {
+  chatRoomId: number;
+  messageId: number;
+  content: string;
+  senderType: "CHATBOT" | "USER";
+  properties?: Property[];
+  createdAt: string;
+}
