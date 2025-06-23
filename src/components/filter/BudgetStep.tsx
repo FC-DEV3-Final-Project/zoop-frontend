@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import AmountQuickSelect from "./AmountQuickSelect";
-import { cn } from "@/lib/utils";
 import {
   parseKoreanMoneyToNumber,
   formatNumberWithComma,
   formatMoneyToKoreanUnit,
 } from "@/utils/filter/budget";
+import PropertySearchLoading from "./PropertySearchLoading";
 
 interface BudgetStepProps {
   onNext: () => void;
@@ -18,13 +20,17 @@ const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
+const BudgetStep = ({ transactionType }: BudgetStepProps) => {
+  const router = useRouter();
+
   const [firstAmount, setFirstAmount] = useState("0"); // 보증금, 전세가, 매매가
   const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
   const [selectedTradeType, setSelectedTradeType] = useState<"월세" | "매매" | "전세">(
     transactionType,
   );
+
+  const [isLoading, setIsLoading] = useState(false); // 임시
 
   useEffect(() => {
     setSelectedTradeType(transactionType);
@@ -52,14 +58,22 @@ const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
     setter(formatNumberWithComma(e.target.value));
   };
 
+  const handleSubmit = () => {
+    // TODO: 필터 설정 API
+
+    setIsLoading(true);
+  };
+
+  if (isLoading) return <PropertySearchLoading />;
+
   return (
-    <div className="flex h-full flex-col gap-5">
+    <div className="flex flex-col h-full gap-5">
       <h1 className="text-title5">생각해 둔 예산을 알려주세요</h1>
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-3">
           <div className="relative">
-            <label className="text-subtitle2 text-gray-800">
+            <label className="text-gray-800 text-subtitle2">
               {selectedTradeType === "월세"
                 ? "보증금"
                 : selectedTradeType === "전세"
@@ -78,7 +92,7 @@ const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
               onFocus={() => setFocusedField("firstAmount")}
             />
             <div className="absolute right-0 top-8 text-title7">만원</div>
-            <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
+            <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
               {formatMoneyToKoreanUnit(firstAmount)}원
             </div>
           </div>
@@ -101,7 +115,7 @@ const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
         {selectedTradeType === "월세" && (
           <div className="flex flex-col gap-3">
             <div className="relative">
-              <label className="text-subtitle2 text-gray-800">{selectedTradeType}</label>
+              <label className="text-gray-800 text-subtitle2">{selectedTradeType}</label>
               <input
                 className={cn(
                   "w-full appearance-none border-b-[2px] bg-transparent py-2 text-title7 outline-none",
@@ -114,7 +128,7 @@ const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>
-              <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
+              <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
                 {formatMoneyToKoreanUnit(secondAmount)}원
               </div>
             </div>
@@ -135,9 +149,9 @@ const BudgetStep = ({ onNext, transactionType }: BudgetStepProps) => {
         )}
       </div>
 
-      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
+      <div className="absolute bottom-3 left-1/2 w-full max-w-[600px] -translate-x-1/2 transform px-5">
         <Button
-          onClick={onNext}
+          onClick={handleSubmit}
           disabled={
             selectedTradeType === "월세"
               ? firstAmount === "0" || secondAmount === "0"

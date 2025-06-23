@@ -160,22 +160,22 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
         <Image
           src={SearchIcon}
           alt="검색"
-          className="absolute right-0 top-2 cursor-pointer"
+          className="absolute right-0 cursor-pointer top-2"
           onClick={handleSearch}
         />
       </div>
 
-      {/* 로딩 상태 */}
-      {isLoading && <div className="text-center text-body2 text-gray-600">검색 중...</div>}
+      {/* 임시 로딩 상태 */}
+      {isLoading && <div className="text-center text-gray-600 text-body2">검색 중...</div>}
 
-      {/* 에러 상태 */}
+      {/* 임시 에러 상태 */}
       {error && (
-        <div className="rounded bg-red-50 p-3 text-center text-body2 text-red-600">{error}</div>
+        <div className="p-3 text-center text-red-600 rounded bg-red-50 text-body2">{error}</div>
       )}
 
       {searchKeyword && !isLoading && (
         <div className="flex flex-col gap-4">
-          <div className="text-body2 text-gray-800">검색결과 ({searchResults.length})</div>
+          <div className="text-gray-800 text-body2">검색결과 ({searchResults.length})</div>
           <div className="h-[calc(100vh-342px)] overflow-y-auto">
             {searchResults !== null ? (
               <ul className="flex flex-col">
@@ -202,9 +202,9 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                 })}
               </ul>
             ) : (
-              <div className="flex h-full flex-col items-center justify-center gap-2 whitespace-nowrap text-center">
+              <div className="flex flex-col items-center justify-center h-full gap-2 text-center whitespace-nowrap">
                 <h1 className="text-subtitle1">원하는 검색 결과가 없으신가요?</h1>
-                <p className="text-body2 text-gray-700">
+                <p className="text-gray-700 text-body2">
                   철자나 띄어쓰기를 확인하거나, <br />
                   인근 지역으로 검색해보세요!
                 </p>
@@ -214,7 +214,7 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
         </div>
       )}
 
-      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
+      <div className="absolute bottom-3 left-1/2 w-full max-w-[600px] -translate-x-1/2 transform bg-white px-5 py-3">
         <Button
           onClick={() => {
             onNext();

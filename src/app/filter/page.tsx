@@ -37,16 +37,15 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen">
       <Header>
         <Header.Prev onPrevClick={handlePrevClick} />
         <Header.Title>필터 설정하기</Header.Title>
         <Header.Close onCloseClick={() => router.push("/")} />
       </Header>
-      <main className="relative min-h-screen bg-white pt-16">
+      <main className="h-screen bg-white pt-[48px]">
         <ProgressBar currentStep={currentStep} />
-
-        <div className="px-5 pt-10">
+        <div className="h-[calc(100%-4px)] px-5 pt-10">
           <Funnel>
             <Step name="1">
               <LocationStep
