@@ -8,7 +8,7 @@ import BottomSheet from "@/components/common/BottomSheet";
 import Dropdown from "@/components/common/Dropdown";
 import PropertyCard from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
-import MapListDialog from "@/components/map/MapListDialog";
+import MapListDialog from "@/components/mapPropertyListDialog/MapListDialog";
 import AutoResizeTextarea from "@/components/ui/textarea";
 import { getMapBookmarkPropertyList } from "@/apis/map/getMapBookmarkPropertyList";
 import { getMapRecentPropertyList } from "@/apis/map/getMapRecentPropertyList";

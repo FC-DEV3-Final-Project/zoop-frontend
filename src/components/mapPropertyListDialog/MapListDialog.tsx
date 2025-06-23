@@ -16,9 +16,10 @@ import PropertyCard, { PropertyCardProps } from "../common/PropertyCard";
 import BottomSheet from "../common/BottomSheet";
 import { cn } from "@/lib/utils";
 import ToggleCompare from "./ToggleCompare";
-import MapViewer from "./MapViewer";
 import SortFilter from "./SortFilter";
 import PropertyListComponent from "./PropertyList";
+import DownloadExcel from "./excel/DownloadExcel";
+import MapViewer from "./MapViewer";
 
 const dummyDate = {
   count: 10,
@@ -438,14 +439,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
                   <span>비교하기</span>
                   <ToggleCompare />
                 </div>
-                <button>
-                  <img
-                    src="/icons/excel.svg"
-                    alt="엑셀 다운"
-                    className="h-6 w-6"
-                    onClick={() => console.log("엑셀다운 버튼 클릭")}
-                  />
-                </button>
+                <DownloadExcel data={dummyDate.properties} />
               </div>
             </div>
             <PropertyListComponent properties={propertyList} />
