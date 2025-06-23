@@ -1,10 +1,8 @@
 export interface ChatPreviewItem {
-  order?: number;
   chatRoomId: number;
   title: string;
-  content?: string;
-  lastMatchingMessage?: string | null;
-  lastMessageAt?: string;
+  lastMatchingMessage: string | null;
+  lastMessageAt: string;
 }
 
 export interface ChatItem {
