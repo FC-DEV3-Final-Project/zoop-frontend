@@ -3,16 +3,12 @@
 import Image from "next/image";
 import React, { forwardRef } from "react";
 import { usePropertyInfoQuery } from "@/queries/property/detail/usePropertyInfoQuery";
+import { formatYMDDate } from "@/utils/property/dateFormat";
 
 const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
   const { data, isLoading, error } = usePropertyInfoQuery(propertyId);
 
   if (isLoading || error || !data) return null;
-
-  const formatDate = (ymd: string | null | undefined) => {
-    if (!ymd || ymd.length !== 8) return "정보 없음";
-    return `${ymd.slice(0, 4)}.${ymd.slice(4, 6)}.${ymd.slice(6, 8)}`;
-  };
 
   const infoList = [
     ["전용/공급면적", data.area1 && data.area2 ? `${data.area1}m²/${data.area2}m²` : "정보 없음"],
@@ -46,7 +42,7 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
           ? "불가능"
           : "정보 없음",
     ],
-    ["사용승인일", formatDate(data.useApproveYmd)],
+    ["사용승인일", formatYMDDate(data.useApproveYmd)],
 
     ...(data.aptName ? [["아파트 명", data.aptName]] : []),
     ...(data.buildingName ? [["동", data.buildingName]] : []),

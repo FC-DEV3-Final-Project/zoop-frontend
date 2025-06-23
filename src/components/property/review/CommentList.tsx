@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
 import { Comment } from "@/apis/property/review/fetchComments";
-import { formatDate } from "@/utils/property/formatDate";
+import { formatISODate } from "@/utils/property/dateFormat";
 import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
 import ThumbsButton from "./ThumbsButton";
 
@@ -80,7 +80,7 @@ const CommentList = ({ reviewId, comments, onEdit }: CommentListProps) => {
               reviewId={reviewId}
             />
             <span className="text-footnote text-gray-700-info">
-              {formatDate(comment.createdAt)}
+              {formatISODate(comment.createdAt)}
             </span>
           </div>
         </div>

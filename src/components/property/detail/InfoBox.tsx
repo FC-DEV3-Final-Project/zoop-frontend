@@ -1,5 +1,5 @@
 import BookmarkButton from "@/components/common/BookmarkButton";
-import { formatRelativeDate } from "@/utils/property/formatRelativeDate";
+import { formatRelativeDate } from "@/utils/property/dateFormat";
 
 interface InfoBoxProps {
   propertyInfo: {
