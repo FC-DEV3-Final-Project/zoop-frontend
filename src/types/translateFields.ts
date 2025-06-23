@@ -1,0 +1,20 @@
+export type PropertyItem = {
+  articleName: string;
+  tradeTypeName: string;
+  rentPrice: number | null;
+  warrantPrice: number | null;
+  dealPrice: number | null;
+  dealOrWarrantPrc: string;
+  summary: string[];
+  aptName: string | null;
+  buildingName: string;
+  realEstateTypeName: string;
+  area2: string;
+  direction: string;
+  floorInfo: string;
+  exposureAddress: string;
+  etcFeeAmount: number;
+  moveInPossibleYmd: string;
+  articleFeatureDesc: string;
+  detailDescription: string;
+};
