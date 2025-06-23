@@ -83,20 +83,20 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Prev onPrevClick={() => router.back()} />
         <Header.Title>{realEstateData.realtorName}</Header.Title>
       </Header>
-      <RealEstateInfo {...realEstateData} />
-      <div className="pb-[76px]">
-        <PropertyListSection
-          showMapViewButton={false}
-          tabOptions={statsItems}
-          propertyCount={{
-            rent: realEstateData.rentCount,
-            lease: realEstateData.leaseCount,
-            deal: realEstateData.dealCount,
-          }}
-          realtyId={realtyId}
-        />
+      <div className="bg-white flex flex-col h-screen pb-[76px]">
+        <RealEstateInfo {...realEstateData} />
+          <PropertyListSection
+            showMapViewButton={false}
+            tabOptions={statsItems}
+            propertyCount={{
+              rent: realEstateData.rentCount,
+              lease: realEstateData.leaseCount,
+              deal: realEstateData.dealCount,
+            }}
+            realtyId={realtyId}
+          />
+        <RealEstateCallButton phoneNumber={phoneNumbers} />
       </div>
-      <RealEstateCallButton phoneNumber={phoneNumbers} />
     </>
   );
 };

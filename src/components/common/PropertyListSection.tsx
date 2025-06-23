@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropertyCard, { PropertyCardProps } from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import EmptyListMessage from "@/components/common/EmptyListMessage";
 import { useRealEstatePropertiesQuery } from "@/queries/real-estate/useRealEstatePropertiesQuery";
 import { useBookmarkedPropertiesQuery } from "@/queries/mypage/useBookmarkedPropertiesQuery";
 
@@ -74,8 +75,16 @@ const PropertyListSection = ({
         currentProperties: propertyMap?.[selectedTab] || [],
       };
 
+  // 탭별 빈 상태 메시지
+  const emptyMessage =
+    selectedTab === "bookmarked"
+      ? "찜한 매물이 없습니다."
+      : selectedTab === "recentViewed"
+        ? "최근 본 매물이 없습니다."
+        : "등록된 매물이 없습니다.";
+
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col flex-1">
       {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
       <div className="sticky top-16 z-10 bg-white">
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
@@ -93,18 +102,30 @@ const PropertyListSection = ({
         </div>
       </div>
       {/* 매물 리스트만 스크롤 */}
-      <div className="overflow-y-auto">
-        {currentProperties.map((property) => (
-          <PropertyCard key={property.propertyId} {...property} isNumberVisible={isNumberVisible} />
-        ))}
-        {hasMoreItems && (
-          <div ref={currentLoader} className="h-16 w-full">
-            {isLoading && (
-              <div className="flex items-center justify-center py-4">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-800-primary border-t-transparent"></div>
+      <div className="flex-1 overflow-y-auto">
+        {propertyCount?.[selectedTab] === 0 ? (
+          <div className="flex h-full items-center justify-center">
+            <EmptyListMessage message={emptyMessage} />
+          </div>
+        ) : (
+          <>
+            {currentProperties.map((property) => (
+              <PropertyCard
+                key={property.propertyId}
+                {...property}
+                isNumberVisible={isNumberVisible}
+              />
+            ))}
+            {hasMoreItems && (
+              <div ref={currentLoader} className="h-16 w-full">
+                {isLoading && (
+                  <div className="flex items-center justify-center py-4">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-800-primary border-t-transparent"></div>
+                  </div>
+                )}
               </div>
             )}
-          </div>
+          </>
         )}
         {currentError && <div className="p-4 text-red-500">{currentError}</div>}
       </div>
