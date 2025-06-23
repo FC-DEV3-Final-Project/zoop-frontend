@@ -1,4 +1,4 @@
-import HeartButton from "@/components/common/HeartButton";
+import BookmarkButton from "@/components/common/BookmarkButton";
 import { formatRelativeDate } from "@/utils/property/formatRelativeDate";
 
 interface InfoBoxProps {
@@ -47,7 +47,7 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
       <div className="flex justify-between">
         <div className="text-subtitle2">{articleName}</div>
         <div className="flex gap-[13px]">
-          <HeartButton itemId={propertyId} initialBookmarked={propertyInfo.isBookmarked} />
+          <BookmarkButton itemId={propertyId} initialBookmarked={propertyInfo.isBookmarked} />
           <button>
             <img src="/icons/share.svg" alt="share" width={24} height={24} />
           </button>
