@@ -21,7 +21,7 @@ const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
     );
 
   const facilityData = {
-    냉방시설: data.heatMethodTypeName,
+    난방시설: data.heatMethodTypeName,
     옵션: data.lifeFacilities,
     보안시설: data.securityFacilities,
     기타시설: data.etcFacilities,
