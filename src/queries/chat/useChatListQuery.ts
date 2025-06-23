@@ -14,6 +14,5 @@ export const useChatListQuery = (searchText: string) => {
   return useQuery({
     queryKey: ["chatList", searchText],
     queryFn: () => fetchChatList({ searchText }),
-    enabled: !!searchText,
   });
 };
