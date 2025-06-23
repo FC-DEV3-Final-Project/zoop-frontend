@@ -2,6 +2,7 @@
 
 import React, { forwardRef } from "react";
 import { useFacilitiesQuery } from "@/queries/property/detail/useFacilitiesQuery";
+import { renderListOrDash, renderTextOrDash } from "@/utils/property/renderDash";
 
 const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyId }, ref) => {
   const { data, isLoading, error } = useFacilitiesQuery(propertyId);
@@ -20,7 +21,7 @@ const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
     );
 
   const facilityData = {
-    냉방시설: data.heatMethodTypeName,
+    난방시설: data.heatMethodTypeName,
     옵션: data.lifeFacilities,
     보안시설: data.securityFacilities,
     기타시설: data.etcFacilities,
@@ -38,11 +39,7 @@ const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
           <React.Fragment key={label}>
             <div className="text-caption2">{label}</div>
             <div className="flex flex-col gap-1 text-body2">
-              {Array.isArray(value) ? (
-                value.map((item, i) => <div key={i}>{item}</div>)
-              ) : (
-                <div>{value}</div>
-              )}
+              {Array.isArray(value) ? renderListOrDash(value) : renderTextOrDash(value as string)}
             </div>
           </React.Fragment>
         ))}

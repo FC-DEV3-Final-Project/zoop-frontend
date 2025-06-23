@@ -4,18 +4,22 @@ import React, { ReactNode } from "react";
 interface ChatBubbleProps {
   children: ReactNode;
   className?: string;
+  type: "CHATBOT" | "USER";
 }
 
-const ChatBubble = ({ children, className }: ChatBubbleProps) => {
+const ChatBubble = ({ children, className, type }: ChatBubbleProps) => {
   return (
-    <span
+    <div
       className={clsx(
-        "inline-block w-3/4 break-words rounded-[2px_16px_16px_16px] border border-gray-200 bg-white p-4 text-caption2",
+        "w-fit max-w-[75%] break-words p-4 text-caption2",
+        type === "USER"
+          ? "bg-blue-050 justify-end rounded-[16px_2px_16px_16px] border border-blue-100 bg-blue-050-bg"
+          : "rounded-[2px_16px_16px_16px] border border-gray-200 bg-white",
         className,
       )}
     >
       {children}
-    </span>
+    </div>
   );
 };
 

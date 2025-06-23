@@ -27,13 +27,20 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
   const feeInfo = [
     {
       label: "중개보수",
-      values: [`최대 ${fee.brokerFee.toLocaleString()}원`, `상한요율 ${fee.maxBrokerFee}%`],
+      values: [
+        fee.brokerFee != null ? `최대 ${fee.brokerFee.toLocaleString()}원` : "중개보수 정보 없음",
+        fee.maxBrokerFee != null ? `상한요율 ${fee.maxBrokerFee}%` : "상한요율 정보 없음",
+      ],
     },
     {
       label: "취득세",
       values: [
-        `취득세 ${fee.acquisitionTax.toLocaleString()}원`,
-        `지방교육세 ${fee.specialTax.toLocaleString()}원`,
+        fee.acquisitionTax != null
+          ? `취득세 ${fee.acquisitionTax.toLocaleString()}원`
+          : "취득세 정보 없음",
+        fee.specialTax != null
+          ? `지방교육세 ${fee.specialTax.toLocaleString()}원`
+          : "지방교육세 정보 없음",
       ],
     },
   ];
