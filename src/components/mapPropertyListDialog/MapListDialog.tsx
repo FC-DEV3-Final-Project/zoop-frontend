@@ -410,8 +410,13 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
       >
         {/* 헤더 */}
         <Header bgColorClassName="bg-gray-100/0">
-          <Header.Prev onPrevClick={() => onOpenChange(false)} />
-          <Header.Title>Guide</Header.Title>
+          <Header.Prev
+            onPrevClick={() => onOpenChange(false)}
+            className="rounded-[20px] bg-white p-[6px]"
+          />
+          <Header.Title className="rounded-[100px] bg-white px-[24px] py-[6px]">
+            이수역 / 전세 / 아파트 / 6억
+          </Header.Title>
         </Header>
 
         {/* 지도 + 리스트 생략 (여기에 구현한 UI 들어감) */}
