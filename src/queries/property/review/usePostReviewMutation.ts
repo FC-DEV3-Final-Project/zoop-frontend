@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postReview, ReviewRequestBody } from "@/apis/property/review/postReview";
+import { postReview } from "@/apis/property/review/postReview";
+import { ReviewRequestBodyType } from "@/types/reviewType";
 
 export const usePostReviewMutation = (propertyId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (body: ReviewRequestBody) => postReview(propertyId, body),
+    mutationFn: (body: ReviewRequestBodyType) => postReview(propertyId, body),
     onSuccess: () => {
       // 작성 성공 시 캐시 무효화 → 다시 조회
       queryClient.invalidateQueries({
