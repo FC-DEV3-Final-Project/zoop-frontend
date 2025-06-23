@@ -65,8 +65,10 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Title>리뷰 작성하기</Header.Title>
       </Header>
 
-      <div className="flex-1 overflow-y-auto pt-16">
-        <div className="mb-5 px-5 text-title2 text-blue-800-primary">{basicInfo?.articleName}</div>
+      <div className="flex-1 overflow-y-auto pt-12">
+        <div className="mb-5 mt-[30px] px-5 text-title2 text-blue-800-primary">
+          {basicInfo?.articleName}
+        </div>
         <ReviewForm
           rating={rating}
           content={content}

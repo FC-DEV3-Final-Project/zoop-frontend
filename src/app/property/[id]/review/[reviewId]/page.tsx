@@ -98,7 +98,7 @@ const ReviewDetailPage = () => {
         <Header.Title>리뷰</Header.Title>
       </Header>
 
-      <div className="flex h-full min-h-screen flex-col bg-white pb-[100px] pt-16">
+      <div className="flex h-full min-h-screen flex-col bg-white pb-[100px] pt-12">
         <ReviewCard
           key={`${review.reviewId}-${review.commentCount}`}
           propertyId={propertyId}

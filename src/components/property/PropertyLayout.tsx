@@ -57,7 +57,7 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
   if (!propertyInfo) return <NotFoundProperty />;
 
   return (
-    <div className="pt-16">
+    <div className="pt-12">
       <ImageCarousel propertyInfo={propertyInfo} />
       <div className="sticky top-12 z-10 bg-white">
         <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
