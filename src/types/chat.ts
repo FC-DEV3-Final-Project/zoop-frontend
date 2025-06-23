@@ -2,7 +2,7 @@ export interface ChatPreviewItem {
   chatRoomId: number;
   title: string;
   lastMatchingMessage: string | null;
-  lastMessageAt: string;
+  lastMessageAt?: string;
 }
 
 export interface ChatItem {

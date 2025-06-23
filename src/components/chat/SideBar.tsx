@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet";
 import Input from "../ui/input";
@@ -11,53 +12,39 @@ import LogoIcon from "../../../public/icons/logo.svg";
 import SideBarItem from "./SideBarItem";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import groupChatsByDate from "@/utils/chat/groupChatsByDate";
-import { ChatPreviewItem } from "@/types/chat";
+import { useChatListQuery } from "@/queries/chat/useChatListQuery";
 
 interface SideBarProps {
-  chatList: ChatPreviewItem[];
   selectedChatId: number | null;
-  setSelectedChatId: React.Dispatch<React.SetStateAction<number | null>>;
   onClose?: () => void;
 }
 
-const SideBar = ({ chatList, selectedChatId, setSelectedChatId, onClose }: SideBarProps) => {
+const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
+  const { user } = useUserInfoStore();
+  const router = useRouter();
+
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [searchResults, setSearchResults] = useState<ChatPreviewItem[]>([]); // API 응답 값 저장할 상태
+  const { data: chatList } = useChatListQuery(searchKeyword);
 
-  // (임시) 검색어 기준 필터링
-  const filteredChats = chatList.filter((chat) =>
-    chat.title.toLowerCase().includes(searchKeyword.toLowerCase()),
-  );
-
-  const grouped = groupChatsByDate(
-    filteredChats.map((chat) => ({
-      ...chat,
-      lastMatchingMessage: chat.lastMatchingMessage ?? "",
-    })),
-  );
-
-  const { user } = useUserInfoStore();
+  const grouped =
+    chatList &&
+    groupChatsByDate(
+      chatList.map((chat) => ({
+        ...chat,
+        lastMatchingMessage: chat.lastMatchingMessage ?? "",
+      })),
+    );
 
   const handelNewChat = () => {
-    setSelectedChatId(null);
+    router.push("/");
     onClose?.();
-
-    // TODO : 채팅 초기화
   };
 
-  const handleItemClick = (chatId: number) => {
-    setSelectedChatId(chatId);
+  const handleItemClick = (chatRoomId: number) => {
+    router.push(`/chat/${chatRoomId}`);
     setSearchKeyword(""); // 검색어 초기화
     onClose?.(); // 아이템 클릭 시 사이드바 닫기
-
-    // TODO: 특정 채팅 불러오기 API
-  };
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-
-    // TODO: 채팅 검색 API
   };
 
   return (
@@ -76,7 +63,7 @@ const SideBar = ({ chatList, selectedChatId, setSelectedChatId, onClose }: SideB
                 className="flex-1"
                 placeholder="검색"
                 value={searchKeyword}
-                onChange={handleSearch}
+                onChange={(e) => setSearchKeyword(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onSend={() => {
                   alert("검색");
@@ -104,7 +91,7 @@ const SideBar = ({ chatList, selectedChatId, setSelectedChatId, onClose }: SideB
         </button>
       </SheetHeader>
 
-      {Object.entries(grouped).length > 0 ? (
+      {grouped && Object.entries(grouped).length > 0 ? (
         <ul className="flex flex-col gap-6 overflow-auto pb-[100px]">
           {Object.entries(grouped).map(([section, items]) => (
             <li key={section}>
@@ -115,7 +102,7 @@ const SideBar = ({ chatList, selectedChatId, setSelectedChatId, onClose }: SideB
                     key={chat.chatRoomId}
                     chatRoomId={chat.chatRoomId}
                     title={chat.title}
-                    content={searchKeyword && (chat.lastMatchingMessage || chat.title)}
+                    lastMatchingMessage={searchKeyword && chat.lastMatchingMessage}
                     searchKeyword={searchKeyword}
                     isSelected={selectedChatId === chat.chatRoomId}
                     onClick={() => handleItemClick(chat.chatRoomId)}
