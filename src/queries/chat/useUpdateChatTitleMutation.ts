@@ -1,5 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateChatTitle } from "@/apis/sidebar/updateChatTitle";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+type UpdateChatTitlePayload = {
+  chatRoomId: number;
+  newTitle: string;
+};
+
+export const updateChatTitle = async ({ chatRoomId, newTitle }: UpdateChatTitlePayload) => {
+  const response = await axiosInstance.patch(`/chats/${chatRoomId}`, {
+    title: newTitle,
+  });
+  return response.data;
+};
 
 export const useUpdateChatTitle = () => {
   const queryClient = useQueryClient();

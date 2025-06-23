@@ -1,5 +1,14 @@
-import { deleteChat } from "@/apis/sidebar/deleteChat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+type DeleteChatPayload = {
+  chatRoomId: number;
+};
+
+export const deleteChat = async ({ chatRoomId }: DeleteChatPayload) => {
+  const response = await axiosInstance.delete(`/chats/${chatRoomId}`);
+  return response.data;
+};
 
 export const useDeleteChatMutation = () => {
   const queryClient = useQueryClient();
