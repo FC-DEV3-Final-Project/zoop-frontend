@@ -86,7 +86,7 @@ const PropertyListSection = ({
   return (
     <section className="flex flex-col flex-1">
       {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
-      <div className="sticky top-16 z-10 bg-white">
+      <div className="sticky top-12 z-10 bg-white">
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         <div className="flex items-center justify-between rounded bg-white px-5 py-4">
           <div className="justify-center">

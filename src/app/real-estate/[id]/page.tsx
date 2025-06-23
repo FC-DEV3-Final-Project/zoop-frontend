@@ -83,7 +83,7 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Prev onPrevClick={() => router.back()} />
         <Header.Title>{realEstateData.realtorName}</Header.Title>
       </Header>
-      <div className="bg-white flex flex-col h-screen pb-[76px]">
+      <div className="bg-white flex flex-col h-screen pt-12 pb-[76px]">
         <RealEstateInfo {...realEstateData} />
           <PropertyListSection
             showMapViewButton={false}

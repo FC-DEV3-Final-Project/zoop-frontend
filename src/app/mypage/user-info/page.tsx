@@ -70,7 +70,7 @@ const UserInfoPage = () => {
         <Header.Title>내 정보</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="h-screen bg-white pt-16">
+      <div className="h-screen bg-white pt-12">
         <div className="relative flex flex-col gap-[5px] bg-gray-100">
           {/* 상단 프로필 이미지 영역 */}
           <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">

@@ -52,8 +52,8 @@ const PostsPage = () => {
         <Header.Prev onPrevClick={() => router.back()} />
         <Header.Title>내가 쓴 글</Header.Title>
       </Header>
-      <div className="flex w-full h-screen flex-col bg-gray-100 pt-16">
-        <div className="sticky top-16 z-10 bg-white">
+      <div className="flex h-screen w-full flex-col bg-gray-100 pt-12">
+        <div className="z-10 bg-white">
           <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
         </div>
         <div className="flex-1">

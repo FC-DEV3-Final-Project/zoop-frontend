@@ -26,7 +26,7 @@ const MyPage = () => {
         <Header.Title>마이페이지</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="flex h-screen flex-col bg-white pt-16">
+      <div className="flex h-screen flex-col bg-white pt-12">
         {homeLoading ? (
           <div>로딩중...</div>
         ) : (
