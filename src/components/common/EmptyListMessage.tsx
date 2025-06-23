@@ -5,7 +5,7 @@ interface EmptyListMessageProps {
 
 const EmptyListMessage = ({ message, className = "" }: EmptyListMessageProps) => {
   return (
-    <div className={`flex h-full w-full items-center justify-center ${className}`}>
+    <div className={`flex py-6 w-full items-center justify-center ${className}`}>
       <p className="h-[25px] text-subtitle1 text-black">{message}</p>
     </div>
   );
