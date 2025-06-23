@@ -5,9 +5,9 @@ import { useState } from "react";
 import ReviewCard from "./ReviewCard";
 import ReviewSortButtons from "./ReviewSortButtons";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
-import { formatDate } from "@/utils/property/formatDate";
 import { starAvg } from "@/utils/property/starAvg";
 import type { StarType } from "@/utils/property/starAvg";
+import { formatISODate } from "@/utils/property/dateFormat";
 
 type SortType = "like" | "latest";
 
@@ -82,7 +82,7 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
               reviewId={review.reviewId}
               key={review.reviewId}
               nickname={review.nickname}
-              date={formatDate(review.createdAt)}
+              date={formatISODate(review.createdAt)}
               content={review.content}
               rating={review.rating}
               likes={review.likeCount}

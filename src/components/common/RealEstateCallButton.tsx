@@ -14,7 +14,7 @@ const RealEstateCallButton = ({ phoneNumber }: RealEstateCallButtonProps) => {
   return (
     <BottomSheet
       trigger={
-        <div className="fixed bottom-0 left-1/2 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
+        <div className="fixed bottom-0 left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-3">
           <Button variant="default">공인중개사에게 전화 걸기</Button>
         </div>
       }

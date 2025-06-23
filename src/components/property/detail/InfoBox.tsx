@@ -1,5 +1,5 @@
-import HeartButton from "@/components/common/HeartButton";
-import { formatRelativeDate } from "@/utils/property/formatRelativeDate";
+import BookmarkButton from "@/components/common/BookmarkButton";
+import { formatRelativeDate } from "@/utils/property/dateFormat";
 
 interface InfoBoxProps {
   propertyInfo: {
@@ -11,8 +11,10 @@ interface InfoBoxProps {
     realEstateTypeName: string;
     correspondingFloorCount: string;
     area2: string;
+    isBookmarked: boolean;
     parkingPossibleYN: "Y" | "N";
     exposeStartYMD: string;
+    summary: string[];
   };
 }
 
@@ -26,7 +28,10 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
     realEstateTypeName,
     correspondingFloorCount,
     area2,
+    isBookmarked,
     parkingPossibleYN,
+    summary,
+    exposeStartYMD,
   } = propertyInfo;
 
   const infoColumns = [
@@ -45,16 +50,26 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
       <div className="flex justify-between">
         <div className="text-subtitle2">{articleName}</div>
         <div className="flex gap-[13px]">
-          <HeartButton itemId={propertyId} />
+          <BookmarkButton itemId={propertyId} initialBookmarked={isBookmarked} />
           <button>
             <img src="/icons/share.svg" alt="share" width={24} height={24} />
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[10px]">
         <div className="text-title1">{`${tradeTypeName} ${dealOrWarrantPrc}`}</div>
         <div className="text-subtitle3">{articleFeatureDesc}</div>
+        <div className="flex flex-wrap gap-[5px]">
+          {summary.map((label, idx) => (
+            <div
+              key={idx}
+              className="flex items-center justify-center rounded-full bg-blue-050-bg px-[9.6px] py-[2.4px] text-caption2 text-blue-800-primary"
+            >
+              {label}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex w-full items-end justify-between">
@@ -71,7 +86,7 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
           ))}
         </div>
         <div className="whitespace-nowrap text-body2 text-gray-800">
-          {formatRelativeDate(propertyInfo.exposeStartYMD)}
+          {formatRelativeDate(exposeStartYMD)}
         </div>
       </div>
     </div>

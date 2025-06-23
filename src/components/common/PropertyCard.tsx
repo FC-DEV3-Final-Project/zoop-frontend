@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import HeartButton from "./HeartButton";
+import BookmarkButton from "./BookmarkButton";
 
 interface PropertyCardProps {
   // BE 전달 데이터
@@ -103,7 +103,8 @@ const PropertyCard = ({
               {tradeTypeName} {dealOrWarrantPrc}
               {rentPrice ? `/${rentPrice}` : ""}
             </div>
-            <HeartButton itemId={propertyId} />
+            {/* 초기값도 props로 받아야 합니다!! 반영 해주세요! */}
+            <BookmarkButton itemId={propertyId} />
           </div>
 
           {/* 주소와 건물 정보 */}

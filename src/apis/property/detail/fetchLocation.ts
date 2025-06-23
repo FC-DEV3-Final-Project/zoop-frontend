@@ -1,13 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { LocationInfoProps } from "@/types/propertyDetail";
 
-export type LocationData = {
-  propertyId: number;
-  exposureAddress: string;
-  latitude: number;
-  longitude: number;
-};
-
-export const fetchLocation = async (propertyId: number): Promise<LocationData> => {
+export const fetchLocation = async (propertyId: number): Promise<LocationInfoProps> => {
   const res = await axiosInstance.get(`/properties/${propertyId}/location`);
   return res.data.data;
 };
