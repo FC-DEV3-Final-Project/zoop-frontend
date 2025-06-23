@@ -30,7 +30,7 @@ const ScrollableTabBar = ({ selected, onSelect }: ScrollableTabBarProps) => {
   return (
     <div
       ref={scrollRef}
-      className="sticky top-[114px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
+      className="sticky top-[98px] z-10 w-full overflow-x-auto bg-white scrollbar-hide"
       style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       <div className="flex w-[600px] max-w-full">
