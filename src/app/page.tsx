@@ -33,7 +33,7 @@ export default function Home() {
       <div className="flex min-h-screen w-full flex-col">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
         <main className="mt-16 p-5">
-          <ChatBubble className="flex flex-col gap-2">
+          <ChatBubble className="flex flex-col gap-2" type="CHATBOT">
             <p>
               {user?.nickname}님 반가워요. <br /> {user?.nickname}님께 딱 맞는 매물을
               추천해드릴게요. <br /> 지역, 매매 형태, 주거 형태, 예산을 선택해 주세요.
