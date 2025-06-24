@@ -7,7 +7,7 @@ type FetchChatDataPayload = {
 };
 
 export const fetchChatData = async ({ chatRoomId }: FetchChatDataPayload) => {
-  const response = await axiosInstance.post(`/chats/${chatRoomId}`);
+  const response = await axiosInstance.get(`/chats/${chatRoomId}`);
   return response.data;
 };
 

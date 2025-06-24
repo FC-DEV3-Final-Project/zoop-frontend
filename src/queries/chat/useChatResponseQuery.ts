@@ -7,7 +7,7 @@ type fetchChatResponsePayload = {
 };
 
 export const fetchChatResponse = async ({ chatRoomId }: fetchChatResponsePayload) => {
-  const response = await axiosInstance.post(`/${chatRoomId}/recent`);
+  const response = await axiosInstance.get(`/${chatRoomId}/recent`);
   return response.data;
 };
 
