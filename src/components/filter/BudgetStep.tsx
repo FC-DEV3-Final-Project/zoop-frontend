@@ -46,10 +46,8 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
   const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
   const { mutateAsync: createChat } = useCreateChatMutation();
-  const { mutateAsync: submitFilter } = useSetFilterMutation();
+  const { mutateAsync: submitFilter, isPending } = useSetFilterMutation();
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleAmountQuickSelectClick = (money: string) => {
     const amount = parseKoreanMoneyToNumber(money);
@@ -74,8 +72,6 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
   // 결과 확인하기 버튼 클릭 시
   const handleSubmit = async () => {
     try {
-      setIsLoading(true); // 로딩 시작
-
       // 1. 채팅방 생성
       const newChatRoom = await createChat();
       const newChatRoomId = newChatRoom?.chatRoomId;
@@ -108,12 +104,10 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
       router.push(`/chat/${newChatRoomId}`);
     } catch (error) {
       console.error("필터 설정 중 에러:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  if (isLoading) return <PropertySearchLoading />;
+  if (isPending) return <PropertySearchLoading />;
 
   return (
     <div className="flex flex-col h-full gap-5">
