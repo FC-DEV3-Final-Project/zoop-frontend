@@ -12,7 +12,7 @@ import AutoResizeTextarea from "@/components/ui/textarea";
 export default function Home() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const { user } = useUserInfoStore();
-  console.log(localStorage.getItem("access_token"));
+  // console.log(localStorage.getItem("access_token"));/
   const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
