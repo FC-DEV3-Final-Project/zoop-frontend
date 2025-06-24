@@ -1,4 +1,4 @@
-export type PropertyItem = {
+export type ExcelPropertyItem = {
   articleName: string;
   tradeTypeName: string;
   rentPrice: number | null;
@@ -17,4 +17,24 @@ export type PropertyItem = {
   moveInPossibleYmd: string;
   articleFeatureDesc: string;
   detailDescription: string;
+};
+
+export type MapPropertyItem = {
+  propertyId: number;
+  order: number;
+  tradeTypeName: string;
+  summary: string[];
+  realEstateTypeName: string;
+  dealOrWarrantPrc: string;
+  buildingName: string;
+  area2: string;
+  isBookmarked: boolean;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+  rentPrice?: number;
+  warrantPrice?: number;
+  dealPrice?: number;
+  aptName?: string;
+  articleName?: string;
 };

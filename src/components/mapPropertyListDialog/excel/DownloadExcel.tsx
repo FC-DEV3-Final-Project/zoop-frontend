@@ -1,14 +1,14 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import React from "react";
-import { PropertyItem } from "@/types/translateFields";
 import { normalizeValue, translateData } from "./utils/translateData";
 import { columnMapping } from "./utils/columnMapping";
+import { ExcelPropertyItem } from "@/types/map";
 
 // 엑셀 다운로드 컴포넌트
-const DownloadExcel = ({ data }: { data: PropertyItem[] }) => {
+const DownloadExcel = ({ data }: { data: ExcelPropertyItem[] }) => {
   const handleDownload = () => {
-    const keys = Object.keys(columnMapping) as (keyof PropertyItem)[];
+    const keys = Object.keys(columnMapping) as (keyof ExcelPropertyItem)[];
 
     const rows: any[][] = [];
 

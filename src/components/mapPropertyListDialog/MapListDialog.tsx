@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "@/layout/Header";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -12,15 +12,15 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import PropertyCard, { PropertyCardProps } from "../common/PropertyCard";
-import BottomSheet from "../common/BottomSheet";
+
 import { cn } from "@/lib/utils";
-import ToggleCompare from "./ToggleCompare";
+// import ToggleCompare from "./ToggleCompare";
 import SortFilter from "./SortFilter";
 import PropertyListComponent from "./PropertyList";
 import DownloadExcel from "./excel/DownloadExcel";
 import MapViewer from "./MapViewer";
 import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
+import { MapPropertyItem } from "@/types/map";
 
 const dummyDate = {
   count: 10,
@@ -363,39 +363,52 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
-const sortOptions = [
-  { label: "가격 높은 순", value: "high" },
-  { label: "가격 낮은 순", value: "low" },
-  { label: "면적 넓은 순", value: "wide" },
-  { label: "면적 좁은 순", value: "narrow" },
-];
-
 const MapListDialog = ({ open, onOpenChange }: Props) => {
-  const [originalList] = useState<PropertyCardProps[]>(dummyDate.properties); // 정렬할 대상
-  const [propertyList, setPropertyList] = useState<PropertyCardProps[]>(dummyDate.properties);
-  const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null);
+  const [originalList] = useState<MapPropertyItem[]>(dummyDate.properties); // 원본 데이터
+  const [propertyList, setPropertyList] = useState<MapPropertyItem[]>(dummyDate.properties); // 출력될 실제 데이터
+  const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>(
+    null,
+  ); // 선택된 옵션
 
+  // 높이 조절 훅
   const { listHeight, initialHeight, maxHeight, handleScroll } = useResizableScrollHeight({
     offset: 437,
     maxOffset: 200,
   });
 
-  const positions = dummyDate.properties.map((item) => ({
-    latitude: item.latitude,
-    longitude: item.longitude,
-  }));
+  // const positions = dummyDate.properties.map((item) => ({
+  //   latitude: item.latitude,
+  //   longitude: item.longitude,
+  // }));
+
+  // ✅ 정렬된 리스트 기준으로 마커 위치 배열 생성
+  const markerPositions = useMemo(
+    () =>
+      propertyList.map((property) => ({
+        order: property.order,
+        propertyId: property.propertyId,
+        latitude: property.latitude,
+        longitude: property.longitude,
+      })),
+    [propertyList],
+  );
 
   const handleSelect = (item: { label: string; value: string }) => {
-    if (selectedText?.value === item.value) {
-      setSelectedText(null);
+    if (selectedOption?.value === item.value) {
+      setSelectedOption(null);
       setPropertyList(originalList);
     } else {
-      setSelectedText(item);
-      const sorted = sortPropertyList(propertyList, item.value);
-      setPropertyList(sorted);
+      setSelectedOption(item);
+      const sortedList = sortPropertyList(originalList, item.value); // 정렬 수행
+      setPropertyList(sortedList);
     }
   };
 
+  useEffect(() => {
+    if (open) {
+      console.log("✅ 정렬 결과 리스트 (propertyList):", propertyList);
+    }
+  }, [propertyList, open]);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -419,7 +432,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
         <div className="flex h-screen w-full flex-col">
           {/* 지도 */}
           <div className="flex h-[339px] items-center justify-center bg-gray-050 text-black">
-            <MapViewer markerPoint={positions} />
+            <MapViewer markerPoint={markerPositions} />
           </div>
 
           {/* 리스트  */}
@@ -434,11 +447,7 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
             </div>
 
             <div className="flex h-[52px] items-center justify-between border-b border-gray-300 px-[12px] py-[20px]">
-              <SortFilter
-                sortOptions={sortOptions}
-                selectedText={selectedText}
-                onSelect={handleSelect}
-              />
+              <SortFilter selectedOption={selectedOption} onSelect={handleSelect} />
               <div className="flex items-center gap-2">
                 {/* <div className="flex gap-1">
                   <span>비교하기</span>
@@ -469,27 +478,27 @@ const MapListDialog = ({ open, onOpenChange }: Props) => {
 
 export default MapListDialog;
 
-const sortPropertyList = (list: any[], sortValue: string) => {
-  const sorted = [...list];
+const sortPropertyList = (originalList: any[], sortValue: string) => {
+  const result = [...originalList];
 
   switch (sortValue) {
     case "high":
-      sorted.sort((a, b) => b.warrantPrice - a.warrantPrice);
-      return sorted;
+      result.sort((a, b) => b.warrantPrice - a.warrantPrice);
+      return result;
 
     case "low":
-      sorted.sort((a, b) => a.warrantPrice - b.warrantPrice);
-      return sorted;
+      result.sort((a, b) => a.warrantPrice - b.warrantPrice);
+      return result;
 
     case "wide":
-      return sorted.sort(
+      return result.sort(
         (a, b) => Math.floor(parseFloat(b.area2)) - Math.floor(parseFloat(a.area2)),
       );
     case "narrow":
-      return sorted.sort(
+      return result.sort(
         (a, b) => Math.floor(parseFloat(a.area2)) - Math.floor(parseFloat(b.area2)),
       );
     default:
-      return list;
+      return originalList;
   }
 };
