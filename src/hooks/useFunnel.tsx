@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
+import { RealEstateType, TradeType } from "@/types/filter";
 
 interface StepProps {
   name: string;
@@ -21,8 +21,6 @@ interface StepData {
       hCode: string;
       placeName: string;
     };
-    tradeTypeCode: TradeTypeCode;
-    realEstateTypeCode: RealEstateTypeCode[];
   };
   tradeType: TradeType[];
   realEstateType: RealEstateType[];
@@ -39,8 +37,6 @@ const useFunnel = ({ lastStep }: { lastStep: string }) => {
         hCode: "",
         placeName: "",
       },
-      tradeTypeCode: "" as TradeTypeCode,
-      realEstateTypeCode: [],
     },
     tradeType: [],
     realEstateType: [],

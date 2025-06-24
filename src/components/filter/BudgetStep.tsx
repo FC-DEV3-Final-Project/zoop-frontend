@@ -12,7 +12,7 @@ import {
   formatMoneyToKoreanUnit,
 } from "@/utils/filter/budget";
 
-import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
+import { RealEstateType, TradeType } from "@/types/filter";
 import { useCreateChatMutation } from "@/queries/chat/useCreateChatMutation";
 import { useSetFilterMutation } from "@/queries/filter/useSetFilterMutation";
 
@@ -26,8 +26,6 @@ interface BudgetStepProps {
         hCode: string;
         placeName: string;
       };
-      tradeTypeCode: TradeTypeCode;
-      realEstateTypeCode: RealEstateTypeCode[];
     };
     tradeType: TradeType[];
     realEstateType: RealEstateType[];
