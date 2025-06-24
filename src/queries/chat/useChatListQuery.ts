@@ -7,7 +7,9 @@ type FetchChatListPayload = {
 };
 
 export const fetchChatList = async ({ searchText }: FetchChatListPayload) => {
-  const response = await axiosInstance.post("/chats", { searchText });
+  const endpoint = searchText ? `/chats?search=${encodeURIComponent(searchText)}` : `/chats`; // search 파라미터 제거
+
+  const response = await axiosInstance.get(endpoint);
   return response.data;
 };
 
