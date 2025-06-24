@@ -7,8 +7,6 @@ import ReviewForm from "@/components/property/review/newandedit/ReviewForm";
 import { usePostReviewMutation } from "@/queries/property/review/usePostReviewMutation";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-import CustomToast from "@/components/common/CustomToast";
 
 const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id: propertyIdString } = use(params);
@@ -55,30 +53,10 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
       },
       {
         onSuccess: () => {
-          toast.custom(
-            ({ id }) => (
-              <CustomToast
-                message="리뷰가 성공적으로 등록되었습니다."
-                type="success"
-                onClickAction={() => toast.dismiss(id)}
-              />
-            ),
-            { duration: 3000 },
-          );
-
           router.push(`/property/${propertyId}/review`);
         },
         onError: () => {
-          toast.custom(
-            ({ id }) => (
-              <CustomToast
-                message="리뷰 등록에 실패했습니다. 다시 시도해주세요."
-                type="error"
-                onClickAction={() => toast.dismiss(id)}
-              />
-            ),
-            { duration: 3000 },
-          );
+          alert("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
         },
       },
     );

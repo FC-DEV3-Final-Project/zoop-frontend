@@ -28,13 +28,3 @@ body {
   background: #555;
   cursor: pointer;
 }
-
-.custom-toast {
-  max-width: 600px !important; /* 최대 너비 */
-  width: 100% !important; /* 부모 너비 100% */
-  margin: 0 auto !important; /* 가운데 정렬 */
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 20px !important; /* 좌우 내부 패딩 */
-  border-radius: 12px !important; /* 둥근 모서리 */
-}

@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
 import { usePatchReviewMutation } from "@/queries/property/review/usePatchReviewMutation";
-import toast from "react-hot-toast";
-import CustomToast from "@/components/common/CustomToast";
 
 const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: string }> }) => {
   const { id: propertyIdString, reviewId: reviewIdString } = use(params);
@@ -81,30 +79,10 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
       },
       {
         onSuccess: () => {
-          toast.custom(
-            ({ id }) => (
-              <CustomToast
-                message="리뷰가 성공적으로 수정되었습니다."
-                type="success"
-                onClickAction={() => toast.dismiss(id)}
-              />
-            ),
-            { duration: 3000 },
-          );
-
           router.replace(`/property/${propertyId}/review/`);
         },
         onError: () => {
-          toast.custom(
-            ({ id }) => (
-              <CustomToast
-                message="리뷰 수정에 실패했습니다. 잠시 후 다시 시도해주세요."
-                type="error"
-                onClickAction={() => toast.dismiss(id)}
-              />
-            ),
-            { duration: 3000 },
-          );
+          alert("리뷰 수정에 실패했어요. 잠시 후 다시 시도해주세요.");
         },
       },
     );

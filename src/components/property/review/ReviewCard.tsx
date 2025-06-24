@@ -5,10 +5,6 @@ import Dropdown from "@/components/common/Dropdown";
 import { useRouter } from "next/navigation";
 import { useDeleteReviewMutation } from "@/queries/property/review/useDeleteReviewMutation";
 import ThumbsButton from "./ThumbsButton";
-import Alert from "@/components/common/Alert";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import CustomToast from "@/components/common/CustomToast";
 
 interface ReviewCardProps {
   propertyId: number;
@@ -45,56 +41,28 @@ const ReviewCard = ({
 }: ReviewCardProps) => {
   const router = useRouter();
   const { mutate: deleteReview } = useDeleteReviewMutation(propertyId);
-  const [showAlert, setShowAlert] = useState(false);
 
   const handleEdit = () => {
     router.push(`/property/${propertyId}/review/edit/${reviewId}`);
   };
 
   const handleDelete = () => {
-    setShowAlert(true);
-  };
+    const confirmed = confirm("리뷰를 삭제하시겠습니까?");
+    if (!confirmed) return;
 
-  const confirmDelete = () => {
     deleteReview(reviewId, {
       onSuccess: () => {
-        toast.custom(
-          ({ id }) => (
-            <CustomToast
-              message="리뷰 삭제에 성공했습니다."
-              type="success"
-              onClickAction={() => toast.dismiss(id)}
-            />
-          ),
-          { duration: 2000 },
-        );
+        console.log("리뷰 삭제 성공");
         router.push(`/property/${propertyId}/review`);
-        setShowAlert(false);
       },
       onError: () => {
-        toast.custom(
-          ({ id }) => (
-            <CustomToast
-              message="리뷰 삭제에 실패했습니다. 다시 시도해주세요."
-              type="error"
-              onClickAction={() => toast.dismiss(id)}
-            />
-          ),
-          { duration: 2000 },
-        );
-        setShowAlert(false);
+        alert("리뷰 삭제에 실패했습니다. 다시 시도해주세요.");
       },
     });
   };
 
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation(); // 삭제, 편집 버튼 클릭 시 부모 이동 방지용
-        onClick?.();
-      }}
-      className="cursor-pointer"
-    >
+    <div onClick={onClick} className="cursor-pointer">
       <div className="flex flex-col gap-4 border-b border-t border-gray-300 bg-white px-5 py-4">
         {/* 상단: 프로필 */}
         <div className="flex items-start justify-between">
@@ -153,6 +121,7 @@ const ReviewCard = ({
         {/* 날짜 */}
         <p className="text-right text-body3 text-gray-700-info">{date}</p>
       </div>
+
       {/* 하단 버튼 */}
       <div className="bg-white px-5 py-3">
         <div className="flex gap-4 text-caption1 text-gray-700">
@@ -168,17 +137,6 @@ const ReviewCard = ({
           </button>
         </div>
       </div>
-      {showAlert && (
-        <Alert
-          title="리뷰 삭제"
-          description="이 작업은 취소할 수 없습니다."
-          onConfirm={confirmDelete}
-          cancelLabel="취소"
-          confirmLabel="삭제"
-          open={showAlert}
-          onOpenChange={setShowAlert}
-        />
-      )}
     </div>
   );
 };

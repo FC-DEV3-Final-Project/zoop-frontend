@@ -1,10 +1,5 @@
-"use client";
-
 import BookmarkButton from "@/components/common/BookmarkButton";
 import { formatRelativeDate } from "@/utils/property/dateFormat";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import CustomToast from "@/components/common/CustomToast";
 
 interface InfoBoxProps {
   propertyInfo: {
@@ -24,7 +19,6 @@ interface InfoBoxProps {
 }
 
 const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
-  const router = useRouter();
   const {
     propertyId,
     articleName,
@@ -51,36 +45,12 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
     ],
   ];
 
-  const showBookmarkToast = (added: boolean) => {
-    toast(
-      ({ id }) => (
-        <CustomToast
-          message={added ? "찜한 매물에 추가했어요." : "찜한 매물에서 제외됐어요."}
-          actionText={added ? "찜한 매물 보기" : undefined}
-          onClickAction={
-            added
-              ? () => {
-                  router.push("/mypage");
-                  toast.dismiss(id);
-                }
-              : undefined
-          }
-        />
-      ),
-      { duration: 2000 },
-    );
-  };
-
   return (
     <div className="flex w-full flex-col gap-[24px] bg-white px-[20px] py-[18px] text-black">
       <div className="flex justify-between">
         <div className="text-subtitle2">{articleName}</div>
         <div className="flex gap-[13px]">
-          <BookmarkButton
-            itemId={propertyId}
-            initialBookmarked={isBookmarked}
-            onSuccess={showBookmarkToast}
-          />
+          <BookmarkButton itemId={propertyId} initialBookmarked={isBookmarked} />
           <button>
             <img src="/icons/share.svg" alt="share" width={24} height={24} />
           </button>
