@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Header } from "@/layout/Header";
-import { Message } from "@/types/chat";
 import { useChatDataQuery } from "@/queries/chat/useChatDataQuery";
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
@@ -16,24 +15,18 @@ interface ChatPageLayoutProps {
 
 const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [currentChatTitle, setCurrentChatTitle] = useState("ZOOP");
-  const [currentChatMessages, setCurrentChatMessages] = useState<Message[]>([]);
 
   // currentChatId이 있다면 기존의 특정 채팅 불러오기
-  const { data: chatData } =
-    currentChatId !== null ? useChatDataQuery(currentChatId) : { data: null };
+  const { data: chatData } = currentChatId ? useChatDataQuery(currentChatId) : { data: null };
 
-  useEffect(() => {
-    if (!chatData) return;
+  const currentChatTitle = chatData?.title || "ZOOP";
 
-    setCurrentChatTitle(chatData.title || "ZOOP");
-
-    // 메세지 생성 순으로 오름차순
-    const sortedMessages = [...chatData.messages].sort(
-      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-    );
-    setCurrentChatMessages(sortedMessages);
-  }, [chatData]);
+  // 메세지 생성 순으로 오름차순 정렬
+  const sortedMessages = chatData?.messages
+    ? [...chatData.messages].sort(
+        (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      )
+    : [];
 
   return (
     <Sheet open={isSideBarOpen} onOpenChange={setIsSideBarOpen}>
@@ -46,7 +39,7 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
       </Header>
       <main className="flex flex-col w-full min-h-screen">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
-        <ChatMain currentChatId={currentChatId} messages={currentChatMessages} />
+        <ChatMain currentChatId={currentChatId} messages={sortedMessages} />
       </main>
       <SideBar currentChatId={currentChatId} onClose={() => setIsSideBarOpen(false)} />
     </Sheet>
