@@ -87,7 +87,7 @@ const PropertyListSection = ({
         : "등록된 매물이 없습니다.";
 
   return (
-    <section className="flex flex-col flex-1">
+    <section className="flex flex-1 flex-col">
       {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
       <div className="sticky top-12 z-10 bg-white">
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
@@ -110,7 +110,7 @@ const PropertyListSection = ({
               open={mapOpen}
               onOpenChange={setMapOpen}
               properties={currentProperties as MapPropertyItem[]}
-              type="bookmark"
+              type={selectedTab === "bookmarked" ? "bookmark" : "recentView"}
               title={selectedTab === "bookmarked" ? "내가 찜한 매물" : "최근 본 매물"}
             />
           )}
