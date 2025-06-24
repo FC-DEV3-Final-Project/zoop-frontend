@@ -8,8 +8,8 @@ const fetchResetProfileImage = async (): Promise<string> => {
       "Content-Type": "multipart/form-data",
     },
   });
-    // 성공 시 profileImageUrl 반환
-    return response.data.profileImageUrl;
+  // 성공 시 profileImageUrl 반환
+  return response.data.data.profileImageUrl;
 };
 
 export default fetchResetProfileImage;

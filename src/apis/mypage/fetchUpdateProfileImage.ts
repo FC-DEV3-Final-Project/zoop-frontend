@@ -8,7 +8,7 @@ const fetchUpdateProfileImage = async (file: File): Promise<string> => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return response.data.profileImageUrl;
+  return response.data.data.profileImageUrl;
 };
 
 export default fetchUpdateProfileImage;
