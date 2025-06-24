@@ -80,7 +80,7 @@ export default function Guide() {
           </button>
         </div>
         {/* Dialog 컴포넌트 */}
-        <MapListDialog open={open} onOpenChange={setOpen} />
+        {open && <MapListDialog open={open} onOpenChange={setOpen} />}
       </div>
 
       {/* textarea Section */}
