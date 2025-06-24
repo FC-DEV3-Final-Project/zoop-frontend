@@ -88,7 +88,9 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
         hCode: stepData.place?.selectedPlace.hCode || "",
         placeName: stepData.place?.selectedPlace.placeName || "",
         tradeTypeName: (stepData.tradeType?.[0] as "월세" | "매매" | "전세") || "월세",
-        realEstateTypeName: stepData.realEstateType || [],
+        realEstateTypeName: (stepData.realEstateType || []).map((type) =>
+          type === "원룸 / 투룸" ? "원룸_투룸" : type,
+        ),
         dealOrWarrantPrc: parseInt(firstAmount.replace(/,/g, ""), 10) || 0,
         rentPrice: secondAmount ? parseInt(secondAmount.replace(/,/g, ""), 10) : 0,
       };
