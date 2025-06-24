@@ -52,7 +52,7 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
     <section
       ref={ref}
       id="info"
-      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+      className="mb-2 min-h-[200px] scroll-mt-[158px] bg-white px-5 py-8"
     >
       <div className="mb-5 text-title2 text-black">매물정보</div>
       {data.images?.[0]?.imageUrl && (
