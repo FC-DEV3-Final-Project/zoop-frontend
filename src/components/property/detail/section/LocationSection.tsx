@@ -46,4 +46,6 @@ const LocationSection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
   );
 });
 
+LocationSection.displayName = "LocationSection";
+
 export default LocationSection;

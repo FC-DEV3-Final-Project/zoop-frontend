@@ -111,4 +111,6 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
   );
 });
 
+AgentSection.displayName = "AgentSection";
+
 export default AgentSection;
