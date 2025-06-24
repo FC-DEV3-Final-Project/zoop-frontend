@@ -68,4 +68,6 @@ const DescriptionSection = forwardRef<HTMLElement, { propertyId: number }>(
   },
 );
 
+DescriptionSection.displayName = "DescriptionSection";
+
 export default DescriptionSection;

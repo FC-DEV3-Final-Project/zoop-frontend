@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
-import { Comment } from "@/apis/property/review/fetchComments";
+import { CommentType } from "@/types/commentType";
 import { formatISODate } from "@/utils/property/dateFormat";
 import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
 import ThumbsButton from "./ThumbsButton";
@@ -11,7 +11,7 @@ interface CommentListProps {
   reviewId: number;
   propertyId: number;
   currentSort: "like" | "latest";
-  comments: Comment[];
+  comments: CommentType[];
   onEdit: (id: number, content: string) => void;
   onDeleteSuccess?: () => void;
 }
