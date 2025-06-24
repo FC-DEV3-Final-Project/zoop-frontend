@@ -58,7 +58,9 @@ const SideBarItem = ({
       onClick={onClick}
     >
       <div className="flex flex-col min-w-0">
-        <span className="w-3/4 truncate text-body2">{highlightSearchText(title, searchText)}</span>
+        <span className="w-[92%] truncate text-body2">
+          {highlightSearchText(title, searchText)}
+        </span>
         <span className="w-3/4 overflow-hidden text-gray-800 text-ellipsis whitespace-nowrap text-body3">
           {lastMatchingMessage && highlightSearchText(lastMatchingMessage, searchText)}
         </span>
