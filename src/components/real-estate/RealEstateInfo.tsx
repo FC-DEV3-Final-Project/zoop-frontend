@@ -29,7 +29,7 @@ export default function RealEstateInfo({
   statsItems,
 }: RealEstateInfoProps) {
   return (
-    <div className="flex flex-col gap-3 bg-white p-5 pt-[84px]">
+    <div className="flex flex-col gap-3 bg-white p-5 pt-5">
       <div className="flex flex-col gap-[3px]">
         <div className="text-caption3">{realtorName}</div>
         <div className="flex gap-[3px]">
