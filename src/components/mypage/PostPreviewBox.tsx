@@ -2,15 +2,16 @@ import { useRouter } from "next/navigation";
 import PostPreviewItem from "./PostPreviewItem";
 
 type PostPreviewBoxProps = {
-  posts: Array<{
-    reviweId?: string | number;
+  postPreviewItems: Array<{
+    reviewId?: string | number;
+    commentId?: string | number;
     content: string;
     likeCount: number;
-    commentCount: number;
+    commentCount?: number;
   }>;
 };
 
-const PostPreviewBox = ({ posts }: PostPreviewBoxProps) => {
+const PostPreviewBox = ({ postPreviewItems }: PostPreviewBoxProps) => {
   const router = useRouter();
 
   return (
@@ -23,13 +24,14 @@ const PostPreviewBox = ({ posts }: PostPreviewBoxProps) => {
         </button>
       </div>
       <div className="flex flex-col items-start self-stretch">
-        {posts && posts.length > 0 ? (
-          posts.map((post, idx) => (
+        {postPreviewItems && postPreviewItems.length > 0 ? (
+          postPreviewItems.map((post, idx) => (
             <PostPreviewItem
-              key={post.reviweId || idx}
+              type={post.reviewId ? "review" : "comment"}
+              key={idx}
               content={post.content}
               likes={post.likeCount}
-              comments={post.commentCount}
+              comments={post.commentCount || 0}
             />
           ))
         ) : (
