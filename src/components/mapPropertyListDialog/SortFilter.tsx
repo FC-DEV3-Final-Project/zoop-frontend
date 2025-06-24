@@ -1,23 +1,29 @@
 import React from "react";
 import BottomSheet from "../common/BottomSheet";
 
-interface sortOptions {
+interface SortOption {
   label: string;
   value: string;
 }
 
+const sortOptions: SortOption[] = [
+  { label: "가격 높은 순", value: "high" },
+  { label: "가격 낮은 순", value: "low" },
+  { label: "면적 넓은 순", value: "wide" },
+  { label: "면적 좁은 순", value: "narrow" },
+];
+
 interface SortFilterProps {
-  sortOptions: sortOptions[];
-  selectedText: sortOptions | null;
-  onSelect: (item: sortOptions) => void;
+  selectedOption: SortOption | null;
+  onSelect: (item: SortOption) => void;
 }
 
-const SortFilter = ({ sortOptions, selectedText, onSelect }: SortFilterProps) => {
+const SortFilter = ({ selectedOption, onSelect }: SortFilterProps) => {
   return (
     <BottomSheet
       trigger={
         <button className="flex h-7 w-max cursor-pointer items-center gap-[3px] rounded-[100px] border border-[#E4E4E4] px-3 py-1 text-body2">
-          {selectedText?.label ?? "가격/면적순"}
+          {selectedOption?.label ?? "가격/면적순"}
           <img src="/icons/arrow-down.svg" alt="화살표" className="h-3 w-3" />
         </button>
       }
@@ -25,7 +31,7 @@ const SortFilter = ({ sortOptions, selectedText, onSelect }: SortFilterProps) =>
     >
       {(close) =>
         sortOptions.map((item) => {
-          const isSelected = item.value === selectedText?.value;
+          const isSelected = item.value === selectedOption?.value;
           return (
             <button
               key={item.value}
@@ -33,7 +39,6 @@ const SortFilter = ({ sortOptions, selectedText, onSelect }: SortFilterProps) =>
                 isSelected ? "bg-gray-200 text-subtitle2" : ""
               }`}
               onClick={() => {
-                console.log("선택된 항목:", item);
                 onSelect(item);
                 close();
               }}
