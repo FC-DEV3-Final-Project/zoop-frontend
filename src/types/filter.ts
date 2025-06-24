@@ -33,9 +33,7 @@ export interface FilterPayload {
     hCode: string;
     placeName: string;
     tradeTypeName: "월세" | "전세" | "매매";
-    tradeTypeCode: "B2" | "B1" | "A1";
     realEstateTypeName: string[];
-    realEstateTypeCode: string[];
     dealOrWarrantPrc: number;
     rentPrice: number;
   };
