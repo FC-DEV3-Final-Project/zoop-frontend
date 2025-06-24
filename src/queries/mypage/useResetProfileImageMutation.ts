@@ -14,10 +14,12 @@ export const useResetProfileImageMutation = (options?: {
       queryClient.invalidateQueries({ queryKey: ["userInfo"] });
 
       // 로컬스토리지 업데이트
-      localStorage.setItem(
-        "userInfo-storage",
-        JSON.stringify({ state: { user: { profileImage: data } }, version: 0 }),
-      );
+      const stored = localStorage.getItem("userInfo-storage");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        parsed.state.user.profileImage = data;
+        localStorage.setItem("userInfo-storage", JSON.stringify(parsed));
+      }
     },
     onError: (error) => {
       console.error("프로필 이미지 초기화 실패:", error);
