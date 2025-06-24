@@ -10,11 +10,11 @@ import InitialFilterPrompt from "./InitialFilterPrompt";
 import { useSendMessageMutation } from "@/queries/chat/useSendMessageMutation";
 
 interface ChatMainProps {
-  selectedChatId: number | null;
+  currentChatId: number | null;
   messages: Message[];
 }
 
-const ChatMain = ({ selectedChatId, messages }: ChatMainProps) => {
+const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
   const [input, setInput] = useState("");
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
   const { mutate } = useSendMessageMutation();
@@ -30,7 +30,7 @@ const ChatMain = ({ selectedChatId, messages }: ChatMainProps) => {
 
     // 채팅 메시지 보내기 API 호출
     mutate({
-      chatRoomId: selectedChatId,
+      chatRoomId: currentChatId,
       content,
     });
 
@@ -40,7 +40,7 @@ const ChatMain = ({ selectedChatId, messages }: ChatMainProps) => {
   return (
     <div className="mb-[66px] mt-16 flex h-full flex-col gap-5 p-5">
       {/** 초기 필터 설정 메세지 */}
-      {!selectedChatId && <InitialFilterPrompt />}
+      {!currentChatId && <InitialFilterPrompt />}
 
       {messages &&
         messages.map((message, index) => {
@@ -75,7 +75,7 @@ const ChatMain = ({ selectedChatId, messages }: ChatMainProps) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onSend={handleSendMessage}
-          disabled={!selectedChatId}
+          disabled={!currentChatId}
         />
       </div>
     </div>

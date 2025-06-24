@@ -4,25 +4,24 @@ import { useEffect, useState } from "react";
 
 import { Header } from "@/layout/Header";
 import { Message } from "@/types/chat";
+import { useChatDataQuery } from "@/queries/chat/useChatDataQuery";
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ChatMain from "@/components/chat/ChatMain";
 import SideBar from "@/components/chat/SideBar";
 
-import { useChatDataQuery } from "@/queries/chat/useChatDataQuery";
-
 interface ChatPageLayoutProps {
-  selectedChatId: number | null;
+  currentChatId: number | null;
 }
 
-const ChatPageLayout = ({ selectedChatId }: ChatPageLayoutProps) => {
+const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [currentChatTitle, setCurrentChatTitle] = useState("ZOOP");
   const [currentChatMessages, setCurrentChatMessages] = useState<Message[]>([]);
 
-  // selectedChatId이 있다면 기존의 특정 채팅 불러오기
+  // currentChatId이 있다면 기존의 특정 채팅 불러오기
   const { data: chatData } =
-    selectedChatId !== null ? useChatDataQuery(selectedChatId) : { data: null };
+    currentChatId !== null ? useChatDataQuery(currentChatId) : { data: null };
 
   useEffect(() => {
     if (!chatData) return;
@@ -47,9 +46,9 @@ const ChatPageLayout = ({ selectedChatId }: ChatPageLayoutProps) => {
       </Header>
       <main className="flex flex-col w-full min-h-screen">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
-        <ChatMain selectedChatId={selectedChatId} messages={currentChatMessages} />
+        <ChatMain currentChatId={currentChatId} messages={currentChatMessages} />
       </main>
-      <SideBar selectedChatId={selectedChatId} onClose={() => setSideBarOpen(false)} />
+      <SideBar currentChatId={currentChatId} onClose={() => setSideBarOpen(false)} />
     </Sheet>
   );
 };

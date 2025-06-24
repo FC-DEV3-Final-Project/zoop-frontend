@@ -15,11 +15,11 @@ import groupChatsByDate from "@/utils/chat/groupChatsByDate";
 import { useChatListQuery } from "@/queries/chat/useChatListQuery";
 
 interface SideBarProps {
-  selectedChatId: number | null;
+  currentChatId: number | null;
   onClose?: () => void;
 }
 
-const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
+const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
   const { user } = useUserInfoStore();
   const router = useRouter();
 
@@ -110,7 +110,7 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
                     title={chat.title}
                     lastMatchingMessage={searchText && chat.lastMatchingMessage}
                     searchText={searchText}
-                    isSelected={selectedChatId === chat.chatRoomId}
+                    isSelected={currentChatId === chat.chatRoomId}
                     onClick={() => handleChatItemClick(chat.chatRoomId)}
                   />
                 ))}
