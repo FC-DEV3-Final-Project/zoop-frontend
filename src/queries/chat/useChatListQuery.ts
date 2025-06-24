@@ -10,7 +10,7 @@ export const fetchChatList = async ({ searchText }: FetchChatListPayload) => {
   const endpoint = searchText ? `/chats?search=${encodeURIComponent(searchText)}` : `/chats`; // search 파라미터 제거
 
   const response = await axiosInstance.get(endpoint);
-  return response.data;
+  return response.data.data;
 };
 
 export const useChatListQuery = (searchText: string) => {
