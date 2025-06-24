@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import AmountQuickSelect from "./AmountQuickSelect";
+import PropertySearchLoading from "./PropertySearchLoading";
+
 import {
   parseKoreanMoneyToNumber,
   formatNumberWithComma,
@@ -11,10 +13,8 @@ import {
 } from "@/utils/filter/budget";
 
 import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
-import PropertySearchLoading from "./PropertySearchLoading";
 import { useCreateChatMutation } from "@/queries/chat/useCreateChatMutation";
 import { useSetFilterMutation } from "@/queries/filter/useSetFilterMutation";
-import { fetchChatResponse, useChatResponseQuery } from "@/queries/chat/useChatResponseQuery";
 
 interface BudgetStepProps {
   stepData: {
@@ -102,7 +102,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
       });
 
       // 3. AI 응답 받기 API 호출
-      await fetchChatResponse({ chatRoomId: newChatRoomId }); // 수동 호출
+      // await fetchChatResponse({ chatRoomId: newChatRoomId }); // 수동 호출
 
       // 4. 채팅방으로 이동
       router.push(`/chat/${newChatRoomId}`);
