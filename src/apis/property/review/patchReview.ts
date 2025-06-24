@@ -1,13 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { ReviewRequestBodyType } from "@/types/reviewType";
 
-export type PatchReviewRequest = {
-  rating: number;
-  content: string;
-  hasChildren: "HAS_CHILDREN" | "NON_CHILDREN";
-  isResident: "CURRENT_RESIDENT" | "PAST_RESIDENT" | "NON_RESIDENT";
-};
-
-export const patchReview = async (reviewId: number, payload: PatchReviewRequest) => {
+export const patchReview = async (reviewId: number, payload: ReviewRequestBodyType) => {
   const res = await axiosInstance.patch(`/reviews/${reviewId}`, payload);
   return res.data.data;
 };

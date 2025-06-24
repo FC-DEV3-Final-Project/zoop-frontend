@@ -79,4 +79,6 @@ const InfoSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
   );
 });
 
+InfoSection.displayName = "InfoSection";
+
 export default InfoSection;

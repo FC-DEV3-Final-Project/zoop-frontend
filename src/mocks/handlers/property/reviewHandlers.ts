@@ -1,6 +1,5 @@
 import { http, HttpResponse } from "msw";
-import type { Comment } from "@/apis/property/review/fetchComments";
-import type { Review } from "@/apis/property/review/fetchReviewList";
+import type { CommentType } from "@/types/commentType";
 
 type ReviewRequestBody = {
   complexId: number | null;
@@ -18,7 +17,7 @@ type ReviewPatchRequestBody = {
 };
 
 // 댓글 전역 저장소
-export const commentStore: Record<number, Comment[]> = {
+export const commentStore: Record<number, CommentType[]> = {
   1001: [
     {
       commentId: 124,

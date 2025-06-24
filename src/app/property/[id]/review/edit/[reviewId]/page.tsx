@@ -1,14 +1,13 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/layout/Header";
 import ReviewForm from "@/components/property/review/newandedit/ReviewForm";
 import { Button } from "@/components/ui/button";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery";
-import { usePatchReviewMutation } from "@/queries/property/review/usePatchReviewMutation"; // ✅ 수정된 훅
-import { useState } from "react";
+import { usePatchReviewMutation } from "@/queries/property/review/usePatchReviewMutation";
 
 const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: string }> }) => {
   const { id: propertyIdString, reviewId: reviewIdString } = use(params);
@@ -20,7 +19,7 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
   const { data: reviewListData, isLoading: isReviewLoading } = useReviewListQuery(propertyId);
   const { mutate } = usePatchReviewMutation(reviewId);
 
-  const review = reviewListData?.find((r) => r.reviewId === reviewId);
+  const review = reviewListData?.reviews.find((r) => r.reviewId === reviewId);
 
   const [rating, setRating] = useState(review?.rating ?? 0);
   const [content, setContent] = useState(review?.content ?? "");
@@ -55,7 +54,14 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
     if (field === "hasChild") setHasChild(value);
   };
 
+  const isValid = rating > 0 && content.trim() !== "" && residence !== "none";
+
   const handleSubmit = () => {
+    if (!isValid) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
     const mappedHasChild = hasChild === "yes" ? "HAS_CHILDREN" : "NON_CHILDREN";
     const mappedResident =
       residence === "current"
@@ -91,8 +97,10 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
         <Header.Title>리뷰 수정하기</Header.Title>
       </Header>
 
-      <div className="flex-1 overflow-y-auto pt-16">
-        <div className="mb-5 px-5 text-title2 text-blue-800-primary">{basicInfo?.articleName}</div>
+      <div className="flex-1 overflow-y-auto pt-12">
+        <div className="mb-5 mt-[30px] px-5 text-title2 text-blue-800-primary">
+          {basicInfo?.articleName}
+        </div>
         <ReviewForm
           rating={rating}
           content={content}
@@ -103,7 +111,7 @@ const EditReviewPage = ({ params }: { params: Promise<{ id: string; reviewId: st
       </div>
 
       <div className="sticky bottom-0 left-0 z-10 w-full max-w-[600px] bg-white px-5 py-3">
-        <Button variant="default" className="w-full" onClick={handleSubmit}>
+        <Button variant="default" className="w-full" onClick={handleSubmit} disabled={!isValid}>
           수정 완료
         </Button>
       </div>

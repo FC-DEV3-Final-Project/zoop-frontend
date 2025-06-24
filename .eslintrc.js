@@ -1,22 +1,22 @@
-import { defineConfig } from "eslint/config";
+require("@rushstack/eslint-patch/modern-module-resolution");
 
-export default defineConfig({
+module.exports = {
   extends: ["next/core-web-vitals", "prettier"],
   plugins: ["import"],
   rules: {
     "import/order": [
       "warn",
       {
-        groups: ["builtin", "external", "internal", ["parent", "sibling", "index"]],
-        pathGroups: [
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+        "pathGroups": [
           {
             pattern: "@/**",
             group: "internal",
           },
         ],
-        pathGroupsExcludedImportTypes: ["builtin"],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "newlines-between": "always",
-        alphabetize: {
+        "alphabetize": {
           order: "asc",
           caseInsensitive: true,
         },
@@ -25,4 +25,4 @@ export default defineConfig({
     "react/jsx-no-target-blank": "off",
     "react/prop-types": "off",
   },
-});
+};

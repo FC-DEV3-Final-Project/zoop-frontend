@@ -5,7 +5,8 @@ export const usePutCommentLikeMutation = (reviewId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (commentId: number) => toggleCommentLike(reviewId, commentId),
+    mutationFn: ({ commentId, isLiked }: { commentId: number; isLiked: boolean }) =>
+      toggleCommentLike(reviewId, commentId, isLiked),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commentList", reviewId] });
     },

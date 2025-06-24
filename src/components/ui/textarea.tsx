@@ -20,6 +20,7 @@ export default function AutoResizeTextarea({
   disabled,
 }: AutoResizeTextareaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isSending = useRef(false);
 
   const baseStyle = cn(
     "w-full resize-none bg-transparent",
@@ -28,10 +29,27 @@ export default function AutoResizeTextarea({
     className,
   );
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (value.length > 0) onSend();
+
+      if (isSending.current) return;
+
+      const trimmed = value.trim();
+      if (trimmed.length > 0) {
+        isSending.current = true;
+        onSend();
+      }
+    }
+  };
+
+  const handleClickSend = () => {
+    if (isSending.current) return;
+
+    const trimmed = value.trim();
+    if (trimmed.length > 0) {
+      isSending.current = true;
+      onSend();
     }
   };
 
@@ -49,6 +67,14 @@ export default function AutoResizeTextarea({
     handleInput();
   }, [value]);
 
+  useEffect(() => {
+    if (value.trim() === "") {
+      isSending.current = false;
+    }
+  }, [value]);
+
+  const isSendable = value.trim().length > 0;
+
   return (
     <div className="flex w-full items-start gap-2 rounded-lg bg-gray-200 p-3">
       <textarea
@@ -61,16 +87,21 @@ export default function AutoResizeTextarea({
           onChange(e);
           handleInput();
         }}
-        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp} // onKeyUp으로 수정
         onInput={handleInput}
         rows={1}
         disabled={disabled}
       />
-      <button className="flex-shrink-0" disabled={value.length === 0} onClick={onSend}>
+      <button
+        className="flex-shrink-0"
+        disabled={!isSendable}
+        onClick={handleClickSend}
+        aria-label="댓글 전송"
+      >
         <img
-          src="/icons/send.svg"
-          className="mt-1 h-5 w-5 opacity-100 disabled:opacity-40"
-          alt="전송 아이콘"
+          src={isSendable ? "/icons/send.svg" : "/icons/unsend.svg"}
+          className={`mt-1 h-5 w-5 ${isSendable ? "opacity-100" : "opacity-40"}`}
+          alt={isSendable ? "전송 가능" : "전송 불가"}
         />
       </button>
     </div>

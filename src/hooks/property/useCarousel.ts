@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export const useCarousel = (length: number) => {
-  const [index, setIndex] = useState(0);
+export const useCarousel = (length: number, initialIndex: number = 0) => {
+  const [index, setIndex] = useState(initialIndex);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const goPrev = () => {

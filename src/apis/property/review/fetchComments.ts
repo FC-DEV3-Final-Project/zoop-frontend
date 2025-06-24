@@ -1,19 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { CommentType } from "@/types/commentType";
 
-export type Comment = {
-  commentId: number;
-  userId: number;
-  nickname: string;
-  profileImage: string | null;
-  content: string;
-  likeCount: number;
-  isLikedByMe: boolean;
-  isMine: boolean;
-  createdAt: string;
-  updatedAt: string | null;
-};
-
-export const fetchComments = async (reviewId: number): Promise<Comment[]> => {
+export const fetchComments = async (reviewId: number): Promise<CommentType[]> => {
   const res = await axiosInstance.get(`/reviews/${reviewId}/comments`);
-  return res.data.data.comments;
+  return res.data?.data ?? [];
 };
