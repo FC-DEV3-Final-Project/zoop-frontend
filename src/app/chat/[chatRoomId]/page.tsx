@@ -8,7 +8,7 @@ const ChatRoomPage = () => {
 
   if (!chatRoomId) return;
 
-  return <ChatPageLayout selectedChatId={Number(chatRoomId)} />;
+  return <ChatPageLayout currentChatId={Number(chatRoomId)} />;
 };
 
 export default ChatRoomPage;
