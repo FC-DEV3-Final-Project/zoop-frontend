@@ -61,15 +61,15 @@ export default function Onboarding({
       </Header>
       <div className="flex min-h-screen flex-col items-center bg-white pt-12">
         {/* 메인메세지 */}
-        <div className="whitespace-pre-line text-center text-title5">
+        <div className="whitespace-pre-line text-center text-title5 h-[62px]">
           {mainMessage[step as keyof typeof mainMessage]}
         </div>
         {/* 서브메세지 */}
-        <div className="whitespace-pre-line pt-[13px] text-center text-body2 text-gray-500">
+        <div className="whitespace-pre-line mt-[13px] text-center text-body2 text-gray-700-info h-[40px]">
           {subMessage[step as keyof typeof subMessage]}
         </div>
         {/* 이미지 */}
-        <div className="flex w-full flex-1 items-start justify-center overflow-hidden px-[56px] pt-5">
+        <div className="flex w-full flex-1 items-start justify-center overflow-hidden px-[56px] mt-5">
           <img
             src={image[step as keyof typeof image]}
             alt="onboarding"
