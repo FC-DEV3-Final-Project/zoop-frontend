@@ -10,9 +10,7 @@ interface AddRecentPropertyResponse {
 }
 
 const fetchAddRecentProperty = async (propertyId: number): Promise<AddRecentPropertyResponse> => {
-  const response = await axiosInstance.post(`/mypage/histories/recent-properties/${propertyId}`, {
-    propertyId,
-  });
+  const response = await axiosInstance.post(`/mypage/histories/recent-properties`, { propertyId });
   return response.data;
 };
 
