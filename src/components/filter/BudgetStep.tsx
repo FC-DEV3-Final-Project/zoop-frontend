@@ -9,9 +9,8 @@ import {
   formatNumberWithComma,
   formatMoneyToKoreanUnit,
 } from "@/utils/filter/budget";
-import PropertySearchLoading from "./PropertySearchLoading";
-
 import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
+import PropertySearchLoading from "./PropertySearchLoading";
 
 interface BudgetStepProps {
   stepData: {
@@ -81,13 +80,13 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
   if (isLoading) return <PropertySearchLoading />;
 
   return (
-    <div className="flex h-full flex-col gap-5">
+    <div className="flex flex-col h-full gap-5">
       <h1 className="text-title5">생각해 둔 예산을 알려주세요</h1>
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-3">
           <div className="relative">
-            <label className="text-subtitle2 text-gray-800">
+            <label className="text-gray-800 text-subtitle2">
               {selectedTradeType === "월세"
                 ? "보증금"
                 : selectedTradeType === "전세"
@@ -106,7 +105,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
               onFocus={() => setFocusedField("firstAmount")}
             />
             <div className="absolute right-0 top-8 text-title7">만원</div>
-            <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
+            <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
               {formatMoneyToKoreanUnit(firstAmount)}원
             </div>
           </div>
@@ -129,7 +128,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
         {selectedTradeType === "월세" && (
           <div className="flex flex-col gap-3">
             <div className="relative">
-              <label className="text-subtitle2 text-gray-800">{selectedTradeType}</label>
+              <label className="text-gray-800 text-subtitle2">{selectedTradeType}</label>
               <input
                 className={cn(
                   "w-full appearance-none border-b-[2px] bg-transparent py-2 text-title7 outline-none",
@@ -142,7 +141,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>
-              <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
+              <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
                 {formatMoneyToKoreanUnit(secondAmount)}원
               </div>
             </div>

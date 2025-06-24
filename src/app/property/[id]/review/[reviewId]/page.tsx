@@ -8,7 +8,7 @@ import { useUpdateCommentMutation } from "@/queries/property/review/useUpdateCom
 import ReviewCard from "@/components/property/review/ReviewCard";
 import CommentList from "@/components/property/review/CommentList";
 import { Header } from "@/layout/Header";
-import { formatDate } from "@/utils/property/formatDate";
+import { formatISODate } from "@/utils/property/dateFormat";
 import AutoResizeTextarea from "@/components/ui/textarea";
 import { usePostCommentMutation } from "@/queries/property/review/usePostCommentMutation";
 
@@ -94,7 +94,7 @@ const ReviewDetailPage = () => {
           propertyId={propertyId}
           reviewId={review.reviewId}
           nickname={review.nickname}
-          date={formatDate(review.createdAt)}
+          date={formatISODate(review.createdAt)}
           content={review.content}
           rating={review.rating}
           likes={review.likeCount}

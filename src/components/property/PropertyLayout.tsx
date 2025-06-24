@@ -5,7 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
-import { fetchBasicInfo, BasicInfo } from "@/apis/property/detail/fetchBasicInfo";
+import { fetchBasicInfo } from "@/apis/property/detail/fetchBasicInfo";
+import { BasicInfoProps } from "@/types/propertyDetail";
+import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 
 const TAB_OPTIONS = [
   { label: "상세 정보", value: "detail" },
@@ -31,7 +33,7 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
   const pathname = usePathname();
   const selectedTab = pathname.includes("/review") ? "review" : "detail";
 
-  const [propertyInfo, setPropertyInfo] = useState<BasicInfo | null>(null);
+  const [propertyInfo, setPropertyInfo] = useState<BasicInfoProps | null>(null);
 
   const handleTabChange = (tab: string) => {
     const targetPath = tab === "review" ? `/property/${id}/review` : `/property/${id}`;
@@ -52,12 +54,12 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
     }
   }, [pathname]);
 
-  if (!propertyInfo) return null;
+  if (!propertyInfo) return <NotFoundProperty />;
 
   return (
     <div className="pt-16">
       <ImageCarousel propertyInfo={propertyInfo} />
-      <div className="sticky top-16 z-10 bg-white">
+      <div className="sticky top-12 z-10 bg-white">
         <Tab tabOptions={TAB_OPTIONS} selected={selectedTab} onChange={handleTabChange} />
       </div>
       <div>{children}</div>
