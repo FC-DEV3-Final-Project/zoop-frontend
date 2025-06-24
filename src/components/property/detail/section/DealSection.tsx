@@ -55,4 +55,6 @@ const DealSection = forwardRef<HTMLElement, { propertyId: number }>(({ propertyI
   );
 });
 
+DealSection.displayName = "DealSection";
+
 export default DealSection;
