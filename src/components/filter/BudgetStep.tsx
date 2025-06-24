@@ -93,8 +93,6 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
         rentPrice: secondAmount ? parseInt(secondAmount.replace(/,/g, ""), 10) : 0,
       };
 
-      console.log(filters); // 디버깅
-
       // 2. 필터 설정 API 호출
       const res = await submitFilter({
         chatRoomId: newChatRoomId,
