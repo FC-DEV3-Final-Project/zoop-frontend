@@ -9,8 +9,12 @@ import {
   formatNumberWithComma,
   formatMoneyToKoreanUnit,
 } from "@/utils/filter/budget";
+
 import { RealEstateType, RealEstateTypeCode, TradeType, TradeTypeCode } from "@/types/filter";
 import PropertySearchLoading from "./PropertySearchLoading";
+import { useCreateChatMutation } from "@/queries/chat/useCreateChatMutation";
+import { useSetFilterMutation } from "@/queries/filter/useSetFilterMutation";
+import { fetchChatResponse, useChatResponseQuery } from "@/queries/chat/useChatResponseQuery";
 
 interface BudgetStepProps {
   stepData: {
@@ -36,20 +40,16 @@ const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"];
 
 const BudgetStep = ({ stepData }: BudgetStepProps) => {
   const router = useRouter();
-  const tradeType = stepData.tradeType?.[0];
+  const selectedTradeType = stepData.tradeType?.[0];
 
   const [firstAmount, setFirstAmount] = useState("0"); // 보증금, 전세가, 매매가
   const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
-  const [selectedTradeType, setSelectedTradeType] = useState<TradeType>(tradeType);
-
-  const [isLoading, setIsLoading] = useState(false); // 임시 (결과 확인하기 로딩 상태)
-
-  useEffect(() => {
-    setSelectedTradeType(tradeType);
-  }, [tradeType]);
-
+  const { mutateAsync: createChat } = useCreateChatMutation();
+  const { mutateAsync: submitFilter } = useSetFilterMutation();
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAmountQuickSelectClick = (money: string) => {
     const amount = parseKoreanMoneyToNumber(money);
@@ -71,10 +71,46 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
     setter(formatNumberWithComma(e.target.value));
   };
 
-  const handleSubmit = () => {
-    // TODO: 필터 설정 API
+  // 결과 확인하기 버튼 클릭 시
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true); // 로딩 시작
 
-    setIsLoading(true);
+      // 1. 채팅방 생성
+      const newChatRoom = await createChat();
+      const newChatRoomId = newChatRoom?.chatRoomId;
+
+      // 필터 데이터 구성
+      const filters = {
+        x: stepData.place?.selectedPlace.x || "",
+        y: stepData.place?.selectedPlace.y || "",
+        bCode: stepData.place?.selectedPlace.bCode || "",
+        hCode: stepData.place?.selectedPlace.hCode || "",
+        placeName: stepData.place?.selectedPlace.placeName || "",
+        tradeTypeName: (stepData.tradeType?.[0] as "월세" | "매매" | "전세") || "월세",
+        realEstateTypeName: stepData.realEstateType || [],
+        dealOrWarrantPrc: parseInt(firstAmount.replace(/,/g, ""), 10) || 0,
+        rentPrice: secondAmount ? parseInt(secondAmount.replace(/,/g, ""), 10) : 0,
+      };
+
+      console.log(filters); // 디버깅
+
+      // 2. 필터 설정 API 호출
+      const res = await submitFilter({
+        chatRoomId: newChatRoomId,
+        filters,
+      });
+
+      // 3. AI 응답 받기 API 호출
+      await fetchChatResponse({ chatRoomId: newChatRoomId }); // 수동 호출
+
+      // 4. 채팅방으로 이동
+      router.push(`/chat/${newChatRoomId}`);
+    } catch (error) {
+      console.error("필터 설정 중 에러:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) return <PropertySearchLoading />;
