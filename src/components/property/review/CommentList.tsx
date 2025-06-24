@@ -7,7 +7,7 @@ import { CommentType } from "@/types/commentType";
 import { formatISODate } from "@/utils/property/dateFormat";
 import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
 import ThumbsButton from "@/components/property/review/ThumbsButton";
-import Alert from "@/components/common/Alert";
+import CustomDialog from "@/components/common/CustomDialog";
 import toast from "react-hot-toast";
 import CustomToast from "@/components/common/CustomToast";
 
@@ -47,7 +47,6 @@ const CommentList = ({
               message="댓글 삭제에 성공했습니다."
               type="success"
               onClickAction={() => toast.dismiss(id)}
-              actionText="닫기"
             />
           ),
           { duration: 4000 },
@@ -61,7 +60,7 @@ const CommentList = ({
         toast.custom(
           ({ id }) => (
             <CustomToast
-              message="댓글 삭제에 실패했습니다. 다시 시도해주세요."
+              message="댓글 삭제에 실패했습니다."
               type="error"
               onClickAction={() => toast.dismiss(id)}
             />
@@ -131,7 +130,7 @@ const CommentList = ({
         </div>
       ))}
       {showAlert && (
-        <Alert
+        <CustomDialog
           title="댓글 삭제"
           description="이 작업은 취소할 수 없습니다."
           onConfirm={confirmDelete}

@@ -5,7 +5,7 @@ import Dropdown from "@/components/common/Dropdown";
 import { useRouter } from "next/navigation";
 import { useDeleteReviewMutation } from "@/queries/property/review/useDeleteReviewMutation";
 import ThumbsButton from "./ThumbsButton";
-import Alert from "@/components/common/Alert";
+import CustomDialog from "@/components/common/CustomDialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import CustomToast from "@/components/common/CustomToast";
@@ -169,7 +169,7 @@ const ReviewCard = ({
         </div>
       </div>
       {showAlert && (
-        <Alert
+        <CustomDialog
           title="리뷰 삭제"
           description="이 작업은 취소할 수 없습니다."
           onConfirm={confirmDelete}
