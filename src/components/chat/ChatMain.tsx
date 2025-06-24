@@ -17,11 +17,18 @@ interface ChatMainProps {
 const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
   const [input, setInput] = useState("");
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+  const isFirstRender = useRef(true);
+
   const { mutate } = useSendMessageMutation();
 
   // 새 메시지가 추가될 때 자동으로 스크롤 맨 아래로 이동
   useEffect(() => {
-    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({
+        behavior: isFirstRender.current ? "auto" : "smooth",
+      });
+      isFirstRender.current = false;
+    }
   }, [messages]);
 
   const handleSendMessage = () => {
