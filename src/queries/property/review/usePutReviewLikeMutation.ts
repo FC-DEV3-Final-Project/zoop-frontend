@@ -5,10 +5,11 @@ export const usePutReviewLikeMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (reviewId: number) => toggleReviewLike(reviewId),
-    onSuccess: (_data, reviewId) => {
+    mutationFn: ({ reviewId, isLiked }: { reviewId: number; isLiked: boolean }) =>
+      toggleReviewLike(reviewId, isLiked),
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["reviewList"] });
-      queryClient.invalidateQueries({ queryKey: ["reviewDetail", reviewId] });
+      queryClient.invalidateQueries({ queryKey: ["reviewDetail", variables.reviewId] });
     },
   });
 };

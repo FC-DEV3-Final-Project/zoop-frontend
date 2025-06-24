@@ -28,7 +28,14 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
     if (field === "hasChild") setHasChild(value);
   };
 
+  const isValid = rating > 0 && content.trim() !== "" && residence !== "none";
+
   const handleSubmit = () => {
+    if (!isValid) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
     const mappedHasChild = hasChild === "yes" ? "HAS_CHILDREN" : "NON_CHILDREN";
     const mappedResident =
       residence === "current"
@@ -55,7 +62,6 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
     );
   };
 
-  // 로딩 관련 일괄 수정 예정
   if (isLoading) return <div className="p-4">매물 정보를 불러오는 중...</div>;
 
   return (
@@ -65,8 +71,10 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Title>리뷰 작성하기</Header.Title>
       </Header>
 
-      <div className="flex-1 overflow-y-auto pt-16">
-        <div className="mb-5 px-5 text-title2 text-blue-800-primary">{basicInfo?.articleName}</div>
+      <div className="flex-1 overflow-y-auto pt-12">
+        <div className="mb-5 mt-[30px] px-5 text-title2 text-blue-800-primary">
+          {basicInfo?.articleName}
+        </div>
         <ReviewForm
           rating={rating}
           content={content}
@@ -76,9 +84,8 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
         />
       </div>
 
-      {/* ✅ sticky 등록 버튼 */}
       <div className="sticky bottom-0 left-0 z-10 w-full max-w-[600px] bg-white px-5 py-3">
-        <Button variant="default" className="w-full" onClick={handleSubmit}>
+        <Button variant="default" className="w-full" onClick={handleSubmit} disabled={!isValid}>
           등록하기
         </Button>
       </div>

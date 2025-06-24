@@ -51,7 +51,7 @@ const OptionSelectStep = ({
         </div>
       </div>
 
-      <div className="absolute bottom-3 left-1/2 w-full -translate-x-1/2 transform px-5">
+      <div className="absolute bottom-3 left-1/2 w-full max-w-[600px] -translate-x-1/2 transform px-5">
         <Button
           onClick={() => {
             onOptionsChange(selectedOption);

@@ -1,12 +1,10 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { ToggleReviewLikeType } from "@/types/reviewType";
 
-export type ToggleReviewLikeResponse = {
-  reviewId: number;
-  userId: number;
-  isLiked: boolean;
-};
-
-export const toggleReviewLike = async (reviewId: number): Promise<ToggleReviewLikeResponse> => {
-  const response = await axiosInstance.put(`/reviews/${reviewId}/likes`);
+export const toggleReviewLike = async (
+  reviewId: number,
+  isLiked: boolean,
+): Promise<ToggleReviewLikeType> => {
+  const response = await axiosInstance.put(`/reviews/${reviewId}/likes`, { isLiked });
   return response.data.data;
 };

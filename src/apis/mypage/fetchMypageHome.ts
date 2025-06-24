@@ -3,21 +3,16 @@ import axiosInstance from "../utils/axiosInstance";
 
 type MyPageHomeResponse = {
   data: {
-    profile: {
+    userInfo: {
       nickname: string;
       profileImageUrl: string;
     };
-    myReviews?: Array<{
-      reviweId?: string | number;
-      content: string;
-      likeCount: number;
-      commentCount: number;
-    }>;
-    myComments?: Array<{
+    reviewOrComments?: Array<{
+      reviewId?: string | number;
       commentId?: string | number;
       content: string;
       likeCount: number;
-      commentCount: number;
+      commentCount?: number;
     }>;
     activity: {
       bookmarkedPropertyCount: number;
@@ -29,13 +24,8 @@ type MyPageHomeResponse = {
 };
 
 const fetchMypageHome = async (): Promise<MyPageHomeResponse> => {
-  try {
     const response = await axiosInstance.get("/mypage/home");
     return response.data;
-  } catch (error) {
-    console.error("fetchMypageHome 에러:", error);
-    throw error;
-  }
 };
 
 export default fetchMypageHome;

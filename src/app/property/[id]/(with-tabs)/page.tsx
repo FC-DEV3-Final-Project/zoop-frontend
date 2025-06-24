@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import InfoBox from "@/components/property/detail/InfoBox";
 import ScrollableSection from "@/components/property/detail/ScrollableSection";
@@ -8,6 +8,7 @@ import { Header } from "@/layout/Header";
 import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
+import { useAddRecentPropertyMutation } from "@/queries/mypage/useAddRecentPropertyMutation";
 import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 
 function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -17,6 +18,14 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
 
   const { data: basicInfo, isLoading, error } = useBasicInfoQuery(propertyId);
   const { data: agent, isLoading: agentLoading } = useAgentQuery(propertyId);
+  const addRecentPropertyMutation = useAddRecentPropertyMutation();
+
+  // 페이지 진입 시 최근 본 매물에 추가
+  useEffect(() => {
+    if (propertyId) {
+      addRecentPropertyMutation.mutate(propertyId);
+    }
+  }, [propertyId]);
 
   if (isLoading) return null;
   if (error || !basicInfo) return <NotFoundProperty />;

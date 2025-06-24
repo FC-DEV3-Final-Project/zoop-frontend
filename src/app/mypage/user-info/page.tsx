@@ -17,7 +17,7 @@ const UserInfoPage = () => {
   // 파일 input ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const { data: account, error, refetch } = useUserInfoQuery();
+  const { data: account, error } = useUserInfoQuery();
   const updateProfileImageMutation = useUpdateProfileImageMutation();
   const resetProfileImageMutation = useResetProfileImageMutation();
   const logoutMutation = useLogoutMutation();
@@ -34,13 +34,11 @@ const UserInfoPage = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     updateProfileImageMutation.mutate(file);
-    refetch();
   };
 
   // 프로필 이미지 삭제(기본이미지로 변경)
   const handleDeleteProfileImage = () => {
     resetProfileImageMutation.mutate();
-    refetch();
   };
 
   // 로그아웃
@@ -52,6 +50,8 @@ const UserInfoPage = () => {
 
   // 회원탈퇴
   const handleWithdraw = () => {
+    const confirmed = confirm("정말로 탈퇴하시겠습니까?");
+    if (!confirmed) return;
     withdrawMutation.mutate();
   };
 
@@ -70,7 +70,7 @@ const UserInfoPage = () => {
         <Header.Title>내 정보</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="h-screen bg-white pt-16">
+      <div className="h-screen bg-white pt-12">
         <div className="relative flex flex-col gap-[5px] bg-gray-100">
           {/* 상단 프로필 이미지 영역 */}
           <div className="flex h-40 items-center justify-center self-stretch bg-white px-5 py-3.5">
@@ -78,12 +78,11 @@ const UserInfoPage = () => {
               trigger={
                 <button className="relative h-16 w-16 rounded-full bg-gray-100">
                   <Image
-                    src={account.profileImageUrl}
+                    src={account.profileImageUrl || "/imgs/default-profile.svg"}
                     alt="프로필"
                     width={64}
                     height={64}
                     className="h-full w-full overflow-hidden rounded-full object-cover"
-                    priority
                   />
                   <div className="absolute bottom-0 right-0">
                     <img src="/icons/image-upload.svg" alt="이미지 업로드" />

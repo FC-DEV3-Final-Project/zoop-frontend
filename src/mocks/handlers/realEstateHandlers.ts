@@ -40,12 +40,13 @@ export const realEstateHandlers = [
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 0;
     const size = Number(url.searchParams.get("size")) || 2;
+    const tradeTypeName = url.searchParams.get("tradeTypeName") || "월세";
 
     if (page === 0) {
       return HttpResponse.json({
         content: [
-          { propertyId: 1, area2: "1번매물" },
-          { propertyId: 2, area2: "2번매물" },
+          { propertyId: 1, area2: `${tradeTypeName} 1번매물` },
+          { propertyId: 2, area2: `${tradeTypeName} 2번매물` },
         ],
         page: 0,
         size: 2,
@@ -54,8 +55,8 @@ export const realEstateHandlers = [
     } else if (page === 1) {
       return HttpResponse.json({
         content: [
-          { propertyId: 3, area2: "3번매물" },
-          { propertyId: 4, area2: "4번매물" },
+          { propertyId: 3, area2: `${tradeTypeName} 3번매물` },
+          { propertyId: 4, area2: `${tradeTypeName} 4번매물` },
         ],
         page: 1,
         size: 2,
@@ -64,8 +65,8 @@ export const realEstateHandlers = [
     } else if (page === 2) {
       return HttpResponse.json({
         content: [
-          { propertyId: 5, area2: "5번매물" },
-          { propertyId: 6, area2: "6번매물" },
+          { propertyId: 5, area2: `${tradeTypeName} 5번매물` },
+          { propertyId: 6, area2: `${tradeTypeName} 6번매물` },
         ],
         page: 2,
         size: 2,

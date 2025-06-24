@@ -1,8 +1,10 @@
 import Dropdown from "@/components/common/Dropdown";
+import { useDeletePostReviewMutation } from "@/queries/mypage/useDeletePostReviewMutation";
+import { useDeletePostCommentMutation } from "@/queries/mypage/useDeletePostCommentMutation";
 import { PostItemProps } from "@/types/post";
 import { useRouter } from "next/navigation";
 
-export const PostItem = ({
+const PostItem = ({
   type,
   reviewId,
   commentId,
@@ -15,11 +17,46 @@ export const PostItem = ({
 }: PostItemProps) => {
   const router = useRouter();
 
-  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
   const propertyOrComplexId =
     type === "review"
       ? item?.complexId || item?.propertyId
       : review?.item.complexId || review?.item.propertyId;
+
+  const targetReviewId = type === "review" ? reviewId : review?.reviewId;
+
+  const { mutate: deletePostReview } = useDeletePostReviewMutation();
+  const { mutate: deletePostComment } = useDeletePostCommentMutation();
+
+  const handleDelete = () => {
+    const confirmed = confirm(
+      type === "review" ? "리뷰를 삭제하시겠습니까?" : "댓글을 삭제하시겠습니까?",
+    );
+    if (!confirmed) return;
+
+    if (type === "review") {
+      // 리뷰 삭제
+      if (!reviewId) return;
+      deletePostReview(reviewId, {
+        onSuccess: () => {
+          console.log("리뷰 삭제 성공");
+        },
+        onError: () => {
+          alert("리뷰 삭제에 실패했습니다. 다시 시도해주세요.");
+        },
+      });
+    } else {
+      // 댓글 삭제
+      if (!commentId) return;
+      deletePostComment(commentId, {
+        onSuccess: () => {
+          console.log("댓글 삭제 성공");
+        },
+        onError: () => {
+          alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+        },
+      });
+    }
+  };
 
   return (
     <div
@@ -37,7 +74,7 @@ export const PostItem = ({
               type: "delete",
               label: "삭제하기",
               onClick: () => {
-                alert("삭제 버튼 클릭됨");
+                handleDelete();
               },
             },
           ]}

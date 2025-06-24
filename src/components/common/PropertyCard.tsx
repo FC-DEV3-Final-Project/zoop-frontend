@@ -103,8 +103,7 @@ const PropertyCard = ({
               {tradeTypeName} {dealOrWarrantPrc}
               {rentPrice ? `/${rentPrice}` : ""}
             </div>
-            {/* 초기값도 props로 받아야 합니다!! 반영 해주세요! */}
-            <BookmarkButton itemId={propertyId} />
+            <BookmarkButton itemId={propertyId} initialBookmarked={isBookmarked} />
           </div>
 
           {/* 주소와 건물 정보 */}
