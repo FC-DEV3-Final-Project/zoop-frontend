@@ -47,7 +47,7 @@ const ImageCarousel = ({ propertyInfo }: ImageCarouselProps) => {
           aria-label="expand image"
           onClick={() => setIsModalOpen(true)}
         >
-          <img src="/icons/expend.svg" alt="expand" width={24} height={24} />
+          <img src="/icons/white-expand.svg" alt="expand" width={24} height={24} />
         </button>
       )}
 
