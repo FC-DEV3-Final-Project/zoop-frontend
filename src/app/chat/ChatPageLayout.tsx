@@ -45,13 +45,9 @@ const ChatPageLayout = ({ selectedChatId }: ChatPageLayoutProps) => {
         <Header.Title>{currentChatTitle}</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <main className="flex min-h-screen w-full flex-col">
+      <main className="flex flex-col w-full min-h-screen">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
-        <ChatMain
-          selectedChatId={selectedChatId}
-          messages={currentChatMessages}
-          setMessages={setCurrentChatMessages}
-        />
+        <ChatMain selectedChatId={selectedChatId} messages={currentChatMessages} />
       </main>
       <SideBar selectedChatId={selectedChatId} onClose={() => setSideBarOpen(false)} />
     </Sheet>

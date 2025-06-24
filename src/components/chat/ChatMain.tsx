@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import RecommendationCard from "@/components/chat/RecommendationCard/RecommendationCard";
 import AutoResizeTextarea from "@/components/ui/textarea";
@@ -7,35 +7,33 @@ import { Message } from "@/types/chat";
 
 import ChatBubble from "./ChatBubble";
 import InitialFilterPrompt from "./InitialFilterPrompt";
+import { useSendMessageMutation } from "@/queries/chat/useSendMessageMutation";
 
 interface ChatMainProps {
   selectedChatId: number | null;
   messages: Message[];
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 }
 
-const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
+const ChatMain = ({ selectedChatId, messages }: ChatMainProps) => {
   const [input, setInput] = useState("");
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+  const { mutate } = useSendMessageMutation();
 
+  // 새 메시지가 추가될 때 자동으로 스크롤 맨 아래로 이동
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const handleSendMessage = () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
+    const content = input.trim();
+    if (!content) return;
 
-    // TODO: 채팅 메시지 보내기 API
+    // 채팅 메시지 보내기 API 호출
+    mutate({
+      chatRoomId: selectedChatId,
+      content,
+    });
 
-    const newMessage: Message = {
-      messageId: Date.now(), // 임시. 간단한 ID 생성
-      senderType: "USER",
-      content: trimmed,
-      createdAt: new Date().toISOString(), // 임시
-    };
-
-    setMessages((prev) => [...prev, newMessage]);
     setInput("");
   };
 
@@ -48,8 +46,10 @@ const ChatMain = ({ selectedChatId, messages, setMessages }: ChatMainProps) => {
         messages.map((message, index) => {
           const isLast = index === messages.length - 1;
           const messageContent = message.properties ? (
+            // 매물 추천 메세지
             <RecommendationCard key={message.messageId} properties={message.properties} />
           ) : (
+            // 일반 메세지
             <div
               key={message.messageId}
               className={`flex ${message.senderType === "USER" ? "justify-end" : "justify-start"}`}
