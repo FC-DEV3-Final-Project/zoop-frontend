@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 
 type Position = {
+  order?: number; // 선택 사항
+  propertyId?: string | number; // 선택 사항
   latitude: number;
   longitude: number;
 };
@@ -11,6 +13,7 @@ interface MapViewerProps {
 
 const MapViewer = ({ markerPoint }: MapViewerProps) => {
   const mapElement = useRef<HTMLDivElement | null>(null);
+  console.log("markerPoint:::확인::", markerPoint);
 
   useEffect(() => {
     if (!open) return;
@@ -62,7 +65,7 @@ const MapViewer = ({ markerPoint }: MapViewerProps) => {
         });
       });
     }, 100); // 100ms 후에 실행
-  }, [open]);
+  }, [markerPoint]);
   return <div ref={mapElement} id="map" className="h-full w-full" />;
 };
 
