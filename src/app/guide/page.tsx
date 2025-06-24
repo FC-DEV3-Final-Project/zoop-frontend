@@ -455,11 +455,9 @@ export default function Guide() {
           order={1}
           tradeTypeName={"전세"}
           rentPrice={undefined}
-          warrantPrice={53000}
-          dealPrice={0}
           dealOrWarrantPrc={"5억 3,000"}
           summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
-          realestateTypeName={"주상복합"}
+          realEstateTypeName={"주상복합"}
           aptName={"방배마에스트로"}
           articleName={"방배마에스트로"}
           buildingName={"1동 703호"}
@@ -467,8 +465,6 @@ export default function Guide() {
           isBookmarked={false}
           isActive={true}
           imageUrl={"/imgs/propertyExample.png"}
-          latitude={37.471515}
-          longitude={126.972487}
         />
         <p>{"isNumberVisible={false}"}</p>
         <PropertyCard
@@ -476,11 +472,9 @@ export default function Guide() {
           order={2}
           tradeTypeName={"전세"}
           rentPrice={undefined}
-          warrantPrice={53000}
-          dealPrice={0}
           dealOrWarrantPrc={"5억 3,000"}
           summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
-          realestateTypeName={"주상복합"}
+          realEstateTypeName={"주상복합"}
           aptName={"방배마에스트로"}
           articleName={"방배마에스트로"}
           buildingName={"1동 703호"}
@@ -488,8 +482,6 @@ export default function Guide() {
           isBookmarked={false}
           isActive={true}
           imageUrl={"/imgs/propertyExample.png"}
-          latitude={37.471515}
-          longitude={126.972487}
           isNumberVisible={false}
         />
         <p>{"isActive={false}"}</p>
@@ -498,11 +490,9 @@ export default function Guide() {
           order={3}
           tradeTypeName={"전세"}
           rentPrice={undefined}
-          warrantPrice={53000}
-          dealPrice={0}
           dealOrWarrantPrc={"5억 3,000"}
           summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
-          realestateTypeName={"주상복합"}
+          realEstateTypeName={"주상복합"}
           aptName={"방배마에스트로"}
           articleName={"방배마에스트로"}
           buildingName={"1동 703호"}
@@ -510,8 +500,6 @@ export default function Guide() {
           isBookmarked={false}
           isActive={false}
           imageUrl={"/imgs/propertyExample.png"}
-          latitude={37.471515}
-          longitude={126.972487}
         />
         <p>{"size='sm'"}</p>
         <PropertyCard
@@ -519,11 +507,9 @@ export default function Guide() {
           order={4}
           tradeTypeName={"전세"}
           rentPrice={undefined}
-          warrantPrice={53000}
-          dealPrice={0}
           dealOrWarrantPrc={"5억 3,000"}
           summary={["풀옵션", "xx역 도보 n분", "대학교 인접"]}
-          realestateTypeName={"주상복합"}
+          realEstateTypeName={"주상복합"}
           aptName={"방배마에스트로"}
           articleName={"방배마에스트로"}
           buildingName={"1동 703호"}
@@ -531,8 +517,6 @@ export default function Guide() {
           isBookmarked={false}
           isActive={true}
           imageUrl={"/imgs/propertyExample.png"}
-          latitude={37.471515}
-          longitude={126.972487}
           size="sm"
         />
       </div>

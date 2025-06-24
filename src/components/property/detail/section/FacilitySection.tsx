@@ -48,4 +48,6 @@ const FacilitySection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
   );
 });
 
+FacilitySection.displayName = "FacilitySection";
+
 export default FacilitySection;

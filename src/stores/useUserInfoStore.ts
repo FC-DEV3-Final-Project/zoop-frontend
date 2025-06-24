@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage, PersistStorage, StorageValue } from "zustand/middleware";
 
 interface UserInfo {
   email: string;
@@ -14,6 +14,18 @@ interface UserInfoStore {
   clearUser: () => void;
 }
 
+const createNoopStorage = (): PersistStorage<unknown> => ({
+  getItem(_name: string): StorageValue<unknown> | null {
+    return null;
+  },
+  setItem(_name: string, _value: StorageValue<unknown>): void {
+    // noop
+  },
+  removeItem(_name: string): void {
+    // noop
+  },
+});
+
 export const useUserInfoStore = create<UserInfoStore>()(
   persist(
     // 상태를 자동으로 localStorage에 저장
@@ -24,6 +36,8 @@ export const useUserInfoStore = create<UserInfoStore>()(
     }),
     {
       name: "userInfo-storage", // localStorage 키 이름
+      storage:
+        typeof window !== "undefined" ? createJSONStorage(() => localStorage) : createNoopStorage(),
     },
   ),
 );
