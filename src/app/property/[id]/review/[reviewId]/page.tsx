@@ -18,11 +18,19 @@ const ReviewDetailPage = () => {
 
   const propertyId = Number(id);
   const targetReviewId = Number(reviewId);
+  const [sortType] = useState<"like" | "latest">("like");
+  const currentSort = sortType === "like" ? "like" : "latest";
 
-  const { data: reviewListData, isLoading: isReviewLoading } = useReviewListQuery(propertyId);
+  const {
+    data: reviewListData,
+    isLoading: isReviewLoading,
+    refetch: refetchReviewList,
+  } = useReviewListQuery(propertyId, { sort: currentSort });
+
   const { data: commentData, isLoading: isCommentLoading } = useCommentListQuery(targetReviewId);
+
   const updateCommentMutation = useUpdateCommentMutation(targetReviewId);
-  const postCommentMutation = usePostCommentMutation(targetReviewId);
+  const postCommentMutation = usePostCommentMutation(targetReviewId, propertyId, currentSort);
 
   const [comment, setComment] = useState("");
   const [mode, setMode] = useState<"write" | "edit">("write");
@@ -35,6 +43,7 @@ const ReviewDetailPage = () => {
       postCommentMutation.mutate(comment, {
         onSuccess: () => {
           setComment("");
+          refetchReviewList();
         },
       });
     } else if (mode === "edit" && editTargetId !== null) {
@@ -48,7 +57,7 @@ const ReviewDetailPage = () => {
           },
         },
       );
-      return; // 수정일 경우는 여기서 return 해야 아래 reset이 중복되지 않음
+      return;
     }
 
     setComment("");
@@ -68,7 +77,7 @@ const ReviewDetailPage = () => {
 
   if (isReviewLoading || isCommentLoading || !reviewListData || !commentData) return null;
 
-  const review = reviewListData.find((r) => r.reviewId === targetReviewId);
+  const review = reviewListData.reviews.find((r) => r.reviewId === targetReviewId);
   if (!review) return <div>리뷰를 찾을 수 없습니다.</div>;
 
   const residenceMap = {
@@ -86,11 +95,12 @@ const ReviewDetailPage = () => {
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>리뷰 줍줍</Header.Title>
+        <Header.Title>리뷰</Header.Title>
       </Header>
 
-      <div className="flex h-full min-h-screen flex-col bg-white pb-[100px] pt-16">
+      <div className="flex h-full min-h-screen flex-col bg-white pb-[100px] pt-12">
         <ReviewCard
+          key={`${review.reviewId}-${review.commentCount}`}
           propertyId={propertyId}
           reviewId={review.reviewId}
           nickname={review.nickname}
@@ -107,9 +117,14 @@ const ReviewDetailPage = () => {
         />
 
         <CommentList
+          propertyId={propertyId}
+          currentSort={currentSort}
           reviewId={targetReviewId}
           comments={commentData}
           onEdit={(id) => handleEdit(id)}
+          onDeleteSuccess={() => {
+            refetchReviewList();
+          }}
         />
 
         <div className="fixed bottom-0 left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 bg-white px-5 py-2">

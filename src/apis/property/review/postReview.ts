@@ -1,14 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { ReviewRequestBodyType } from "@/types/reviewType";
 
-export type ReviewRequestBody = {
-  // complexId: number | null;
-  rating: number;
-  content: string;
-  hasChildren: "HAS_CHILDREN" | "NON_CHILDREN";
-  isResident: "CURRENT_RESIDENT" | "PAST_RESIDENT" | "NON_RESIDENT";
-};
-
-export const postReview = async (propertyId: number, body: ReviewRequestBody) => {
+export const postReview = async (propertyId: number, body: ReviewRequestBodyType) => {
   const res = await axiosInstance.post(`/reviews/${propertyId}`, body);
   return res.data.data;
 };
