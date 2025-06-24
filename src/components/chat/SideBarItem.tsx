@@ -57,9 +57,11 @@ const SideBarItem = ({
       className={`relative flex w-full items-center justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
       onClick={onClick}
     >
-      <div className="flex min-w-0 flex-col">
-        <span className="text-body2">{highlightSearchKeyword(title, searchKeyword)}</span>
-        <span className="w-3/4 overflow-hidden text-ellipsis whitespace-nowrap text-body3 text-gray-800">
+      <div className="flex flex-col min-w-0">
+        <span className="w-3/4 truncate text-body2">
+          {highlightSearchKeyword(title, searchKeyword)}
+        </span>
+        <span className="w-3/4 overflow-hidden text-gray-800 text-ellipsis whitespace-nowrap text-body3">
           {lastMatchingMessage && highlightSearchKeyword(lastMatchingMessage, searchKeyword)}
         </span>
       </div>
