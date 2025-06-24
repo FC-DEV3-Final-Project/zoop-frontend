@@ -1,7 +1,7 @@
-import { ExcelPropertyItem } from "@/types/map";
+import { MapPropertyItem } from "@/types/map";
 
 // 데이터 한글 컬럼명 매핑
-export const columnMapping: Record<keyof ExcelPropertyItem, string> = {
+export const columnMapping: Partial<Record<keyof MapPropertyItem, string>> = {
   articleName: "매물명",
   tradeTypeName: "거래유형",
   rentPrice: "월세",

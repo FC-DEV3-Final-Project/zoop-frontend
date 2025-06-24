@@ -1,40 +1,22 @@
-export type ExcelPropertyItem = {
-  articleName: string;
-  tradeTypeName: string;
-  rentPrice: number | null;
-  warrantPrice: number | null;
-  dealPrice: number | null;
-  dealOrWarrantPrc: string;
-  summary: string[];
-  aptName: string | null;
-  buildingName: string;
-  realEstateTypeName: string;
-  area2: string;
-  direction: string;
-  floorInfo: string;
-  exposureAddress: string;
-  etcFeeAmount: number;
-  moveInPossibleYmd: string;
-  articleFeatureDesc: string;
-  detailDescription: string;
-};
+import { PropertyCardProps } from "@/components/common/PropertyCard";
 
-export type MapPropertyItem = {
-  propertyId: number;
-  order: number;
-  tradeTypeName: string;
-  summary: string[];
-  realEstateTypeName: string;
-  dealOrWarrantPrc: string;
-  buildingName: string;
-  area2: string;
-  isBookmarked: boolean;
-  imageUrl: string;
-  latitude: number;
-  longitude: number;
-  rentPrice?: number;
+export type MapPropertyItem = PropertyCardProps & {
   warrantPrice?: number;
   dealPrice?: number;
-  aptName?: string;
-  articleName?: string;
+  direction?: string;
+  floorInfo?: string;
+  exposureAddress?: string;
+  etcFeeAmount?: number;
+  moveInPossibleYmd?: string;
+  articleFeatureDesc?: string;
+  detailDescription?: string;
+  latitude: number;
+  longitude: number;
+  realtorName?: string;
+  representativeName?: string;
+  realtorAddress?: string;
+  representativeTelNo?: string;
+  cellPhoneNo?: string;
+  maxBrokerFee?: number;
+  brokerFee?: number;
 };
