@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useCarousel } from "@/hooks/property/useCarousel";
+import Image from "next/image";
 
 interface ImageViewerModalProps {
   images: {
@@ -63,11 +64,16 @@ const ImageViewerModal = ({ images, initialIndex, onClose }: ImageViewerModalPro
               className="flex h-full w-full flex-shrink-0 items-center justify-center"
               style={{ width: `${100 / images.length}%` }}
             >
-              <img
-                src={img.imageUrl}
-                alt={`property-image-${img.imageOrder}`}
-                className="h-auto max-h-full w-auto max-w-full object-contain"
-              />
+              <div className="relative h-full w-full">
+                <Image
+                  src={img.imageUrl}
+                  alt={`property-image-${img.imageOrder}`}
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
             </div>
           ))}
         </div>
