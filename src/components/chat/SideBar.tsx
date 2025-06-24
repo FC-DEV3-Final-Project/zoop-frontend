@@ -23,9 +23,9 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
   const { user } = useUserInfoStore();
   const router = useRouter();
 
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const { data: chatList } = useChatListQuery(searchKeyword);
+  const { data: chatList } = useChatListQuery(searchText);
 
   // 날짜 별(오늘, 어제, 지난주, ...)로 그룹화
   const groupedChatList =
@@ -38,7 +38,7 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
     );
 
   const reset = () => {
-    setSearchKeyword(""); // 검색어 초기화
+    setSearchText(""); // 검색어 초기화
     onClose?.(); // 사이드바 닫기
   };
 
@@ -62,19 +62,19 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
     >
       <SheetHeader className="flex w-full flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
         <SheetTitle className="w-full">
-          <div className="flex w-full justify-between gap-2">
+          <div className="flex justify-between w-full gap-2">
             <div className="flex gap-4">
               <Image src={LogoIcon} alt={"logo"} />
               <Input
                 className="flex-1"
                 placeholder="검색"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onSend={() => {
                   alert("검색");
                 }}
-                onClear={() => setSearchKeyword("")}
+                onClear={() => setSearchText("")}
               />
             </div>
 
@@ -108,8 +108,8 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
                     key={chat.chatRoomId}
                     chatRoomId={chat.chatRoomId}
                     title={chat.title}
-                    lastMatchingMessage={searchKeyword && chat.lastMatchingMessage}
-                    searchKeyword={searchKeyword}
+                    lastMatchingMessage={searchText && chat.lastMatchingMessage}
+                    searchText={searchText}
                     isSelected={selectedChatId === chat.chatRoomId}
                     onClick={() => handleChatItemClick(chat.chatRoomId)}
                   />
@@ -119,18 +119,18 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
           ))}
         </ul>
       ) : (
-        searchKeyword && (
-          <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+        searchText && (
+          <div className="flex flex-col items-center justify-center h-full gap-2 text-center">
             <p className="text-subtitle1">검색 결과가 없습니다.</p>
             <p className="text-body2 text-gray-700-info">
-              {searchKeyword}이/가 포함된 조건을 설정해보세요!
+              {searchText}이/가 포함된 조건을 설정해보세요!
             </p>
           </div>
         )
       )}
 
       <SheetFooter
-        className="absolute -bottom-1 left-0 right-0 px-5 py-6"
+        className="absolute left-0 right-0 px-5 py-6 -bottom-1"
         style={{
           background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 44%)",
           paddingTop: "40px",
@@ -142,7 +142,7 @@ const SideBar = ({ selectedChatId, onClose }: SideBarProps) => {
               <img
                 src={user.profileImage}
                 alt="프로필 이미지"
-                className="h-8 w-8 rounded-full object-cover"
+                className="object-cover w-8 h-8 rounded-full"
               />
             ) : (
               <img src="/icons/base-user-img.svg" alt="프로필 이미지" />

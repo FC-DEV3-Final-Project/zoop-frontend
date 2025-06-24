@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
+import { highlightSearchText } from "@/utils/common/highlightSearchText";
 
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
@@ -194,7 +194,7 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                       }`}
                     >
                       <div className="text-body1">
-                        {highlightSearchKeyword(place.place_name, searchKeyword)}
+                        {highlightSearchText(place.place_name, searchKeyword)}
                       </div>
                       <div className="text-body2">{getSimpleAddress(place)}</div>
                     </li>

@@ -1,13 +1,13 @@
 import React from "react";
 
 import Dropdown from "../common/Dropdown";
-import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
+import { highlightSearchText } from "@/utils/common/highlightSearchText";
 import { ChatPreviewItem } from "@/types/chat";
 import { useDeleteChatMutation } from "@/queries/chat/useDeleteChatMutation";
 import { useUpdateChatTitle } from "@/queries/chat/useUpdateChatTitleMutation";
 
 interface SideBarItemProps extends ChatPreviewItem {
-  searchKeyword: string;
+  searchText: string;
   isSelected?: boolean;
   onClick?: () => void;
 }
@@ -16,7 +16,7 @@ const SideBarItem = ({
   chatRoomId,
   title,
   lastMatchingMessage,
-  searchKeyword,
+  searchText,
   isSelected = false,
   onClick,
 }: SideBarItemProps) => {
@@ -58,11 +58,9 @@ const SideBarItem = ({
       onClick={onClick}
     >
       <div className="flex flex-col min-w-0">
-        <span className="w-3/4 truncate text-body2">
-          {highlightSearchKeyword(title, searchKeyword)}
-        </span>
+        <span className="w-3/4 truncate text-body2">{highlightSearchText(title, searchText)}</span>
         <span className="w-3/4 overflow-hidden text-gray-800 text-ellipsis whitespace-nowrap text-body3">
-          {lastMatchingMessage && highlightSearchKeyword(lastMatchingMessage, searchKeyword)}
+          {lastMatchingMessage && highlightSearchText(lastMatchingMessage, searchText)}
         </span>
       </div>
       <Dropdown items={[...dropdownItems]} />
