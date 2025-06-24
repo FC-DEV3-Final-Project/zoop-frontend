@@ -26,18 +26,15 @@ const ThumbsButton = ({ itemId, likeCount, initialLiked, type, reviewId }: Thumb
 
   const handleClick = async () => {
     try {
-      const result =
-        type === "review" ? await toggleReviewLike(itemId) : await toggleCommentLike(itemId);
+      const nextLiked = !isLiked;
 
-      const nextLiked = result.isLiked;
+      const result =
+        type === "review"
+          ? await toggleReviewLike({ reviewId: itemId, isLiked: nextLiked })
+          : await toggleCommentLike({ commentId: itemId, isLiked: nextLiked });
 
       // 낙관적 업데이트
-      setCount((prev) => {
-        if (!isLiked && nextLiked) return prev + 1;
-        if (isLiked && !nextLiked) return prev - 1;
-        return prev;
-      });
-
+      setCount((prev) => (nextLiked ? prev + 1 : prev - 1));
       setIsLiked(nextLiked);
     } catch (err) {
       console.error("공감 처리 실패:", err);

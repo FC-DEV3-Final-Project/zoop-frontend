@@ -3,24 +3,34 @@
 import Image from "next/image";
 import Dropdown from "@/components/common/Dropdown";
 import { Comment } from "@/apis/property/review/fetchComments";
-import { formatDate } from "@/utils/property/formatDate";
+import { formatISODate } from "@/utils/property/dateFormat";
 import { useDeleteCommentMutation } from "@/queries/property/review/useDeleteCommentMutation";
 import ThumbsButton from "./ThumbsButton";
 
 interface CommentListProps {
   reviewId: number;
+  propertyId: number;
+  currentSort: "like" | "latest";
   comments: Comment[];
   onEdit: (id: number, content: string) => void;
+  onDeleteSuccess?: () => void;
 }
 
-const CommentList = ({ reviewId, comments, onEdit }: CommentListProps) => {
-  const { mutate: deleteComment } = useDeleteCommentMutation(reviewId);
-
+const CommentList = ({
+  reviewId,
+  propertyId,
+  currentSort,
+  comments,
+  onEdit,
+  onDeleteSuccess,
+}: CommentListProps) => {
+  const { mutate: deleteComment } = useDeleteCommentMutation(reviewId, propertyId, currentSort);
   const handleDelete = (commentId: number) => {
     if (confirm("댓글을 삭제하시겠습니까?")) {
       deleteComment(commentId, {
         onSuccess: () => {
           console.log("댓글 삭제 성공");
+          onDeleteSuccess?.();
         },
         onError: () => {
           alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
@@ -80,7 +90,7 @@ const CommentList = ({ reviewId, comments, onEdit }: CommentListProps) => {
               reviewId={reviewId}
             />
             <span className="text-footnote text-gray-700-info">
-              {formatDate(comment.createdAt)}
+              {formatISODate(comment.createdAt)}
             </span>
           </div>
         </div>

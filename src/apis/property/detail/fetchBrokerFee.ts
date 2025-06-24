@@ -1,14 +1,7 @@
 import axiosInstance from "@/apis/utils/axiosInstance";
+import { BrokerFeeInfoProps } from "@/types/propertyDetail";
 
-export type BrokerFeeInfo = {
-  propertyId: number;
-  maxBrokerFee: number;
-  brokerFee: number;
-  acquisitionTax: number;
-  specialTax: number;
-};
-
-export const fetchBrokerFee = async (propertyId: number): Promise<BrokerFeeInfo> => {
+export const fetchBrokerFee = async (propertyId: number): Promise<BrokerFeeInfoProps> => {
   const res = await axiosInstance.get(`/properties/${propertyId}/broker_fee`);
   return res.data.data;
 };

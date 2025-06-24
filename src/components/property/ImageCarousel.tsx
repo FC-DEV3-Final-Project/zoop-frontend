@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { useCarousel } from "@/hooks/property/useCarousel";
+import Image from "next/image";
+import ImageViewerModal from "@/components/property/detail/ImageViewerModal";
 
 interface ImageCarouselProps {
   propertyInfo: {
-    summary: string[];
     images: {
       imageUrl: string;
       imageOrder: number;
@@ -14,63 +15,106 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel = ({ propertyInfo }: ImageCarouselProps) => {
-  const { images, summary } = propertyInfo;
-
+  const { images } = propertyInfo;
   const { index, goNext, goPrev, handleTouchStart, handleTouchEnd } = useCarousel(images.length);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const hasImages = images.length > 0;
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   return (
     <div
-      className="relative h-[238px] w-full overflow-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      className="relative w-full overflow-hidden"
+      style={{ height: "238px" }}
+      onTouchStart={hasImages ? handleTouchStart : undefined}
+      onTouchEnd={hasImages ? handleTouchEnd : undefined}
     >
-      {/* 이미지 슬라이드 */}
-      <div
-        className="flex transition-transform duration-300 ease-in-out"
-        style={{
-          transform: `translateX(-${index * 100}%)`,
-          width: `${images.length * 100}%`,
-        }}
-      >
-        {images.map((img, i) => (
-          <div
-            key={i}
-            className="relative flex h-[238px] w-full flex-shrink-0 items-center justify-center bg-black"
-          >
-            {/* <Image
-              src={img.imageUrl}
-              alt={`property-image-${i}`}
-              fill
-              style={{ objectFit: "cover" }}
-            /> */}
-          </div>
-        ))}
+      {/* 이미지 전체보기 버튼 */}
+      {hasImages && (
+        <button
+          className="absolute right-3 top-3 z-10 rounded-full bg-black/40 p-1"
+          aria-label="expand image"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <img src="/icons/white-expand.svg" alt="expand" width={24} height={24} />
+        </button>
+      )}
+
+      {/* 슬라이드 or 기본 이미지 */}
+      {hasImages ? (
+        <div
+          className="flex transition-transform duration-300 ease-in-out"
+          style={{
+            transform: `translateX(-${index * (100 / images.length)}%)`,
+            width: `${images.length * 100}%`,
+          }}
+        >
+          {images.map((img) => (
+            <div
+              key={img.imageOrder}
+              className="relative flex-shrink-0"
+              style={{ width: `${100 / images.length}%`, height: "238px" }}
+            >
+              <Image
+                src={img.imageUrl}
+                alt={`property-image-${img.imageOrder}`}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-gray-100">
+          <img
+            src="/icons/default-property.svg"
+            alt="기본 이미지"
+            className="h-20 w-20 object-contain opacity-60"
+          />
+        </div>
+      )}
+
+      {/* 하단 넘버링 */}
+      <div className="absolute bottom-3 right-3 rounded-[20px] bg-black/40 px-[12px] py-[4px] text-body2 text-white">
+        {hasImages ? index + 1 : 1} / {hasImages ? images.length : 1}
       </div>
 
-      <div className="absolute bottom-3 left-0 right-0 flex items-center justify-between px-3">
-        {/* 태그 */}
-        <div className="flex items-center gap-[10px] rounded-[20px] bg-white/50 px-[12px] py-[4px]">
-          <Image src="/icons/smile.svg" alt="icon" width={22} height={22} />
-          <span className="text-subtitle2 text-blue-800">{summary.join(" / ")}</span>
-        </div>
-
-        {/* 이미지 넘버링 */}
-        <div className="rounded-[20px] bg-black/40 px-[12px] py-[4px] text-body2 text-white">
-          {index + 1} / {images.length}
-        </div>
-      </div>
+      {isModalOpen && (
+        <ImageViewerModal
+          images={images}
+          initialIndex={index}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
 
       {/* 좌/우 클릭 영역 */}
-      <button
-        onClick={goPrev}
-        className="absolute inset-y-0 left-0 w-1/2"
-        aria-label="prev image"
-      />
-      <button
-        onClick={goNext}
-        className="absolute inset-y-0 right-0 w-1/2"
-        aria-label="next image"
-      />
+      {hasImages && (
+        <>
+          <button
+            onClick={goPrev}
+            className="absolute inset-y-0 left-0 w-1/2"
+            aria-label="prev image"
+          />
+          <button
+            onClick={goNext}
+            className="absolute inset-y-0 right-0 w-1/2"
+            aria-label="next image"
+          />
+        </>
+      )}
     </div>
   );
 };

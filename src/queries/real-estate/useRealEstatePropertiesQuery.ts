@@ -4,20 +4,25 @@ import fetchRealEstateProperties from "@/apis/real-estate/fetchRealEstatePropert
 
 export const useRealEstatePropertiesQuery = (
   realtyId: number,
-  tradeType: string,
+  tradeTypeName: string,
   size: number = 2,
+  enabled: boolean = true,
 ) => {
-  const {
-    items,
-    loader,
-    hasMore,
-    loading,
-    error,
-  } = useInfiniteScroll<PropertyCardProps>(
+  const { items, loader, hasMore, loading, error, reset } = useInfiniteScroll<PropertyCardProps>(
     async (page: number) => {
-      return fetchRealEstateProperties(page, size, realtyId, tradeType as "매매" | "월세" | "전세");
+      const { properties, hasNext } = await fetchRealEstateProperties(
+        page,
+        size,
+        realtyId,
+        tradeTypeName as "매매" | "월세" | "전세",
+      );
+      return {
+        content: Array.isArray(properties) ? properties : [],
+        hasNext: hasNext || false,
+      };
     },
-    [realtyId, tradeType],
+    [realtyId, tradeTypeName],
+    enabled,
   );
 
   return {
@@ -26,5 +31,6 @@ export const useRealEstatePropertiesQuery = (
     hasMore,
     loading,
     error,
+    reset,
   };
 };

@@ -27,7 +27,7 @@ const EditNickname = () => {
         <Header.Title>내 정보</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="relative min-h-screen bg-white pt-16">
+      <div className="relative min-h-screen bg-white pt-12">
         <div className="flex w-full flex-col items-start justify-start gap-[10px] p-5 pt-[81px]">
           <div className="justify-center text-subtitle2">닉네임</div>
           <NicknameInput

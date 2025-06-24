@@ -26,7 +26,7 @@ const MyPage = () => {
         <Header.Title>마이페이지</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <div className="flex h-screen flex-col bg-white pt-16">
+      <div className="flex h-screen flex-col bg-white pt-12">
         {homeLoading ? (
           <div>로딩중...</div>
         ) : (
@@ -34,9 +34,9 @@ const MyPage = () => {
             {/* 상단: 프로필/포스트 */}
             <section className="flex inline-flex flex-col items-start justify-start gap-6 bg-white px-5 pb-6 pt-7">
               {/* 유저 정보 */}
-              {homeData?.profile && <UserProfile profile={homeData.profile} />}
+              {homeData?.userInfo && <UserProfile profile={homeData.userInfo} />}
               {/* 포스트 박스 */}
-              <PostPreviewBox posts={homeData?.myReviews || []} />
+              <PostPreviewBox postPreviewItems={homeData?.reviewOrComments || []} />
             </section>
 
             {/* 하단: 탭바 + 리스트 */}
