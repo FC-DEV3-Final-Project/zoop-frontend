@@ -4,6 +4,8 @@ import Tab from "@/components/common/Tab";
 import EmptyListMessage from "@/components/common/EmptyListMessage";
 import { useRealEstatePropertiesQuery } from "@/queries/real-estate/useRealEstatePropertiesQuery";
 import { useBookmarkedPropertiesQuery } from "@/queries/mypage/useBookmarkedPropertiesQuery";
+import MapListDialog from "../mapPropertyListDialog/MapListDialog";
+import { MapPropertyItem } from "@/types/map";
 
 interface TabOption {
   label: string;
@@ -38,6 +40,7 @@ const PropertyListSection = ({
   realtyId,
 }: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
+  const [mapOpen, setMapOpen] = useState(false);
 
   // 부동산 쿼리들 - enabled 옵션으로 조건부 호출
   const rentQuery = useRealEstatePropertiesQuery(realtyId!, "월세", 20, selectedTab === "rent");
@@ -94,10 +97,22 @@ const PropertyListSection = ({
             <span className="text-caption2">의 매물</span>
           </div>
           {showMapViewButton && (
-            <button onClick={handleMapView} className="flex items-center justify-start gap-1">
+            <button
+              onClick={() => setMapOpen(true)}
+              className="flex items-center justify-start gap-1"
+            >
               <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
               <span className="text-body2">지도에서 보기</span>
             </button>
+          )}
+          {mapOpen && (
+            <MapListDialog
+              open={mapOpen}
+              onOpenChange={setMapOpen}
+              properties={currentProperties as MapPropertyItem[]}
+              type="bookmark"
+              title={selectedTab === "bookmarked" ? "내가 찜한 매물" : "최근 본 매물"}
+            />
           )}
         </div>
       </div>
