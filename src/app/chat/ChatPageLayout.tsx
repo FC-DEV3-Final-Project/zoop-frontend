@@ -15,7 +15,7 @@ interface ChatPageLayoutProps {
 }
 
 const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
-  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [currentChatTitle, setCurrentChatTitle] = useState("ZOOP");
   const [currentChatMessages, setCurrentChatMessages] = useState<Message[]>([]);
 
@@ -36,7 +36,7 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
   }, [chatData]);
 
   return (
-    <Sheet open={sideBarOpen} onOpenChange={setSideBarOpen}>
+    <Sheet open={isSideBarOpen} onOpenChange={setIsSideBarOpen}>
       <Header bgColorClassName="bg-gray-100" size="md">
         <SheetTrigger>
           <Header.Hamburger />
@@ -48,7 +48,7 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
         <ChatMain currentChatId={currentChatId} messages={currentChatMessages} />
       </main>
-      <SideBar currentChatId={currentChatId} onClose={() => setSideBarOpen(false)} />
+      <SideBar currentChatId={currentChatId} onClose={() => setIsSideBarOpen(false)} />
     </Sheet>
   );
 };
