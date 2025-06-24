@@ -8,6 +8,8 @@ import { useReviewListQuery } from "@/queries/property/review/useReviewListQuery
 import { starAvg } from "@/utils/property/starAvg";
 import type { StarType } from "@/utils/property/starAvg";
 import { formatISODate } from "@/utils/property/dateFormat";
+import { Skeleton } from "@/components/ui/skeleton";
+import EmptyListMessage from "@/components/common/EmptyListMessage";
 
 type SortType = "like" | "latest";
 
@@ -72,9 +74,12 @@ const ReviewList = ({ propertyId }: ReviewListProps) => {
 
       <div className="flex flex-col gap-2 bg-white">
         {isLoading ? (
-          <div className="px-5 py-4 text-body2 text-gray-500">리뷰를 불러오는 중입니다...</div>
+          <div className="space-y-2 px-5 py-4">
+            <Skeleton className="h-5 w-3/4" />
+            <Skeleton className="h-5 w-1/2" />
+          </div>
         ) : reviews.length === 0 ? (
-          <div className="px-5 py-4 text-body2 text-gray-500">아직 등록된 리뷰가 없습니다.</div>
+          <EmptyListMessage message="아직 등록된 리뷰가 없습니다." className="px-5 py-4" />
         ) : (
           reviews.map((review) => (
             <ReviewCard
