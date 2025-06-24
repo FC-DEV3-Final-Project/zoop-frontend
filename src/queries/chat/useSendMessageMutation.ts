@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@/apis/utils/axiosInstance";
 
 interface SendMessagePayload {
@@ -11,7 +11,14 @@ export const postMessage = async (payload: SendMessagePayload) => {
   return response.data;
 };
 
-export const useSendMessageMutation = () =>
-  useMutation({
+export const useSendMessageMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
     mutationFn: postMessage,
+    onSuccess: () => {
+      // 채팅방 쿼리 갱신
+      queryClient.invalidateQueries({ queryKey: ["chatData"] });
+    },
   });
+};
