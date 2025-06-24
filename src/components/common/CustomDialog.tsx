@@ -28,7 +28,7 @@ interface AlertProps {
   onConfirm: (value?: string) => void;
 }
 
-export default function Alert({
+export default function CustomDialog({
   title,
   description,
   placeholder,
