@@ -1,8 +1,7 @@
 "use client";
 
 import { Header } from "@/layout/Header";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import React, { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 // import ToggleCompare from "./ToggleCompare";
@@ -12,6 +11,7 @@ import DownloadExcel from "./excel/DownloadExcel";
 import MapViewer from "./MapViewer";
 import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
 import { MapPropertyItem } from "@/types/map";
+import { Dialog, DialogContent } from "../ui/mapDialog";
 
 interface Props {
   open: boolean;
