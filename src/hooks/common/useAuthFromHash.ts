@@ -38,5 +38,5 @@ export default function useAuthFromHash({
 
     // 해시 제거
     window.history.replaceState(null, "", window.location.pathname);
-  }, [redirectIfNicknameNeeded, router]);
+  }, []);
 }

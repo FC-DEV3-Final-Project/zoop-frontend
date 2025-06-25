@@ -1,9 +1,21 @@
 import axiosInstance from "../utils/axiosInstance";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 export const getUserInfo = async () => {
   try {
     const response = await axiosInstance.get("/users/auth/me");
-    return response.data;
+    const data = response.data;
+
+    // ✅ Zustand 저장
+    const setUser = useUserInfoStore.getState().setUser;
+    setUser({
+      userId: data.userId,
+      email: data.email,
+      nickname: data.nickname,
+      profileImage: data.profileImage,
+    });
+
+    return data;
   } catch (error) {
     console.error("getUserInfo 에러:", error);
     throw error;
