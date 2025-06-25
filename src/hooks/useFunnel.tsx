@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { RealEstateType, TradeType } from "@/types/filter";
 
 interface StepProps {
   name: string;
@@ -12,14 +13,34 @@ interface FunnelProps {
 }
 
 interface StepData {
-  location?: string;
-  transactionType?: string[];
-  housingType?: string[];
+  place: {
+    selectedPlace: {
+      x: string;
+      y: string;
+      bCode: string;
+      hCode: string;
+      placeName: string;
+    };
+  };
+  tradeType: TradeType[];
+  realEstateType: RealEstateType[];
 }
 
 const useFunnel = ({ lastStep }: { lastStep: string }) => {
   const [step, setStep] = useState("1");
-  const [stepData, setStepData] = useState<StepData>({});
+  const [stepData, setStepData] = useState<StepData>({
+    place: {
+      selectedPlace: {
+        x: "",
+        y: "",
+        bCode: "",
+        hCode: "",
+        placeName: "",
+      },
+    },
+    tradeType: [],
+    realEstateType: [],
+  });
 
   const Step = (props: StepProps): React.ReactElement => {
     return <>{props.children}</>;

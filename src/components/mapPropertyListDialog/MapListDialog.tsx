@@ -12,6 +12,7 @@ import MapViewer from "./MapViewer";
 import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
 import { MapPropertyItem } from "@/types/map";
 import { Dialog, DialogContent } from "../ui/mapDialog";
+import { useMarkerPositions } from "@/hooks/common/useMarkerPositions";
 
 interface Props {
   open: boolean;
@@ -40,16 +41,17 @@ const MapListDialog = ({ open, onOpenChange, properties, title, type }: Props) =
   });
 
   // 지도 마커에 표시될 좌표 정보 추출
-  const markerPositions = useMemo(
-    () =>
-      propertyList.map(({ order, propertyId, latitude, longitude }) => ({
-        order,
-        propertyId,
-        latitude,
-        longitude,
-      })),
-    [propertyList],
-  );
+  const markerPositions = useMarkerPositions(propertyList);
+  // const markerPositions = useMemo(
+  //   () =>
+  //     propertyList.map(({ order, propertyId, latitude, longitude }) => ({
+  //       order,
+  //       propertyId,
+  //       latitude,
+  //       longitude,
+  //     })),
+  //   [propertyList],
+  // );
 
   // 정렬 옵션 선택 시 호출되는 함수
   const handleSelect = (item: { label: string; value: string }) => {

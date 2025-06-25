@@ -1,11 +1,13 @@
 import React from "react";
 
 import Dropdown from "../common/Dropdown";
-import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
+import { highlightSearchText } from "@/utils/common/highlightSearchText";
 import { ChatPreviewItem } from "@/types/chat";
+import { useDeleteChatMutation } from "@/queries/chat/useDeleteChatMutation";
+import { useUpdateChatTitle } from "@/queries/chat/useUpdateChatTitleMutation";
 
 interface SideBarItemProps extends ChatPreviewItem {
-  searchKeyword: string;
+  searchText: string;
   isSelected?: boolean;
   onClick?: () => void;
 }
@@ -13,17 +15,19 @@ interface SideBarItemProps extends ChatPreviewItem {
 const SideBarItem = ({
   chatRoomId,
   title,
-  content,
-  searchKeyword,
+  lastMatchingMessage,
+  searchText,
   isSelected = false,
   onClick,
 }: SideBarItemProps) => {
-  const handleEditTilte = () => {
-    const isConfirmed = window.prompt("제목 편집하기", title);
+  const { mutate: deleteChatRoom } = useDeleteChatMutation();
+  const { mutate: updateTitle } = useUpdateChatTitle();
 
-    if (isConfirmed) {
-      // TODO: 제목 수정하기 API
-      alert(`${chatRoomId} 제목을 수정합니다.`);
+  const handleEditTilte = () => {
+    const newTitle = window.prompt("제목 편집하기", title);
+
+    if (newTitle && newTitle.trim() !== "" && newTitle !== title) {
+      updateTitle({ chatRoomId, newTitle });
     }
   };
 
@@ -31,8 +35,7 @@ const SideBarItem = ({
     const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
 
     if (isConfirmed) {
-      // TODO: 채팅 삭제하기 API
-      alert(`${chatRoomId} 채팅방을 삭제합니다.`);
+      deleteChatRoom({ chatRoomId });
     }
   };
 
@@ -51,13 +54,15 @@ const SideBarItem = ({
 
   return (
     <div
-      className={`relative flex w-full items-center justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
+      className={`relative flex w-full cursor-pointer items-center justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
       onClick={onClick}
     >
-      <div className="flex min-w-0 flex-col">
-        <span className="text-body2">{highlightSearchKeyword(title, searchKeyword)}</span>
+      <div className="flex w-full min-w-0 flex-col">
+        <span className="w-[92%] truncate text-body2">
+          {highlightSearchText(title, searchText)}
+        </span>
         <span className="w-3/4 overflow-hidden text-ellipsis whitespace-nowrap text-body3 text-gray-800">
-          {highlightSearchKeyword(content ?? "", searchKeyword)}
+          {lastMatchingMessage && highlightSearchText(lastMatchingMessage, searchText)}
         </span>
       </div>
       <Dropdown items={[...dropdownItems]} />
