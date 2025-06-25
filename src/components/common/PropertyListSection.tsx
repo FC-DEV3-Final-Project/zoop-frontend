@@ -50,10 +50,6 @@ const PropertyListSection = ({
   // 북마크 쿼리 - enabled 옵션으로 조건부 호출
   const bookmarkedQuery = useBookmarkedPropertiesQuery(20, selectedTab === "bookmarked");
 
-  const handleMapView = () => {
-    alert("지도에서 보기 클릭!");
-  };
-
   // 현재 선택된 탭의 쿼리 가져오기
   const getCurrentQuery = (): CurrentQueryType | null => {
     if (selectedTab === "rent") return rentQuery;
@@ -99,9 +95,20 @@ const PropertyListSection = ({
           {showMapViewButton && (
             <button
               onClick={() => setMapOpen(true)}
-              className="flex items-center justify-start gap-1"
+              disabled={propertyCount?.[selectedTab] === 0}
+              className={`flex items-center justify-start gap-1 ${
+                propertyCount?.[selectedTab] === 0
+                  ? "text-gray-700-info"
+                  : "cursor-pointer text-black"
+              }`}
             >
-              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+              <img
+                src={
+                  propertyCount?.[selectedTab] === 0 ? "/icons/map-disabled.svg" : "/icons/map.svg"
+                }
+                alt="더보기"
+                className="h-4 w-4"
+              />
               <span className="text-body2">지도에서 보기</span>
             </button>
           )}

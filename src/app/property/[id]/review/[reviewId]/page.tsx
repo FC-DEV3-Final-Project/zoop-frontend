@@ -11,6 +11,8 @@ import { Header } from "@/layout/Header";
 import { formatISODate } from "@/utils/property/dateFormat";
 import AutoResizeTextarea from "@/components/ui/textarea";
 import { usePostCommentMutation } from "@/queries/property/review/usePostCommentMutation";
+import toast from "react-hot-toast";
+import CustomToast from "@/components/common/CustomToast";
 
 const ReviewDetailPage = () => {
   const { id, reviewId } = useParams();
@@ -44,6 +46,16 @@ const ReviewDetailPage = () => {
         onSuccess: () => {
           setComment("");
           refetchReviewList();
+          toast.custom(
+            ({ id }) => (
+              <CustomToast
+                message="댓글이 등록되었습니다."
+                type="success"
+                onClickAction={() => toast.dismiss(id)}
+              />
+            ),
+            { duration: 2000 },
+          );
         },
       });
     } else if (mode === "edit" && editTargetId !== null) {
@@ -54,9 +66,20 @@ const ReviewDetailPage = () => {
             setComment("");
             setMode("write");
             setEditTargetId(null);
+            toast.custom(
+              ({ id }) => (
+                <CustomToast
+                  message="댓글이 수정되었습니다."
+                  type="success"
+                  onClickAction={() => toast.dismiss(id)}
+                />
+              ),
+              { duration: 2000 },
+            );
           },
         },
       );
+
       return;
     }
 

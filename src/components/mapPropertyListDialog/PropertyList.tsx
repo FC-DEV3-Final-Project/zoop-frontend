@@ -14,7 +14,7 @@ const PropertyList = ({ properties }: { properties: PropertyCardProps[] }) => (
           dealOrWarrantPrc={property.dealOrWarrantPrc}
           buildingName={property.buildingName}
           area2={property.area2}
-          isBookmarked={true}
+          isBookmarked={property.isBookmarked}
           imageUrl={property.imageUrl}
           rentPrice={property.rentPrice || undefined}
           aptName={property.aptName}

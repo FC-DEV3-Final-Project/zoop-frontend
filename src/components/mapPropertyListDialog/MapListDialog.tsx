@@ -1,8 +1,7 @@
 "use client";
 
 import { Header } from "@/layout/Header";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import React, { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 // import ToggleCompare from "./ToggleCompare";
@@ -12,6 +11,7 @@ import DownloadExcel from "./excel/DownloadExcel";
 import MapViewer from "./MapViewer";
 import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
 import { MapPropertyItem } from "@/types/map";
+import { Dialog, DialogContent } from "../ui/mapDialog";
 
 interface Props {
   open: boolean;
@@ -19,63 +19,47 @@ interface Props {
   properties: MapPropertyItem[];
   title: string;
   type?: "bookmark" | "recentView";
-  positionList?: MarkerItem[];
 }
 
-type MarkerItem = {
-  propertyId: string;
-  latitude: number;
-  longitude: number;
-};
+const MapListDialog = ({ open, onOpenChange, properties, title, type }: Props) => {
+  // props로 받은 매물 데이터를 초기 원본 리스트로 설정
+  const [originalList] = useState<MapPropertyItem[]>(properties);
 
-const MapListDialog = ({ open, onOpenChange, properties, title, type, positionList }: Props) => {
-  const [originalList] = useState<MapPropertyItem[]>(properties); // prop으로 넘어온 데이터
-  const [propertyList, setPropertyList] = useState<MapPropertyItem[]>(originalList); // 출력될 실제 데이터
-  const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>( // 선택된 옵션
+  // 화면에 표시될 실제 리스트 상태값
+  const [propertyList, setPropertyList] = useState<MapPropertyItem[]>(originalList);
+
+  // 선택된 정렬 옵션 상태값
+  const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>(
     null,
   );
 
-  useEffect(() => {
-    console.log("초기 originalList:", originalList);
-  }, [originalList]);
-
-  useEffect(() => {
-    console.log("변경된 propertyList:", propertyList);
-  }, [propertyList]);
-
-  useEffect(() => {
-    console.log("선택된 옵션:", selectedOption);
-  }, [selectedOption]);
-
-  // 높이 조절 훅
+  // 리스트 스크롤 높이 자동 조절
   const { listHeight, initialHeight, maxHeight, handleScroll } = useResizableScrollHeight({
     offset: 437,
     maxOffset: 200,
   });
 
+  // 지도 마커에 표시될 좌표 정보 추출
   const markerPositions = useMemo(
     () =>
-      propertyList.map((property) => ({
-        order: property.order,
-        propertyId: property.propertyId,
-        latitude: property.latitude,
-        longitude: property.longitude,
+      propertyList.map(({ order, propertyId, latitude, longitude }) => ({
+        order,
+        propertyId,
+        latitude,
+        longitude,
       })),
     [propertyList],
   );
 
-  useEffect(() => {
-    console.log("📍 markerPositions:", markerPositions);
-  }, [markerPositions]);
-
+  // 정렬 옵션 선택 시 호출되는 함수
   const handleSelect = (item: { label: string; value: string }) => {
     if (selectedOption?.value === item.value) {
       setSelectedOption(null);
       setPropertyList(originalList);
     } else {
       setSelectedOption(item);
-      const sortedList = sortPropertyList(originalList, item.value); // 정렬 수행
-      setPropertyList(sortedList);
+      const sorted = sortPropertyList(originalList, item.value, type);
+      setPropertyList(sorted);
     }
   };
 
@@ -116,6 +100,7 @@ const MapListDialog = ({ open, onOpenChange, properties, title, type, positionLi
               </div>
             </div>
 
+            {/* 정렬 및 엑셀 다운로드 버튼 */}
             <div className="flex h-[52px] items-center justify-between border-b border-gray-300 px-[12px] py-[20px]">
               <SortFilter selectedOption={selectedOption} onSelect={handleSelect} />
               <div className="flex items-center gap-2">
@@ -127,7 +112,7 @@ const MapListDialog = ({ open, onOpenChange, properties, title, type, positionLi
               </div>
             </div>
 
-            {/* 리스트 */}
+            {/* 매물 리스트 */}
             <div
               className="overflow-y-auto"
               style={{

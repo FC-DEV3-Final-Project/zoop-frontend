@@ -49,7 +49,7 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
     <section
       ref={ref}
       id="agent"
-      className="mb-[75px] min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+      className="mb-[75px] min-h-[200px] scroll-mt-[158px] bg-white px-5 py-8"
     >
       <div className="mb-5 text-title2 text-black">중개정보</div>
       <div className="mb-5 text-title3 text-black">{agent.realtorName}</div>

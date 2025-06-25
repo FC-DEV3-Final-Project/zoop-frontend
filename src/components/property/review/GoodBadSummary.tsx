@@ -19,12 +19,6 @@ const GoodBadSummary = ({ good, bad }: GoodBadSummaryProps) => {
     </div>
   );
 
-  if (good.length === 0 && bad.length === 0) {
-    return (
-      <div className="text-body2 text-gray-500">아직 긍정/부정 리뷰 분석 결과가 없습니다.</div>
-    );
-  }
-
   return (
     <div className="flex flex-row justify-between gap-[15px] overflow-x-auto">
       {good.length > 0 && renderBlock("GOOD", good)}
