@@ -5,7 +5,7 @@ module.exports = {
   plugins: ["import"],
   rules: {
     "import/order": [
-      "warn",
+      "off",
       {
         "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
         "pathGroups": [

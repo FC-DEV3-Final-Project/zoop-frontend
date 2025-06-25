@@ -27,8 +27,8 @@ axiosInstance.interceptors.request.use(
       config.headers["Content-Type"] = "application/json";
     }
 
-    console.log("📌 access_token =", token);
-    console.log("axiosInstance headers 확인:", config.headers);
+    // console.log("📌 access_token =", token);
+    // console.log("axiosInstance headers 확인:", config.headers);
 
     return config;
   },

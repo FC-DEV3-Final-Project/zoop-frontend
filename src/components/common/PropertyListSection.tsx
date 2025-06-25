@@ -4,6 +4,8 @@ import Tab from "@/components/common/Tab";
 import EmptyListMessage from "@/components/common/EmptyListMessage";
 import { useRealEstatePropertiesQuery } from "@/queries/real-estate/useRealEstatePropertiesQuery";
 import { useBookmarkedPropertiesQuery } from "@/queries/mypage/useBookmarkedPropertiesQuery";
+import MapListDialog from "../mapPropertyListDialog/MapListDialog";
+import { MapPropertyItem } from "@/types/map";
 
 interface TabOption {
   label: string;
@@ -38,6 +40,7 @@ const PropertyListSection = ({
   realtyId,
 }: PropertyListSectionProps) => {
   const [selectedTab, setSelectedTab] = useState(tabOptions[0].value);
+  const [mapOpen, setMapOpen] = useState(false);
 
   // 부동산 쿼리들 - enabled 옵션으로 조건부 호출
   const rentQuery = useRealEstatePropertiesQuery(realtyId!, "월세", 20, selectedTab === "rent");
@@ -46,10 +49,6 @@ const PropertyListSection = ({
 
   // 북마크 쿼리 - enabled 옵션으로 조건부 호출
   const bookmarkedQuery = useBookmarkedPropertiesQuery(20, selectedTab === "bookmarked");
-
-  const handleMapView = () => {
-    alert("지도에서 보기 클릭!");
-  };
 
   // 현재 선택된 탭의 쿼리 가져오기
   const getCurrentQuery = (): CurrentQueryType | null => {
@@ -95,7 +94,7 @@ const PropertyListSection = ({
           </div>
           {showMapViewButton && (
             <button
-              onClick={handleMapView}
+              onClick={() => setMapOpen(true)}
               disabled={propertyCount?.[selectedTab] === 0}
               className={`flex items-center justify-start gap-1 ${
                 propertyCount?.[selectedTab] === 0
@@ -112,6 +111,15 @@ const PropertyListSection = ({
               />
               <span className="text-body2">지도에서 보기</span>
             </button>
+          )}
+          {mapOpen && (
+            <MapListDialog
+              open={mapOpen}
+              onOpenChange={setMapOpen}
+              properties={currentProperties as MapPropertyItem[]}
+              type={selectedTab === "bookmarked" ? "bookmark" : "recentView"}
+              title={selectedTab === "bookmarked" ? "내가 찜한 매물" : "최근 본 매물"}
+            />
           )}
         </div>
       </div>
