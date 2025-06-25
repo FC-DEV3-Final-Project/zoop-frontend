@@ -24,16 +24,48 @@ const SideBarItem = ({
   onClick,
 }: SideBarItemProps) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEditAlert, setShowEditAlert] = useState(false);
 
   const { mutate: deleteChatRoom } = useDeleteChatMutation();
   const { mutate: updateTitle } = useUpdateChatTitle();
 
-  const handleEditTilte = () => {
-    const newTitle = window.prompt("제목 편집하기", title);
+  const handleEditTitle = () => {
+    setShowEditAlert(true);
+  };
 
+  const confirmEditTitle = (newTitle?: string) => {
     if (newTitle && newTitle.trim() !== "" && newTitle !== title) {
-      updateTitle({ chatRoomId, newTitle });
+      updateTitle(
+        { chatRoomId, newTitle },
+        {
+          onSuccess: () => {
+            toast.custom(
+              ({ id }) => (
+                <CustomToast
+                  message="제목이 성공적으로 변경되었습니다."
+                  type="success"
+                  onClickAction={() => toast.dismiss(id)}
+                />
+              ),
+              { duration: 3000 },
+            );
+          },
+          onError: () => {
+            toast.custom(
+              ({ id }) => (
+                <CustomToast
+                  message="제목 변경에 실패했습니다. 잠시 후 다시 시도해주세요."
+                  type="error"
+                  onClickAction={() => toast.dismiss(id)}
+                />
+              ),
+              { duration: 3000 },
+            );
+          },
+        },
+      );
     }
+    setShowEditAlert(false);
   };
 
   const handleDeleteChat = () => {
@@ -77,7 +109,7 @@ const SideBarItem = ({
     {
       type: "edit",
       label: "제목 편집하기",
-      onClick: handleEditTilte,
+      onClick: handleEditTitle,
     },
     {
       type: "delete",
@@ -101,15 +133,32 @@ const SideBarItem = ({
       </div>
       <Dropdown items={[...dropdownItems]} />
       {showDeleteAlert && (
-        <CustomDialog
-          title="채팅방 삭제"
-          description="정말 삭제하시겠습니까?"
-          onConfirm={confirmDelete}
-          cancelLabel="취소"
-          confirmLabel="삭제"
-          open={showDeleteAlert}
-          onOpenChange={setShowDeleteAlert}
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <CustomDialog
+            title="채팅방 삭제"
+            description="정말 삭제하시겠습니까?"
+            onConfirm={confirmDelete}
+            cancelLabel="취소"
+            confirmLabel="삭제"
+            open={showDeleteAlert}
+            onOpenChange={setShowDeleteAlert}
+          />
+        </div>
+      )}
+      {showEditAlert && (
+        <div onClick={(e) => e.stopPropagation()}>
+          <CustomDialog
+            title="제목 편집하기"
+            description="새로운 제목을 입력하세요."
+            placeholder="제목을 입력하세요"
+            defaultValue={title}
+            onConfirm={confirmEditTitle}
+            cancelLabel="취소"
+            confirmLabel="저장"
+            open={showEditAlert}
+            onOpenChange={setShowEditAlert}
+          />
+        </div>
       )}
     </div>
   );
