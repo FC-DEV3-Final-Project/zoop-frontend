@@ -4,7 +4,6 @@ import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
 import { createUserNickname } from "@/apis/login/createUserNickname";
 import { useRouter } from "next/navigation";
-import useAuthFromHash from "@/hooks/common/useAuthFromHash";
 import NicknameInput from "@/components/common/NicknameInput";
 import { getUserInfo } from "@/apis/login/getUserInfo";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
@@ -15,8 +14,6 @@ const Page = () => {
   const [isValid, setIsValid] = useState(false);
 
   const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
-
-  useAuthFromHash();
 
   const handleSubmit = async () => {
     try {
