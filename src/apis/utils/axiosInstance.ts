@@ -1,20 +1,21 @@
 import axios from "axios";
 
+// mock 서버 사용 여부 체크
 const isMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
 const baseURL = isMock ? "" : process.env.NEXT_PUBLIC_BASE_URL;
 
+// 인스턴스 생성
 const axiosInstance = axios.create({
   baseURL,
+  withCredentials: true, // 쿠키 포함 설정
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    // Authorization 헤더는 제거
+    // 쿠키 기반 인증은 자동으로 전달되므로 헤더를 따로 추가할 필요 없음
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
+    // Content-Type 자동 설정
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else {
@@ -29,24 +30,17 @@ axiosInstance.interceptors.request.use(
   },
 );
 
+// 응답 인터셉터
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401) {
       try {
-        originalRequest._retry = true;
+        // accessToken 재발급 요청 (withCredentials 이미 포함됨)
+        await axiosInstance.post("/auth/refresh");
 
-        await axiosInstance.post("/auth/refresh", null, {
-          withCredentials: true,
-        });
-
-        return axiosInstance({
-          ...originalRequest,
-          method: originalRequest.method || "post",
-          data: originalRequest.data,
-        });
+        // 실패한 요청 재시도
+        return axiosInstance(error.config);
       } catch (refreshError) {
         window.location.href = "/login";
         return Promise.reject(refreshError);
