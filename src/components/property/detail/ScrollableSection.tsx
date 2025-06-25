@@ -57,10 +57,9 @@ const ScrollableSection = ({ propertyId }: ScrollableSectionProps) => {
       setActiveSection(section);
     }, 300); // scroll 완료 이후 반영
 
-    // 💡 스크롤 중 observer 작동 중단 → 800ms 후 다시 감지 시작
     setTimeout(() => {
       isScrollingByClick.current = false;
-    }, 800);
+    }, 200);
   };
 
   return (

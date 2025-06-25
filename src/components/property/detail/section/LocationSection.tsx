@@ -37,11 +37,11 @@ const LocationSection = forwardRef<HTMLElement, { propertyId: number }>(({ prope
     <section
       ref={ref}
       id="location"
-      className="mb-2 min-h-[200px] scroll-mt-[174px] bg-white px-5 py-8"
+      className="mb-2 min-h-[200px] scroll-mt-[158px] bg-white px-5 py-8"
     >
       <div className="mb-5 text-title2 text-black">위치정보</div>
       <div className="mb-4 text-body2 text-black">{data.exposureAddress}</div>
-      <div id="staticMap" className="h-[210px] w-full rounded-small" />
+      <div id="staticMap" className="h-[210px] w-full rounded-small sm:h-[250px] md:h-[300px]" />
     </section>
   );
 });

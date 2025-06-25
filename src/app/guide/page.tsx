@@ -6,9 +6,10 @@ import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
 import BottomSheet from "@/components/common/BottomSheet";
 import Dropdown from "@/components/common/Dropdown";
-import PropertyCard from "@/components/common/PropertyCard";
 import Tab from "@/components/common/Tab";
+import MapListDialog from "@/components/mapPropertyListDialog/MapListDialog";
 import AutoResizeTextarea from "@/components/ui/textarea";
+import { MapPropertyItem } from "@/types/map";
 
 const tabItems = [
   { label: "상세 정보", value: "detail" },
@@ -35,9 +36,245 @@ const phonNumber = [
   { label: "010-1234-1234", value: 1012341234 },
 ];
 
+const data: MapPropertyItem[] = [
+  {
+    order: 1,
+    propertyId: 1001,
+    latitude: 37.5744,
+    longitude: 127.04,
+    articleName: "센트럴아파트 101동",
+    tradeTypeName: "전세",
+    rentPrice: 0,
+    warrantPrice: 3000,
+    dealPrice: 0,
+    dealOrWarrantPrc: "3억",
+    summary: ["신축", "역세권"],
+    aptName: "센트럴아파트",
+    buildingName: "101동",
+    realEstateTypeName: "아파트",
+    area2: "84.9",
+    isBookmarked: true,
+    imageUrl: "/imgs/propertyExample.png",
+    direction: "남향",
+    floorInfo: "10/15",
+    exposureAddress: "서울시 강남구 역삼동",
+    etcFeeAmount: 100000,
+    moveInPossibleYmd: "2025-12-01",
+    articleFeatureDesc: "햇살 좋은 집",
+    detailDescription: "방 3, 거실 1, 욕실 2",
+    realtorName: "센트럴공인중개사",
+    representativeName: "홍길동",
+    realtorAddress: "서울시 강남구 테헤란로 123",
+    representativeTelNo: "02-1234-5678",
+    cellPhoneNo: "010-1234-5678",
+    maxBrokerFee: 500000,
+    brokerFee: 300000,
+  },
+  {
+    order: 2,
+    propertyId: 1002,
+    latitude: 37.4962,
+    longitude: 126.9536,
+    articleName: "해피빌 B동 103호",
+    tradeTypeName: "월세",
+    rentPrice: 50,
+    warrantPrice: 1000,
+    dealPrice: 0,
+    dealOrWarrantPrc: "보증금 1000 / 월세 50",
+    summary: ["풀옵션", "역세권"],
+    aptName: "해피빌",
+    buildingName: "B동",
+    realEstateTypeName: "오피스텔",
+    area2: "32.5",
+    isBookmarked: false,
+    imageUrl: "",
+    direction: "동향",
+    floorInfo: "1/5",
+    exposureAddress: "서울시 마포구 합정동",
+    etcFeeAmount: 50000,
+    moveInPossibleYmd: "2025-08-15",
+    articleFeatureDesc: "역세권 + 풀옵션",
+    detailDescription: "방 1, 욕실 1",
+    realtorName: "해피공인",
+    representativeName: "김철수",
+    realtorAddress: "서울시 마포구 와우산로 45",
+    representativeTelNo: "02-9876-5432",
+    cellPhoneNo: "010-9876-5432",
+    maxBrokerFee: 300000,
+    brokerFee: 200000,
+  },
+  {
+    order: 3,
+    propertyId: 1003,
+    latitude: 37.5299,
+    longitude: 126.9644,
+    articleName: "래미안하이클래스 202동",
+    tradeTypeName: "매매",
+    rentPrice: 0,
+    warrantPrice: 2400,
+    dealPrice: 75000,
+    dealOrWarrantPrc: "7억 5천",
+    summary: ["공원 인접", "조용한 동네"],
+    aptName: "래미안하이클래스",
+    buildingName: "202동",
+    realEstateTypeName: "아파트",
+    area2: "112.3",
+    isBookmarked: false,
+    imageUrl: "",
+    direction: "서향",
+    floorInfo: "8/20",
+    exposureAddress: "서울시 송파구 잠실동",
+    etcFeeAmount: 120000,
+    moveInPossibleYmd: "즉시입주",
+    articleFeatureDesc: "초역세권 대단지 아파트",
+    detailDescription: "방 4, 욕실 2, 팬트리",
+    realtorName: "프리미엄공인",
+    representativeName: "박진영",
+    realtorAddress: "서울시 송파구 올림픽로 300",
+    representativeTelNo: "02-1111-2222",
+    cellPhoneNo: "010-3333-4444",
+    maxBrokerFee: 800000,
+    brokerFee: 700000,
+  },
+  {
+    order: 4,
+    propertyId: 1004,
+    latitude: 37.6545,
+    longitude: 127.0568,
+    articleName: "서초자이 A동",
+    tradeTypeName: "전세",
+    rentPrice: 0,
+    warrantPrice: 20000,
+    dealPrice: 0,
+    dealOrWarrantPrc: "2억",
+    summary: ["신축", "엘리베이터"],
+    aptName: "서초자이",
+    buildingName: "A동",
+    realEstateTypeName: "아파트",
+    area2: "74.5",
+    isBookmarked: true,
+    imageUrl: "",
+    direction: "남서향",
+    floorInfo: "3/12",
+    exposureAddress: "서울시 서초구 서초동",
+    etcFeeAmount: 80000,
+    moveInPossibleYmd: "2025-10-01",
+    articleFeatureDesc: "서초역 도보 5분 거리",
+    detailDescription: "방 2, 거실 1",
+    realtorName: "서초공인",
+    representativeName: "최유리",
+    realtorAddress: "서울시 서초구 강남대로 123",
+    representativeTelNo: "02-8765-4321",
+    cellPhoneNo: "010-2222-3333",
+    maxBrokerFee: 400000,
+    brokerFee: 300000,
+  },
+  {
+    order: 5,
+    propertyId: 1005,
+    latitude: 37.5509,
+    longitude: 126.8495,
+    articleName: "하이빌라 2층",
+    tradeTypeName: "월세",
+    rentPrice: 60,
+    warrantPrice: 500,
+    dealPrice: 0,
+    dealOrWarrantPrc: "보증금 500 / 월세 60",
+    summary: ["역세권", "반려동물 가능"],
+    aptName: "",
+    buildingName: "하이빌라",
+    realEstateTypeName: "빌라",
+    area2: "45.3",
+    isBookmarked: false,
+    imageUrl: "",
+    direction: "북향",
+    floorInfo: "2/3",
+    exposureAddress: "서울시 은평구 불광동",
+    etcFeeAmount: 60000,
+    moveInPossibleYmd: "2025-09-10",
+    articleFeatureDesc: "반려동물 환영하는 조용한 집",
+    detailDescription: "방 2, 욕실 1",
+    realtorName: "은평공인",
+    representativeName: "서정우",
+    realtorAddress: "서울시 은평구 통일로 123",
+    representativeTelNo: "02-1234-8888",
+    cellPhoneNo: "010-9999-0000",
+    maxBrokerFee: 200000,
+    brokerFee: 180000,
+  },
+  {
+    order: 6,
+    propertyId: 1006,
+    latitude: 37.6176,
+    longitude: 126.9227,
+    articleName: "더테라스하우스 C동",
+    tradeTypeName: "전세",
+    rentPrice: 0,
+    warrantPrice: 27000,
+    dealPrice: 0,
+    dealOrWarrantPrc: "2억 7천",
+    summary: ["신축", "테라스"],
+    aptName: "더테라스하우스",
+    buildingName: "C동",
+    realEstateTypeName: "아파트",
+    area2: "78.2",
+    isBookmarked: true,
+    imageUrl: "",
+    direction: "남동향",
+    floorInfo: "5/15",
+    exposureAddress: "서울시 강서구 화곡동",
+    etcFeeAmount: 90000,
+    moveInPossibleYmd: "2026-02-01",
+    articleFeatureDesc: "테라스 포함된 조용한 아파트",
+    detailDescription: "방 3, 거실 1, 테라스 1",
+    realtorName: "강서공인",
+    representativeName: "한지민",
+    realtorAddress: "서울시 강서구 곰달래로 111",
+    representativeTelNo: "02-7777-8888",
+    cellPhoneNo: "010-7777-8888",
+    maxBrokerFee: 350000,
+    brokerFee: 290000,
+  },
+  {
+    order: 7,
+    propertyId: 1007,
+    latitude: 37.4836,
+    longitude: 127.0325,
+    articleName: "코지하우스 201호",
+    tradeTypeName: "월세",
+    rentPrice: 55,
+    warrantPrice: 500,
+    dealPrice: 0,
+    dealOrWarrantPrc: "보증금 500 / 월세 55",
+    summary: ["역세권", "즉시입주"],
+    aptName: "",
+    buildingName: "코지하우스",
+    realEstateTypeName: "다가구",
+    area2: "40.0",
+    isBookmarked: false,
+    imageUrl: "",
+    direction: "동향",
+    floorInfo: "2/3",
+    exposureAddress: "서울시 노원구 공릉동",
+    etcFeeAmount: 50000,
+    moveInPossibleYmd: "즉시입주",
+    articleFeatureDesc: "깔끔하게 리모델링된 집",
+    detailDescription: "원룸, 욕실 1",
+    realtorName: "노원공인",
+    representativeName: "이도현",
+    realtorAddress: "서울시 노원구 동일로 456",
+    representativeTelNo: "02-1111-0000",
+    cellPhoneNo: "010-1212-3434",
+    maxBrokerFee: 180000,
+    brokerFee: 160000,
+  },
+];
+
 export default function Guide() {
+  const [mapData, setMapData] = useState<MapPropertyItem[]>(data);
   const [selectedTab, setSelectedTab] = useState(tabItems[0].value); // 항상 첫 번째 탭이 활성화된 채로 켜지길 원한다면,,
   const [selectedText, setSelectedText] = useState<{ label: string; value: string } | null>(null); // BottomSheet 관련로직
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(""); // textarea
 
   // BottomSheet 관련로직
@@ -58,6 +295,29 @@ export default function Guide() {
         <Header.Title>Guide</Header.Title>
         <Header.Close onCloseClick={() => alert("닫기 클릭")} />
       </Header>
+      {/* Dialog Section */}
+      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+        <h2 className="text-title2">Dialog</h2>
+        <div className="mt-1 flex justify-end">
+          <button
+            onClick={() => setOpen(true)}
+            className="flex h-[28px] items-center gap-[4px] text-body3 text-gray-800"
+          >
+            자세히보기
+            <img src="/icons/arrow-right.svg" alt="화살표" className="h-[14px] w-[14px]" />
+          </button>
+        </div>
+        {/* Dialog 컴포넌트 */}
+        {open && (
+          <MapListDialog
+            open={open}
+            onOpenChange={setOpen}
+            properties={mapData}
+            type="bookmark"
+            title="찜 한 매물"
+          />
+        )}
+      </div>
 
       {/* textarea Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
@@ -423,7 +683,7 @@ export default function Guide() {
       </div>
 
       {/* propertyCard Section */}
-      <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
+      {/* <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h2 className="text-title2">Property Card</h2>
         <p>기본 카드</p>
         <PropertyCard
@@ -495,7 +755,7 @@ export default function Guide() {
           imageUrl={"/imgs/propertyExample.png"}
           size="sm"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

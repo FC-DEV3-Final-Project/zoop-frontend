@@ -30,7 +30,7 @@ const DescriptionSection = forwardRef<HTMLElement, { propertyId: number }>(
       <section
         ref={ref}
         id="description"
-        className="mb-2 min-h-[100px] scroll-mt-[174px] bg-white px-5 py-8"
+        className="mb-2 min-h-[100px] scroll-mt-[158px] bg-white px-5 py-8"
       >
         <div className="mb-5 text-title2 text-black">상세설명</div>
 

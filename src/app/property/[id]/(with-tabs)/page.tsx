@@ -10,6 +10,7 @@ import RealEstateCallButton from "@/components/common/RealEstateCallButton";
 import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
 import { useAddRecentPropertyMutation } from "@/queries/mypage/useAddRecentPropertyMutation";
 import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
+import SkeletonInfoBox from "@/components/property/detail/SkeletonInfoBox";
 
 function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -20,17 +21,29 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { data: agent, isLoading: agentLoading } = useAgentQuery(propertyId);
   const addRecentPropertyMutation = useAddRecentPropertyMutation();
 
-  // 페이지 진입 시 최근 본 매물에 추가
   useEffect(() => {
     if (propertyId) {
       addRecentPropertyMutation.mutate(propertyId);
     }
   }, [propertyId]);
 
-  if (isLoading) return null;
-  if (error || !basicInfo) return <NotFoundProperty />;
+  if (isLoading) {
+    return (
+      <>
+        <Header>
+          <Header.Prev onPrevClick={() => router.back()} />
+          <Header.Title>로딩 중...</Header.Title>
+        </Header>
+        <SkeletonInfoBox />
+      </>
+    );
+  }
 
-  const { articleName } = basicInfo;
+  if (!isLoading && (error || !basicInfo)) {
+    return <NotFoundProperty />;
+  }
+
+  const { articleName } = basicInfo!;
 
   const phoneNumberOptions = agent
     ? [
@@ -47,7 +60,7 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
       </Header>
 
       <div className="flex flex-col gap-2">
-        <InfoBox propertyInfo={basicInfo} />
+        <InfoBox propertyInfo={basicInfo!} />
         <ScrollableSection propertyId={propertyId} />
       </div>
 

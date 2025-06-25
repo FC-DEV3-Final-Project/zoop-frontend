@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { MSWComponent } from "@/components/MSWComponent";
 import Script from "next/script";
 import Providers from "./providers";
+import { Toaster } from "react-hot-toast";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
@@ -46,7 +47,23 @@ export default function RootLayout({
             src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_JS_KEY}&autoload=false`}
             strategy="beforeInteractive"
           />
-          <Providers>{useMock ? <MSWComponent>{children}</MSWComponent> : children}</Providers>
+          <Providers>
+            {useMock ? <MSWComponent>{children}</MSWComponent> : children}
+            <Toaster
+              position="bottom-center"
+              containerStyle={{
+                bottom: "80px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "600px",
+                maxWidth: "90vw",
+                padding: 0, // 패딩은 여기서 제거하고 CSS에서 처리
+              }}
+              toastOptions={{
+                className: "custom-toast",
+              }}
+            />
+          </Providers>{" "}
         </div>
       </body>
     </html>

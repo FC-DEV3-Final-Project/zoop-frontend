@@ -3,6 +3,8 @@
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import EmptyListMessage from "@/components/common/EmptyListMessage";
 import { Header } from "@/layout/Header";
 import ReviewList from "@/components/property/review/ReviewList";
 import EnvironmentTabs from "@/components/property/review/EnvironmentTabs";
@@ -26,19 +28,23 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const { articleName } = basicInfo;
 
-  const environmentTabsData =
+  const hasSummaryData =
     summaryData &&
-    (summaryData.tra.length ||
-      summaryData.edu.length ||
-      summaryData.loc.length ||
-      summaryData.hel.length)
-      ? [
-          { name: "교통 환경", value: "transport", content: summaryData.tra },
-          { name: "학군", value: "school", content: summaryData.edu },
-          { name: "주변 시설", value: "facility", content: summaryData.loc },
-          { name: "의료 시설", value: "hospital", content: summaryData.hel },
-        ]
-      : [];
+    (summaryData.good.length > 0 ||
+      summaryData.bad.length > 0 ||
+      summaryData.tra.length > 0 ||
+      summaryData.edu.length > 0 ||
+      summaryData.loc.length > 0 ||
+      summaryData.hel.length > 0);
+
+  const environmentTabsData = hasSummaryData
+    ? [
+        { name: "교통 환경", value: "transport", content: summaryData.tra },
+        { name: "학군", value: "school", content: summaryData.edu },
+        { name: "주변 시설", value: "facility", content: summaryData.loc },
+        { name: "의료 시설", value: "hospital", content: summaryData.hel },
+      ].filter((tab) => tab.content.length > 0)
+    : [];
 
   return (
     <div className="flex h-full flex-col bg-white">
@@ -56,14 +62,17 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
             {isSummaryLoading ? (
               <div className="space-y-2">
-                <div className="h-5 w-3/4 animate-pulse rounded bg-gray-200" />
-                <div className="h-5 w-1/2 animate-pulse rounded bg-gray-200" />
+                <Skeleton className="h-5 w-3/4" />
+                <Skeleton className="h-5 w-1/2" />
               </div>
+            ) : !hasSummaryData ? (
+              <EmptyListMessage message="아직 AI 기반 리뷰 분석 결과가 없습니다." />
             ) : (
-              <GoodBadSummary good={summaryData?.good ?? []} bad={summaryData?.bad ?? []} />
+              <>
+                <GoodBadSummary good={summaryData?.good ?? []} bad={summaryData?.bad ?? []} />
+                <EnvironmentTabs tabs={environmentTabsData} isLoading={false} />
+              </>
             )}
-
-            <EnvironmentTabs tabs={environmentTabsData} isLoading={isSummaryLoading} />
           </div>
         </div>
 
