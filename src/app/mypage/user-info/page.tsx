@@ -66,7 +66,7 @@ const UserInfoPage = () => {
   return (
     <>
       <Header>
-        <Header.Prev onPrevClick={() => router.back()} />
+        <Header.Prev onPrevClick={() => router.push("/mypage")} />
         <Header.Title>내 정보</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
