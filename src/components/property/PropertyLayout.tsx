@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ReactNode } from "react";
 import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
 import { fetchBasicInfo } from "@/apis/property/detail/fetchBasicInfo";
 import { BasicInfoProps } from "@/types/propertyDetail";
 import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
+import SkeletonInfoBox from "@/components/property/detail/SkeletonInfoBox";
 
 const TAB_OPTIONS = [
   { label: "상세 정보", value: "detail" },
@@ -34,18 +34,28 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
   const selectedTab = pathname.includes("/review") ? "review" : "detail";
 
   const [propertyInfo, setPropertyInfo] = useState<BasicInfoProps | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const handleTabChange = (tab: string) => {
     const targetPath = tab === "review" ? `/property/${id}/review` : `/property/${id}`;
     router.push(targetPath, { scroll: false });
-
     scrollToTopSmooth();
   };
 
   useEffect(() => {
+    setLoading(true);
+    setError(false);
     fetchBasicInfo(propertyId)
-      .then(setPropertyInfo)
-      .catch((err) => console.error(err));
+      .then((data) => {
+        setPropertyInfo(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+        setLoading(false);
+      });
   }, [propertyId]);
 
   useEffect(() => {
@@ -54,7 +64,13 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
     }
   }, [pathname]);
 
-  if (!propertyInfo) return <NotFoundProperty />;
+  if (loading) {
+    return <SkeletonInfoBox />;
+  }
+
+  if (error || !propertyInfo) {
+    return <NotFoundProperty />;
+  }
 
   return (
     <div className="pt-12">

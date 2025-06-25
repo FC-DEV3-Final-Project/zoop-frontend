@@ -8,6 +8,7 @@ export const useDeletePostReviewMutation = () => {
     mutationFn: (reviewId: number) => deletePostReview(reviewId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["postReview"] });
+      queryClient.invalidateQueries({ queryKey: ["postComment"] });
     },
   });
 };

@@ -12,7 +12,14 @@ export const useUpdateProfileImageMutation = (options?: {
     onSuccess: (data) => {
       // userInfo 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: ["userInfo"] });
-      options?.onSuccess?.(data);
+
+      // 로컬스토리지 업데이트
+      const stored = localStorage.getItem("userInfo-storage");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        parsed.state.user.profileImage = data;
+        localStorage.setItem("userInfo-storage", JSON.stringify(parsed));
+      }
     },
     onError: (error) => {
       options?.onError?.(error);

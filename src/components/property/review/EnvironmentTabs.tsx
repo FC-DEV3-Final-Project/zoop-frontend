@@ -24,12 +24,8 @@ const EnvironmentTabs = ({ tabs, isLoading }: EnvironmentTabsProps) => {
     );
   }
 
-  if (!tabs.length) {
-    return <div className="text-body2 text-gray-500">아직 AI 기반 환경 요약 리뷰가 없습니다.</div>;
-  }
-
   return (
-    <Tabs defaultValue={tabs[0].value} className="w-full">
+    <Tabs defaultValue={tabs[0]?.value ?? ""} className="w-full">
       <TabsList className="z-5 relative flex w-full justify-start gap-0 bg-white p-0">
         {tabs.map((tab) => (
           <TabsTrigger
