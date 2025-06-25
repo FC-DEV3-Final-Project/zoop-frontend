@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import AmountQuickSelect from "./AmountQuickSelect";
-import PropertySearchLoading from "./PropertySearchLoading";
 
 import {
   parseKoreanMoneyToNumber,
   formatNumberWithComma,
   formatMoneyToKoreanUnit,
 } from "@/utils/filter/budget";
-
 import { RealEstateType, TradeType } from "@/types/filter";
+
 import { useCreateChatMutation } from "@/queries/chat/useCreateChatMutation";
 import { useSetFilterMutation } from "@/queries/filter/useSetFilterMutation";
 
@@ -30,13 +29,14 @@ interface BudgetStepProps {
     tradeType: TradeType[];
     realEstateType: RealEstateType[];
   };
+  setShowLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MONTHLY_RENT_DEPOSIT_OPTIONS = ["1억", "5천만", "1천만", "5백만", "1백만"]; // 월세용 보증금
 const MONTHLY_RENT_PRICE_OPTIONS = ["1백만", "50만", "10만", "5만", "1만"]; // 월세
 const LEASE_DEPOSIT_OPTIONS = ["5억", "1억", "5천만", "1천만", "5백만"]; // 전세/매매용 보증금
 
-const BudgetStep = ({ stepData }: BudgetStepProps) => {
+const BudgetStep = ({ stepData, setShowLoading }: BudgetStepProps) => {
   const router = useRouter();
   const selectedTradeType = stepData.tradeType?.[0];
 
@@ -45,8 +45,6 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
 
   const { mutateAsync: createChat } = useCreateChatMutation();
   const { mutateAsync: submitFilter } = useSetFilterMutation();
-
-  const [showLoading, setShowLoading] = useState(false);
 
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
 
@@ -112,11 +110,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
     }
   };
 
-  if (showLoading) return <PropertySearchLoading />;
-
-  return showLoading ? (
-    <PropertySearchLoading />
-  ) : (
+  return (
     <div className="flex h-full flex-col gap-5">
       <h1 className="text-title5">생각해 둔 예산을 알려주세요</h1>
 
