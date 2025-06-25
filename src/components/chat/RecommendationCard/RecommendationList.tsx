@@ -16,12 +16,12 @@ const RecommendationList = ({ properties }: Props) => {
             tradeTypeName={property.tradeTypeName}
             rentPrice={property.rentPrice}
             dealOrWarrantPrc={property.dealOrWarrantPrc}
-            summary={property.tagList}
+            summary={property.summary}
             articleName={property.articleName}
             realEstateTypeName={property.realEstateTypeName}
-            buildingName={""} // 필수
-            area2={String(property.netArea)}
-            isBookmarked={false}
+            buildingName={property.buildingName}
+            area2={property.area2}
+            isBookmarked={property.isBookmarked}
             imageUrl={property.imageUrl ?? ""}
             isNumberVisible={false}
             size="sm"

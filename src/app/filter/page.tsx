@@ -13,8 +13,8 @@ import BudgetStep from "@/components/filter/BudgetStep";
 import ProgressBar from "@/components/filter/ProgressBar";
 import { LocationStepData } from "@/types/filter";
 
-const TRANSACTION_OPTIONS = ["월세", "전세", "매매"];
-const HOUSING_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
+const TRADE_TYPE_OPTIONS = ["월세", "전세", "매매"];
+const REAL_ESTATE_TYPE_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
 
 const Page = () => {
   const { Funnel, Step, currentStep, prevStep, nextStep, stepData, updateStepData } = useFunnel({
@@ -32,8 +32,8 @@ const Page = () => {
   };
 
   const handleLocationDataChange = (data: Partial<LocationStepData>) => {
-    const currentLocationData = stepData.location || {};
-    updateStepData("location", { ...currentLocationData, ...data });
+    const currentLocationData = stepData.place || {};
+    updateStepData("place", { ...currentLocationData, ...data });
   };
 
   return (
@@ -50,7 +50,7 @@ const Page = () => {
             <Step name="1">
               <LocationStep
                 onNext={nextStep}
-                savedLocationData={typeof stepData.location === "object" ? stepData.location : {}}
+                savedLocationData={typeof stepData.place === "object" ? stepData.place : {}}
                 onLocationDataChange={handleLocationDataChange}
               />
             </Step>
@@ -58,26 +58,23 @@ const Page = () => {
               <OptionSelectStep
                 onNext={nextStep}
                 title="매매 형태"
-                options={TRANSACTION_OPTIONS}
+                options={TRADE_TYPE_OPTIONS}
                 multiSelect={false}
-                savedOptions={stepData.transactionType || []}
-                onOptionsChange={(options) => updateStepData("transactionType", options)}
+                savedOptions={stepData.tradeType || []}
+                onOptionsChange={(options) => updateStepData("tradeType", options)}
               />
             </Step>
             <Step name="3">
               <OptionSelectStep
                 onNext={nextStep}
                 title="주거 형태"
-                options={HOUSING_OPTIONS}
-                savedOptions={stepData.housingType || []}
-                onOptionsChange={(options) => updateStepData("housingType", options)}
+                options={REAL_ESTATE_TYPE_OPTIONS}
+                savedOptions={stepData.realEstateType || []}
+                onOptionsChange={(options) => updateStepData("realEstateType", options)}
               />
             </Step>
             <Step name="4">
-              <BudgetStep
-                onNext={nextStep}
-                transactionType={(stepData.transactionType?.[0] as "월세" | "매매" | "전세") || ""}
-              />
+              <BudgetStep stepData={stepData} />
             </Step>
           </Funnel>
         </div>

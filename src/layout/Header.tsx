@@ -36,13 +36,17 @@ const Prev = ({
 );
 
 const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
-  <div onClick={onHamburgerClick} className="flex cursor-pointer justify-center">
+  <div onClick={onHamburgerClick} className="flex justify-center cursor-pointer">
     <Image src={HamburgerIcon} alt="메뉴" width={24} height={24} />
   </div>
 );
 
 const Title = ({ children, className = "" }: { children: string; className?: string }) => (
-  <h1 className={`absolute left-1/2 -translate-x-1/2 text-subtitle2 ${className}`}>{children}</h1>
+  <h1
+    className={`absolute left-1/2 w-[70%] -translate-x-1/2 truncate whitespace-nowrap text-center text-subtitle2 ${className}`}
+  >
+    {children}
+  </h1>
 );
 
 const Close = ({ onCloseClick }: { onCloseClick?: () => void }) => (

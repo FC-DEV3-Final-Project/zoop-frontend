@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { highlightSearchKeyword } from "@/utils/common/highlightSearchKeyword";
+import { highlightSearchText } from "@/utils/common/highlightSearchText";
 
 import { Button } from "../ui/button";
 import SearchIcon from "../../../public/icons/search.svg";
@@ -56,10 +56,6 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
     try {
       const firstPage = await getSearchPlaces(currentInput);
 
-      // console.log("=== 카카오 API 원본 응답 ===");
-      // console.log("첫 페이지 결과:", firstPage);
-      // console.log("총 결과 수:", firstPage.meta.total_count); // 검색어에 검색된 문서 수
-
       // 나머지 페이지들 가져오기 (첫 페이지는 이미 가져왔으므로 2페이지부터)
       const pagePromises = [];
       for (let i = 2; i <= 3; i++) {
@@ -73,15 +69,9 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
         ...remainingPages.flatMap((page) => page.documents),
       ];
 
-      // console.log("=== API 결과 확인 ===");
-      // console.log("allResults:", allResults.length, allResults);
-
       const filteredResults = allResults.filter((place) =>
         place.place_name.toLowerCase().includes(currentInput.toLowerCase()),
       );
-
-      // console.log("=== 필터링 결과 확인 ===");
-      // console.log("filteredResults:", filteredResults.length, filteredResults);
 
       setSearchResults(filteredResults);
       setSearchKeyword(currentInput);
@@ -194,7 +184,7 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                       }`}
                     >
                       <div className="text-body1">
-                        {highlightSearchKeyword(place.place_name, searchKeyword)}
+                        {highlightSearchText(place.place_name, searchKeyword)}
                       </div>
                       <div className="text-body2">{getSimpleAddress(place)}</div>
                     </li>

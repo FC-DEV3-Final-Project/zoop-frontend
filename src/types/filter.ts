@@ -23,3 +23,21 @@ export interface LocationStepData {
   searchResults: KakaoPlace[];
   selectedPlace: SelectedPlaceInfo | null;
 }
+
+export interface FilterPayload {
+  chatRoomId: number;
+  filters: {
+    x: string;
+    y: string;
+    bCode: string;
+    hCode: string;
+    placeName: string;
+    tradeTypeName: "월세" | "전세" | "매매";
+    realEstateTypeName: string[];
+    dealOrWarrantPrc: number;
+    rentPrice: number;
+  };
+}
+
+export type TradeType = "월세" | "전세" | "매매";
+export type RealEstateType = "원룸 / 투룸" | "아파트" | "오피스텔" | "빌라";
