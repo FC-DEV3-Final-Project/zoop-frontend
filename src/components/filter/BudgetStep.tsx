@@ -44,7 +44,10 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
   const [secondAmount, setSecondAmount] = useState("0"); // 월세
 
   const { mutateAsync: createChat } = useCreateChatMutation();
-  const { mutateAsync: submitFilter, isPending } = useSetFilterMutation();
+  const { mutateAsync: submitFilter } = useSetFilterMutation();
+
+  const [showLoading, setShowLoading] = useState(false);
+
   const [focusedField, setFocusedField] = useState<"firstAmount" | "secondAmount">("firstAmount");
 
   const handleAmountQuickSelectClick = (money: string) => {
@@ -70,6 +73,8 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
   // 결과 확인하기 버튼 클릭 시
   const handleSubmit = async () => {
     try {
+      setShowLoading(true);
+
       // 1. 채팅방 생성
       const newChatRoom = await createChat();
       const newChatRoomId = newChatRoom?.chatRoomId;
@@ -100,21 +105,25 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
 
       // 4. 채팅방으로 이동
       router.push(`/chat/${newChatRoomId}`);
+      return;
     } catch (error) {
       console.error("필터 설정 중 에러:", error);
+      setShowLoading(false);
     }
   };
 
-  if (isPending) return <PropertySearchLoading />;
+  if (showLoading) return <PropertySearchLoading />;
 
-  return (
-    <div className="flex flex-col h-full gap-5">
+  return showLoading ? (
+    <PropertySearchLoading />
+  ) : (
+    <div className="flex h-full flex-col gap-5">
       <h1 className="text-title5">생각해 둔 예산을 알려주세요</h1>
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-3">
           <div className="relative">
-            <label className="text-gray-800 text-subtitle2">
+            <label className="text-subtitle2 text-gray-800">
               {selectedTradeType === "월세"
                 ? "보증금"
                 : selectedTradeType === "전세"
@@ -133,7 +142,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
               onFocus={() => setFocusedField("firstAmount")}
             />
             <div className="absolute right-0 top-8 text-title7">만원</div>
-            <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
+            <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
               {formatMoneyToKoreanUnit(firstAmount)}원
             </div>
           </div>
@@ -156,7 +165,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
         {selectedTradeType === "월세" && (
           <div className="flex flex-col gap-3">
             <div className="relative">
-              <label className="text-gray-800 text-subtitle2">{selectedTradeType}</label>
+              <label className="text-subtitle2 text-gray-800">{selectedTradeType}</label>
               <input
                 className={cn(
                   "w-full appearance-none border-b-[2px] bg-transparent py-2 text-title7 outline-none",
@@ -169,7 +178,7 @@ const BudgetStep = ({ stepData }: BudgetStepProps) => {
                 onFocus={() => setFocusedField("secondAmount")}
               />
               <div className="absolute right-0 top-8 text-title7">만원</div>
-              <div className="flex justify-start w-full mt-1 text-gray-800 text-subtitle3">
+              <div className="mt-1 flex w-full justify-start text-subtitle3 text-gray-800">
                 {formatMoneyToKoreanUnit(secondAmount)}원
               </div>
             </div>
