@@ -20,6 +20,8 @@ export const useResetProfileImageMutation = (options?: {
         parsed.state.user.profileImage = data;
         localStorage.setItem("userInfo-storage", JSON.stringify(parsed));
       }
+
+      options?.onSuccess?.(data);
     },
     onError: (error) => {
       console.error("프로필 이미지 초기화 실패:", error);

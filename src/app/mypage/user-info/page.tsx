@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/layout/Header";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import BottomSheet from "@/components/common/BottomSheet";
 import { clearAuthTokens } from "@/utils/auth";
 import { useUserInfoQuery } from "@/queries/mypage/useUserInfoQuery";
@@ -11,22 +11,124 @@ import { useUpdateProfileImageMutation } from "@/queries/mypage/useUpdateProfile
 import { useResetProfileImageMutation } from "@/queries/mypage/useResetProfileImageMutation";
 import { useLogoutMutation } from "@/queries/mypage/useLogoutMutation";
 import { useWithdrawMutation } from "@/queries/mypage/useWithdrawMutation";
+import toast from "react-hot-toast";
+import CustomToast from "@/components/common/CustomToast";
+import CustomDialog from "@/components/common/CustomDialog";
 
 const UserInfoPage = () => {
   const router = useRouter();
+  const [showWithdrawAlert, setShowWithdrawAlert] = useState(false);
   // 파일 input ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { data: account, error } = useUserInfoQuery();
-  const updateProfileImageMutation = useUpdateProfileImageMutation();
-  const resetProfileImageMutation = useResetProfileImageMutation();
-  const logoutMutation = useLogoutMutation();
+  const updateProfileImageMutation = useUpdateProfileImageMutation({
+    onSuccess: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="프로필 이미지가 성공적으로 변경되었습니다."
+            type="success"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
+    onError: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="프로필 이미지 변경에 실패했습니다. 잠시 후 다시 시도해주세요."
+            type="error"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
+  });
+  const resetProfileImageMutation = useResetProfileImageMutation({
+    onSuccess: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="프로필 이미지가 기본 이미지로 변경되었습니다."
+            type="success"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
+    onError: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="프로필 이미지 초기화에 실패했습니다. 잠시 후 다시 시도해주세요."
+            type="error"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
+  });
+  const logoutMutation = useLogoutMutation({
+    onSuccess: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="로그아웃되었습니다."
+            type="success"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+      clearAuthTokens();
+      router.push("/login");
+    },
+    onError: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요."
+            type="error"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
+  });
   const withdrawMutation = useWithdrawMutation({
     onSuccess: () => {
       clearAuthTokens();
       router.push("/login");
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="회원탈퇴가 완료되었습니다."
+            type="success"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
     },
-    onError: () => console.log("회원탈퇴 실패"),
+    onError: () => {
+      toast.custom(
+        ({ id }) => (
+          <CustomToast
+            message="회원탈퇴에 실패했습니다. 잠시 후 다시 시도해주세요."
+            type="error"
+            onClickAction={() => toast.dismiss(id)}
+          />
+        ),
+        { duration: 3000 },
+      );
+    },
   });
 
   // 프로필 이미지 업로드
@@ -44,15 +146,17 @@ const UserInfoPage = () => {
   // 로그아웃
   const handleLogout = () => {
     logoutMutation.mutate();
-    clearAuthTokens();
-    router.push("/login");
   };
 
-  // 회원탈퇴
+  // 회원탈퇴 다이얼로그 열기
   const handleWithdraw = () => {
-    const confirmed = confirm("정말로 탈퇴하시겠습니까?");
-    if (!confirmed) return;
+    setShowWithdrawAlert(true);
+  };
+
+  // 회원탈퇴 확인
+  const confirmWithdraw = () => {
     withdrawMutation.mutate();
+    setShowWithdrawAlert(false);
   };
 
   if (error) {
@@ -161,6 +265,19 @@ const UserInfoPage = () => {
           </div>
         </div>
       </div>
+
+      {/* 회원탈퇴 확인 다이얼로그 */}
+      {showWithdrawAlert && (
+        <CustomDialog
+          title="회원탈퇴"
+          description="정말로 탈퇴하시겠습니까?"
+          onConfirm={confirmWithdraw}
+          cancelLabel="취소"
+          confirmLabel="확인"
+          open={showWithdrawAlert}
+          onOpenChange={setShowWithdrawAlert}
+        />
+      )}
     </>
   );
 };
