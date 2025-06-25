@@ -1,91 +1,40 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   font-family: var(--font-pretendard);
 }
 
-.text-largeTitle {
-  font-size: 30px;
-  line-height: 1.4;
-  font-weight: 600;
+/* 스크롤바 넓이 지정 */
+::-webkit-scrollbar {
+  width: 3px;
 }
-.text-title1 {
-  font-size: 24px;
-  line-height: 1.4;
-  font-weight: 700;
+
+/* 스크롤바 트랙 꾸미기 */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+  border-radius: 2px;
 }
-.text-title2 {
-  font-size: 20px;
-  line-height: 1.4;
-  font-weight: 700;
-} 
-.text-title3 {
-  font-size: 18px;
-  line-height: 1.4;
-  font-weight: 700;
+
+/* 스크롤바 손잡이 꾸미기 */
+::-webkit-scrollbar-thumb {
+  background: #bcc2ca;
+  border-radius: 5px;
 }
-.text-title4 {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 700;
+
+/* 스크롤바 손잡이 호버 시 색 */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: pointer;
 }
-.text-subtitle1 {
-  font-size: 18px;
-  line-height: 1.4;
-  font-weight: 600;
-}
-.text-subtitle2 {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 600;
-}
-.text-subtitle3 {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 400;
-}
-.text-subtitle4 {
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 700;
-}
-.text-body1 {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 500;
-} 
-.text-body2 {
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 400;
-}
-.text-body3 {
-  font-size: 12px;
-  line-height: 1.4;
-  font-weight: 400;
-}
-.text-body4 {
-  font-size: 12px;
-  line-height: 1.4;
-  font-weight: 400;
-} 
-.text-caption1 {
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 600;
-}
-.text-caption2 {
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 500;
-}
-.text-caption3 {
-  font-size: 12px;
-  line-height: 1.4;
-  font-weight: 500;
-}
-.text-footnote {
-  font-size: 11px;
-  line-height: 1.4;
-  font-weight: 300;
+
+.custom-toast {
+  max-width: 600px !important; /* 최대 너비 */
+  width: 100% !important; /* 부모 너비 100% */
+  margin: 0 auto !important; /* 가운데 정렬 */
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 20px !important; /* 좌우 내부 패딩 */
+  border-radius: 12px !important; /* 둥근 모서리 */
 }

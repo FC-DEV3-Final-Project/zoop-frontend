@@ -1,16 +1,99 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    "./node_modules/flowbite/**/*.js"
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
+      colors: {
+        white: "#FFFFFF",
+        black: "#000000",
+        gray: {
+          "050": "#FCFCFC",
+          "100": "#F8F8F8",
+          "200": "#F3F3F3",
+          "300": "#EDEDED",
+          "400": "#DDE0E4",
+          "500-alternative": "#D4D7DD",
+          "600-hint": "#BCC2CA",
+          "700-info": "#949CA8",
+          "800": "#778292",
+          "900": "#444A54",
+          "950-dark": "#252730",
+        },
+        blue: {
+          "050-bg": "#EDF0FD",
+          "100": "#D9E0FB",
+          "200": "#B7C9F7",
+          "300": "#8FAEF4",
+          "400": "#6F99F1",
+          "500-secondary": "#4F7FEC",
+          "600": "#3B68E9",
+          "700": "#2E57E7",
+          "800-primary": "#204AE5",
+          "900": "#1939B5",
+        },
+      },
       fontFamily: {
-        pretendard: ['var(--font-pretendard)'],
+        pretendard: ["var(--font-pretendard)"],
+      },
+      fontSize: {
+        largeTitle: ["30px", { fontWeight: "600", lineHeight: "1.4" }],
+        logo: ["28px", { fontWeight: "700", lineHeight: "1.4" }],
+        title1: ["24px", { fontWeight: "700", lineHeight: "1.4" }],
+        title2: ["20px", { fontWeight: "700", lineHeight: "1.4" }],
+        title3: ["18px", { fontWeight: "700", lineHeight: "1.4" }],
+        title4: ["16px", { fontWeight: "700", lineHeight: "1.4" }],
+        title5: ["22px", { fontWeight: "600", lineHeight: "1.4" }],
+        title6: ["20px", { fontWeight: "600", lineHeight: "1.4" }],
+        title7: ["20px", { fontWeight: "500", lineHeight: "1.4" }],
+        subtitle1: ["18px", { fontWeight: "600", lineHeight: "1.4" }],
+        subtitle2: ["16px", { fontWeight: "600", lineHeight: "1.4" }],
+        subtitle3: ["16px", { fontWeight: "400", lineHeight: "1.4" }],
+        subtitle4: ["14px", { fontWeight: "700", lineHeight: "1.4" }],
+        body1: ["16px", { fontWeight: "500", lineHeight: "1.4" }],
+        body2: ["14px", { fontWeight: "400", lineHeight: "1.4" }],
+        body3: ["12px", { fontWeight: "400", lineHeight: "1.4" }],
+        caption1: ["14px", { fontWeight: "600", lineHeight: "1.4" }],
+        caption2: ["14px", { fontWeight: "500", lineHeight: "1.4" }],
+        caption3: ["12px", { fontWeight: "500", lineHeight: "1.4" }],
+        footnote: ["11px", { fontWeight: "300", lineHeight: "1.4" }],
+      },
+      borderRadius: {
+        small: "8px",
+        medium: "10px",
+        large: "12px",
+      },
+      boxShadow: {
+        shadow1: "0 4px 4px rgba(31, 34, 39, 0.08)",
+        shadow2: "0 8px 4px rgba(31, 34, 39, 0.08)",
+        shadow3: "0 16px 4px rgba(31, 34, 39, 0.08)",
+        shadow4: "0 24px 4px rgba(31, 34, 39, 0.08)",
+        selectCard: "0px 0px 0px 0px rgba(0, 0, 0, 0.05), 0px 4px 6px 0px rgba(0, 0, 0, 0.03)",
+      },
+      keyframes: {
+        "slide-in-from-bottom": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-out-to-bottom": {
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
+        "fade-in-0": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "fade-out-0": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "slide-in-from-bottom": "slide-in-from-bottom 0.5s ease-out",
+        "slide-out-to-bottom": "slide-out-to-bottom 0.5s ease-in",
+        "fade-in-0": "fade-in-0 0.3s ease-out",
+        "fade-out-0": "fade-out-0 0.3s ease-in",
       },
     },
   },
-  plugins: [
-  ],
+  plugins: [require("tailwind-scrollbar-hide"), require("tailwindcss-animate")],
 };
