@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 // import ToggleCompare from "./ToggleCompare";
 import SortFilter from "./SortFilter";
 import PropertyListComponent from "./PropertyList";
-import DownloadExcel from "./excel/DownloadExcel";
+//import DownloadExcel from "./excel/DownloadExcel";
 import MapViewer from "./MapViewer";
 import { useResizableScrollHeight } from "@/hooks/property/useResizableScrollHeight";
 import { MapPropertyItem } from "@/types/map";
@@ -110,7 +110,7 @@ const MapListDialog = ({ open, onOpenChange, properties, title, type }: Props) =
                   <span>비교하기</span>
                   <ToggleCompare />
                 </div> */}
-                <DownloadExcel data={properties} type={type} />
+                {/* <DownloadExcel data={properties} type={type} /> */}
               </div>
             </div>
 
