@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Dropdown from "../common/Dropdown";
 import { highlightSearchText } from "@/utils/common/highlightSearchText";
 import { ChatPreviewItem } from "@/types/chat";
 import { useDeleteChatMutation } from "@/queries/chat/useDeleteChatMutation";
 import { useUpdateChatTitle } from "@/queries/chat/useUpdateChatTitleMutation";
+import CustomDialog from "@/components/common/CustomDialog";
+import toast from "react-hot-toast";
+import CustomToast from "@/components/common/CustomToast";
 
 interface SideBarItemProps extends ChatPreviewItem {
   searchText: string;
@@ -20,6 +23,8 @@ const SideBarItem = ({
   isSelected = false,
   onClick,
 }: SideBarItemProps) => {
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+
   const { mutate: deleteChatRoom } = useDeleteChatMutation();
   const { mutate: updateTitle } = useUpdateChatTitle();
 
@@ -32,11 +37,40 @@ const SideBarItem = ({
   };
 
   const handleDeleteChat = () => {
-    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+    setShowDeleteAlert(true);
+  };
 
-    if (isConfirmed) {
-      deleteChatRoom({ chatRoomId });
-    }
+  const confirmDelete = () => {
+    deleteChatRoom(
+      { chatRoomId },
+      {
+        onSuccess: () => {
+          toast.custom(
+            ({ id }) => (
+              <CustomToast
+                message="채팅방이 성공적으로 삭제되었습니다."
+                type="success"
+                onClickAction={() => toast.dismiss(id)}
+              />
+            ),
+            { duration: 3000 },
+          );
+        },
+        onError: () => {
+          toast.custom(
+            ({ id }) => (
+              <CustomToast
+                message="채팅방 삭제에 실패했습니다. 잠시 후 다시 시도해주세요."
+                type="error"
+                onClickAction={() => toast.dismiss(id)}
+              />
+            ),
+            { duration: 3000 },
+          );
+        },
+      },
+    );
+    setShowDeleteAlert(false);
   };
 
   const dropdownItems = [
@@ -66,6 +100,17 @@ const SideBarItem = ({
         </span>
       </div>
       <Dropdown items={[...dropdownItems]} />
+      {showDeleteAlert && (
+        <CustomDialog
+          title="채팅방 삭제"
+          description="정말 삭제하시겠습니까?"
+          onConfirm={confirmDelete}
+          cancelLabel="취소"
+          confirmLabel="삭제"
+          open={showDeleteAlert}
+          onOpenChange={setShowDeleteAlert}
+        />
+      )}
     </div>
   );
 };
