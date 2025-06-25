@@ -21,7 +21,7 @@ const ReviewTextarea = ({ value, onChange }: ReviewTextareaProps) => {
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholderText}
         maxLength={500}
-        className={`mt-2 h-[160px] w-full resize-none rounded-[8px] bg-gray-100 px-[20px] py-[16px] text-subtitle3 placeholder:text-body3 placeholder:text-gray-800 focus:outline-none ${value ? "text-black" : ""} `}
+        className={`mt-2 h-[160px] w-full resize-none rounded-[8px] bg-gray-100 px-[20px] py-[16px] text-subtitle3 placeholder:text-gray-800 focus:outline-none ${value ? "text-black" : ""} `}
       />
     </div>
   );
