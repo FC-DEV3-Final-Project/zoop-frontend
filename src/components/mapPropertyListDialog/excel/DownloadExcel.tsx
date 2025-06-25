@@ -15,23 +15,23 @@ interface DownloadExcelProps {
 const DownloadExcel = ({ data, type }: DownloadExcelProps) => {
   const [excelData, setExcelData] = useState<MapPropertyItem[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (type === "bookmark") {
-        console.log("나는 북마크");
-        const bookmarkData = await getMapBookmarkPropertyList();
-        setExcelData(bookmarkData);
-      } else if (type === "recentView") {
-        console.log("나는 최근봄");
-        const recentData = await getMapRecentPropertyList();
-        setExcelData(recentData);
-      } else {
-        setExcelData(data ?? []);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (type === "bookmark") {
+  //       console.log("나는 북마크");
+  //       const bookmarkData = await getMapBookmarkPropertyList();
+  //       setExcelData(bookmarkData);
+  //     } else if (type === "recentView") {
+  //       console.log("나는 최근봄");
+  //       const recentData = await getMapRecentPropertyList();
+  //       setExcelData(recentData);
+  //     } else {
+  //       setExcelData(data ?? []);
+  //     }
+  //   };
 
-    fetchData();
-  }, [type, data]);
+  //   fetchData();
+  // }, [type, data]);
 
   const handleDownload = () => {
     if (!Array.isArray(excelData) || excelData.length === 0) {
