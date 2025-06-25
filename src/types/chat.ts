@@ -21,12 +21,11 @@ export interface Message {
   properties?: MapPropertyItem[];
 }
 
-// AI 응답 타입
-// export interface AIResponse {
-//   chatRoomId: number;
-//   messageId: number;
-//   content: string;
-//   senderType: "CHATBOT" | "USER";
-//   properties?: MapPropertyItem[];
-//   createdAt: string;
-// }
+export interface AIResponse {
+  chatRoomId: number;
+  messageId: number;
+  content: string;
+  senderType: "CHATBOT" | "USER";
+  properties?: MapPropertyItem[];
+  createdAt: string;
+}
