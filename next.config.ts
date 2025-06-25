@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       "k.kakaocdn.net",
       "api.dicebear.com",
       "cdn.example.com",
-      "43.201.121.201",
+      "zoopzoop.shop",
       "landthumb-phinf.pstatic.net",
       "img1.kakaocdn.net",
     ],
