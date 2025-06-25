@@ -8,6 +8,7 @@ import { Message } from "@/types/chat";
 import ChatBubble from "./ChatBubble";
 import InitialFilterPrompt from "./InitialFilterPrompt";
 import { useSendMessageMutation } from "@/queries/chat/useSendMessageMutation";
+import LoadingDots from "../common/LoadingDots";
 
 interface ChatMainProps {
   currentChatId: number | null;
@@ -97,15 +98,7 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
             className={`flex ${message.senderType === "USER" ? "justify-end" : "justify-start"}`}
           >
             <ChatBubble type={message.senderType as "CHATBOT" | "USER"}>
-              {isLoading ? (
-                <div className="flex items-center space-x-1">
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:0ms]" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:150ms]" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:300ms]" />
-                </div>
-              ) : (
-                message.content
-              )}
+              {isLoading ? <LoadingDots /> : message.content}
             </ChatBubble>
           </div>
         );
