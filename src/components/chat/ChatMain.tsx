@@ -16,10 +16,15 @@ interface ChatMainProps {
 
 const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
   const [input, setInput] = useState("");
+  const [tempMessages, setTempMessages] = useState<Message[]>([]);
+
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
   const isFirstRender = useRef(true);
 
   const { mutate } = useSendMessageMutation();
+
+  // 실제 렌더링에 사용될 메시지 배열
+  const allMessages = [...messages, ...tempMessages];
 
   // 새 메시지가 추가될 때 자동으로 스크롤 맨 아래로 이동
   useEffect(() => {
@@ -29,19 +34,50 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
       });
       isFirstRender.current = false;
     }
-  }, [messages]);
+  }, [allMessages]);
 
   const handleSendMessage = () => {
     const content = input.trim();
-    if (!content) return;
+    if (!content || !currentChatId) return;
 
-    // 채팅 메시지 보내기 API 호출
-    mutate({
-      chatRoomId: currentChatId,
+    const userMessageId = Date.now();
+    const chatbotLoadingMessageId = userMessageId + 1;
+
+    // 낙관적 USER 메시지 구성
+    const optimisticUserMessage: Message = {
+      messageId: userMessageId,
+      senderType: "USER",
       content,
-    });
+      createdAt: new Date().toISOString(),
+    };
 
+    // 낙관적 LOADING CHATBOT 메시지 구성
+    const loadingChatbotMessage: Message = {
+      messageId: chatbotLoadingMessageId,
+      senderType: "CHATBOT",
+      content: "", // 로딩 판단
+      createdAt: new Date().toISOString(),
+    };
+
+    setTempMessages([optimisticUserMessage, loadingChatbotMessage]);
     setInput("");
+
+    mutate(
+      {
+        chatRoomId: currentChatId,
+        content,
+      },
+      {
+        onSuccess: () => {
+          // 서버 응답 도착 시 낙관적 메시지 제거
+          setTempMessages([]);
+        },
+        onError: () => {
+          alert("메시지 전송 실패");
+          setTempMessages([]);
+        },
+      },
+    );
   };
 
   return (
@@ -49,31 +85,38 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
       {/** 초기 필터 설정 메세지 */}
       {!currentChatId && <InitialFilterPrompt />}
 
-      {messages &&
-        messages.map((message, index) => {
-          const isLast = index === messages.length - 1;
-          const messageContent = message.properties ? (
-            // 매물 추천 메세지
-            <RecommendationCard key={message.messageId} properties={message.properties} />
-          ) : (
-            // 일반 메세지
-            <div
-              key={message.messageId}
-              className={`flex ${message.senderType === "USER" ? "justify-end" : "justify-start"}`}
-            >
-              <ChatBubble type={message.senderType as "CHATBOT" | "USER"}>
-                {message.content}
-              </ChatBubble>
-            </div>
-          );
+      {allMessages.map((message, index) => {
+        const isLast = index === messages.length - 1;
+        const isLoading = message.senderType === "CHATBOT" && message.content === "";
 
-          return (
-            <React.Fragment key={message.messageId}>
-              {messageContent}
-              {isLast && <div ref={lastMessageRef} />}
-            </React.Fragment>
-          );
-        })}
+        const messageContent = message.properties ? (
+          <RecommendationCard key={message.messageId} properties={message.properties} />
+        ) : (
+          <div
+            key={message.messageId}
+            className={`flex ${message.senderType === "USER" ? "justify-end" : "justify-start"}`}
+          >
+            <ChatBubble type={message.senderType as "CHATBOT" | "USER"}>
+              {isLoading ? (
+                <div className="flex items-center space-x-1">
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:0ms]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:150ms]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-blue-800-primary [animation-delay:300ms]" />
+                </div>
+              ) : (
+                message.content
+              )}
+            </ChatBubble>
+          </div>
+        );
+
+        return (
+          <React.Fragment key={message.messageId}>
+            {messageContent}
+            {isLast && <div ref={lastMessageRef} />}
+          </React.Fragment>
+        );
+      })}
 
       {/** Input */}
       <div className="fixed -bottom-[1px] left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 rounded-t-2xl bg-white px-5 py-2 shadow-[0px_-4px_8px_rgba(0,0,0,0.04)]">
