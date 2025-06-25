@@ -6,14 +6,17 @@ export type AgentInfoProps = {
   address: string;
   representativeTelNo: string;
   cellPhoneNo: string;
+  realtyId: number;
 };
 
 export type BasicInfoProps = {
   propertyId: number;
-  complexId: number;
+  complexId: number | null;
   tradeTypeName: string;
   articleName: string;
   dealPrice: number;
+  warrantPrice: number;
+  rentPrice: number;
   dealOrWarrantPrc: string;
   articleFeatureDesc: string;
   realEstateTypeName: string;

@@ -17,6 +17,8 @@ interface InfoBoxProps {
     correspondingFloorCount: string;
     area2: string;
     isBookmarked: boolean;
+    warrantPrice: number;
+    rentPrice: number;
     parkingPossibleYN: "Y" | "N";
     exposeStartYMD: string;
     summary: string[];
@@ -31,6 +33,7 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
     articleFeatureDesc,
     tradeTypeName,
     dealOrWarrantPrc,
+
     realEstateTypeName,
     correspondingFloorCount,
     area2,
@@ -88,7 +91,11 @@ const InfoBox = ({ propertyInfo }: InfoBoxProps) => {
       </div>
 
       <div className="flex flex-col gap-[10px]">
-        <div className="text-title1">{`${tradeTypeName} ${dealOrWarrantPrc}`}</div>
+        <div className="text-title1">
+          {tradeTypeName === "월세"
+            ? `${tradeTypeName} ${dealOrWarrantPrc}/${Number(propertyInfo.rentPrice).toLocaleString()}`
+            : `${tradeTypeName} ${dealOrWarrantPrc}`}
+        </div>
         <div className="text-subtitle3">{articleFeatureDesc}</div>
         <div className="flex flex-wrap gap-[5px]">
           {summary.map((label, idx) => (
