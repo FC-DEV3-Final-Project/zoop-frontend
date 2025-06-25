@@ -57,7 +57,7 @@ const SideBarItem = ({
       className={`relative flex w-full items-center justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
       onClick={onClick}
     >
-      <div className="flex flex-col min-w-0">
+      <div className="flex flex-col w-full min-w-0">
         <span className="w-[92%] truncate text-body2">
           {highlightSearchText(title, searchText)}
         </span>
