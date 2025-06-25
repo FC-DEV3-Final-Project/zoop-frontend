@@ -17,6 +17,13 @@ const EditNickname = () => {
   // 닉네임 변경
   const handleSubmit = () => {
     updateNicknameMutation.mutate(nickname);
+    // 로컬스토리지 업데이트
+    const stored = localStorage.getItem("userInfo-storage");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      parsed.state.user.nickname = nickname;
+      localStorage.setItem("userInfo-storage", JSON.stringify(parsed));
+    }
     router.push("/mypage/user-info");
   };
 

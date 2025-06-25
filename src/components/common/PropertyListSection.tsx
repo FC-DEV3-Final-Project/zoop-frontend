@@ -84,7 +84,7 @@ const PropertyListSection = ({
         : "등록된 매물이 없습니다.";
 
   return (
-    <section className="flex flex-col flex-1">
+    <section className="flex flex-1 flex-col">
       {/* 탭바 + 매물 헤더를 sticky로 묶기 */}
       <div className="sticky top-12 z-10 bg-white">
         <Tab tabOptions={tabOptions} selected={selectedTab} onChange={setSelectedTab} />
@@ -94,8 +94,22 @@ const PropertyListSection = ({
             <span className="text-caption2">의 매물</span>
           </div>
           {showMapViewButton && (
-            <button onClick={handleMapView} className="flex items-center justify-start gap-1">
-              <img src="/icons/map.svg" alt="더보기" className="h-4 w-4" />
+            <button
+              onClick={handleMapView}
+              disabled={propertyCount?.[selectedTab] === 0}
+              className={`flex items-center justify-start gap-1 ${
+                propertyCount?.[selectedTab] === 0
+                  ? "text-gray-700-info"
+                  : "cursor-pointer text-black"
+              }`}
+            >
+              <img
+                src={
+                  propertyCount?.[selectedTab] === 0 ? "/icons/map-disabled.svg" : "/icons/map.svg"
+                }
+                alt="더보기"
+                className="h-4 w-4"
+              />
               <span className="text-body2">지도에서 보기</span>
             </button>
           )}
