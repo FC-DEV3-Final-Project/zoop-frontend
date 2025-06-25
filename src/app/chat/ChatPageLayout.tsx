@@ -17,7 +17,7 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   // currentChatId이 있다면 기존의 특정 채팅 불러오기
-  const { data: chatData } = currentChatId ? useChatDataQuery(currentChatId) : { data: null };
+  const { data: chatData } = useChatDataQuery(currentChatId ?? 0); // 훅은 항상 호출
 
   const currentChatTitle = chatData?.title || "ZOOP";
 
@@ -37,7 +37,7 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
         <Header.Title>{currentChatTitle}</Header.Title>
         <Header.Alarm onAlarmClick={() => alert("알림 클릭")} />
       </Header>
-      <main className="flex flex-col w-full min-h-screen">
+      <main className="flex min-h-screen w-full flex-col">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
         <ChatMain currentChatId={currentChatId} messages={sortedMessages} />
       </main>
