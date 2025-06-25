@@ -1,11 +1,12 @@
 import PropertyCard from "@/components/common/PropertyCard";
 import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { MapPropertyItem } from "@/types/map";
 
-interface Props {
-  properties: any[];
+interface RecommendationListProps {
+  properties: MapPropertyItem[];
 }
 
-const RecommendationList = ({ properties }: Props) => {
+const RecommendationList = ({ properties }: RecommendationListProps) => {
   return (
     <CarouselContent>
       {properties.map((property) => (
@@ -18,6 +19,7 @@ const RecommendationList = ({ properties }: Props) => {
             dealOrWarrantPrc={property.dealOrWarrantPrc}
             summary={property.summary}
             articleName={property.articleName}
+            aptName={property.aptName}
             realEstateTypeName={property.realEstateTypeName}
             buildingName={property.buildingName}
             area2={property.area2}

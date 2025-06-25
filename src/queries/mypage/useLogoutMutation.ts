@@ -7,5 +7,10 @@ export const useLogoutMutation = (options?: {
 }) =>
   useMutation({
     mutationFn: fetchLogout,
-    ...options,
+    onSuccess: (data) => {
+      options?.onSuccess?.(data);
+    },
+    onError: (error) => {
+      options?.onError?.(error);
+    },
   });

@@ -20,6 +20,8 @@ export const useUpdateProfileImageMutation = (options?: {
         parsed.state.user.profileImage = data;
         localStorage.setItem("userInfo-storage", JSON.stringify(parsed));
       }
+
+      options?.onSuccess?.(data);
     },
     onError: (error) => {
       options?.onError?.(error);

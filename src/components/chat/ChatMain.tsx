@@ -13,9 +13,10 @@ import { useSendMessageMutation } from "@/queries/chat/useSendMessageMutation";
 interface ChatMainProps {
   currentChatId: number | null;
   messages: Message[];
+  title: string;
 }
 
-const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
+const ChatMain = ({ currentChatId, messages, title }: ChatMainProps) => {
   const [tempMessages, setTempMessages] = useState<Message[]>([]);
 
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
@@ -87,7 +88,11 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
 
         const messageContent =
           message.properties && message.properties.length > 0 ? (
-            <RecommendationCard key={message.messageId} properties={message.properties} />
+            <RecommendationCard
+              key={message.messageId}
+              properties={message.properties}
+              title={title}
+            />
           ) : (
             <div
               key={message.messageId}

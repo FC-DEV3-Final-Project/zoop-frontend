@@ -39,7 +39,11 @@ const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
       </Header>
       <main className="flex min-h-screen w-full flex-col">
         <div className="fixed top-16 h-[1px] w-full max-w-[600px] bg-gray-400" />
-        <ChatMain currentChatId={currentChatId} messages={sortedMessages} />
+        <ChatMain
+          currentChatId={currentChatId}
+          messages={sortedMessages}
+          title={currentChatTitle}
+        />
       </main>
       <SideBar currentChatId={currentChatId} onClose={() => setIsSideBarOpen(false)} />
     </Sheet>

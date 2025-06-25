@@ -21,7 +21,7 @@ export default function LoginPage() {
           <Header bgColorClassName="bg-white/0">
             <div className="w-6" />
             <Header.Title>ZOOP</Header.Title>
-            <Header.Close onCloseClick={() => alert("알림 클릭")} />
+            <div className="w-6" />
           </Header>
 
           <div className="flex h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#EDF0FD] to-white px-5 pt-16">
