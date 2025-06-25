@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import AutoResizeTextarea from "@/components/ui/textarea";
-
 import { Message } from "@/types/chat";
 
 import InitialFilterPrompt from "./InitialFilterPrompt";
+import RecommendationCard from "./RecommendationCard/RecommendationCard";
+import ChatBubble from "./ChatBubble";
+import LoadingDots from "../common/LoadingDots";
+import Textarea from "../ui/chatTextarea";
+
 import { useSendMessageMutation } from "@/queries/chat/useSendMessageMutation";
-import MessageList from "./MessageList";
 
 interface ChatMainProps {
   currentChatId: number | null;
@@ -14,7 +16,6 @@ interface ChatMainProps {
 }
 
 const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
-  const [input, setInput] = useState("");
   const [tempMessages, setTempMessages] = useState<Message[]>([]);
 
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
@@ -35,10 +36,7 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
     }
   }, [allMessages]);
 
-  const handleSendMessage = () => {
-    const content = input.trim();
-    if (!content || !currentChatId) return;
-
+  const handleSendMessage = (content: string) => {
     const userMessageId = Date.now();
     const chatbotLoadingMessageId = userMessageId + 1;
 
@@ -59,7 +57,6 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
     };
 
     setTempMessages([optimisticUserMessage, loadingChatbotMessage]);
-    setInput("");
 
     mutate(
       {
@@ -84,15 +81,37 @@ const ChatMain = ({ currentChatId, messages }: ChatMainProps) => {
       {/** 초기 필터 설정 메세지 */}
       {!currentChatId && <InitialFilterPrompt />}
 
-      <MessageList messages={allMessages} />
+      {allMessages.map((message, index) => {
+        const isLast = index === messages.length - 1;
+        const isLoading = message.senderType === "CHATBOT" && message.content === "";
+
+        const messageContent =
+          message.properties && message.properties.length > 0 ? (
+            <RecommendationCard key={message.messageId} properties={message.properties} />
+          ) : (
+            <div
+              key={message.messageId}
+              className={`flex ${message.senderType === "USER" ? "justify-end" : "justify-start"}`}
+            >
+              <ChatBubble type={message.senderType as "CHATBOT" | "USER"}>
+                {isLoading ? <LoadingDots /> : message.content}
+              </ChatBubble>
+            </div>
+          );
+
+        return (
+          <React.Fragment key={message.messageId}>
+            {messageContent}
+            {isLast && <div ref={lastMessageRef} />}
+          </React.Fragment>
+        );
+      })}
 
       {/** Input */}
       <div className="fixed -bottom-[1px] left-1/2 z-10 w-full max-w-[600px] -translate-x-1/2 rounded-t-2xl bg-white px-5 py-2 shadow-[0px_-4px_8px_rgba(0,0,0,0.04)]">
-        <AutoResizeTextarea
+        <Textarea
           placeholder={"질문을 적어주세요."}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onSend={handleSendMessage}
+          onSend={(content) => handleSendMessage(content)}
           disabled={!currentChatId}
         />
       </div>
