@@ -5,19 +5,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [isReady, setIsReady] = useState(false);
+  // const router = useRouter();
+  // const [isReady, setIsReady] = useState(false);
 
-  useEffect(() => {
-    const token = document.cookie.includes("accessToken");
-    if (!token) {
-      router.replace("/login");
-      return;
-    }
-    setIsReady(true);
-  }, []);
+  // useEffect(() => {
+  //   const token = document.cookie.includes("accessToken");
 
-  if (!isReady) return null;
+  //   if (!token) {
+  //     router.replace("/login");
+  //     return;
+  //   }
+  //   setIsReady(true);
+  // }, []);
+
+  // if (!isReady) return null;
 
   return <ChatPageLayout currentChatId={null} />;
 }
