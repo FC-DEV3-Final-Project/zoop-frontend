@@ -20,7 +20,7 @@ const Page = () => {
       await createUserNickname(nickname);
       router.push("/");
     } catch (err) {
-      alert("닉네임 등록 중 오류가 발생했습니다.");
+      alert("닉네임 입력 페이지 오류");
     }
   };
 

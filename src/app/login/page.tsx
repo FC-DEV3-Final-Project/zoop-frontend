@@ -19,6 +19,7 @@ export default function LoginPage() {
   // const { setUser } = useUserInfoStore();
 
   const handleSubmit = async () => {
+    console.log("로그인 버튼 클릭");
     try {
       const userData = await getUserInfo();
 
@@ -27,7 +28,7 @@ export default function LoginPage() {
 
       router.push("/");
     } catch (err) {
-      alert("닉네임 등록 중 오류가 발생했습니다.");
+      alert("로그인 에러 발생");
     }
   };
 

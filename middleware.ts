@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   console.log("미들웨어 실행됨:", req.nextUrl.pathname);
   // 요청의 쿠키 중 accessToken 값을 가져옴
-  const accessToken = req.cookies.get("accessToken")?.value;
-  console.log("accessToken:", accessToken);
+  const accessToken = req.cookies.get("ACCESS_TOKEN")?.value;
+  console.log("ACCESS_TOKEN:", accessToken);
 
   const isLoggedIn = !!accessToken;
 
