@@ -3,22 +3,17 @@
 import ChatPageLayout from "./chat/ChatPageLayout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUserInfo } from "@/apis/login/getUserInfo";
+import axiosInstance from "@/apis/utils/axiosInstance";
+import useAuthGuard from "@/hooks/common/useAuthGuard";
 
 export default function HomePage() {
-  // const router = useRouter();
-  // const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
 
-  // useEffect(() => {
-  //   const token = document.cookie.includes("accessToken");
+  useAuthGuard();
 
-  //   if (!token) {
-  //     router.replace("/login");
-  //     return;
-  //   }
-  //   setIsReady(true);
-  // }, []);
-
-  // if (!isReady) return null;
+  if (!isReady) return null;
 
   return <ChatPageLayout currentChatId={null} />;
 }

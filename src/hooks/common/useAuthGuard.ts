@@ -1,20 +1,26 @@
-// "use client";
+"use client";
 
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getUserInfo } from "@/apis/login/getUserInfo";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
-// export default function useAuthGuard() {
-//   const router = useRouter();
-//   const [isReady, setIsReady] = useState(false);
+export default function useAuthGuard() {
+  const router = useRouter();
+  const { setUser, clearUser } = useUserInfoStore();
 
-//   useEffect(() => {
-//     const hasToken = document.cookie.includes("ACCESS_TOKEN");
-//     if (!hasToken) {
-//       router.replace("/login");
-//       return;
-//     }
-//     setIsReady(true);
-//   }, []);
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const checkLogin = await getUserInfo();
+        setUser(checkLogin);
+        router.replace("/");
+      } catch {
+        clearUser();
+        router.replace("/login");
+      }
+    };
 
-//   return isReady;
-// }
+    checkLogin();
+  }, []);
+}
