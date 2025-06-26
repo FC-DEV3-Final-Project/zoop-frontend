@@ -104,7 +104,7 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
               <img src="/icons/arrow-right.svg" alt="arrow" width={18} height={18} />
             </div>
           }
-          onClick={() => router.push(`/real-estate/${agent.realtyId}`)}
+          onClick={() => router.push(`/property/${propertyId}/real-estate/${agent.realtyId}`)}
         />
       </div>
     </section>

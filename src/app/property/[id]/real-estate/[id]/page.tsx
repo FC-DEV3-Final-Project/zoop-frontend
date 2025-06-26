@@ -13,11 +13,6 @@ const statsItems = [
   { label: "매매", value: "deal" },
 ];
 
-// const phoneNumbers = [
-//   { label: "registrationNumber", value: "010-1234-5678" },
-//   { label: "cellPhoneNo", value: "010-1234-5678" },
-// ];
-
 const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
   const { id } = use(params);
@@ -28,7 +23,7 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
     data: realEstateInfoResponse,
     isLoading: isInfoLoading,
     error: infoError,
-  } = useRealEstateInfoQuery(realtyId, { realtyId }, !!realtyId);
+  } = useRealEstateInfoQuery(realtyId, !!realtyId);
 
   const phoneNumbers = [
     ...(realEstateInfoResponse?.data?.representativeTelNo
@@ -83,7 +78,7 @@ const RealEstatePage = ({ params }: { params: Promise<{ id: string }> }) => {
         <Header.Prev onPrevClick={() => router.back()} />
         <Header.Title>{realEstateData.realtorName}</Header.Title>
       </Header>
-      <div className="flex min-h-screen bg-white flex-col bg-white pb-[76px] pt-12">
+      <div className="flex min-h-screen flex-col bg-white pb-[76px] pt-12">
         <RealEstateInfo {...realEstateData} />
         <PropertyListSection
           showMapViewButton={false}

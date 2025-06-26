@@ -3,10 +3,8 @@ import { RealEstateInfoRequest, RealEstateInfoResponse } from "@/types/real-esta
 
 const fetchRealEstateInfo = async (
   propertyId: number,
-  requestData: RealEstateInfoRequest,
 ): Promise<RealEstateInfoResponse> => {
   const response = await axiosInstance.get(`/properties/${propertyId}/realty`, {
-    params: requestData,
   });
   return response.data;
 };
