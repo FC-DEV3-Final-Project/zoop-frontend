@@ -57,7 +57,6 @@ const Page = () => {
           <PropertySearchLoading />
         ) : (
           <>
-            {" "}
             <ProgressBar currentStep={currentStep} />
             <div className="h-[calc(100%-4px)] px-5 pt-10">
               <Funnel>

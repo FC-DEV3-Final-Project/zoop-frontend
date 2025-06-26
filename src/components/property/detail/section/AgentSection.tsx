@@ -58,7 +58,7 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
           <div key={idx}>
             {item.label && (
               <>
-                {item.label}{" "}
+                {item.label}
                 {Array.isArray(item.value) ? (
                   item.value.map((v, i) => (
                     <span key={i} className="text-caption1">

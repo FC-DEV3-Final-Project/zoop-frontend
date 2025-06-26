@@ -224,7 +224,6 @@ export const postReviewHandler = http.post("/reviews/:propertyId", async ({ para
 
 // 리뷰 수정
 export const patchReviewHandler = http.patch("/reviews/:reviewId", async ({ params, request }) => {
-  console.log("PATCH 핸들러 동작 확인:", params.reviewId);
   const reviewId = Number(params.reviewId);
 
   const body = (await request.json()) as ReviewPatchRequestBody;
