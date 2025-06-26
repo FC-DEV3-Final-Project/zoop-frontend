@@ -16,17 +16,15 @@ const Page = () => {
   const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
 
   const handleSubmit = async () => {
-    console.log("로그인 버튼 클릭");
     try {
       await createUserNickname(nickname);
       const userData = await getUserInfo();
 
-      console.log("기존 유저 로그인 한 사람:: ", userData);
       setUser(userData); // Zustand에 유저 정보 저장
 
       router.push("/");
     } catch (err) {
-      alert("닉네임 입력발생");
+      console.error("닉네임 입력발생");
     }
   };
 

@@ -8,6 +8,7 @@ import { useChatDataQuery } from "@/queries/chat/useChatDataQuery";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ChatMain from "@/components/chat/ChatMain";
 import SideBar from "@/components/chat/SideBar";
+import useAuthGuard from "@/hooks/common/useAuthGuard";
 
 interface ChatPageLayoutProps {
   currentChatId: number | null;
@@ -15,6 +16,8 @@ interface ChatPageLayoutProps {
 
 const ChatPageLayout = ({ currentChatId }: ChatPageLayoutProps) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+
+  useAuthGuard();
 
   // currentChatId이 있다면 기존의 특정 채팅 불러오기
   const { data: chatData } = useChatDataQuery(currentChatId ?? 0); // 훅은 항상 호출

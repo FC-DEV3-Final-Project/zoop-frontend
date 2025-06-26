@@ -13,9 +13,5 @@ export const useMarkerPositions = (propertyList: MapPropertyItem[]) => {
     [propertyList],
   );
 
-  useEffect(() => {
-    console.log("🗺️ 마커 위치 리스트:", markerPositions);
-  }, [markerPositions]);
-
   return markerPositions;
 };

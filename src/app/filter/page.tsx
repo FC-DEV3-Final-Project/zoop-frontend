@@ -12,11 +12,14 @@ import OptionSelectStep from "@/components/filter/OptionSelectStep";
 import BudgetStep from "@/components/filter/BudgetStep";
 import ProgressBar from "@/components/filter/ProgressBar";
 import PropertySearchLoading from "@/components/filter/PropertySearchLoading";
+import useAuthGuard from "@/hooks/common/useAuthGuard";
 
 const TRADE_TYPE_OPTIONS = ["월세", "전세", "매매"];
 const REAL_ESTATE_TYPE_OPTIONS = ["원룸 / 투룸", "빌라", "오피스텔", "아파트"];
 
 const Page = () => {
+  useAuthGuard();
+
   const { Funnel, Step, currentStep, prevStep, nextStep, stepData, updateStepData } = useFunnel({
     lastStep: "4",
   });

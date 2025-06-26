@@ -2,6 +2,7 @@
 import { getUserInfo } from "@/apis/login/getUserInfo";
 import Onboarding from "@/components/login/onboarding";
 import { Button } from "@/components/ui/button";
+import useRedirect from "@/hooks/common/useRedirect";
 import { Header } from "@/layout/Header";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import Link from "next/link";
@@ -16,15 +17,11 @@ export default function LoginPage() {
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
   const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoClientId}&redirect_uri=${redirectUri}`;
 
-  // const { setUser } = useUserInfoStore();
+  useRedirect();
 
   const handleSubmit = async () => {
-    console.log("로그인 버튼 클릭");
     try {
       const userData = await getUserInfo();
-
-      console.log("기존 유저 로그인 한 사람:: ", userData);
-      // setUser(userData); // Zustand에 유저 정보 저장
 
       router.push("/");
     } catch (err) {
