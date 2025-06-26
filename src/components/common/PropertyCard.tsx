@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import BookmarkButton from "./BookmarkButton";
-import { constants } from "node:crypto";
 
 interface PropertyCardProps {
   // BE 전달 데이터
