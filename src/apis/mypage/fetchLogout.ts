@@ -16,7 +16,7 @@ const fetchLogout = async (): Promise<boolean> => {
 
   const response = await axiosInstance.post("/users/auth/logout", undefined, {
     headers: {
-      "Kakao-Access": kakaoAccess || "",
+      "KAKAO_ACCESS": kakaoAccess || "",
     },
   });
 

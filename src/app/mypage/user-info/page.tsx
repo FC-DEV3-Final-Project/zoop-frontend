@@ -76,6 +76,8 @@ const UserInfoPage = () => {
   });
   const logoutMutation = useLogoutMutation({
     onSuccess: () => {
+      clearAuthTokens();
+      router.push("/login");
       toast.custom(
         ({ id }) => (
           <CustomToast
@@ -86,8 +88,6 @@ const UserInfoPage = () => {
         ),
         { duration: 3000 },
       );
-      clearAuthTokens();
-      router.push("/login");
     },
     onError: () => {
       toast.custom(
