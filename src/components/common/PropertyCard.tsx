@@ -61,6 +61,9 @@ const PropertyCard = ({
       ? aptName
       : originalArticleName;
 
+  const articleFullName =
+    realEstateTypeName === articleName ? buildingName : `${articleName} ${buildingName}`;
+
   const handleCardClick = () => {
     router.push(`/property/${propertyId}`);
   };
@@ -93,7 +96,7 @@ const PropertyCard = ({
       </div>
 
       {/* 정보 섹션 */}
-      <div className="inline-flex flex-1 flex-col justify-between self-stretch">
+      <div className="inline-flex max-w-full flex-1 flex-col justify-between self-stretch truncate">
         <div
           className={`flex flex-col gap-0.5 self-stretch ${isActive ? "text-black" : "text-gray-600-hint"}`}
         >
@@ -108,11 +111,8 @@ const PropertyCard = ({
 
           {/* 주소와 건물 정보 */}
           <div className="flex flex-col items-start gap-0.5 self-stretch">
-            <div className="inline-flex items-center gap-1 self-stretch">
-              {realEstateTypeName !== articleName && (
-                <p className="text-grey-100 max-w-fit truncate text-body2">{articleName}</p>
-              )}
-              <p className="min-w-fit text-body2">{buildingName}</p>
+            <div className="items-center self-stretch">
+              <p className="text-grey-100 truncate text-body2">{articleFullName}</p>
             </div>
             <div className="h-5 self-stretch text-body2">
               {realEstateTypeName}, {area2}㎡
