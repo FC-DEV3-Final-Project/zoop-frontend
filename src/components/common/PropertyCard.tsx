@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import BookmarkButton from "./BookmarkButton";
+import { constants } from "node:crypto";
 
 interface PropertyCardProps {
   // BE 전달 데이터
@@ -39,7 +40,7 @@ const PropertyCard = ({
   summary,
   realEstateTypeName,
   dealOrWarrantPrc,
-  buildingName: buildingNameOrNull,
+  buildingName: originalBuildingName,
   area2,
   isBookmarked,
   imageUrl,
@@ -48,7 +49,7 @@ const PropertyCard = ({
   rentPrice,
   // warrantPrice,
   // dealPrice,
-  aptName,
+  aptName: originalAptName,
   articleName: originalArticleName,
   isActive = true,
   size = "md",
@@ -56,12 +57,15 @@ const PropertyCard = ({
 }: PropertyCardProps) => {
   const router = useRouter();
 
-  const articleName =
-    realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔"
-      ? aptName
-      : originalArticleName;
+  const buildingName = originalBuildingName || "";
+  const aptName = originalAptName || "";
+  let articleName = originalArticleName || "";
 
-  const buildingName = buildingNameOrNull || "";
+  if (realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔") {
+    articleName = aptName;
+  } else {
+    articleName = originalArticleName || "";
+  }
 
   const articleFullName =
     realEstateTypeName === articleName ? buildingName : `${articleName} ${buildingName}`;
