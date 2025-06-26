@@ -12,7 +12,7 @@ interface PropertyCardProps {
   summary: string[]; // ex. ["신축", "풀옵션", "역세권"],없으면 []
   realEstateTypeName: string; //  ex."아파트","오피스텔", "빌라", "단독", "다가구"
   dealOrWarrantPrc: string; // ex."3억"
-  buildingName: string; // ex. "101동"  빌라인 경우  "빌라" 또는 "다인힐"등 건물명
+  buildingName?: string | null; // ex. "101동"  빌라인 경우  "빌라" 또는 "다인힐"등 건물명
   area2: string; // ex."34.5",
   isBookmarked: boolean; // ex. true,
   imageUrl: string; // ex. "https://cdn.example.com/images/123.jpg", 없으면 ""
@@ -39,7 +39,7 @@ const PropertyCard = ({
   summary,
   realEstateTypeName,
   dealOrWarrantPrc,
-  buildingName,
+  buildingName: buildingNameOrNull,
   area2,
   isBookmarked,
   imageUrl,
@@ -60,6 +60,8 @@ const PropertyCard = ({
     realEstateTypeName === "아파트" || realEstateTypeName === "오피스텔"
       ? aptName
       : originalArticleName;
+
+  const buildingName = buildingNameOrNull || "";
 
   const articleFullName =
     realEstateTypeName === articleName ? buildingName : `${articleName} ${buildingName}`;
