@@ -150,22 +150,22 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
         <Image
           src={SearchIcon}
           alt="검색"
-          className="absolute right-0 cursor-pointer top-2"
+          className="absolute right-0 top-2 cursor-pointer"
           onClick={handleSearch}
         />
       </div>
 
       {/* 임시 로딩 상태 */}
-      {isLoading && <div className="text-center text-gray-600 text-body2">검색 중...</div>}
+      {isLoading && <div className="text-center text-body2 text-gray-600">검색 중...</div>}
 
       {/* 임시 에러 상태 */}
       {error && (
-        <div className="p-3 text-center text-red-600 rounded bg-red-50 text-body2">{error}</div>
+        <div className="rounded bg-red-50 p-3 text-center text-body2 text-red-600">{error}</div>
       )}
 
       {searchKeyword && !isLoading && (
         <div className="flex flex-col gap-4">
-          <div className="text-gray-800 text-body2">검색결과 ({searchResults.length})</div>
+          <div className="text-body2 text-gray-800">검색결과 ({searchResults.length})</div>
           <div className="h-[calc(100vh-342px)] overflow-y-auto">
             {searchResults !== null ? (
               <ul className="flex flex-col">
@@ -179,8 +179,8 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                     <li
                       key={place.id}
                       onClick={() => handleLocationSelect(place)}
-                      className={`cursor-pointer border-b-[0.5px] border-gray-200 px-5 py-[10px] transition-colors ${
-                        isSelected ? "bg-gray-100" : "bg-white"
+                      className={`cursor-pointer rounded-lg border-b-[0.5px] border-gray-200 px-5 py-[10px] transition-colors ${
+                        isSelected ? "bg-blue-050-bg" : "bg-white"
                       }`}
                     >
                       <div className="text-body1">
@@ -192,9 +192,9 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
                 })}
               </ul>
             ) : (
-              <div className="flex flex-col items-center justify-center h-full gap-2 text-center whitespace-nowrap">
+              <div className="flex h-full flex-col items-center justify-center gap-2 whitespace-nowrap text-center">
                 <h1 className="text-subtitle1">원하는 검색 결과가 없으신가요?</h1>
-                <p className="text-gray-700 text-body2">
+                <p className="text-body2 text-gray-700">
                   철자나 띄어쓰기를 확인하거나, <br />
                   인근 지역으로 검색해보세요!
                 </p>

@@ -1,31 +1,47 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// 로그인 하지 않아도 되는 공개 페이지
+const publicRoutes = ["/login"];
+// 로그인해야 접근 가능한 보호 페이지
+const protectedRoutes = ["/chat", "/filter", "/mypage", "/property"];
+
 export function middleware(req: NextRequest) {
-  console.log("미들웨어 실행됨:", req.nextUrl.pathname);
-  // 요청의 쿠키 중 accessToken 값을 가져옴
-  const accessToken = req.cookies.get("ACCESS_TOKEN")?.value;
-  console.log("ACCESS_TOKEN:", accessToken);
+  const token = req.cookies.get("ACCESS_TOKEN");
+  const currentPath = req.nextUrl.pathname;
 
-  const isLoggedIn = !!accessToken;
+  // 루트 경로("/") 접근 시 로그인 여부에 따라 리다이렉트 처리
+  if (currentPath === "/") {
+    if (token) {
+      return NextResponse.redirect(new URL("/", req.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  }
 
-  const protectedPaths = ["/chat", "/filter", "/mypage", "/property"];
-  const isProtected = protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path));
+  // 로그아웃 상태에서 보호 페이지 접근 시 로그인 페이지로 리다이렉트
+  if (!token && protectedRoutes.includes(currentPath)) {
+    const loginUrl = req.nextUrl.clone();
+    loginUrl.pathname = "/login";
 
-  // 로그인 안 되어 있으면 → /login으로 리디렉트
-  if (isProtected && !isLoggedIn) {
-    const loginUrl = new URL("/login", req.url); // login URL을 새로 만듦
     return NextResponse.redirect(loginUrl);
   }
 
-  // 로그인한 유저가 /login으로 접근하면 → 홈으로 리디렉트
-  if (req.nextUrl.pathname === "/login" && isLoggedIn) {
-    const homeUrl = new URL("/", req.url);
+  // 로그인 상태에서 공개 페이지 접근 시 홈으로 리다이렉트
+  if (token && publicRoutes.includes(currentPath)) {
+    const homeUrl = req.nextUrl.clone();
+    homeUrl.pathname = "/";
+
     return NextResponse.redirect(homeUrl);
   }
-  return NextResponse.next();
-}
 
-export const config = {
-  matcher: ["/chat/:path*", "/filter/:path*", "/mypage/:path*", "/property/:path*", "/login"],
-};
+  // x-pathname 헤더 추가
+  const reqHeaders = new Headers(req.headers);
+  reqHeaders.set("x-pathname", currentPath);
+
+  return NextResponse.next({
+    request: {
+      headers: reqHeaders,
+    },
+  });
+}
