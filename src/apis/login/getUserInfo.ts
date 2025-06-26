@@ -6,6 +6,8 @@ export const getUserInfo = async () => {
     const response = await axiosInstance.get("/users/auth/me");
     const data = response.data;
 
+    console.log("로그인 된 유저 data확인::", data);
+
     // ✅ Zustand 저장
     const setUser = useUserInfoStore.getState().setUser;
     setUser({

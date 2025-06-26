@@ -1,16 +1,35 @@
 "use client";
+import { getUserInfo } from "@/apis/login/getUserInfo";
 import Onboarding from "@/components/login/onboarding";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/layout/Header";
+import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showOnboarding, setShowOnboarding] = useState(true); // 다이얼로그 on/off
 
   const kakaoClientId = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
   const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoClientId}&redirect_uri=${redirectUri}`;
+
+  // const { setUser } = useUserInfoStore();
+
+  const handleSubmit = async () => {
+    try {
+      const userData = await getUserInfo();
+
+      console.log("기존 유저 로그인 한 사람:: ", userData);
+      // setUser(userData); // Zustand에 유저 정보 저장
+
+      router.push("/");
+    } catch (err) {
+      alert("닉네임 등록 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <>
@@ -43,6 +62,7 @@ export default function LoginPage() {
               <span className="text-subtitle1">부동산 매물 추천 AI 챗봇</span>
             </div>
             <Button
+              onClick={handleSubmit}
               asChild
               className="mt-32 h-[50px] w-full rounded-[8px] bg-[#FEE500] text-base font-medium text-[#000000] hover:bg-[#fada0b]"
             >

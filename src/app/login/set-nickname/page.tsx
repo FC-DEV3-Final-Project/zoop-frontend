@@ -13,14 +13,15 @@ const Page = () => {
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
+  // const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
 
   const handleSubmit = async () => {
     try {
       await createUserNickname(nickname);
       const userData = await getUserInfo();
 
-      setUser(userData); // Zustand에 유저 정보 저장
+      console.log("신규 유저 로그인 한 사람:: ", userData);
+      // setUser(userData); // Zustand에 유저 정보 저장
 
       router.push("/");
     } catch (err) {
