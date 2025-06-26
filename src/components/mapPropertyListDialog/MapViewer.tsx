@@ -27,6 +27,8 @@ const MapViewer = ({ markerPoint }: MapViewerProps) => {
           level: 3,
         });
 
+        const bounds = new window.kakao.maps.LatLngBounds();
+
         markerPoint.forEach((item, i) => {
           const latlng = new window.kakao.maps.LatLng(item.latitude, item.longitude);
 
@@ -52,7 +54,13 @@ const MapViewer = ({ markerPoint }: MapViewerProps) => {
             position: latlng,
             image: markerImage,
           });
+
+          bounds.extend(latlng);
         });
+
+        if (!bounds.isEmpty()) {
+          map.setBounds(bounds);
+        }
       });
     }, 100);
 
