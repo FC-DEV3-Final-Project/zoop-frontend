@@ -28,7 +28,7 @@ export default function LoginPage() {
 
       router.push("/");
     } catch (err) {
-      alert("로그인 에러 발생");
+      console.log("err :", err);
     }
   };
 
