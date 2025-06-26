@@ -62,7 +62,7 @@ export default function RootLayout({
                 className: "custom-toast",
               }}
             />
-          </Providers>{" "}
+          </Providers>
         </div>
       </body>
     </html>
