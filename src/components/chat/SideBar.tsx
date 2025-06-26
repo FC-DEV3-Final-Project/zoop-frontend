@@ -61,9 +61,9 @@ const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
       className="gap-0"
     >
       <SheetHeader className="flex w-full flex-col gap-[30px] border-b-[1px] border-gray-300 p-5">
-        <SheetTitle className="w-full">
-          <div className="flex justify-between w-full gap-2">
-            <div className="flex gap-4">
+        <SheetTitle>
+          <div className="flex w-full justify-between gap-2">
+            <div className="flex w-full gap-4">
               <Image src={LogoIcon} alt={"logo"} />
               <Input
                 className="flex-1"
@@ -120,7 +120,7 @@ const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
         </ul>
       ) : (
         searchText && (
-          <div className="flex flex-col items-center justify-center h-full gap-2 text-center">
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
             <p className="text-subtitle1">검색 결과가 없습니다.</p>
             <p className="text-body2 text-gray-700-info">
               {searchText}이/가 포함된 조건을 설정해보세요!
@@ -130,7 +130,7 @@ const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
       )}
 
       <SheetFooter
-        className="absolute left-0 right-0 px-5 py-6 -bottom-1"
+        className="absolute -bottom-1 left-0 right-0 px-5 py-6"
         style={{
           background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 44%)",
           paddingTop: "40px",
@@ -142,7 +142,7 @@ const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
               <img
                 src={user.profileImage}
                 alt="프로필 이미지"
-                className="object-cover w-8 h-8 rounded-full"
+                className="h-8 w-8 rounded-full object-cover"
               />
             ) : (
               <img src="/icons/base-user-img.svg" alt="프로필 이미지" />

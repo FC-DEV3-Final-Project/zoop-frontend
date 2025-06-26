@@ -330,6 +330,7 @@ export default function Guide() {
         />
       </div>
 
+
       {/* DropDown Section */}
       <div className="flex w-full flex-col gap-2 rounded-large border border-gray-400 p-4">
         <h1 className="text-title1">DropDown</h1>
