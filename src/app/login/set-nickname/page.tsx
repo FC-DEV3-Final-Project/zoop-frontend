@@ -18,11 +18,6 @@ const Page = () => {
   const handleSubmit = async () => {
     try {
       await createUserNickname(nickname);
-      const userData = await getUserInfo();
-
-      console.log("신규 유저 로그인 한 사람:: ", userData);
-      // setUser(userData); // Zustand에 유저 정보 저장
-
       router.push("/");
     } catch (err) {
       alert("닉네임 등록 중 오류가 발생했습니다.");

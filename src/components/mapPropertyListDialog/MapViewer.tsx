@@ -24,7 +24,7 @@ const MapViewer = ({ markerPoint }: MapViewerProps) => {
 
         const map = new window.kakao.maps.Map(container, {
           center: new window.kakao.maps.LatLng(37.5665, 126.978),
-          level: 9,
+          level: 3,
         });
 
         markerPoint.forEach((item, i) => {
