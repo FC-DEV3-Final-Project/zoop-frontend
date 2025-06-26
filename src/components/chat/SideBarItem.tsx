@@ -120,7 +120,7 @@ const SideBarItem = ({
 
   return (
     <div
-      className={`relative flex w-full cursor-pointer items-center justify-between px-5 py-3 ${isSelected ? "border-l-[3px] border-blue-800 bg-blue-050-bg" : "bg-white"}`}
+      className={`relative flex w-full cursor-pointer items-center justify-between border-l-[3px] px-5 py-3 ${isSelected ? "border-blue-800 bg-blue-050-bg" : "border-white bg-white"}`}
       onClick={onClick}
     >
       <div className="flex w-full min-w-0 flex-col">
