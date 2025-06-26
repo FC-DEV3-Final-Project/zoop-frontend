@@ -12,13 +12,11 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
       try {
         await axiosInstance.get("/users/auth/me"); // 서버가 쿠키로 인증 확인
-        if (location.pathname === "/login") {
+        if (location.pathname === "/login" || location.pathname === "/set-nickname") {
           router.replace("/"); // 이미 로그인 중이면 메인으로
         }
       } catch (err) {
-        if (location.pathname !== "/login") {
-          router.replace("/login"); // 로그인 안 되어 있으면 로그인 페이지로
-        }
+        router.replace("/login"); // 로그인 안 되어 있으면 로그인 페이지로
       } finally {
         setChecked(true);
       }
