@@ -13,17 +13,17 @@ const statsItems = [
   { label: "매매", value: "deal" },
 ];
 
-const RealEstatePage = ({ params }: { params: Promise<{ realtyId: string }> }) => {
+const RealEstatePage = ({ params }: { params: Promise<{ id: string; realtyId: string }> }) => {
   const router = useRouter();
-  const { realtyId: realtyIdString } = use(params);
-  const realtyId = Number(realtyIdString);
+  const { id, realtyId } = use(params);
+  const propertyId = Number(id);
 
   // 부동산 정보
   const {
     data: realEstateInfoResponse,
     isLoading: isInfoLoading,
     error: infoError,
-  } = useRealEstateInfoQuery(Number(realtyId), !!realtyId);
+  } = useRealEstateInfoQuery(propertyId, !!propertyId);
 
   const phoneNumbers = [
     ...(realEstateInfoResponse?.data?.representativeTelNo
