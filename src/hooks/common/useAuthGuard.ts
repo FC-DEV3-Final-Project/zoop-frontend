@@ -14,7 +14,6 @@ export default function useAuthGuard() {
       try {
         const checkLogin = await getUserInfo();
         setUser(checkLogin);
-        router.replace("/");
       } catch {
         clearUser();
         router.replace("/login");
