@@ -1,26 +1,34 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axiosInstance from "@/apis/utils/axiosInstance";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const [checked, setChecked] = useState(false); // 로그인 체크 완료 여부
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
+    const checkAuth = async () => {
+      try {
+        await axiosInstance.get("/users/auth/me"); // 서버가 쿠키로 인증 확인
+        if (location.pathname === "/login") {
+          router.replace("/"); // 이미 로그인 중이면 메인으로
+        }
+      } catch (err) {
+        if (location.pathname !== "/login") {
+          router.replace("/login"); // 로그인 안 되어 있으면 로그인 페이지로
+        }
+      } finally {
+        setChecked(true);
+      }
+    };
 
-    const isLoginPage = location.pathname === "/login";
-
-    if (!token && !isLoginPage) {
-      router.replace("/login");
-    }
-
-    if (token && isLoginPage) {
-      router.replace("/"); // 로그인한 사용자가 로그인 페이지 들어올 경우 홈으로
-    }
+    checkAuth();
   }, []);
+
+  if (!checked) return null;
 
   return <>{children}</>;
 };
-
 export default AuthGuard;
