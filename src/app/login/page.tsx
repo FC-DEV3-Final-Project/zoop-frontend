@@ -2,7 +2,7 @@
 import { getUserInfo } from "@/apis/login/getUserInfo";
 import Onboarding from "@/components/login/onboarding";
 import { Button } from "@/components/ui/button";
-import useRedirect from "@/hooks/common/useRedirect";
+// import useRedirect from "@/hooks/common/useRedirect";
 import { Header } from "@/layout/Header";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function LoginPage() {
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
   const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoClientId}&redirect_uri=${redirectUri}`;
 
-  useRedirect();
+  // useRedirect();
 
   const handleSubmit = async () => {
     try {

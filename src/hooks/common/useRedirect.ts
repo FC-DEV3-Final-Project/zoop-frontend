@@ -1,16 +1,16 @@
-"use client";
+// "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
 
-export default function useRedirect() {
-  const router = useRouter();
+// export default function useRedirect() {
+//   const router = useRouter();
 
-  useEffect(() => {
-    const hasToken = document.cookie.includes("ACCESS_TOKEN");
+//   useEffect(() => {
+//     const hasToken = document.cookie.includes("ACCESS_TOKEN");
 
-    if (hasToken) {
-      router.replace("/");
-    }
-  }, []);
-}
+//     if (hasToken) {
+//       router.replace("/");
+//     }
+//   }, []);
+// }
