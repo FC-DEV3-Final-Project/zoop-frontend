@@ -38,7 +38,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const useMock = process.env.NEXT_PUBLIC_USE_MOCK === "true";
   return (
     <html lang="en" className={pretendard.variable}>
       <body className="font-pretendard">
@@ -50,7 +49,7 @@ export default function RootLayout({
           />
           <Providers>
             <AuthGuard>
-              {useMock ? <MSWComponent>{children}</MSWComponent> : children}
+              {children}
               <Toaster
                 position="bottom-center"
                 containerStyle={{
