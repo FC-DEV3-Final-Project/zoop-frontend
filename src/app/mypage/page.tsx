@@ -6,11 +6,9 @@ import PostPreviewBox from "@/components/mypage/PostPreviewBox";
 import PropertyListSection from "@/components/common/PropertyListSection";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
 import { useMypageHomeQuery } from "@/queries/mypage/useMypageHomeQuery";
-import useAuthGuard from "@/hooks/common/useAuthGuard";
 
 const MyPage = () => {
   const router = useRouter();
-  useAuthGuard();
 
   // 홈 데이터 조회
   const { data: homeResponse, isLoading: homeLoading } = useMypageHomeQuery();
