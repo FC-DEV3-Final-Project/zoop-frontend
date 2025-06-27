@@ -1,8 +1,9 @@
 # 👽🏠 나만을 위한 AI 매물 추천 플랫폼, ZOOP
-![1](https://github.com/user-attachments/assets/74fe4800-55e2-4487-8dad-421d757a258b)
+![main](https://github.com/user-attachments/assets/74fe4800-55e2-4487-8dad-421d757a258b)
 
-## ♥️ 프로젝트 소개
-![5](https://github.com/user-attachments/assets/dc1abbf4-3270-4966-967a-a2279d95752d)
+## ♥️ 프로젝트 배경 및 소개
+![사전 리서치](https://github.com/user-attachments/assets/eadb724d-c5d9-4768-bd20-b592ef484747)
+![문제점 및 해결 방안](https://github.com/user-attachments/assets/dc1abbf4-3270-4966-967a-a2279d95752d)
 
 1. 복잡한 조건 설정 없이, **원하는 매물을 빠르게 탐색**
     - 다양한 필터를 복잡하게 설정하지 않아도, AI 기반 채팅 인터페이스를 통해 자연어로 원하는 매물을 간편하게 탐색할 수 있습니다.
