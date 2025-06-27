@@ -5,6 +5,7 @@ import { MSWComponent } from "@/components/MSWComponent";
 import Script from "next/script";
 import Providers from "./providers";
 import { Toaster } from "react-hot-toast";
+import AuthGuardWrapper from "@/components/AuthGuardWrapper";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
@@ -47,21 +48,23 @@ export default function RootLayout({
             strategy="beforeInteractive"
           />
           <Providers>
-            {children}
-            <Toaster
-              position="bottom-center"
-              containerStyle={{
-                bottom: "80px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "600px",
-                maxWidth: "90vw",
-                padding: 0, // 패딩은 여기서 제거하고 CSS에서 처리
-              }}
-              toastOptions={{
-                className: "custom-toast",
-              }}
-            />
+            <AuthGuardWrapper>
+              {children}
+              <Toaster
+                position="bottom-center"
+                containerStyle={{
+                  bottom: "80px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "600px",
+                  maxWidth: "90vw",
+                  padding: 0, // 패딩은 여기서 제거하고 CSS에서 처리
+                }}
+                toastOptions={{
+                  className: "custom-toast",
+                }}
+              />
+            </AuthGuardWrapper>
           </Providers>
         </div>
       </body>
