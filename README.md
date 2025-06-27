@@ -70,7 +70,7 @@
 ## 👨‍👩‍👧‍👦 팀원 구성
 |<img src="https://avatars.githubusercontent.com/u/173143133?v=4,Jang-eunhye,,https://github.com/Jang-eunhye" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/81246338?v=4,gkfla668,임하림,https://github.com/gkfla668" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/150775699?v=4,girl0330,,https://github.com/girl0330" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/94222592?v=4,jiyoon04,,https://github.com/jiyoon04" width="150" height="150"/>
 |:-:|:-:|:-:|:-:
-|팀장 : [@jiyoon04](https://github.com/jiyoon04))|팀원 : [@gkfla668](https://github.com/gkfla668)|팀원 : [@girl0330](https://github.com/girl0330)|팀원 : [@Jang-eunhye](https://github.com/Jang-eunhye)
+|팀장 : [@jiyoon04](https://github.com/jiyoon04)|팀원 : [@gkfla668](https://github.com/gkfla668)|팀원 : [@girl0330](https://github.com/girl0330)|팀원 : [@Jang-eunhye](https://github.com/Jang-eunhye)
 
 
 ## 🪚 기술 스택
