@@ -1,5 +1,8 @@
 # 👽🏠 나만을 위한 AI 매물 추천 플랫폼, ZOOP
+### [서비스 이용하러가기](https://zoop-frontend-sable.vercel.app/)
+
 ![main](https://github.com/user-attachments/assets/74fe4800-55e2-4487-8dad-421d757a258b)
+
 
 ## ♥️ 프로젝트 배경 및 소개
 ![사전 리서치](https://github.com/user-attachments/assets/eadb724d-c5d9-4768-bd20-b592ef484747)
