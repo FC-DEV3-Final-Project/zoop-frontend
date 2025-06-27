@@ -30,7 +30,7 @@ const NewReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
     if (field === "hasChild") setHasChild(value);
   };
 
-  const isValid = rating > 0 && content.trim() !== "" && residence !== "none";
+  const isValid = rating > 0 && content.trim() !== "";
 
   const handleSubmit = () => {
     if (!isValid) {
