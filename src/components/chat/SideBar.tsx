@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet";
+import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import Input from "../ui/input";
 
 import NewChatIcon from "../../../public/icons/new-chat.svg";
 import LogoIcon from "../../../public/icons/logo.svg";
 
 import SideBarItem from "./SideBarItem";
-import { useUserInfoStore } from "@/stores/useUserInfoStore";
+import SideBarFooter from "./SideBarFooter";
+
 import groupChatsByDate from "@/utils/chat/groupChatsByDate";
 import { useChatListQuery } from "@/queries/chat/useChatListQuery";
 
@@ -20,7 +20,6 @@ interface SideBarProps {
 }
 
 const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
-  const { user } = useUserInfoStore();
   const router = useRouter();
 
   const [searchText, setSearchText] = useState("");
@@ -129,34 +128,7 @@ const SideBar = ({ currentChatId, onClose }: SideBarProps) => {
         )
       )}
 
-      <SheetFooter
-        className="absolute -bottom-1 left-0 right-0 px-5 py-6"
-        style={{
-          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 44%)",
-          paddingTop: "40px",
-        }}
-      >
-        <div className="flex flex-row items-center justify-between py-[10px]">
-          <div className="flex items-center gap-2">
-            {user?.profileImage ? (
-              <img
-                src={user.profileImage}
-                alt="프로필 이미지"
-                className="h-8 w-8 rounded-full object-cover"
-              />
-            ) : (
-              <img src="/icons/base-user-img.svg" alt="프로필 이미지" />
-            )}
-            <span className="text-title3">{user?.nickname}님</span>
-          </div>
-          <Link
-            href={"/mypage"}
-            className="w-[76px] rounded-lg border-[1px] border-blue-100 bg-blue-50 py-1 text-center text-caption1 text-blue-800-primary"
-          >
-            내 프로필
-          </Link>
-        </div>
-      </SheetFooter>
+      <SideBarFooter />
     </SheetContent>
   );
 };
