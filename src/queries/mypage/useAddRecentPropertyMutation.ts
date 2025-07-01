@@ -1,6 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import fetchAddRecentProperty from "@/apis/mypage/fetchAddRecentProperty";
+import axiosInstance from "@/apis/utils/axiosInstance";
 
+
+interface AddRecentPropertyRequest {
+  propertyId: number;
+}
+
+interface AddRecentPropertyResponse {
+  status: number;
+  message: string;
+}
+
+const fetchAddRecentProperty = async (propertyId: number): Promise<AddRecentPropertyResponse> => {
+  const response = await axiosInstance.post(`/mypage/histories/recent-properties`, { propertyId });
+  return response.data;
+};
 export const useAddRecentPropertyMutation = () => {
   const queryClient = useQueryClient();
 
