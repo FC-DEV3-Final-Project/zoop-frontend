@@ -61,7 +61,7 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await axiosInstance.post("/auth/refresh");
+        await axiosInstance.post("/users/auth/refresh");
 
         processQueue(null, true);
 
