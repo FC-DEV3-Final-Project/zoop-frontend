@@ -57,11 +57,11 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
         {agentInfo.map((item, idx) => (
           <div key={idx}>
             {item.label && (
-              <>
-                {item.label}
+              <div className="text-caption1">
+                <span>{item.label}&nbsp;</span>
                 {Array.isArray(item.value) ? (
                   item.value.map((v, i) => (
-                    <span key={i} className="text-caption1">
+                    <span key={i} className="text-body2">
                       {v}
                       {i !== item.value.length - 1 && ", "}
                     </span>
@@ -69,7 +69,7 @@ const AgentSection = forwardRef<HTMLElement, { propertyId: number }>(({ property
                 ) : (
                   <span className="text-body2">{item.value}</span>
                 )}
-              </>
+              </div>
             )}
             {!item.label && <div className="text-body2">{item.value}</div>}
           </div>
