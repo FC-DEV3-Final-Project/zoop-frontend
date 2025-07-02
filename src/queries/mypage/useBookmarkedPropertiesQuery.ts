@@ -12,12 +12,11 @@ const fetchBookmarkedProperties = async (
   size: number = 2,
   hasNext: boolean = true,
 ): Promise<BookmarkedPropertiesResponse> => {
-    // 무한스크롤 테스트용 2초 대기
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const response = await axiosInstance.get(`/mypage/histories/bookmarked-properties?page=${page}&size=${size}`);
-    return response.data.data;
+  const response = await axiosInstance.get(
+    `/mypage/histories/bookmarked-properties?page=${page}&size=${size}`,
+  );
+  return response.data.data;
 };
-
 
 export const useBookmarkedPropertiesQuery = (size: number = 2, enabled: boolean = true) => {
   const { items, loader, hasMore, loading, error, reset } = useInfiniteScroll<PropertyCardProps>(
