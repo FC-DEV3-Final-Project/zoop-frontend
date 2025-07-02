@@ -1,13 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchReviewSummary } from "@/apis/property/review/fetchReviewSummary";
-import type { ReviewSummary } from "@/types/reviewType";
+import axiosInstance from "@/apis/utils/axiosInstance";
+import type { ReviewSummary, ReviewSummaryResponse } from "@/types/reviewType";
 
-export const useReviewSummaryQuery = (propertyId: number) =>
-  useQuery<ReviewSummary, Error>({
+export const useReviewSummaryQuery = (propertyId: number) => {
+  const fetchReviewSummary = async (): Promise<ReviewSummary> => {
+    const response = await axiosInstance.get<ReviewSummaryResponse>(
+      `/reviews/${propertyId}/summary`,
+    );
+    return response.data.data;
+  };
+
+  return useQuery<ReviewSummary, Error>({
     queryKey: ["reviewSummary", propertyId],
-    queryFn: () => fetchReviewSummary(propertyId),
+    queryFn: fetchReviewSummary,
     enabled: !!propertyId,
-    // 이미 정보 없는 AI 리뷰 (머신 데이터 X) 일 때 계속 Skeleton & try 방지.. 임시입니다
     retry: 0,
     staleTime: 1000 * 60 * 5,
   });
+};
