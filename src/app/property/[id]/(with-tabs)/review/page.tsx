@@ -20,13 +20,7 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { data: basicInfo, isLoading: isBasicLoading } = useBasicInfoQuery(propertyId);
   const { data: summaryData, isLoading: isSummaryLoading } = useReviewSummaryQuery(propertyId);
 
-  if (isBasicLoading || !basicInfo) {
-    return (
-      <div className="px-5 py-4 text-body2 text-gray-500">기본 정보를 불러오는 중입니다...</div>
-    );
-  }
-
-  const { articleName } = basicInfo;
+  const articleName = basicInfo?.articleName ?? "";
 
   const hasSummaryData =
     summaryData &&
@@ -50,12 +44,16 @@ const ReviewPage = ({ params }: { params: Promise<{ id: string }> }) => {
     <div className="flex h-full flex-col bg-white">
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>{articleName}</Header.Title>
+        <Header.Title>
+          {isBasicLoading ? <Skeleton className="h-6 w-32" /> : articleName}
+        </Header.Title>
       </Header>
 
       <div className="min-h-screen flex-1 overflow-y-auto">
         <div className="flex flex-col gap-6 p-5">
-          <div className="text-title3 text-black">{articleName}</div>
+          <div className="text-title3 text-black">
+            {isBasicLoading ? <Skeleton className="h-6 w-1/2" /> : articleName}
+          </div>
 
           <div className="flex flex-col gap-4">
             <div className="text-subtitle2 text-black">AI 리뷰 분석</div>
