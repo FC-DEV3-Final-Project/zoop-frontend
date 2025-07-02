@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { getUserInfo } from "@/apis/login/getUserInfo";
+import { fetchUserInfoData } from "@/apis/login/fetchUserInfoData";
 import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 export default function useAuthGuard() {
@@ -20,7 +20,7 @@ export default function useAuthGuard() {
 
     const checkLogin = async () => {
       try {
-        const checkLogin = await getUserInfo();
+        const checkLogin = await fetchUserInfoData();
         setUser(checkLogin);
       } catch {
         clearUser();

@@ -1,9 +1,8 @@
 import { UserNickname } from "@/types/user";
 import axiosInstance from "../utils/axiosInstance";
 import { useMutation } from "@tanstack/react-query";
-import { getUserInfo } from "./getUserInfo";
 import { useRouter } from "next/navigation";
-import { useUserInfoStore } from "@/stores/useUserInfoStore";
+import { fetchUserInfoData } from "./fetchUserInfoData";
 
 export const createUserNickname = async (nickname: string): Promise<UserNickname> => {
   const response = await axiosInstance.post("/users/auth/register", { nickname });
@@ -12,13 +11,11 @@ export const createUserNickname = async (nickname: string): Promise<UserNickname
 
 export const useCreateNicknameMutation = () => {
   const router = useRouter();
-  const { setUser } = useUserInfoStore();
 
   return useMutation({
     mutationFn: createUserNickname,
     onSuccess: async () => {
-      const userData = await getUserInfo();
-      setUser(userData);
+      await fetchUserInfoData();
       router.push("/");
     },
     onError: (error) => {
