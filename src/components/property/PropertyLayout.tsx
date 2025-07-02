@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Tab from "@/components/common/Tab";
 import ImageCarousel from "@/components/property/ImageCarousel";
-import { fetchBasicInfo } from "@/apis/property/detail/fetchBasicInfo";
-import { BasicInfoProps } from "@/types/propertyDetail";
+import { useBasicInfoQuery } from "@/queries/property/detail/useBasicInfoQuery";
 import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 import SkeletonInfoBox from "@/components/property/detail/SkeletonInfoBox";
 
@@ -33,9 +32,7 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
   const pathname = usePathname();
   const selectedTab = pathname.includes("/review") ? "review" : "detail";
 
-  const [propertyInfo, setPropertyInfo] = useState<BasicInfoProps | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { data: propertyInfo, isLoading, isError } = useBasicInfoQuery(propertyId);
 
   const handleTabChange = (tab: string) => {
     const targetPath = tab === "review" ? `/property/${id}/review` : `/property/${id}`;
@@ -44,31 +41,16 @@ const PropertyLayout = ({ id, children }: { id: string; children: ReactNode }) =
   };
 
   useEffect(() => {
-    setLoading(true);
-    setError(false);
-    fetchBasicInfo(propertyId)
-      .then((data) => {
-        setPropertyInfo(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-        setLoading(false);
-      });
-  }, [propertyId]);
-
-  useEffect(() => {
     if (pathname.includes("/property")) {
       scrollToTopSmooth();
     }
   }, [pathname]);
 
-  if (loading) {
+  if (isLoading) {
     return <SkeletonInfoBox />;
   }
 
-  if (error || !propertyInfo) {
+  if (isError || !propertyInfo) {
     return <NotFoundProperty />;
   }
 
