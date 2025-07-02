@@ -8,6 +8,20 @@ const axiosInstance = axios.create({
   withCredentials: true, // 쿠키 포함 설정
 });
 
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, tokenRefreshed = false) => {
+  failedQueue.forEach((prom) => {
+    if (tokenRefreshed) {
+      prom.resolve(axiosInstance(prom.config));
+    } else {
+      prom.reject(error);
+    }
+  });
+  failedQueue = [];
+};
+
 axiosInstance.interceptors.request.use(
   (config) => {
     // Authorization 헤더는 제거
@@ -23,7 +37,6 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error("요청 인터셉터 오류:", error);
     return Promise.reject(error);
   },
 );
@@ -32,19 +45,33 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject, config: originalRequest });
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
       try {
-        // accessToken 재발급 요청 (withCredentials 이미 포함됨)
         await axiosInstance.post("/auth/refresh");
 
-        // 실패한 요청 재시도
-        return axiosInstance(error.config);
+        processQueue(null, true);
+
+        return axiosInstance(originalRequest);
       } catch (refreshError) {
+        processQueue(refreshError, false);
+
         window.location.href = "/login";
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
-
     return Promise.reject(error);
   },
 );
