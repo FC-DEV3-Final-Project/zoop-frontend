@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import BookmarkButton from "./BookmarkButton";
 import toast from "react-hot-toast";
 import CustomToast from "./CustomToast";
@@ -57,6 +57,7 @@ const PropertyCard = ({
   isNumberVisible = true,
 }: PropertyCardProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const buildingName = originalBuildingName || "";
   const aptName = originalAptName || "";
@@ -80,9 +81,9 @@ const PropertyCard = ({
       ({ id }) => (
         <CustomToast
           message={added ? "찜한 매물에 추가했어요." : "찜한 매물에서 제외됐어요."}
-          actionText={added ? "찜한 매물 보기" : undefined}
+          actionText={added && pathname !== "/mypage" ? "찜한 매물 보기" : undefined}
           onClickAction={
-            added
+            added && pathname !== "/mypage"
               ? () => {
                   router.push("/mypage");
                   toast.dismiss(id);
