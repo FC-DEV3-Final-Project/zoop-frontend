@@ -1,6 +1,23 @@
 import useInfiniteScroll from "@/hooks/common/useInfiniteScroll";
 import { PropertyCardProps } from "@/components/common/PropertyCard";
-import fetchRealEstateProperties from "@/apis/real-estate/fetchRealEstateProperties";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+type RealEstatePropertiesResponse = {
+  properties: PropertyCardProps[];
+  hasNext: boolean;
+};
+
+const fetchRealEstateProperties = async (
+  page: number,
+  size: number = 2,
+  realtyId: number,
+  tradeTypeName: "월세" | "전세" | "매매",
+): Promise<RealEstatePropertiesResponse> => {
+  const response = await axiosInstance.get(
+    `/realties/${realtyId}/properties?page=${page}&size=${size}&tradeTypeName=${tradeTypeName}`,
+  );
+  return response.data.data;
+};
 
 export const useRealEstatePropertiesQuery = (
   realtyId: number,
