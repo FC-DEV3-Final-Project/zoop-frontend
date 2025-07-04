@@ -11,8 +11,8 @@ import { LocationStepData, SelectedPlaceInfo } from "@/types/filter";
 
 interface LocationStepProps {
   onNext: () => void;
-  savedLocationData: Partial<LocationStepData>;
-  onLocationDataChange: (data: Partial<LocationStepData>) => void;
+  savedLocationData: LocationStepData;
+  onLocationChange: (data: LocationStepData) => void;
 }
 
 // 카카오 API 응답 타입
@@ -25,7 +25,7 @@ interface KakaoPlace {
   y: string; // 위도
 }
 
-const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: LocationStepProps) => {
+const LocationStep = ({ onNext, savedLocationData, onLocationChange }: LocationStepProps) => {
   const [input, setInput] = useState(savedLocationData.searchKeyword || "");
   const [searchKeyword, setSearchKeyword] = useState(savedLocationData.searchKeyword || "");
   const [selectedPlaceInfo, setSelectedPlaceInfo] = useState<SelectedPlaceInfo | null>(
@@ -208,7 +208,7 @@ const LocationStep = ({ onNext, savedLocationData, onLocationDataChange }: Locat
         <Button
           onClick={() => {
             onNext();
-            onLocationDataChange({
+            onLocationChange({
               searchKeyword,
               searchResults,
               selectedPlace: selectedPlaceInfo,

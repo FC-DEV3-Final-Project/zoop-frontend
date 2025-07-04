@@ -19,15 +19,15 @@ const OptionSelectStep = ({
   savedOptions,
   onOptionsChange,
 }: OptionSelectStepProps) => {
-  const [selectedOption, setSelectedOption] = useState<string[]>(savedOptions || []);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(savedOptions || []);
 
   const handleSelect = (option: string) => {
     if (multiSelect) {
-      setSelectedOption((prev) =>
+      setSelectedOptions((prev) =>
         prev.includes(option) ? prev.filter((item) => item !== option) : [...prev, option],
       );
     } else {
-      setSelectedOption((prev) => (prev.includes(option) ? [] : [option]));
+      setSelectedOptions((prev) => (prev.includes(option) ? [] : [option]));
     }
   };
   return (
@@ -44,7 +44,7 @@ const OptionSelectStep = ({
             <FilterOptionCard
               key={option}
               option={option}
-              selectedCards={selectedOption}
+              selectedOptions={selectedOptions}
               onSelect={handleSelect}
             />
           ))}
@@ -54,10 +54,10 @@ const OptionSelectStep = ({
       <div className="absolute bottom-3 left-1/2 w-full max-w-[600px] -translate-x-1/2 transform px-5">
         <Button
           onClick={() => {
-            onOptionsChange(selectedOption);
+            onOptionsChange(selectedOptions);
             onNext();
           }}
-          disabled={selectedOption.length === 0}
+          disabled={selectedOptions.length === 0}
         >
           다음
         </Button>

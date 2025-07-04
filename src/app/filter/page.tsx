@@ -33,24 +33,24 @@ const Page = () => {
     }
   };
 
-  const handleLocationDataChange = (data: Partial<LocationStepData>) => {
+  const handleLocationDataChange = (data: LocationStepData) => {
     const currentLocationData = stepData.place || {};
     updateStepData("place", { ...currentLocationData, ...data });
   };
 
   return (
     <div className="h-screen">
-      {showLoading ? (
-        <Header>
+      <Header>
+        {showLoading ? (
           <Header.Title>AI 매물 찾기</Header.Title>
-        </Header>
-      ) : (
-        <Header>
-          <Header.Prev onPrevClick={handlePrevClick} />
-          <Header.Title>필터 설정하기</Header.Title>
-          <Header.Close onCloseClick={() => router.push("/")} />
-        </Header>
-      )}
+        ) : (
+          <>
+            <Header.Prev onPrevClick={handlePrevClick} />
+            <Header.Title>필터 설정하기</Header.Title>
+            <Header.Close onCloseClick={() => router.push("/")} />
+          </>
+        )}
+      </Header>
 
       <main className="h-screen bg-white pt-[48px]">
         {showLoading ? (
@@ -63,8 +63,8 @@ const Page = () => {
                 <Step name="1">
                   <LocationStep
                     onNext={nextStep}
-                    savedLocationData={typeof stepData.place === "object" ? stepData.place : {}}
-                    onLocationDataChange={handleLocationDataChange}
+                    savedLocationData={stepData.place}
+                    onLocationChange={handleLocationDataChange}
                   />
                 </Step>
                 <Step name="2">
@@ -73,7 +73,7 @@ const Page = () => {
                     title="매매 형태"
                     options={TRADE_TYPE_OPTIONS}
                     multiSelect={false}
-                    savedOptions={stepData.tradeType || []}
+                    savedOptions={stepData.tradeType}
                     onOptionsChange={(options) => updateStepData("tradeType", options)}
                   />
                 </Step>
@@ -82,7 +82,7 @@ const Page = () => {
                     onNext={nextStep}
                     title="주거 형태"
                     options={REAL_ESTATE_TYPE_OPTIONS}
-                    savedOptions={stepData.realEstateType || []}
+                    savedOptions={stepData.realEstateType}
                     onOptionsChange={(options) => updateStepData("realEstateType", options)}
                   />
                 </Step>
