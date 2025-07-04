@@ -4,12 +4,12 @@ import Image from "next/image";
 
 interface FilterOptionCardProps {
   option: string;
-  selectedCards: string[];
+  selectedOptions: string[];
   onSelect: (option: string) => void;
 }
 
-const FilterOptionCard = ({ option, selectedCards, onSelect }: FilterOptionCardProps) => {
-  const isSelected = selectedCards.includes(option);
+const FilterOptionCard = ({ option, selectedOptions, onSelect }: FilterOptionCardProps) => {
+  const isSelected = selectedOptions.includes(option);
 
   return (
     <button

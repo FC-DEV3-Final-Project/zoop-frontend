@@ -19,9 +19,9 @@ export interface KakaoPlace {
 
 // 저장될 지역 설정 타입
 export interface LocationStepData {
-  searchKeyword: string;
-  searchResults: KakaoPlace[];
-  selectedPlace: SelectedPlaceInfo | null;
+  searchKeyword?: string;
+  searchResults?: KakaoPlace[];
+  selectedPlace?: SelectedPlaceInfo | null;
 }
 
 export interface FilterPayload {
