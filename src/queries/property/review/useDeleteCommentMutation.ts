@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteComment } from "@/apis/property/review/deleteComment";
+import axiosInstance from "@/apis/utils/axiosInstance";
 
 export const useDeleteCommentMutation = (
   reviewId: number,
@@ -8,8 +8,13 @@ export const useDeleteCommentMutation = (
 ) => {
   const queryClient = useQueryClient();
 
+  const deleteComment = async (commentId: number) => {
+    const res = await axiosInstance.delete(`/reviews/${reviewId}/comments/${commentId}`);
+    return res.data;
+  };
+
   return useMutation({
-    mutationFn: (commentId: number) => deleteComment(reviewId, commentId),
+    mutationFn: deleteComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commentList", reviewId] });
       queryClient.invalidateQueries({ queryKey: ["reviewList", propertyId, currentReviewSort] });

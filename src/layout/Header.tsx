@@ -1,5 +1,5 @@
 "use client";
-
+import { ReactNode } from "react";
 import Image from "next/image";
 
 import HamburgerIcon from "../../public/icons/list.svg";
@@ -36,12 +36,12 @@ const Prev = ({
 );
 
 const Hamburger = ({ onHamburgerClick }: { onHamburgerClick?: () => void }) => (
-  <div onClick={onHamburgerClick} className="flex justify-center cursor-pointer">
+  <div onClick={onHamburgerClick} className="flex cursor-pointer justify-center">
     <Image src={HamburgerIcon} alt="메뉴" width={24} height={24} />
   </div>
 );
 
-const Title = ({ children, className = "" }: { children: string; className?: string }) => (
+const Title = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
   <h1
     className={`absolute left-1/2 w-[70%] -translate-x-1/2 truncate whitespace-nowrap text-center text-subtitle2 ${className}`}
   >

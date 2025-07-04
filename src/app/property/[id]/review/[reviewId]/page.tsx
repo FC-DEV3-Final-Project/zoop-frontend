@@ -13,6 +13,7 @@ import AutoResizeTextarea from "@/components/ui/textarea";
 import { usePostCommentMutation } from "@/queries/property/review/usePostCommentMutation";
 import toast from "react-hot-toast";
 import CustomToast from "@/components/common/CustomToast";
+import SkeletonCard from "@/components/property/review/SkeletonCard";
 
 const ReviewDetailPage = () => {
   const { id, reviewId } = useParams();
@@ -98,7 +99,24 @@ const ReviewDetailPage = () => {
     setComment(target.content);
   };
 
-  if (isReviewLoading || isCommentLoading || !reviewListData || !commentData) return null;
+  if (isReviewLoading || isCommentLoading) {
+    return (
+      <>
+        <Header>
+          <Header.Prev onPrevClick={() => router.back()} />
+          <Header.Title>리뷰</Header.Title>
+        </Header>
+
+        <div className="flex h-full min-h-screen flex-col gap-4 bg-white px-5 pt-12">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      </>
+    );
+  }
+
+  if (!reviewListData || !commentData) return null;
 
   const review = reviewListData.reviews.find((r) => r.reviewId === targetReviewId);
   if (!review) return <div>리뷰를 찾을 수 없습니다.</div>;

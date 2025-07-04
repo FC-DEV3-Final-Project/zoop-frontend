@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postComment } from "@/apis/property/review/postComment";
+import axiosInstance from "@/apis/utils/axiosInstance";
 
 export const usePostCommentMutation = (
   reviewId: number,
@@ -8,8 +8,13 @@ export const usePostCommentMutation = (
 ) => {
   const queryClient = useQueryClient();
 
+  const postComment = async (content: string) => {
+    const response = await axiosInstance.post(`/reviews/${reviewId}/comments`, { content });
+    return response.data.data;
+  };
+
   return useMutation({
-    mutationFn: (content: string) => postComment(reviewId, content),
+    mutationFn: postComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commentList", reviewId] });
       queryClient.refetchQueries({ queryKey: ["reviewList", propertyId, currentSort] });

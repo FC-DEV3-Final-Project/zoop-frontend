@@ -11,6 +11,7 @@ import { useAgentQuery } from "@/queries/property/detail/useAgentQuery";
 import { useAddRecentPropertyMutation } from "@/queries/mypage/useAddRecentPropertyMutation";
 import NotFoundProperty from "@/components/property/detail/NotFoundProperty";
 import SkeletonInfoBox from "@/components/property/detail/SkeletonInfoBox";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -27,23 +28,11 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
     }
   }, [propertyId]);
 
-  if (isLoading) {
-    return (
-      <>
-        <Header>
-          <Header.Prev onPrevClick={() => router.back()} />
-          <Header.Title>로딩 중...</Header.Title>
-        </Header>
-        <SkeletonInfoBox />
-      </>
-    );
-  }
-
   if (!isLoading && (error || !basicInfo)) {
     return <NotFoundProperty />;
   }
 
-  const { articleName } = basicInfo!;
+  const articleName = basicInfo?.articleName ?? "";
 
   const phoneNumberOptions = agent
     ? [
@@ -56,11 +45,17 @@ function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
     <>
       <Header>
         <Header.Prev onPrevClick={() => router.back()} />
-        <Header.Title>{articleName}</Header.Title>
+        {isLoading ? (
+          <Header.Title>
+            <Skeleton className="h-6 w-32" />
+          </Header.Title>
+        ) : (
+          <Header.Title>{articleName}</Header.Title>
+        )}
       </Header>
 
       <div className="flex flex-col gap-2">
-        <InfoBox propertyInfo={basicInfo!} />
+        {isLoading ? <SkeletonInfoBox /> : <InfoBox propertyInfo={basicInfo!} />}
         <ScrollableSection propertyId={propertyId} />
       </div>
 

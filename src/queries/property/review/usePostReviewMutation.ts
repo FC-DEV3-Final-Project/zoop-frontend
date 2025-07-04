@@ -1,14 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postReview } from "@/apis/property/review/postReview";
+import axiosInstance from "@/apis/utils/axiosInstance";
 import { ReviewRequestBodyType } from "@/types/reviewType";
 
 export const usePostReviewMutation = (propertyId: number) => {
   const queryClient = useQueryClient();
 
+  const postReview = async (body: ReviewRequestBodyType) => {
+    const res = await axiosInstance.post(`/reviews/${propertyId}`, body);
+    return res.data.data;
+  };
+
   return useMutation({
-    mutationFn: (body: ReviewRequestBodyType) => postReview(propertyId, body),
+    mutationFn: postReview,
     onSuccess: () => {
-      // 작성 성공 시 캐시 무효화 → 다시 조회
       queryClient.invalidateQueries({
         queryKey: ["reviewList", propertyId],
       });
