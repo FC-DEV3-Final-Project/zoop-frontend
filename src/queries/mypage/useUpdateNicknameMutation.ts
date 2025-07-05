@@ -1,5 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import fetchUpdateNickname from "@/apis/mypage/fetchUpdateNickname";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+const fetchUpdateNickname = async (nickname: string): Promise<boolean> => {
+  const response = await axiosInstance.patch("/mypage/user-nickname", { nickname });
+  return response.status === 200;
+};
 
 export const useUpdateNicknameMutation = (options?: {
   onSuccess?: (data: boolean) => void;

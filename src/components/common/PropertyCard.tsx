@@ -1,7 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import BookmarkButton from "./BookmarkButton";
+import toast from "react-hot-toast";
+import CustomToast from "./CustomToast";
 
 interface PropertyCardProps {
   // BE 전달 데이터
@@ -55,6 +57,7 @@ const PropertyCard = ({
   isNumberVisible = true,
 }: PropertyCardProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const buildingName = originalBuildingName || "";
   const aptName = originalAptName || "";
@@ -71,6 +74,26 @@ const PropertyCard = ({
 
   const handleCardClick = () => {
     router.push(`/property/${propertyId}`);
+  };
+
+  const showBookmarkToast = (added: boolean) => {
+    toast(
+      ({ id }) => (
+        <CustomToast
+          message={added ? "찜한 매물에 추가했어요." : "찜한 매물에서 제외됐어요."}
+          actionText={added && pathname !== "/mypage" ? "찜한 매물 보기" : undefined}
+          onClickAction={
+            added && pathname !== "/mypage"
+              ? () => {
+                  router.push("/mypage");
+                  toast.dismiss(id);
+                }
+              : undefined
+          }
+        />
+      ),
+      { duration: 2000 },
+    );
   };
 
   return (
@@ -111,7 +134,11 @@ const PropertyCard = ({
               {tradeTypeName} {dealOrWarrantPrc}
               {rentPrice ? `/${rentPrice}` : ""}
             </div>
-            <BookmarkButton itemId={propertyId} initialBookmarked={isBookmarked} />
+            <BookmarkButton
+              itemId={propertyId}
+              initialBookmarked={isBookmarked}
+              onSuccess={showBookmarkToast}
+            />
           </div>
 
           {/* 주소와 건물 정보 */}

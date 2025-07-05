@@ -1,5 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import fetchResetProfileImage from "@/apis/mypage/fetchResetProfileImage";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+const fetchResetProfileImage = async (): Promise<string> => {
+  const formData = new FormData();
+  
+    const response = await axiosInstance.patch("/mypage/profile-image/reset", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  // 성공 시 profileImageUrl 반환
+  return response.data.data.profileImageUrl;
+};
 
 export const useResetProfileImageMutation = (options?: {
   onSuccess?: (data: string) => void;
@@ -22,10 +34,6 @@ export const useResetProfileImageMutation = (options?: {
       }
 
       options?.onSuccess?.(data);
-    },
-    onError: (error) => {
-      console.error("프로필 이미지 초기화 실패:", error);
-      options?.onError?.(error);
     },
   });
 };

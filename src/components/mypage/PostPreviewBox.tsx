@@ -25,15 +25,19 @@ const PostPreviewBox = ({ postPreviewItems }: PostPreviewBoxProps) => {
       </div>
       <div className="flex flex-col items-start self-stretch">
         {postPreviewItems && postPreviewItems.length > 0 ? (
-          postPreviewItems.map((post, idx) => (
-            <PostPreviewItem
-              type={post.reviewId ? "review" : "comment"}
-              key={idx}
-              content={post.content}
-              likes={post.likeCount}
-              comments={post.commentCount || 0}
-            />
-          ))
+          postPreviewItems.map((post) => {
+            const postId = post.reviewId ? `review-${post.reviewId}` : `comment-${post.commentId}`;
+
+            return (
+              <PostPreviewItem
+                key={postId}
+                type={post.reviewId ? "review" : "comment"}
+                content={post.content}
+                likes={post.likeCount}
+                comments={post.commentCount || 0}
+              />
+            );
+          })
         ) : (
           <div className="h-5 justify-center self-stretch text-body2 leading-tight">
             내가 작성한 글이 없어요

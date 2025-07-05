@@ -1,5 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import fetchRealEstateInfo from "@/apis/real-estate/fetchRealEstateInfo";
+import axiosInstance from "@/apis/utils/axiosInstance";
+import { RealEstateInfoResponse } from "@/types/real-estate";
+
+const fetchRealEstateInfo = async (
+  propertyId: number,
+): Promise<RealEstateInfoResponse> => {
+  const response = await axiosInstance.get(`/properties/${propertyId}/realty`, {
+  });
+  return response.data;
+};
 
 export const useRealEstateInfoQuery = (
   propertyId: number,

@@ -1,5 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import deletePostReview from "@/apis/mypage/deletePostReview";
+import axiosInstance from "@/apis/utils/axiosInstance";
+
+const deletePostReview = async (reviewId: number) => {
+  const res = await axiosInstance.delete(`/mypage/reviews/${reviewId}`);
+  return res.data.result;
+};
 
 export const useDeletePostReviewMutation = () => {
   const queryClient = useQueryClient();
