@@ -1,10 +1,8 @@
 "use client";
-import { getUserInfo } from "@/apis/login/getUserInfo";
+import { fetchUserInfoData } from "@/apis/login/fetchUserInfoData";
 import Onboarding from "@/components/login/onboarding";
 import { Button } from "@/components/ui/button";
-// import useRedirect from "@/hooks/common/useRedirect";
 import { Header } from "@/layout/Header";
-import { useUserInfoStore } from "@/stores/useUserInfoStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,12 +15,9 @@ export default function LoginPage() {
   const redirectUri = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
   const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoClientId}&redirect_uri=${redirectUri}`;
 
-  // useRedirect();
-
   const handleSubmit = async () => {
     try {
-      const userData = await getUserInfo();
-
+      await fetchUserInfoData();
       router.push("/");
     } catch (err) {
       console.log("err :", err);

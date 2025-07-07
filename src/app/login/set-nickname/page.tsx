@@ -2,30 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@/layout/Header";
 import { Button } from "@/components/ui/button";
-import { createUserNickname } from "@/apis/login/createUserNickname";
+import { useCreateNicknameMutation } from "@/apis/login/createUserNickname";
 import { useRouter } from "next/navigation";
 import NicknameInput from "@/components/common/NicknameInput";
-import { getUserInfo } from "@/apis/login/getUserInfo";
-import { useUserInfoStore } from "@/stores/useUserInfoStore";
 
 const Page = () => {
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [isValid, setIsValid] = useState(false);
-
-  const { setUser } = useUserInfoStore(); // 상태 저장 함수 가져오기
+  const { mutate: submitNickname, isPending } = useCreateNicknameMutation();
 
   const handleSubmit = async () => {
-    try {
-      await createUserNickname(nickname);
-      const userData = await getUserInfo();
-
-      setUser(userData); // Zustand에 유저 정보 저장
-
-      router.push("/");
-    } catch (err) {
-      console.error("닉네임 입력발생");
-    }
+    submitNickname(nickname);
   };
 
   return (
